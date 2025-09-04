@@ -144,67 +144,38 @@ class ProductionGamePredictor:
         }
     
     def predict_player_passing(self, player_stats, opponent_team=None):
-        """Production QB prediction with enhanced defense adjustment"""
-        if not self.models.get('passing'):
-            return None, "Passing model not loaded"
+    if not self.models.get('passing'):
+        return None, "Passing model not loaded"
 
-        try:
-            defense_rank = 16
-            defense_multiplier = 1.0
-            
-            if opponent_team and opponent_team in self.defense_rankings:
-                defense_rank = self.defense_rankings[opponent_team]['rank']
-                
-                # Enhanced defense adjustment based on analysis
-                if defense_rank <= 5:     # Elite defense
-                    defense_multiplier = 0.80
-                elif defense_rank <= 12:  # Good defense
-                    defense_multiplier = 0.90
-                elif defense_rank <= 20:  # Average defense
-                    defense_multiplier = 1.0
-                elif defense_rank <= 28:  # Poor defense
-                    defense_multiplier = 1.15
-                else:                     # Terrible defense
-                    defense_multiplier = 1.25
-            
-            model = self.models['passing']
-            
-            # Multiple feature combinations for robustness
-            feature_combinations = [
-                [
-                    player_stats.get('passing_yards_L4', 250),
-                    player_stats.get('completion_pct_L4', 0.65),
-                    player_stats.get('attempts_L4', 35),
-                    defense_rank
-                ],
-                [
-                    player_stats.get('passing_yards_L4', 250),
-                    player_stats.get('passing_yards_L8', 250),
-                    player_stats.get('completion_pct_L4', 0.65),
-                    player_stats.get('attempts_L4', 35),
-                    player_stats.get('passing_tds_L4', 1.5),
-                    defense_rank
-                ]
-            ]
-            
-            for features in feature_combinations:
-                try:
-                    feature_array = np.array([features])
-                    base_prediction = model.predict(feature_array)[0]
-                    adjusted_prediction = base_prediction * defense_multiplier
-                    
-                    model_type = self.models.get('passing_type', 'unknown')
-                    return max(0, round(adjusted_prediction, 1)), f"Success ({model_type}) vs #{defense_rank} defense"
-                except:
-                    continue
-            
-            # Fallback
-            base_avg = player_stats.get('passing_yards_L4', 250)
-            adjusted_avg = base_avg * defense_multiplier
-            return round(adjusted_avg, 1), f"Fallback vs #{defense_rank} defense"
-            
-        except Exception as e:
-            return None, f"Error: {str(e)[:50]}"
+    try:
+        model = self.models['passing']
+        
+        # Debug: Show what we're working with
+        print(f"Model type: {type(model)}")
+        print(f"Player stats available: {list(player_stats.keys())}")
+        
+        # Check if model has feature info
+        if hasattr(model, 'feature_names_in_'):
+            print(f"Model expects: {list(model.feature_names_in_)}")
+        elif hasattr(model, 'n_features_in_'):
+            print(f"Model expects {model.n_features_in_} features")
+        
+        # Try the prediction with debug info
+        features = [
+            player_stats.get('passing_yards_L4', 250),
+            player_stats.get('completion_pct_L4', 0.65),
+            player_stats.get('attempts_L4', 35),
+            16  # defense rank
+        ]
+        print(f"Trying prediction with features: {features}")
+        
+        prediction = model.predict([features])[0]
+        return max(0, round(prediction, 1)), "Success"
+        
+    except Exception as e:
+        print(f"Prediction error details: {e}")
+        print(f"Error type: {type(e)}")
+        return None, f"Error: {str(e)[:50]}"
     
     def predict_player_receiving(self, player_stats, opponent_team=None):
         """Production WR prediction"""
