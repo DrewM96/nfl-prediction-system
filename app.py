@@ -144,38 +144,38 @@ class ProductionGamePredictor:
         }
     
     def predict_player_passing(self, player_stats, opponent_team=None):
-    if not self.models.get('passing'):
-        return None, "Passing model not loaded"
-
-    try:
-        model = self.models['passing']
-        
-        # Debug: Show what we're working with
-        print(f"Model type: {type(model)}")
-        print(f"Player stats available: {list(player_stats.keys())}")
-        
-        # Check if model has feature info
-        if hasattr(model, 'feature_names_in_'):
-            print(f"Model expects: {list(model.feature_names_in_)}")
-        elif hasattr(model, 'n_features_in_'):
-            print(f"Model expects {model.n_features_in_} features")
-        
-        # Try the prediction with debug info
-        features = [
-            player_stats.get('passing_yards_L4', 250),
-            player_stats.get('completion_pct_L4', 0.65),
-            player_stats.get('attempts_L4', 35),
-            16  # defense rank
-        ]
-        print(f"Trying prediction with features: {features}")
-        
-        prediction = model.predict([features])[0]
-        return max(0, round(prediction, 1)), "Success"
-        
-    except Exception as e:
-        print(f"Prediction error details: {e}")
-        print(f"Error type: {type(e)}")
-        return None, f"Error: {str(e)[:50]}"
+        if not self.models.get('passing'):
+            return None, "Passing model not loaded"
+    
+        try:
+            model = self.models['passing']
+            
+            # Debug: Show what we're working with
+            print(f"Model type: {type(model)}")
+            print(f"Player stats available: {list(player_stats.keys())}")
+            
+            # Check if model has feature info
+            if hasattr(model, 'feature_names_in_'):
+                print(f"Model expects: {list(model.feature_names_in_)}")
+            elif hasattr(model, 'n_features_in_'):
+                print(f"Model expects {model.n_features_in_} features")
+            
+            # Try the prediction with debug info
+            features = [
+                player_stats.get('passing_yards_L4', 250),
+                player_stats.get('completion_pct_L4', 0.65),
+                player_stats.get('attempts_L4', 35),
+                16  # defense rank
+            ]
+            print(f"Trying prediction with features: {features}")
+            
+            prediction = model.predict([features])[0]
+            return max(0, round(prediction, 1)), "Success"
+            
+        except Exception as e:
+            print(f"Prediction error details: {e}")
+            print(f"Error type: {type(e)}")
+            return None, f"Error: {str(e)[:50]}"
     
     def predict_player_receiving(self, player_stats, opponent_team=None):
         """Production WR prediction"""
