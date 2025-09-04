@@ -8,6 +8,30 @@ import joblib
 import os
 from datetime import datetime
 
+# ADD THE DEBUG CODE HERE (temporarily)
+st.write("DEBUG: Files in root directory:")
+try:
+    files = os.listdir('.')
+    st.write(files)
+except:
+    st.write("Cannot list root directory")
+
+st.write("DEBUG: Looking for models directories:")
+for path in ['models', 'models_enhanced', 'models_github_ready']:
+    if os.path.exists(path):
+        st.write(f"Found {path}:")
+        st.write(os.listdir(path))
+    else:
+        st.write(f"❌ {path} not found")
+
+# Try loading one model manually
+try:
+    import joblib
+    model = joblib.load('models/passing_model.pkl')
+    st.write("✅ Model loading works")
+except Exception as e:
+    st.write(f"❌ Model loading failed: {e}")
+
 # Page configuration
 st.set_page_config(
     page_title="NFL Prediction System - Pro Edition",
