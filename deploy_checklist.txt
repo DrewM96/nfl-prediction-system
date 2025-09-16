@@ -1,0 +1,8 @@
+# In your project folder, create a file called deploy_checklist.txt
+echo "NFL Model Deployment Checklist
+[] Run weekly_nfl_update.py locally
+[] Check model files exist in models/ folder
+[] Verify JSON data files updated
+[] Test Streamlit app locally
+[] Commit and push to GitHub
+[] Verify Heroku deployment" > deploy_checklist.txt
