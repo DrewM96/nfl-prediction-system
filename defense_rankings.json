@@ -1,0 +1,130 @@
+{
+  "ARI": {
+    "rank": 21,
+    "yards_allowed": 333.5
+  },
+  "ATL": {
+    "rank": 2,
+    "yards_allowed": 229.0
+  },
+  "BAL": {
+    "rank": 31,
+    "yards_allowed": 409.5
+  },
+  "BUF": {
+    "rank": 8,
+    "yards_allowed": 293.0
+  },
+  "CAR": {
+    "rank": 22,
+    "yards_allowed": 335.5
+  },
+  "CHI": {
+    "rank": 28,
+    "yards_allowed": 383.5
+  },
+  "CIN": {
+    "rank": 25,
+    "yards_allowed": 375.0
+  },
+  "CLE": {
+    "rank": 1,
+    "yards_allowed": 191.5
+  },
+  "DAL": {
+    "rank": 30,
+    "yards_allowed": 404.0
+  },
+  "DEN": {
+    "rank": 12,
+    "yards_allowed": 303.0
+  },
+  "DET": {
+    "rank": 10,
+    "yards_allowed": 302.5
+  },
+  "GB": {
+    "rank": 3,
+    "yards_allowed": 239.0
+  },
+  "HOU": {
+    "rank": 20,
+    "yards_allowed": 328.0
+  },
+  "IND": {
+    "rank": 5,
+    "yards_allowed": 268.5
+  },
+  "JAX": {
+    "rank": 10,
+    "yards_allowed": 302.5
+  },
+  "KC": {
+    "rank": 13,
+    "yards_allowed": 305.0
+  },
+  "LA": {
+    "rank": 4,
+    "yards_allowed": 258.5
+  },
+  "LAC": {
+    "rank": 7,
+    "yards_allowed": 282.5
+  },
+  "LV": {
+    "rank": 18,
+    "yards_allowed": 326.5
+  },
+  "MIA": {
+    "rank": 26,
+    "yards_allowed": 376.5
+  },
+  "MIN": {
+    "rank": 17,
+    "yards_allowed": 321.5
+  },
+  "NE": {
+    "rank": 24,
+    "yards_allowed": 373.5
+  },
+  "NO": {
+    "rank": 14,
+    "yards_allowed": 310.0
+  },
+  "NYG": {
+    "rank": 32,
+    "yards_allowed": 455.0
+  },
+  "NYJ": {
+    "rank": 23,
+    "yards_allowed": 337.0
+  },
+  "PHI": {
+    "rank": 9,
+    "yards_allowed": 300.5
+  },
+  "PIT": {
+    "rank": 29,
+    "yards_allowed": 394.5
+  },
+  "SEA": {
+    "rank": 18,
+    "yards_allowed": 326.5
+  },
+  "SF": {
+    "rank": 5,
+    "yards_allowed": 268.5
+  },
+  "TB": {
+    "rank": 15,
+    "yards_allowed": 312.0
+  },
+  "TEN": {
+    "rank": 27,
+    "yards_allowed": 378.0
+  },
+  "WAS": {
+    "rank": 16,
+    "yards_allowed": 317.5
+  }
+}

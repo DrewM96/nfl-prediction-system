@@ -1,0 +1,20 @@
+{
+  "last_updated": "2025-09-17T11:04:29.018971",
+  "data_years": [
+    2023,
+    2024,
+    2025
+  ],
+  "models_trained": [
+    "passing",
+    "receiving",
+    "receptions",
+    "rushing"
+  ],
+  "players": {
+    "qb_count": 39,
+    "wr_count": 254,
+    "rb_count": 143
+  },
+  "teams": 32
+}
