@@ -1,0 +1,16 @@
+{
+  "method": "manual_review",
+  "note": "Always check official injury reports before finalizing bets",
+  "key_positions": [
+    "QB",
+    "RB1",
+    "WR1",
+    "Top_Pass_Rusher",
+    "CB1"
+  ],
+  "impact_multipliers": {
+    "QB_out": 0.85,
+    "RB1_out": 0.95,
+    "WR1_out": 0.93
+  }
+}

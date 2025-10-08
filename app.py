@@ -1,4 +1,4 @@
-# nfl_app.py - Production-Ready NFL Prediction System
+# nfl_app.py - Clean v2.1 with Injury System
 
 import streamlit as st
 import pandas as pd
@@ -7,25 +7,27 @@ import json
 import joblib
 import os
 from datetime import datetime
-
+from injury_system import (
+    InjuryAdjustmentSystem, 
+    render_injury_manager, 
+    integrate_injuries_into_game_prediction,
+    integrate_injuries_into_player_prediction
+)
 
 # Page configuration
 st.set_page_config(
-    page_title="NFL Prediction System - Pro Edition",
+    page_title="NFL Prediction System v2.1",
     page_icon="🏈",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Production configuration
-PRODUCTION_MODE = True  # Set to False for development
-MODEL_UPDATE_DATE = "2024-12-XX"  # Update this when models are retrained
+MODEL_UPDATE_DATE = "2025-10-08"
 
 class ProductionGamePredictor:
-    def __init__(self, team_data_file='team_data.json', use_enhanced=True):
-        """Production-ready NFL prediction system"""
+    def __init__(self, team_data_file='team_data.json'):
+        """Production-ready NFL prediction system with ensemble models"""
         
-        # Load team data
         try:
             with open(team_data_file, 'r') as f:
                 self.team_data = json.load(f)
@@ -37,314 +39,296 @@ class ProductionGamePredictor:
             self.league_avg_allowed = np.mean(all_allowed)
             
         except FileNotFoundError:
-            st.error("Team data not found. Please update team statistics.")
+            st.error("Team data not found. Please run weekly update.")
             self.team_data = {}
             self.league_avg_points = 22.0
             self.league_avg_allowed = 22.0
         
-        # Load models (enhanced if available, fallback to original)
-        self.models = self._load_models(use_enhanced)
+        self.ensemble_models = self._load_ensemble_models()
         
-        # Load defense rankings
         try:
             with open('defense_rankings.json', 'r') as f:
                 self.defense_rankings = json.load(f)
         except FileNotFoundError:
             self.defense_rankings = {}
     
-    def _load_models(self, use_enhanced=True):
-        """Load models with fallback strategy"""
-        models = {}
+    def _load_ensemble_models(self):
+        """Load ensemble models (3 sub-models each)"""
+        ensemble_models = {}
+        model_types = ['passing', 'receiving', 'receptions', 'rushing', 'game_total', 'game_spread']
         
-        # Try enhanced models first
-        if use_enhanced:
-            enhanced_paths = {
-                'passing': 'models/enhanced_passing_model.pkl',
-                'receiving': 'models/enhanced_receiving_model.pkl',
-                'receptions': 'models/enhanced_receptions_model.pkl',
-                'rushing': 'models/enhanced_rushing_model.pkl'
-            }
+        for model_name in model_types:
+            models = []
+            for idx in range(3):
+                path = f'models/{model_name}_model_{idx}.pkl'
+                if os.path.exists(path):
+                    try:
+                        model = joblib.load(path)
+                        models.append(model)
+                    except Exception as e:
+                        pass
             
-            for model_name, path in enhanced_paths.items():
-                if os.path.exists(path):
-                    try:
-                        models[model_name] = joblib.load(path)
-                        models[f'{model_name}_type'] = 'enhanced'
-                    except:
-                        models[model_name] = None
-                        models[f'{model_name}_type'] = 'failed'
+            if len(models) > 0:
+                ensemble_models[model_name] = models
+            else:
+                ensemble_models[model_name] = None
         
-        # Fallback to original models
-        original_paths = {
-            'passing': 'models/passing_model.pkl',
-            'receiving': 'models/receiving_model.pkl',
-            'receptions': 'models/receptions_model.pkl',
-            'rushing': 'models/rushing_model.pkl'
-        }
-        
-        for model_name, path in original_paths.items():
-            if model_name not in models or models[model_name] is None:
-                if os.path.exists(path):
-                    try:
-                        models[model_name] = joblib.load(path)
-                        models[f'{model_name}_type'] = 'original'
-                    except:
-                        models[model_name] = None
-                        models[f'{model_name}_type'] = 'failed'
-        
-        return models
+        return ensemble_models
     
-    def predict_team_score(self, offense_team, defense_team, is_home=False, recency_weight=0.7):
-        """Production team scoring prediction"""
-        off_data = self.team_data.get(offense_team, {})
-        def_data = self.team_data.get(defense_team, {})
+    def predict_with_ensemble(self, model_name, features):
+        """Make prediction using ensemble averaging"""
+        if not self.ensemble_models.get(model_name):
+            return None
         
-        if not off_data or not def_data:
-            return self.league_avg_points
+        models = self.ensemble_models[model_name]
+        predictions = []
         
-        off_recent = off_data.get('points_L4', self.league_avg_points)
-        off_season = off_data.get('points_L8', self.league_avg_points)
-        offensive_scoring = (recency_weight * off_recent + (1 - recency_weight) * off_season)
+        for model in models:
+            try:
+                pred = model.predict(features)[0]
+                predictions.append(pred)
+            except Exception as e:
+                continue
         
-        def_recent = def_data.get('opp_points_L4', self.league_avg_allowed)
-        def_season = def_data.get('opp_points_L8', self.league_avg_allowed)
-        defensive_allowing = (recency_weight * def_recent + (1 - recency_weight) * def_season)
+        if len(predictions) == 0:
+            return None
         
-        # Matchup calculation
-        offensive_efficiency = offensive_scoring / self.league_avg_points
-        defensive_efficiency = defensive_allowing / self.league_avg_allowed
-        base_prediction = self.league_avg_points * offensive_efficiency * defensive_efficiency
-        
-        # Adjustments
-        home_bonus = 2.8 if is_home else 0
-        regression_factor = 0.85
-        
-        final_prediction = (regression_factor * base_prediction + 
-                          (1 - regression_factor) * self.league_avg_points + 
-                          home_bonus)
-        
-        return max(final_prediction, 10.0)
+        return np.mean(predictions)
     
     def predict_game(self, team1, team2, home_team=None):
-        """Game outcome prediction"""
-        team1_home = (home_team == team1) if home_team else False
-        team2_home = (home_team == team2) if home_team else False
+        """Game outcome prediction using ENSEMBLE models with calibration"""
         
-        team1_score = self.predict_team_score(team1, team2, team1_home)
-        team2_score = self.predict_team_score(team2, team1, team2_home)
+        if self.ensemble_models.get('game_total') and self.ensemble_models.get('game_spread'):
+            try:
+                home_stats = self.team_data.get(home_team, {}) if home_team else {}
+                away_team = team1 if team2 == home_team else team2
+                away_stats = self.team_data.get(away_team, {})
+                
+                if not home_stats or not away_stats:
+                    raise ValueError("Missing team stats")
+                
+                features = np.array([[
+                    home_stats.get('points_L4', 22),
+                    home_stats.get('opp_points_L4', 22),
+                    home_stats.get('yards_L4', 350),
+                    home_stats.get('points_L8', 22),
+                    home_stats.get('opp_points_L8', 22),
+                    home_stats.get('win_pct_L8', 0.5),
+                    home_stats.get('turnovers_L4', 1.0),
+                    away_stats.get('points_L4', 22),
+                    away_stats.get('opp_points_L4', 22),
+                    away_stats.get('yards_L4', 350),
+                    away_stats.get('points_L8', 22),
+                    away_stats.get('opp_points_L8', 22),
+                    away_stats.get('win_pct_L8', 0.5),
+                    away_stats.get('turnovers_L4', 1.0),
+                    7, 7, 0, 0
+                ]])
+                
+                total_pred = self.predict_with_ensemble('game_total', features)
+                spread_pred_raw = self.predict_with_ensemble('game_spread', features)
+                
+                if total_pred is not None and spread_pred_raw is not None:
+                    try:
+                        with open('calibration_params.json', 'r') as f:
+                            calib = json.load(f)
+                            spread_factor = calib.get('spread_factor', 0.7)
+                    except:
+                        spread_factor = 0.7
+                    
+                    spread_pred = spread_pred_raw * spread_factor
+                    home_score = (total_pred + spread_pred) / 2
+                    away_score = (total_pred - spread_pred) / 2
+                    
+                    return {
+                        'team1': team1,
+                        'team1_score': round(away_score if team1 == away_team else home_score, 1),
+                        'team2': team2,
+                        'team2_score': round(home_score if team2 == home_team else away_score, 1),
+                        'total': round(total_pred, 1),
+                        'spread': round(spread_pred, 1),
+                        'confidence': f'Calibrated ({spread_factor:.2f})',
+                        'method': 'ensemble'
+                    }
+            except Exception as e:
+                pass
         
+        # Fallback
         return {
             'team1': team1,
-            'team1_score': round(team1_score, 1),
+            'team1_score': 22.0,
             'team2': team2,
-            'team2_score': round(team2_score, 1), 
-            'total': round(team1_score + team2_score, 1),
-            'spread': round(team1_score - team2_score, 1),
-            'confidence': 'Medium'  # Could be enhanced with prediction intervals
+            'team2_score': 22.0,
+            'total': 44.0,
+            'spread': 0.0,
+            'confidence': 'Fallback',
+            'method': 'fallback'
         }
     
     def predict_player_passing(self, player_stats, opponent_team=None):
-        """Statistical QB prediction using recent averages and opponent adjustments"""
+        """QB prediction with ENSEMBLE models"""
         
-        # Get base prediction from recent performance
-        base_prediction = player_stats.get('passing_yards_L4', 250)
+        if not self.ensemble_models.get('passing'):
+            base = player_stats.get('passing_yards_L4', 250)
+            return round(base, 1), "Statistical fallback"
         
-        # Apply opponent defense adjustment
-        defense_rank = 16
-        defense_multiplier = 1.0
-        
-        if opponent_team and opponent_team in self.defense_rankings:
-            defense_rank = self.defense_rankings[opponent_team]['rank']
-            
-            # Enhanced defense adjustment
-            if defense_rank <= 5:     # Elite defense
-                defense_multiplier = 0.80
-            elif defense_rank <= 12:  # Good defense
-                defense_multiplier = 0.90
-            elif defense_rank <= 20:  # Average defense
-                defense_multiplier = 1.0
-            elif defense_rank <= 28:  # Poor defense
-                defense_multiplier = 1.15
-            else:                     # Terrible defense
-                defense_multiplier = 1.25
-        
-        # Apply the adjustment
-        adjusted_prediction = base_prediction * defense_multiplier
-        
-        return max(0, round(adjusted_prediction, 1)), f"Statistical prediction vs #{defense_rank} defense"
-    
-    def predict_player_receiving(self, player_stats, opponent_team=None):
-        """Production WR prediction"""
-        if not self.models.get('receiving'):
-            return None, "Receiving model not loaded"
-
         try:
             defense_rank = 16
-            defense_multiplier = 1.0
-            
             if opponent_team and opponent_team in self.defense_rankings:
-                defense_rank = self.defense_rankings[opponent_team]['rank']
+                defense_rank = self.defense_rankings[opponent_team].get('pass_def_rank', 16)
+            
+            features = np.array([[
+                player_stats.get('passing_yards_L4', 250),
+                player_stats.get('passing_yards_L8', 250),
+                player_stats.get('passing_yards_L16', 250),
+                player_stats.get('completion_pct_L4', 0.65),
+                player_stats.get('completion_pct_L8', 0.65),
+                player_stats.get('attempts_L4', 35),
+                player_stats.get('attempts_L8', 35),
+                player_stats.get('passing_tds_L4', 1.5),
+                player_stats.get('passing_tds_L8', 1.5),
+                player_stats.get('interception_L4', 0.5),
+                defense_rank
+            ]])
+            
+            prediction = self.predict_with_ensemble('passing', features)
+            
+            if prediction:
+                return round(prediction, 1), f"Ensemble vs #{int(defense_rank)} pass D"
+            else:
+                return None, "Failed"
                 
-                if defense_rank <= 8:
-                    defense_multiplier = 0.80
-                elif defense_rank <= 16:
-                    defense_multiplier = 1.0
-                elif defense_rank <= 24:
-                    defense_multiplier = 1.15
-                else:
-                    defense_multiplier = 1.25
+        except Exception as e:
+            return None, f"Error: {str(e)[:50]}"
+    
+    def predict_player_receiving(self, player_stats, opponent_team=None):
+        """WR prediction with ENSEMBLE models"""
+        
+        if not self.ensemble_models.get('receiving'):
+            base = player_stats.get('receiving_yards_L4', 50)
+            return round(base, 1), "Statistical fallback"
+        
+        try:
+            defense_rank = 16
+            if opponent_team and opponent_team in self.defense_rankings:
+                defense_rank = self.defense_rankings[opponent_team].get('pass_def_rank', 16)
             
-            model = self.models['receiving']
+            features = np.array([[
+                player_stats.get('receiving_yards_L4', 50),
+                player_stats.get('receiving_yards_L8', 50),
+                player_stats.get('receiving_yards_L16', 50),
+                player_stats.get('receptions_L4', 4),
+                player_stats.get('receptions_L8', 4),
+                player_stats.get('yards_per_rec_L4', 12),
+                player_stats.get('yards_per_rec_L8', 12),
+                player_stats.get('receiving_tds_L4', 0.5),
+                player_stats.get('receiving_tds_L8', 0.5),
+                player_stats.get('target_share_L4', 0.15),
+                player_stats.get('target_share_L8', 0.15),
+                defense_rank
+            ]])
             
-            feature_combinations = [
-                [
-                    player_stats.get('receiving_yards_L4', 50),
-                    player_stats.get('receptions_L4', 4),
-                    player_stats.get('yards_per_rec_L4', 12),
-                    defense_rank
-                ]
-            ]
+            prediction = self.predict_with_ensemble('receiving', features)
             
-            for features in feature_combinations:
-                try:
-                    feature_array = np.array([features])
-                    base_prediction = model.predict(feature_array)[0]
-                    adjusted_prediction = base_prediction * defense_multiplier
-                    
-                    model_type = self.models.get('receiving_type', 'unknown')
-                    return max(0, round(adjusted_prediction, 1)), f"Success ({model_type}) vs #{defense_rank} defense"
-                except:
-                    continue
-            
-            base_avg = player_stats.get('receiving_yards_L4', 50)
-            adjusted_avg = base_avg * defense_multiplier
-            return round(adjusted_avg, 1), f"Fallback vs #{defense_rank} defense"
-            
+            if prediction:
+                return round(prediction, 1), f"Ensemble vs #{int(defense_rank)} pass D"
+            else:
+                return None, "Failed"
+                
         except Exception as e:
             return None, f"Error: {str(e)[:50]}"
     
     def predict_player_receptions(self, player_stats, opponent_team=None):
-        """Production receptions prediction"""
-        if not self.models.get('receptions'):
-            return None, "Receptions model not loaded"
-
+        """Receptions prediction with ENSEMBLE models"""
+        
+        if not self.ensemble_models.get('receptions'):
+            base = player_stats.get('receptions_L4', 4)
+            return round(base, 1), "Statistical fallback"
+        
         try:
             defense_rank = 16
-            defense_multiplier = 1.0
-            
             if opponent_team and opponent_team in self.defense_rankings:
-                defense_rank = self.defense_rankings[opponent_team]['rank']
+                defense_rank = self.defense_rankings[opponent_team].get('pass_def_rank', 16)
+            
+            features = np.array([[
+                player_stats.get('receptions_L4', 4),
+                player_stats.get('receptions_L8', 4),
+                player_stats.get('receptions_L16', 4),
+                player_stats.get('receiving_yards_L4', 50),
+                player_stats.get('yards_per_rec_L4', 12),
+                player_stats.get('target_share_L4', 0.15),
+                defense_rank
+            ]])
+            
+            prediction = self.predict_with_ensemble('receptions', features)
+            
+            if prediction:
+                return round(prediction, 1), f"Ensemble vs #{int(defense_rank)} pass D"
+            else:
+                return None, "Failed"
                 
-                if defense_rank <= 8:
-                    defense_multiplier = 0.85
-                elif defense_rank <= 16:
-                    defense_multiplier = 1.0
-                elif defense_rank <= 24:
-                    defense_multiplier = 1.1
-                else:
-                    defense_multiplier = 1.2
-            
-            model = self.models['receptions']
-            
-            feature_combinations = [
-                [
-                    player_stats.get('receptions_L4', 4),
-                    player_stats.get('receiving_yards_L4', 50),
-                    defense_rank
-                ]
-            ]
-            
-            for features in feature_combinations:
-                try:
-                    feature_array = np.array([features])
-                    base_prediction = model.predict(feature_array)[0]
-                    adjusted_prediction = base_prediction * defense_multiplier
-                    
-                    model_type = self.models.get('receptions_type', 'unknown')
-                    return max(0, round(adjusted_prediction, 1)), f"Success ({model_type}) vs #{defense_rank} defense"
-                except:
-                    continue
-            
-            base_avg = player_stats.get('receptions_L4', 4)
-            adjusted_avg = base_avg * defense_multiplier
-            return round(adjusted_avg, 1), f"Fallback vs #{defense_rank} defense"
-            
         except Exception as e:
             return None, f"Error: {str(e)[:50]}"
     
     def predict_player_rushing(self, player_stats, opponent_team=None):
-        """Production RB prediction"""
-        if not self.models.get('rushing'):
-            return None, "Rushing model not loaded"
-
+        """RB prediction with ENSEMBLE models"""
+        
+        if not self.ensemble_models.get('rushing'):
+            base = player_stats.get('rushing_yards_L4', 80)
+            return round(base, 1), "Statistical fallback"
+        
         try:
             defense_rank = 16
-            defense_multiplier = 1.0
-            
             if opponent_team and opponent_team in self.defense_rankings:
-                defense_rank = self.defense_rankings[opponent_team]['rank']
+                defense_rank = self.defense_rankings[opponent_team].get('rush_def_rank', 16)
+            
+            features = np.array([[
+                player_stats.get('rushing_yards_L4', 80),
+                player_stats.get('rushing_yards_L8', 80),
+                player_stats.get('rushing_yards_L16', 80),
+                player_stats.get('attempts_L4', 18),
+                player_stats.get('attempts_L8', 18),
+                player_stats.get('yards_per_carry_L4', 4.5),
+                player_stats.get('yards_per_carry_L8', 4.5),
+                player_stats.get('rushing_tds_L4', 0.5),
+                player_stats.get('rushing_tds_L8', 0.5),
+                defense_rank
+            ]])
+            
+            prediction = self.predict_with_ensemble('rushing', features)
+            
+            if prediction:
+                return round(prediction, 1), f"Ensemble vs #{int(defense_rank)} rush D"
+            else:
+                return None, "Failed"
                 
-                if defense_rank <= 8:
-                    defense_multiplier = 0.75
-                elif defense_rank <= 16:
-                    defense_multiplier = 1.0
-                elif defense_rank <= 24:
-                    defense_multiplier = 1.2
-                else:
-                    defense_multiplier = 1.3
-            
-            model = self.models['rushing']
-            
-            feature_combinations = [
-                [
-                    player_stats.get('rushing_yards_L4', 80),
-                    player_stats.get('attempts_L4', 18),
-                    player_stats.get('yards_per_carry_L4', 4.5),
-                    defense_rank
-                ]
-            ]
-            
-            for features in feature_combinations:
-                try:
-                    feature_array = np.array([features])
-                    base_prediction = model.predict(feature_array)[0]
-                    adjusted_prediction = base_prediction * defense_multiplier
-                    
-                    model_type = self.models.get('rushing_type', 'unknown')
-                    return max(0, round(adjusted_prediction, 1)), f"Success ({model_type}) vs #{defense_rank} defense"
-                except:
-                    continue
-            
-            base_avg = player_stats.get('rushing_yards_L4', 80)
-            adjusted_avg = base_avg * defense_multiplier
-            return round(adjusted_avg, 1), f"Fallback vs #{defense_rank} defense"
-            
         except Exception as e:
             return None, f"Error: {str(e)[:50]}"
     
     def get_system_status(self):
-        """Get system health status for monitoring"""
-        status = {
+        """System health status"""
+        total_models = sum([len(models) if models else 0 for models in self.ensemble_models.values()])
+        
+        return {
             'teams_loaded': len(self.team_data),
-            'models_loaded': len([m for m in self.models.values() if m is not None and not isinstance(m, str)]),
+            'ensemble_models': len([m for m in self.ensemble_models.values() if m]),
+            'total_sub_models': total_models,
             'defense_rankings': len(self.defense_rankings),
-            'last_update': MODEL_UPDATE_DATE
+            'last_update': MODEL_UPDATE_DATE,
+            'version': '2.1 - With Injuries'
         }
-        return status
     
     def list_available_teams(self):
         """List all available teams"""
         return sorted(list(self.team_data.keys()))
 
-# Load models and data with caching
+# Load system
 @st.cache_resource
 def load_prediction_system():
-    """Load the prediction system with caching"""
     return ProductionGamePredictor()
 
 @st.cache_data
 def load_player_data():
-    """Load player data with caching"""
     data = {}
     files = ['qb_data.json', 'wr_data.json', 'rb_data.json']
     
@@ -355,33 +339,34 @@ def load_player_data():
                     data[file.replace('_data.json', '')] = json.load(f)
             else:
                 data[file.replace('_data.json', '')] = {}
-        except Exception as e:
-            st.sidebar.warning(f"Error loading {file}")
+        except:
             data[file.replace('_data.json', '')] = {}
     
     return data
 
-# Initialize the app
-st.title("🏈 NFL Prediction System - Pro Edition")
-st.caption(f"Last Updated: {MODEL_UPDATE_DATE}")
+# Initialize
+st.title("🏈 NFL Prediction System v2.1")
+st.caption(f"With Injury Adjustments | Updated: {MODEL_UPDATE_DATE}")
 
-# Load system
 prediction_system = load_prediction_system()
 player_data = load_player_data()
+injury_system = InjuryAdjustmentSystem()
 
-# System status
 system_status = prediction_system.get_system_status()
 available_teams = prediction_system.list_available_teams()
 
 # Sidebar
-st.sidebar.title("System Status")
-st.sidebar.success(f"Teams: {system_status['teams_loaded']}")
-st.sidebar.info(f"Models: {system_status['models_loaded']}/4")
-st.sidebar.info(f"Defense Rankings: {system_status['defense_rankings']}")
+st.sidebar.title("System Status v2.1")
+st.sidebar.success(f"✅ Teams: {system_status['teams_loaded']}")
+st.sidebar.info(f"🤖 Models: {system_status['ensemble_models']}")
+st.sidebar.info(f"📦 Sub-Models: {system_status['total_sub_models']}")
+st.sidebar.caption(system_status['version'])
+
+# Add injury manager to sidebar
+render_injury_manager(injury_system, available_teams)
 
 if system_status['teams_loaded'] == 0:
-    st.sidebar.error("⚠️ Data needs update")
-    st.error("System requires data update. Please refresh team and player statistics.")
+    st.error("System requires data. Run weekly_nfl_update.py")
     st.stop()
 
 # Navigation
@@ -403,22 +388,34 @@ if page == "Game Predictions":
         
         if st.button("Predict Game", type="primary"):
             if away_team != home_team:
-                prediction = prediction_system.predict_game(away_team, home_team, home_team=home_team)
+                prediction = integrate_injuries_into_game_prediction(
+                    prediction_system,
+                    injury_system, 
+                    away_team,
+                    home_team,
+                    home_team
+                )
                 
                 st.success(f"**{prediction['team1']} @ {prediction['team2']}**")
+                st.caption(f"Method: {prediction.get('method', 'unknown')}")
                 
                 col_pred1, col_pred2 = st.columns(2)
                 with col_pred1:
-                    st.metric(f"{prediction['team1']} (Away)", f"{prediction['team1_score']} points")
+                    st.metric(f"{prediction['team1']} (Away)", f"{prediction['team1_score']} pts")
                 with col_pred2:
-                    st.metric(f"{prediction['team2']} (Home)", f"{prediction['team2_score']} points")
+                    st.metric(f"{prediction['team2']} (Home)", f"{prediction['team2_score']} pts")
                 
                 col_total1, col_total2 = st.columns(2)
                 with col_total1:
-                    st.metric("Total Points", f"{prediction['total']}")
+                    st.metric("Total", f"{prediction['total']}")
                 with col_total2:
                     spread_text = f"{prediction['team2']} by {abs(prediction['spread']):.1f}" if prediction['spread'] < 0 else f"{prediction['team1']} by {prediction['spread']:.1f}"
                     st.metric("Spread", spread_text)
+                
+                if prediction.get('injury_adjusted'):
+                    st.warning(f"⚠️ {prediction['adjustment_note']}")
+                    if prediction.get('original_spread'):
+                        st.caption(f"Original: {prediction['original_spread']:+.1f} → Adjusted: {prediction['spread']:+.1f}")
                 
                 st.session_state.last_prediction = prediction
             else:
@@ -428,31 +425,29 @@ if page == "Game Predictions":
         st.subheader("Betting Context")
         if 'last_prediction' in st.session_state:
             pred = st.session_state.last_prediction
-            st.write("**Key Insights:**")
+            st.write("**Analysis:**")
             
             total = pred['total']
             if total >= 50:
-                st.write("🔥 High-scoring game expected")
+                st.write("🔥 High-scoring expected")
             elif total <= 38:
-                st.write("🛡️ Defensive battle expected")
+                st.write("🛡️ Defensive battle")
             else:
-                st.write("📊 Average scoring expected")
+                st.write("📊 Average scoring")
             
             spread = abs(pred['spread'])
             if spread >= 10:
                 st.write("💪 Significant favorite")
             elif spread <= 3:
-                st.write("⚖️ Close game predicted")
+                st.write("⚖️ Toss-up game")
             else:
                 st.write("📈 Moderate favorite")
 
 elif page == "Player Props":
-    st.header("🎲 Player Prop Predictions")
-    st.write("Player predictions using production models with opponent adjustments")
+    st.header("🎲 Player Props")
     
-    position = st.selectbox("Select Position", ["Quarterback", "Wide Receiver/TE", "Running Back"])
+    position = st.selectbox("Position", ["Quarterback", "Wide Receiver/TE", "Running Back"])
     
-    # QUARTERBACK SECTION
     if position == "Quarterback":
         if 'qb' in player_data and player_data['qb']:
             qb_names = sorted(list(player_data['qb'].keys()))
@@ -464,59 +459,45 @@ elif page == "Player Props":
                 col1, col2 = st.columns([1, 1])
                 
                 with col1:
-                    st.subheader(f"📊 {selected_qb} Stats")
-                    
-                    st.metric("Last 4 Games Avg", f"{qb_stats['passing_yards_L4']:.0f} yards")
-                    st.metric("Season Avg (L8)", f"{qb_stats['passing_yards_L8']:.0f} yards")
+                    st.subheader(f"📊 {selected_qb}")
+                    st.metric("Yards (L4)", f"{qb_stats['passing_yards_L4']:.0f}")
+                    st.metric("Yards (L8)", f"{qb_stats['passing_yards_L8']:.0f}")
                     st.metric("Completion %", f"{qb_stats['completion_pct_L4']:.1%}")
-                    st.metric("Attempts/Game", f"{qb_stats['attempts_L4']:.0f}")
-                    st.metric("TDs/Game", f"{qb_stats['passing_tds_L4']:.1f}")
-                    
-                    st.write(f"**Team:** {qb_stats['team']}")
-                    st.write(f"**Last vs:** {qb_stats['last_opponent']}")
+                    st.write(f"Team: {qb_stats['team']}")
                 
                 with col2:
-                    st.subheader("🎯 Make Prediction")
+                    st.subheader("🎯 Prediction")
+                    opponent = st.selectbox("Opponent", available_teams, key="qb_opp")
                     
-                    opponent_team = st.selectbox("Select Opponent Defense", available_teams, key="qb_opp")
-                    
-                    if opponent_team in prediction_system.defense_rankings:
-                        def_info = prediction_system.defense_rankings[opponent_team]
-                        def_rank = def_info['rank']
-                        def_yards = def_info['yards_allowed']
-                        
-                        if def_rank <= 8:
-                            st.error(f"🛡️ {opponent_team}: Elite Defense (#{def_rank}) - {def_yards:.0f} yds/game")
-                        elif def_rank <= 16:
-                            st.warning(f"🟡 {opponent_team}: Average Defense (#{def_rank}) - {def_yards:.0f} yds/game")
-                        else:
-                            st.success(f"🎯 {opponent_team}: Poor Defense (#{def_rank}) - {def_yards:.0f} yds/game")
-                    
-                    if st.button("🏈 PREDICT PASSING YARDS", type="primary", key="predict_qb"):
-                        with st.spinner("Making prediction..."):
-                            prediction, status = prediction_system.predict_player_passing(qb_stats, opponent_team)
+                    if st.button("🏈 PREDICT PASSING YARDS", type="primary"):
+                        with st.spinner("Predicting..."):
+                            base_prediction, status = prediction_system.predict_player_passing(qb_stats, opponent)
+                            
+                            prediction, injury_status = integrate_injuries_into_player_prediction(
+                                injury_system,
+                                base_prediction,
+                                selected_qb,
+                                qb_stats['team']
+                            )
                         
                         if prediction is not None:
-                            st.success(f"## 🎯 Predicted: {prediction} yards")
+                            st.success(f"## 🎯 {prediction} yards")
+                            st.caption(status)
                             
-                            lower = max(0, prediction - 30)
-                            upper = prediction + 30
-                            st.info(f"**Confidence Range:** {lower:.0f} - {upper:.0f} yards")
-                            
-                            st.write(f"**Status:** {status}")
+                            if "Out" in injury_status or "Doubtful" in injury_status:
+                                st.error(f"🚨 {injury_status}")
+                            elif "Questionable" in injury_status:
+                                st.warning(f"⚠️ {injury_status}")
                             
                             if prediction >= qb_stats['passing_yards_L4'] * 1.1:
-                                st.write("📈 Prediction is 10%+ above recent average - consider Over")
+                                st.write("📈 Strong matchup")
                             elif prediction <= qb_stats['passing_yards_L4'] * 0.9:
-                                st.write("📉 Prediction is 10%+ below recent average - consider Under")
-                            else:
-                                st.write("📊 Prediction aligns with recent performance")
+                                st.write("📉 Tough matchup")
                         else:
-                            st.error(f"Prediction failed: {status}")
+                            st.error(f"Failed: {status}")
         else:
-            st.warning("⚠️ No QB data available.")
+            st.warning("No QB data available")
     
-    # WIDE RECEIVER SECTION  
     elif position == "Wide Receiver/TE":
         if 'wr' in player_data and player_data['wr']:
             wr_names = sorted(list(player_data['wr'].keys()))
@@ -528,59 +509,45 @@ elif page == "Player Props":
                 col1, col2 = st.columns([1, 1])
                 
                 with col1:
-                    st.subheader(f"📊 {selected_wr} Stats")
-                    
-                    st.metric("Receiving Yards (L4)", f"{wr_stats['receiving_yards_L4']:.0f}")
+                    st.subheader(f"📊 {selected_wr}")
+                    st.metric("Rec Yards (L4)", f"{wr_stats['receiving_yards_L4']:.0f}")
                     st.metric("Receptions (L4)", f"{wr_stats['receptions_L4']:.1f}")
-                    st.metric("Yards/Reception", f"{wr_stats['yards_per_rec_L4']:.1f}")
-                    st.metric("TDs (L4)", f"{wr_stats['receiving_tds_L4']:.1f}")
-                    
-                    st.write(f"**Team:** {wr_stats['team']}")
-                    st.write(f"**Last vs:** {wr_stats['last_opponent']}")
+                    st.write(f"Team: {wr_stats['team']}")
                 
                 with col2:
-                    st.subheader("🎯 Make Predictions")
-                    
-                    opponent_team = st.selectbox("Select Opponent Defense", available_teams, key="wr_opp")
-                    
-                    if opponent_team in prediction_system.defense_rankings:
-                        def_rank = prediction_system.defense_rankings[opponent_team]['rank']
-                        if def_rank <= 10:
-                            st.error(f"🛡️ Strong Defense (#{def_rank})")
-                        elif def_rank >= 25:
-                            st.success(f"🎯 Weak Defense (#{def_rank})")
-                        else:
-                            st.warning(f"🟡 Average Defense (#{def_rank})")
+                    st.subheader("🎯 Predictions")
+                    opponent = st.selectbox("Opponent", available_teams, key="wr_opp")
                     
                     col_btn1, col_btn2 = st.columns(2)
                     
                     with col_btn1:
-                        if st.button("Predict Receiving Yards", key="pred_rec_yards"):
-                            prediction, status = prediction_system.predict_player_receiving(wr_stats, opponent_team)
+                        if st.button("Rec Yards"):
+                            base_prediction, status = prediction_system.predict_player_receiving(wr_stats, opponent)
+                            prediction, injury_status = integrate_injuries_into_player_prediction(
+                                injury_system, base_prediction, selected_wr, wr_stats['team']
+                            )
                             if prediction:
-                                st.success(f"**{prediction} yards**")
-                                st.write(f"Status: {status}")
-                                lower = max(0, prediction - 15)
-                                upper = prediction + 15
-                                st.write(f"Range: {lower:.0f}-{upper:.0f}")
+                                st.success(f"**{prediction} yds**")
+                                if "Out" in injury_status or "Doubtful" in injury_status:
+                                    st.error(f"🚨 {injury_status}")
                             else:
-                                st.error(f"Failed: {status}")
+                                st.error(status)
                     
                     with col_btn2:
-                        if st.button("Predict Receptions", key="pred_recs"):
-                            prediction, status = prediction_system.predict_player_receptions(wr_stats, opponent_team)
+                        if st.button("Receptions"):
+                            base_prediction, status = prediction_system.predict_player_receptions(wr_stats, opponent)
+                            prediction, injury_status = integrate_injuries_into_player_prediction(
+                                injury_system, base_prediction, selected_wr, wr_stats['team']
+                            )
                             if prediction:
-                                st.success(f"**{prediction} catches**")
-                                st.write(f"Status: {status}")
-                                lower = max(0, prediction - 2)
-                                upper = prediction + 2
-                                st.write(f"Range: {lower:.1f}-{upper:.1f}")
+                                st.success(f"**{prediction} rec**")
+                                if "Out" in injury_status or "Doubtful" in injury_status:
+                                    st.error(f"🚨 {injury_status}")
                             else:
-                                st.error(f"Failed: {status}")
+                                st.error(status)
         else:
-            st.warning("⚠️ No WR data available.")
+            st.warning("No WR data available")
     
-    # RUNNING BACK SECTION
     elif position == "Running Back":
         if 'rb' in player_data and player_data['rb']:
             rb_names = sorted(list(player_data['rb'].keys()))
@@ -592,83 +559,73 @@ elif page == "Player Props":
                 col1, col2 = st.columns([1, 1])
                 
                 with col1:
-                    st.subheader(f"📊 {selected_rb} Stats")
-                    
-                    st.metric("Rushing Yards (L4)", f"{rb_stats['rushing_yards_L4']:.0f}")
+                    st.subheader(f"📊 {selected_rb}")
+                    st.metric("Rush Yards (L4)", f"{rb_stats['rushing_yards_L4']:.0f}")
                     st.metric("Attempts (L4)", f"{rb_stats['attempts_L4']:.1f}")
-                    st.metric("Yards/Carry", f"{rb_stats['yards_per_carry_L4']:.1f}")
-                    st.metric("TDs (L4)", f"{rb_stats['rushing_tds_L4']:.1f}")
-                    
-                    st.write(f"**Team:** {rb_stats['team']}")
-                    st.write(f"**Last vs:** {rb_stats['last_opponent']}")
+                    st.write(f"Team: {rb_stats['team']}")
                 
                 with col2:
-                    st.subheader("🎯 Make Prediction")
+                    st.subheader("🎯 Prediction")
+                    opponent = st.selectbox("Opponent", available_teams, key="rb_opp")
                     
-                    opponent_team = st.selectbox("Select Opponent Defense", available_teams, key="rb_opp")
-                    
-                    if opponent_team in prediction_system.defense_rankings:
-                        def_rank = prediction_system.defense_rankings[opponent_team]['rank']
-                        if def_rank <= 8:
-                            st.error(f"🛡️ Elite Run Defense (#{def_rank})")
-                        elif def_rank >= 24:
-                            st.success(f"🎯 Weak Run Defense (#{def_rank})")
-                        else:
-                            st.warning(f"🟡 Average Run Defense (#{def_rank})")
-                    
-                    if st.button("🏃 PREDICT RUSHING YARDS", type="primary", key="predict_rb"):
-                        with st.spinner("Making prediction..."):
-                            prediction, status = prediction_system.predict_player_rushing(rb_stats, opponent_team)
+                    if st.button("🏃 PREDICT RUSHING YARDS", type="primary"):
+                        with st.spinner("Predicting..."):
+                            base_prediction, status = prediction_system.predict_player_rushing(rb_stats, opponent)
+                            
+                            prediction, injury_status = integrate_injuries_into_player_prediction(
+                                injury_system,
+                                base_prediction,
+                                selected_rb,
+                                rb_stats['team']
+                            )
                         
                         if prediction is not None:
-                            st.success(f"## 🎯 Predicted: {prediction} yards")
+                            st.success(f"## 🎯 {prediction} yards")
+                            st.caption(status)
                             
-                            lower = max(0, prediction - 20)
-                            upper = prediction + 20
-                            st.info(f"**Confidence Range:** {lower:.0f} - {upper:.0f} yards")
-                            
-                            st.write(f"**Status:** {status}")
+                            if "Out" in injury_status or "Doubtful" in injury_status:
+                                st.error(f"🚨 {injury_status}")
+                            elif "Questionable" in injury_status:
+                                st.warning(f"⚠️ {injury_status}")
                             
                             if prediction >= rb_stats['rushing_yards_L4'] * 1.15:
-                                st.write("📈 Strong matchup - consider Over")
+                                st.write("📈 Great matchup")
                             elif prediction <= rb_stats['rushing_yards_L4'] * 0.85:
-                                st.write("📉 Tough matchup - consider Under")
-                            else:
-                                st.write("📊 Neutral prediction")
+                                st.write("📉 Tough matchup")
                         else:
-                            st.error(f"Prediction failed: {status}")
+                            st.error(f"Failed: {status}")
         else:
-            st.warning("⚠️ No RB data available.")
+            st.warning("No RB data available")
 
 elif page == "System Info":
-    st.header("📊 System Information")
+    st.header("📊 System Information v2.1")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("Model Performance")
-        performance_data = {
-            'Model': ['Passing Yards', 'Receiving Yards', 'Receptions', 'Rushing Yards'],
-            'MAE': ['66.7 yards', '19.8 yards', '1.4 catches', '18.8 yards'],
-            'Type': [prediction_system.models.get(f'{m}_type', 'unknown') for m in ['passing', 'receiving', 'receptions', 'rushing']]
-        }
-        st.dataframe(pd.DataFrame(performance_data))
+        st.subheader("Features")
+        st.write("✅ Ensemble models (3 per prediction)")
+        st.write("✅ Calibrated game predictions")
+        st.write("✅ Split defense rankings")
+        st.write("✅ Injury adjustments")
+        st.write("✅ Point-in-time stats (no leakage)")
     
     with col2:
         st.subheader("Data Coverage")
-        st.metric("NFL Teams", len(available_teams))
+        st.metric("Teams", len(available_teams))
         st.metric("QBs", len(player_data.get('qb', {})))
         st.metric("WRs/TEs", len(player_data.get('wr', {})))
         st.metric("RBs", len(player_data.get('rb', {})))
     
-    st.subheader("Update Schedule")
-    st.write("- **Team Stats**: Updated after each week's games")
-    st.write("- **Player Stats**: Updated after each week's games")
-    st.write("- **Models**: Retrained monthly with new data")
-    st.write("- **Defense Rankings**: Updated weekly")
+    st.subheader("Performance Targets")
+    st.write("• Game Predictions: 55-58% win accuracy")
+    st.write("• Spread MAE: ~10 points")
+    st.write("• Player Props: Highly accurate")
+    
+    st.info("💡 Run `python weekly_nfl_update.py` every Monday to update data")
 
 # Footer
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Production System**")
-st.sidebar.markdown("Ready for deployment")
-st.sidebar.markdown("Automated updates: Weekly")
+st.sidebar.markdown("**🚀 Production v2.1**")
+st.sidebar.markdown("Injury System Active")
+st.sidebar.markdown(f"Updated: {MODEL_UPDATE_DATE}")

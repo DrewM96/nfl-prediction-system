@@ -1,130 +1,130 @@
 {
   "ARI": {
-    "rank": 23,
-    "yards_allowed": 340.6666564941406
+    "pass_def_rank": 14,
+    "rush_def_rank": 8
   },
   "ATL": {
-    "rank": 2,
-    "yards_allowed": 227.3333282470703
+    "pass_def_rank": 1,
+    "rush_def_rank": 23
   },
   "BAL": {
-    "rank": 32,
-    "yards_allowed": 415.0
+    "pass_def_rank": 23,
+    "rush_def_rank": 26
   },
   "BUF": {
-    "rank": 9,
-    "yards_allowed": 287.3333435058594
+    "pass_def_rank": 6,
+    "rush_def_rank": 29
   },
   "CAR": {
-    "rank": 21,
-    "yards_allowed": 334.3333435058594
+    "pass_def_rank": 21,
+    "rush_def_rank": 22
   },
   "CHI": {
-    "rank": 29,
-    "yards_allowed": 388.3333435058594
+    "pass_def_rank": 30,
+    "rush_def_rank": 32
   },
   "CIN": {
-    "rank": 25,
-    "yards_allowed": 359.6666564941406
+    "pass_def_rank": 27,
+    "rush_def_rank": 16
   },
   "CLE": {
-    "rank": 1,
-    "yards_allowed": 204.3333282470703
+    "pass_def_rank": 8,
+    "rush_def_rank": 1
   },
   "DAL": {
-    "rank": 30,
-    "yards_allowed": 397.6666564941406
+    "pass_def_rank": 32,
+    "rush_def_rank": 19
   },
   "DEN": {
-    "rank": 19,
-    "yards_allowed": 327.3333435058594
+    "pass_def_rank": 4,
+    "rush_def_rank": 14
   },
   "DET": {
-    "rank": 13,
-    "yards_allowed": 307.6666564941406
+    "pass_def_rank": 13,
+    "rush_def_rank": 10
   },
   "GB": {
-    "rank": 3,
-    "yards_allowed": 233.0
+    "pass_def_rank": 2,
+    "rush_def_rank": 5
   },
   "HOU": {
-    "rank": 16,
-    "yards_allowed": 315.6666564941406
+    "pass_def_rank": 7,
+    "rush_def_rank": 7
   },
   "IND": {
-    "rank": 7,
-    "yards_allowed": 273.0
+    "pass_def_rank": 10,
+    "rush_def_rank": 17
   },
   "JAX": {
-    "rank": 10,
-    "yards_allowed": 292.0
+    "pass_def_rank": 18,
+    "rush_def_rank": 20
   },
   "KC": {
-    "rank": 11,
-    "yards_allowed": 297.0
+    "pass_def_rank": 16,
+    "rush_def_rank": 27
   },
   "LA": {
-    "rank": 5,
-    "yards_allowed": 268.3333435058594
+    "pass_def_rank": 9,
+    "rush_def_rank": 3
   },
   "LAC": {
-    "rank": 8,
-    "yards_allowed": 276.6666564941406
+    "pass_def_rank": 3,
+    "rush_def_rank": 25
   },
   "LV": {
-    "rank": 24,
-    "yards_allowed": 351.0
+    "pass_def_rank": 22,
+    "rush_def_rank": 9
   },
   "MIA": {
-    "rank": 26,
-    "yards_allowed": 371.0
+    "pass_def_rank": 29,
+    "rush_def_rank": 31
   },
   "MIN": {
-    "rank": 6,
-    "yards_allowed": 271.3333435058594
+    "pass_def_rank": 5,
+    "rush_def_rank": 18
   },
   "NE": {
-    "rank": 17,
-    "yards_allowed": 316.6666564941406
+    "pass_def_rank": 31,
+    "rush_def_rank": 4
   },
   "NO": {
-    "rank": 15,
-    "yards_allowed": 313.3333435058594
+    "pass_def_rank": 19,
+    "rush_def_rank": 15
   },
   "NYG": {
-    "rank": 31,
-    "yards_allowed": 405.3333435058594
+    "pass_def_rank": 12,
+    "rush_def_rank": 30
   },
   "NYJ": {
-    "rank": 22,
-    "yards_allowed": 340.3333435058594
+    "pass_def_rank": 28,
+    "rush_def_rank": 24
   },
   "PHI": {
-    "rank": 18,
-    "yards_allowed": 319.0
+    "pass_def_rank": 11,
+    "rush_def_rank": 21
   },
   "PIT": {
-    "rank": 28,
-    "yards_allowed": 386.0
+    "pass_def_rank": 25,
+    "rush_def_rank": 11
   },
   "SEA": {
-    "rank": 14,
-    "yards_allowed": 312.3333435058594
+    "pass_def_rank": 17,
+    "rush_def_rank": 2
   },
   "SF": {
-    "rank": 4,
-    "yards_allowed": 265.6666564941406
+    "pass_def_rank": 15,
+    "rush_def_rank": 13
   },
   "TB": {
-    "rank": 11,
-    "yards_allowed": 297.0
+    "pass_def_rank": 20,
+    "rush_def_rank": 6
   },
   "TEN": {
-    "rank": 27,
-    "yards_allowed": 373.6666564941406
+    "pass_def_rank": 24,
+    "rush_def_rank": 28
   },
   "WAS": {
-    "rank": 20,
-    "yards_allowed": 330.3333435058594
+    "pass_def_rank": 26,
+    "rush_def_rank": 12
   }
 }

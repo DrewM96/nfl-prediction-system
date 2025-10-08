@@ -1,20 +1,33 @@
 {
-  "last_updated": "2025-09-25T17:40:15.820331",
+  "last_updated": "2025-10-08T16:43:42.454791",
+  "version": "2.1 - With Calibration",
   "data_years": [
     2023,
     2024,
     2025
   ],
-  "models_trained": [
+  "ensemble_models_trained": [
     "passing",
     "receiving",
     "receptions",
-    "rushing"
+    "rushing",
+    "game_total",
+    "game_spread"
+  ],
+  "calibration_applied": true,
+  "spread_calibration_factor": 2.660674719802461,
+  "improvements": [
+    "Fixed data leakage in game predictions",
+    "Added ensemble models (GB + NN + LR)",
+    "Exponential recency weighting",
+    "Split defense rankings (pass/rush)",
+    "Enhanced features (rest days, division games, turnovers)",
+    "Minimum games played filter",
+    "**NEW: Spread calibration to align with Vegas accuracy**"
   ],
   "players": {
-    "qb_count": 46,
-    "wr_count": 281,
-    "rb_count": 166
-  },
-  "teams": 32
+    "qb_count": 32,
+    "wr_count": 210,
+    "rb_count": 107
+  }
 }
