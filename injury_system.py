@@ -51,7 +51,7 @@ class InjuryAdjustmentSystem:
                 'QUESTIONABLE': {'team_scoring': 0.97, 'team_spread': -0.5},
             },
             'DEF_STAR': {
-                'OUT': {'opp_scoring': 1.08, 'team_spread': -1.5},  # Opponent scores more
+                'OUT': {'opp_scoring': 1.08, 'team_spread': -1.5},
                 'DOUBTFUL': {'opp_scoring': 1.04, 'team_spread': -0.8},
                 'QUESTIONABLE': {'opp_scoring': 1.02, 'team_spread': -0.3},
             }
@@ -315,7 +315,7 @@ def render_injury_manager(injury_system, available_teams):
 # Example integration into your existing prediction code:
 def integrate_injuries_into_game_prediction(predictor, injury_system, team1, team2, home_team):
     """
-    Wrapper function that adds injury adjustments to game predictions
+    FIXED: Wrapper function that adds injury adjustments to game predictions
     Use this in place of predictor.predict_game()
     """
     # Get base prediction
@@ -330,24 +330,36 @@ def integrate_injuries_into_game_prediction(predictor, injury_system, team1, tea
         away_team_name = team1
     
     # Create prediction in format expected by injury system
+    # The base_prediction already has correct team1_score and team2_score
+    # We need to map them to home/away for the injury adjustment
     prediction_for_adjustment = {
-        'home_score': base_prediction['team1_score'] if home_team_name == team1 else base_prediction['team2_score'],
-        'away_score': base_prediction['team2_score'] if home_team_name == team2 else base_prediction['team1_score'],
+        'home_score': base_prediction['team1_score'] if team1 == home_team_name else base_prediction['team2_score'],
+        'away_score': base_prediction['team2_score'] if team2 == away_team_name else base_prediction['team1_score'],
         'spread': base_prediction['spread'],
         'total': base_prediction['total']
     }
     
-    # Apply injury adjustments
+    # Apply injury adjustments (returns adjusted home_score and away_score)
     adjusted = injury_system.adjust_game_prediction(
         prediction_for_adjustment,
         home_team_name,
         away_team_name
     )
     
+    # FIXED: Map adjusted home/away scores back to team1/team2 correctly
+    if team1 == home_team_name:
+        # team1 is home, team2 is away
+        adjusted_team1_score = adjusted['home_score']
+        adjusted_team2_score = adjusted['away_score']
+    else:
+        # team1 is away, team2 is home
+        adjusted_team1_score = adjusted['away_score']
+        adjusted_team2_score = adjusted['home_score']
+    
     # Merge back into original format
     base_prediction.update({
-        'team1_score': adjusted['away_score'] if home_team_name != team1 else adjusted['home_score'],
-        'team2_score': adjusted['home_score'] if home_team_name == team2 else adjusted['away_score'],
+        'team1_score': adjusted_team1_score,
+        'team2_score': adjusted_team2_score,
         'spread': adjusted['spread'],
         'total': adjusted['total'],
         'injury_adjusted': adjusted['injury_adjusted'],
@@ -367,38 +379,3 @@ def integrate_injuries_into_player_prediction(injury_system, prediction, player_
     adjusted_pred, confidence = injury_system.adjust_player_prediction(prediction, player_name, team)
     
     return adjusted_pred, confidence
-
-# Usage example in your Streamlit app:
-"""
-# In your main app file, initialize the injury system:
-injury_system = InjuryAdjustmentSystem()
-
-# Add to sidebar:
-render_injury_manager(injury_system, available_teams)
-
-# When making game predictions:
-prediction = integrate_injuries_into_game_prediction(
-    prediction_system, 
-    injury_system,
-    away_team, 
-    home_team, 
-    home_team
-)
-
-# Show injury note if adjusted
-if prediction.get('injury_adjusted'):
-    st.warning(f"⚠️ {prediction['adjustment_note']}")
-    st.caption(f"Original spread: {prediction['original_spread']:+.1f} → Adjusted: {prediction['spread']:+.1f}")
-
-# When making player predictions:
-base_prediction, status = prediction_system.predict_player_passing(qb_stats, opponent)
-adjusted_pred, injury_status = integrate_injuries_into_player_prediction(
-    injury_system,
-    base_prediction,
-    selected_qb,
-    qb_stats['team']
-)
-
-if "Out" in injury_status or "Doubtful" in injury_status:
-    st.error(f"🚨 {injury_status}")
-"""
