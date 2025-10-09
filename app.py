@@ -855,7 +855,61 @@ elif page == "📈 Weekly Report":
 elif page == "ℹ️ System Info":
     st.header("ℹ️ SYSTEM INFORMATION")
     st.markdown("---")
+    
+    # Weekly Update Button
+    st.subheader("🔄 DATA MANAGEMENT")
+    col_update1, col_update2 = st.columns([1, 2])
+    
+    with col_update1:
+        if st.button("🔄 RUN WEEKLY UPDATE", type="primary", use_container_width=True):
+            with st.spinner("Running weekly update... This may take 2-3 minutes..."):
+                try:
+                    import subprocess
+                    result = subprocess.run(
+                        ['python', 'weekly_nfl_update.py'],
+                        capture_output=True,
+                        text=True,
+                        timeout=300
+                    )
+                    
+                    if result.returncode == 0:
+                        st.success("✅ WEEKLY UPDATE COMPLETE!")
+                        st.info("Data and models have been updated. Refresh the page to see changes.")
+                        
+                        # Show update log if available
+                        try:
+                            with open('update_log.json', 'r') as f:
+                                log = json.load(f)
+                                st.caption(f"Updated: {log.get('timestamp', 'N/A')}")
+                        except:
+                            pass
+                        
+                        # Clear cache to reload new data
+                        st.cache_data.clear()
+                        st.cache_resource.clear()
+                    else:
+                        st.error(f"⚠️ UPDATE FAILED")
+                        st.code(result.stderr)
+                        
+                except subprocess.TimeoutExpired:
+                    st.error("⚠️ UPDATE TIMED OUT (>5 minutes)")
+                except Exception as e:
+                    st.error(f"⚠️ ERROR: {str(e)}")
+    
+    with col_update2:
+        st.markdown("""
+        **What this does:**
+        - Downloads latest NFL data
+        - Retrains all prediction models
+        - Updates player statistics
+        - Generates weekly accuracy report
+        - Typically takes 2-3 minutes
+        """)
+    
+    st.markdown("---")
+    
     col1, col2 = st.columns(2)
+    
     with col1:
         st.subheader("FEATURES")
         st.markdown("""
@@ -866,12 +920,14 @@ elif page == "ℹ️ System Info":
         ✅ **POINT-IN-TIME STATS** (no leakage)  
         ✅ **WEEKLY ACCURACY REPORTS**
         """)
+    
     with col2:
         st.subheader("DATA COVERAGE")
         st.metric("TEAMS", len(available_teams))
         st.metric("QBS", len(player_data.get('qb', {})))
         st.metric("WRS/TES", len(player_data.get('wr', {})))
         st.metric("RBS", len(player_data.get('rb', {})))
+    
     st.markdown("---")
     st.subheader("PERFORMANCE TARGETS")
     st.markdown("""
@@ -888,7 +944,7 @@ elif page == "ℹ️ System Info":
     **CROSS-SEASON STATS:** Rolling averages across multiple seasons for stability
     """)
     st.markdown("---")
-    st.info("💡 **MAINTENANCE:** Run `python weekly_nfl_update.py` every Monday to update data and generate weekly reports")
+    st.caption("💡 Last updated: " + MODEL_UPDATE_DATE)
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("**🚀 PRODUCTION v2.1**")
