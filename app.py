@@ -601,6 +601,7 @@ page = st.sidebar.selectbox("📊 CHOOSE ANALYSIS", [
     "🎯 Game Predictions",
     "🎲 Player Props",
     "📈 Weekly Report",
+    "📊 Season History",
     "ℹ️ System Info"
 ])
 

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-NFL Model Update Script v2.1 - With Calibration
-Adds post-training calibration to align predictions with Vegas-level accuracy
+NFL Model Update Script v2.1 - With Weekly Report Generation
+Generates accuracy report BEFORE updating models, then updates everything
 
-Key Addition: Calibration layer that adjusts raw model outputs
+Key Flow:
+1. Generate accuracy report using OLD models (true out-of-sample test)
+2. Update all data and retrain models with new information
 """
 
 import sys
@@ -37,6 +39,863 @@ def install_packages():
         print("✅ Packages installed successfully")
         return True
 
+def generate_weekly_accuracy_report():
+    """Generate weekly accuracy report using CURRENT models before updating"""
+    print("\n" + "="*60)
+    print("🎯 GENERATING WEEKLY ACCURACY REPORT")
+    print("Using OLD models to test predictions (out-of-sample)")
+    print("="*60)
+    
+    try:
+        import nfl_data_py as nfl
+        from sklearn.metrics import mean_absolute_error, accuracy_score
+        
+        # Load ONLY current season schedule
+        current_year = datetime.now().year
+        current_month = datetime.now().month
+        
+        # Determine current NFL season (starts in September)
+        if current_month >= 9:
+            current_season = current_year
+        else:
+            current_season = current_year - 1
+        
+        print(f"   Current NFL Season: {current_season}")
+        
+        schedule = nfl.import_schedules([current_season])
+        schedule = schedule[schedule['week'] <= 18]
+        
+        # Find weeks with completed games
+        completed_games = schedule[schedule['home_score'].notna()]
+        
+        if len(completed_games) == 0:
+            print("⚠️ No completed games found in current season")
+            return None
+        
+        # Get the most recent completed week
+        latest_week = int(completed_games['week'].max())
+        
+        print(f"📊 Analyzing Week {latest_week} of {current_season} season...")
+        
+        # Get all games from that week
+        week_games = schedule[
+            (schedule['week'] == latest_week) &
+            (schedule['home_score'].notna())
+        ]
+        
+        print(f"   Found {len(week_games)} completed games in Week {latest_week}")
+        
+        if len(week_games) == 0:
+            print(f"⚠️ No completed games for Week {latest_week}")
+            return None
+        
+        # Load CURRENT (old) prediction models
+        try:
+            # DON'T use ProductionGamePredictor - it relies on broken team_data.json
+            # Instead, use the models directly with fresh team stats
+            import joblib
+            
+            # Load the ensemble models
+            game_total_models = []
+            game_spread_models = []
+            
+            for idx in range(3):
+                total_path = f'models/game_total_model_{idx}.pkl'
+                spread_path = f'models/game_spread_model_{idx}.pkl'
+                
+                if os.path.exists(total_path) and os.path.exists(spread_path):
+                    game_total_models.append(joblib.load(total_path))
+                    game_spread_models.append(joblib.load(spread_path))
+            
+            if len(game_total_models) == 0:
+                print(f"⚠️ No trained models found - cannot generate report")
+                return None
+            
+            # Load calibration
+            try:
+                with open('calibration_params.json', 'r') as f:
+                    calib = json.load(f)
+                    spread_factor = calib.get('spread_factor', 0.7)
+            except:
+                spread_factor = 0.7
+            
+            print(f"✅ Loaded {len(game_total_models)} ensemble models")
+            
+        except Exception as e:
+            print(f"⚠️ Could not load models: {e}")
+            return None
+        
+        # We need the full schedule to calculate team stats
+        all_schedule = nfl.import_schedules([current_season])
+        all_schedule = all_schedule[all_schedule['week'] <= 18]
+        
+        # Also need play-by-play for detailed stats (optional)
+        try:
+            pbp_data = nfl.import_pbp_data([current_season])
+            pbp_regular = pbp_data[pbp_data['week'] <= 18]
+        except:
+            pbp_regular = None
+            print("⚠️ Could not load play-by-play data, using simplified stats")
+        
+        # Helper function to get team stats (copy from updater)
+        def get_team_stats_for_game(team, game_date, week):
+            """Get team stats using only data BEFORE this game"""
+            prior_games = all_schedule[
+                (
+                    ((all_schedule['home_team'] == team) | 
+                     (all_schedule['away_team'] == team))
+                ) &
+                (
+                    (pd.to_datetime(all_schedule['gameday']) < pd.to_datetime(game_date))
+                )
+            ].copy()
+            
+            if len(prior_games) == 0:
+                return {
+                    'points_L4': 22.0, 'points_L8': 22.0,
+                    'opp_points_L4': 22.0, 'opp_points_L8': 22.0,
+                    'yards_L4': 350.0, 'win_pct_L8': 0.5,
+                    'turnovers_L4': 1.0
+                }
+            
+            team_scores = []
+            opp_scores = []
+            
+            for _, game in prior_games.iterrows():
+                if game['home_team'] == team:
+                    team_scores.append(game['home_score'])
+                    opp_scores.append(game['away_score'])
+                else:
+                    team_scores.append(game['away_score'])
+                    opp_scores.append(game['home_score'])
+            
+            return {
+                'points_L4': float(np.mean(team_scores[-4:]) if len(team_scores) >= 1 else 22.0),
+                'points_L8': float(np.mean(team_scores[-8:]) if len(team_scores) >= 1 else 22.0),
+                'opp_points_L4': float(np.mean(opp_scores[-4:]) if len(opp_scores) >= 1 else 22.0),
+                'opp_points_L8': float(np.mean(opp_scores[-8:]) if len(opp_scores) >= 1 else 22.0),
+                'yards_L4': 350.0,
+                'win_pct_L8': float(np.mean([1 if ts > os else 0 for ts, os in zip(team_scores[-8:], opp_scores[-8:])]) if len(team_scores) >= 1 else 0.5),
+                'turnovers_L4': 1.0
+            }
+        
+        report_games = []
+        correct_winners = 0
+        spread_errors = []
+        total_errors = []
+        
+        print(f"\nTesting predictions on {len(week_games)} completed games...")
+        print("-"*60)
+        
+        for _, game in week_games.iterrows():
+            home_team = game['home_team']
+            away_team = game['away_team']
+            game_date = game['gameday']
+            week = game['week']
+            
+            # Actual results
+            actual_home_score = game['home_score']
+            actual_away_score = game['away_score']
+            actual_total = actual_home_score + actual_away_score
+            actual_spread = actual_home_score - actual_away_score
+            
+            print(f"\n{away_team} @ {home_team}")
+            print(f"  Actual: {away_team} {actual_away_score} - {home_team} {actual_home_score}")
+            
+            # Make prediction using OLD models with fresh stats
+            try:
+                # Get team stats as of BEFORE this game
+                home_stats = get_team_stats_for_game(home_team, game_date, week)
+                away_stats = get_team_stats_for_game(away_team, game_date, week)
+                
+                # Create feature vector
+                features = np.array([[
+                    home_stats['points_L4'], home_stats['opp_points_L4'], home_stats['yards_L4'],
+                    home_stats['points_L8'], home_stats['opp_points_L8'],
+                    home_stats['win_pct_L8'], home_stats['turnovers_L4'],
+                    away_stats['points_L4'], away_stats['opp_points_L4'], away_stats['yards_L4'],
+                    away_stats['points_L8'], away_stats['opp_points_L8'],
+                    away_stats['win_pct_L8'], away_stats['turnovers_L4'],
+                    7, 7, 0, 0  # rest days, division game
+                ]])
+                
+                # Predict with ensemble
+                total_preds = [m.predict(features)[0] for m in game_total_models]
+                pred_total = np.mean(total_preds)
+                
+                spread_preds = [m.predict(features)[0] for m in game_spread_models]
+                spread_pred_raw = np.mean(spread_preds)
+                pred_spread = spread_pred_raw * spread_factor
+                
+                # Calculate scores
+                pred_home_score = (pred_total + pred_spread) / 2
+                pred_away_score = (pred_total - pred_spread) / 2
+                
+                print(f"  Predicted: {away_team} {pred_away_score:.1f} - {home_team} {pred_home_score:.1f}")
+                
+                # Check if winner was correct
+                actual_winner = home_team if actual_home_score > actual_away_score else away_team
+                pred_winner = home_team if pred_home_score > pred_away_score else away_team
+                correct_winner = (actual_winner == pred_winner)
+                
+                if correct_winner:
+                    correct_winners += 1
+                    print(f"  ✅ Winner: CORRECT")
+                else:
+                    print(f"  ❌ Winner: INCORRECT")
+                
+                # Calculate errors
+                spread_error = pred_spread - actual_spread
+                total_error = pred_total - actual_total
+                
+                spread_errors.append(abs(spread_error))
+                total_errors.append(abs(total_error))
+                
+                print(f"  Spread Error: {abs(spread_error):.1f} pts | Total Error: {abs(total_error):.1f} pts")
+                
+                # Store game result
+                report_games.append({
+                    'away_team': away_team,
+                    'home_team': home_team,
+                    'predicted_away_score': round(pred_away_score, 1),
+                    'predicted_home_score': round(pred_home_score, 1),
+                    'predicted_total': round(pred_total, 1),
+                    'predicted_spread': round(pred_spread, 1),
+                    'actual_away_score': int(actual_away_score),
+                    'actual_home_score': int(actual_home_score),
+                    'actual_total': int(actual_total),
+                    'actual_spread': round(actual_spread, 1),
+                    'correct_winner': correct_winner,
+                    'spread_error': round(spread_error, 1),
+                    'total_error': round(total_error, 1)
+                })
+                
+            except Exception as e:
+                print(f"  ⚠️ Error: {e}")
+                import traceback
+                traceback.print_exc()
+                continue
+        
+        # Calculate summary stats
+        games_predicted = len(report_games)
+        win_accuracy = (correct_winners / games_predicted * 100) if games_predicted > 0 else 0
+        avg_spread_error = np.mean(spread_errors) if spread_errors else 0
+        avg_total_error = np.mean(total_errors) if total_errors else 0
+        
+        # Create report
+        report = {
+            'week': latest_week,
+            'season': current_season,
+            'date': datetime.now().isoformat(),
+            'games_predicted': games_predicted,
+            'correct_winners': correct_winners,
+            'win_accuracy': round(win_accuracy, 1),
+            'avg_spread_error': round(avg_spread_error, 1),
+            'avg_total_error': round(avg_total_error, 1),
+            'games': report_games
+        }
+        
+        # Save report
+        with open('weekly_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        # ALSO save to season history
+        try:
+            with open('season_history.json', 'r') as f:
+                season_history = json.load(f)
+        except FileNotFoundError:
+            season_history = {'season': current_season, 'weeks': []}
+        
+        # Update season if changed
+        if season_history.get('season') != current_season:
+            season_history = {'season': current_season, 'weeks': []}
+        
+        # Check if this week already exists, update if so
+        existing_week_idx = None
+        for idx, week in enumerate(season_history['weeks']):
+            if week['week'] == latest_week:
+                existing_week_idx = idx
+                break
+        
+        if existing_week_idx is not None:
+            season_history['weeks'][existing_week_idx] = report
+            print(f"   ℹ️ Updated existing Week {latest_week} in season history")
+        else:
+            season_history['weeks'].append(report)
+            print(f"   ✅ Added Week {latest_week} to season history")
+        
+        # Save updated history
+        with open('season_history.json', 'w') as f:
+            json.dump(season_history, f, indent=2)
+        
+        print(f"   📚 Season history saved ({len(season_history['weeks'])} weeks tracked)")
+        
+        # Print summary
+        print("\n" + "="*60)
+        print(f"📊 WEEK {latest_week} ACCURACY REPORT")
+        print("="*60)
+        print(f"Games Predicted: {games_predicted}")
+        print(f"Correct Winners: {correct_winners}/{games_predicted} ({win_accuracy:.1f}%)")
+        print(f"Avg Spread Error: {avg_spread_error:.1f} points")
+        print(f"Avg Total Error: {avg_total_error:.1f} points")
+        print("="*60)
+        print("✅ Report saved to weekly_report.json")
+        print("✅ Added to season_history.json")
+        
+        return report
+        
+    except Exception as e:
+        print(f"⚠️ Could not generate weekly report: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+    """Generate weekly accuracy report using CURRENT models before updating"""
+    print("\n" + "="*60)
+    print("🎯 GENERATING WEEKLY ACCURACY REPORT")
+    print("Using OLD models to test predictions (out-of-sample)")
+    print("="*60)
+    
+    try:
+        import nfl_data_py as nfl
+        from sklearn.metrics import mean_absolute_error, accuracy_score
+        
+        # Load schedule to find completed games
+        current_date = datetime.now()
+        current_year = current_date.year
+        
+        # Determine which season we're in
+        if current_date.month >= 9:  # September or later = current year season
+            seasons_to_check = [current_year]
+        else:  # Before September = last year's season
+            seasons_to_check = [current_year - 1]
+        
+        print(f"   Checking season(s): {seasons_to_check}")
+        
+        schedule = nfl.import_schedules(seasons_to_check)
+        schedule = schedule[schedule['week'] <= 18]
+        
+        # Find weeks with completed games
+        completed_games = schedule[schedule['home_score'].notna()]
+        
+        if len(completed_games) == 0:
+            print("⚠️ No completed games found")
+            return None
+        
+        # Group by season and week to find fully completed weeks
+        week_counts = completed_games.groupby(['season', 'week']).size().reset_index(name='completed_games')
+        
+        # Filter for weeks with at least 12 completed games (typical full week)
+        fully_completed = week_counts[week_counts['completed_games'] >= 12]
+        
+        if len(fully_completed) == 0:
+            print("⚠️ No fully completed weeks found yet")
+            return None
+        
+        # Get the most recent fully completed week
+        latest = fully_completed.sort_values(['season', 'week'], ascending=False).iloc[0]
+        week_number = int(latest['week'])
+        season = int(latest['season'])
+        
+        print(f"📊 Analyzing Week {week_number} of {season} season...")
+        print(f"   Found {int(latest['completed_games'])} completed games")
+        
+        # Get games from that week
+        week_games = schedule[
+            (schedule['week'] == week_number) & 
+            (schedule['season'] == season) &
+            (schedule['home_score'].notna())
+        ]
+        
+        if len(week_games) == 0:
+            print(f"⚠️ No completed games for Week {week_number}")
+            return None
+        
+        # Load CURRENT (old) prediction models
+        try:
+            from app import ProductionGamePredictor
+            predictor = ProductionGamePredictor()
+            print(f"✅ Loaded current prediction models (before update)")
+        except Exception as e:
+            print(f"⚠️ Could not load prediction system: {e}")
+            return None
+        
+        report_games = []
+        correct_winners = 0
+        spread_errors = []
+        total_errors = []
+        
+        print(f"\nTesting predictions on {len(week_games)} completed games...")
+        print("-"*60)
+        
+        for _, game in week_games.iterrows():
+            home_team = game['home_team']
+            away_team = game['away_team']
+            
+            # Actual results
+            actual_home_score = game['home_score']
+            actual_away_score = game['away_score']
+            actual_total = actual_home_score + actual_away_score
+            actual_spread = actual_home_score - actual_away_score
+            
+            print(f"\n{away_team} @ {home_team}")
+            print(f"  Actual: {away_team} {actual_away_score} - {home_team} {actual_home_score}")
+            
+            # Make prediction using OLD models
+            try:
+                prediction = predictor.predict_game(away_team, home_team, home_team)
+                
+                # Extract predicted scores
+                if prediction['home_team'] == home_team:
+                    pred_home_score = prediction['team2_score'] if prediction['team2'] == home_team else prediction['team1_score']
+                    pred_away_score = prediction['team1_score'] if prediction['team1'] == away_team else prediction['team2_score']
+                else:
+                    pred_home_score = prediction['team1_score'] if prediction['team1'] == home_team else prediction['team2_score']
+                    pred_away_score = prediction['team2_score'] if prediction['team2'] == away_team else prediction['team1_score']
+                
+                pred_total = prediction['total']
+                pred_spread = prediction['spread']
+                
+                print(f"  Predicted: {away_team} {pred_away_score} - {home_team} {pred_home_score}")
+                
+                # Check if winner was correct
+                actual_winner = home_team if actual_home_score > actual_away_score else away_team
+                pred_winner = home_team if pred_home_score > pred_away_score else away_team
+                correct_winner = (actual_winner == pred_winner)
+                
+                if correct_winner:
+                    correct_winners += 1
+                    print(f"  ✅ Winner: CORRECT")
+                else:
+                    print(f"  ❌ Winner: INCORRECT")
+                
+                # Calculate errors
+                spread_error = pred_spread - actual_spread
+                total_error = pred_total - actual_total
+                
+                spread_errors.append(abs(spread_error))
+                total_errors.append(abs(total_error))
+                
+                print(f"  Spread Error: {abs(spread_error):.1f} pts | Total Error: {abs(total_error):.1f} pts")
+                
+                # Store game result
+                report_games.append({
+                    'away_team': away_team,
+                    'home_team': home_team,
+                    'predicted_away_score': round(pred_away_score, 1),
+                    'predicted_home_score': round(pred_home_score, 1),
+                    'predicted_total': round(pred_total, 1),
+                    'predicted_spread': round(pred_spread, 1),
+                    'actual_away_score': int(actual_away_score),
+                    'actual_home_score': int(actual_home_score),
+                    'actual_total': int(actual_total),
+                    'actual_spread': round(actual_spread, 1),
+                    'correct_winner': correct_winner,
+                    'spread_error': round(spread_error, 1),
+                    'total_error': round(total_error, 1)
+                })
+                
+            except Exception as e:
+                print(f"  ⚠️ Error: {e}")
+                continue
+        
+        # Calculate summary stats
+        games_predicted = len(report_games)
+        win_accuracy = (correct_winners / games_predicted * 100) if games_predicted > 0 else 0
+        avg_spread_error = np.mean(spread_errors) if spread_errors else 0
+        avg_total_error = np.mean(total_errors) if total_errors else 0
+        
+        # Create report
+        report = {
+            'week': week_number,
+            'season': season,
+            'date': datetime.now().isoformat(),
+            'games_predicted': games_predicted,
+            'correct_winners': correct_winners,
+            'win_accuracy': round(win_accuracy, 1),
+            'avg_spread_error': round(avg_spread_error, 1),
+            'avg_total_error': round(avg_total_error, 1),
+            'games': report_games
+        }
+        
+        # Save report
+        with open('weekly_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        # ALSO save to season history
+        try:
+            with open('season_history.json', 'r') as f:
+                season_history = json.load(f)
+        except FileNotFoundError:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Update season if changed
+        if season_history.get('season') != season:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Check if this week already exists, update if so
+        existing_week_idx = None
+        for idx, week in enumerate(season_history['weeks']):
+            if week['week'] == week_number:
+                existing_week_idx = idx
+                break
+        
+        if existing_week_idx is not None:
+            season_history['weeks'][existing_week_idx] = report
+            print(f"   ℹ️ Updated existing Week {week_number} in season history")
+        else:
+            season_history['weeks'].append(report)
+            print(f"   ✅ Added Week {week_number} to season history")
+        
+        # Save updated history
+        with open('season_history.json', 'w') as f:
+            json.dump(season_history, f, indent=2)
+        
+        print(f"   📚 Season history saved ({len(season_history['weeks'])} weeks tracked)")
+        
+        # Print summary
+        print("\n" + "="*60)
+        print(f"📊 WEEK {week_number} ACCURACY REPORT")
+        print("="*60)
+        print(f"Games Predicted: {games_predicted}")
+        print(f"Correct Winners: {correct_winners}/{games_predicted} ({win_accuracy:.1f}%)")
+        print(f"Avg Spread Error: {avg_spread_error:.1f} points")
+        print(f"Avg Total Error: {avg_total_error:.1f} points")
+        print("="*60)
+        print("✅ Report saved to weekly_report.json")
+        print("✅ Added to season_history.json")
+        
+        return report
+        
+    except Exception as e:
+        print(f"⚠️ Could not generate weekly report: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+        
+        # Load CURRENT (old) prediction models
+        try:
+            from app import ProductionGamePredictor
+            predictor = ProductionGamePredictor()
+            print(f"✅ Loaded current prediction models (before update)")
+        except Exception as e:
+            print(f"⚠️ Could not load prediction system: {e}")
+            return None
+        
+        report_games = []
+        correct_winners = 0
+        spread_errors = []
+        total_errors = []
+        
+        print(f"\nTesting predictions on {len(week_games)} completed games...")
+        print("-"*60)
+        
+        for _, game in week_games.iterrows():
+            home_team = game['home_team']
+            away_team = game['away_team']
+            
+            # Actual results
+            actual_home_score = game['home_score']
+            actual_away_score = game['away_score']
+            actual_total = actual_home_score + actual_away_score
+            actual_spread = actual_home_score - actual_away_score
+            
+            print(f"\n{away_team} @ {home_team}")
+            print(f"  Actual: {away_team} {actual_away_score} - {home_team} {actual_home_score}")
+            
+            # Make prediction using OLD models
+            try:
+                prediction = predictor.predict_game(away_team, home_team, home_team)
+                
+                # Extract predicted scores
+                if prediction['home_team'] == home_team:
+                    pred_home_score = prediction['team2_score'] if prediction['team2'] == home_team else prediction['team1_score']
+                    pred_away_score = prediction['team1_score'] if prediction['team1'] == away_team else prediction['team2_score']
+                else:
+                    pred_home_score = prediction['team1_score'] if prediction['team1'] == home_team else prediction['team2_score']
+                    pred_away_score = prediction['team2_score'] if prediction['team2'] == away_team else prediction['team1_score']
+                
+                pred_total = prediction['total']
+                pred_spread = prediction['spread']
+                
+                print(f"  Predicted: {away_team} {pred_away_score} - {home_team} {pred_home_score}")
+                
+                # Check if winner was correct
+                actual_winner = home_team if actual_home_score > actual_away_score else away_team
+                pred_winner = home_team if pred_home_score > pred_away_score else away_team
+                correct_winner = (actual_winner == pred_winner)
+                
+                if correct_winner:
+                    correct_winners += 1
+                    print(f"  ✅ Winner: CORRECT")
+                else:
+                    print(f"  ❌ Winner: INCORRECT")
+                
+                # Calculate errors
+                spread_error = pred_spread - actual_spread
+                total_error = pred_total - actual_total
+                
+                spread_errors.append(abs(spread_error))
+                total_errors.append(abs(total_error))
+                
+                print(f"  Spread Error: {abs(spread_error):.1f} pts | Total Error: {abs(total_error):.1f} pts")
+                
+                # Store game result
+                report_games.append({
+                    'away_team': away_team,
+                    'home_team': home_team,
+                    'predicted_away_score': round(pred_away_score, 1),
+                    'predicted_home_score': round(pred_home_score, 1),
+                    'predicted_total': round(pred_total, 1),
+                    'predicted_spread': round(pred_spread, 1),
+                    'actual_away_score': int(actual_away_score),
+                    'actual_home_score': int(actual_home_score),
+                    'actual_total': int(actual_total),
+                    'actual_spread': round(actual_spread, 1),
+                    'correct_winner': correct_winner,
+                    'spread_error': round(spread_error, 1),
+                    'total_error': round(total_error, 1)
+                })
+                
+            except Exception as e:
+                print(f"  ⚠️ Error: {e}")
+                continue
+        
+        # Calculate summary stats
+        games_predicted = len(report_games)
+        win_accuracy = (correct_winners / games_predicted * 100) if games_predicted > 0 else 0
+        avg_spread_error = np.mean(spread_errors) if spread_errors else 0
+        avg_total_error = np.mean(total_errors) if total_errors else 0
+        
+        # Create report
+        report = {
+            'week': week_number,
+            'season': season,
+            'date': datetime.now().isoformat(),
+            'games_predicted': games_predicted,
+            'correct_winners': correct_winners,
+            'win_accuracy': round(win_accuracy, 1),
+            'avg_spread_error': round(avg_spread_error, 1),
+            'avg_total_error': round(avg_total_error, 1),
+            'games': report_games
+        }
+        
+        # Save report
+        with open('weekly_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        # ALSO save to season history
+        try:
+            with open('season_history.json', 'r') as f:
+                season_history = json.load(f)
+        except FileNotFoundError:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Update season if changed
+        if season_history.get('season') != season:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Check if this week already exists, update if so
+        existing_week_idx = None
+        for idx, week in enumerate(season_history['weeks']):
+            if week['week'] == week_number:
+                existing_week_idx = idx
+                break
+        
+        if existing_week_idx is not None:
+            season_history['weeks'][existing_week_idx] = report
+            print(f"   ℹ️ Updated existing Week {week_number} in season history")
+        else:
+            season_history['weeks'].append(report)
+            print(f"   ✅ Added Week {week_number} to season history")
+        
+        # Save updated history
+        with open('season_history.json', 'w') as f:
+            json.dump(season_history, f, indent=2)
+        
+        print(f"   📚 Season history saved ({len(season_history['weeks'])} weeks tracked)")
+        
+        # Print summary
+        print("\n" + "="*60)
+        print(f"📊 WEEK {week_number} ACCURACY REPORT")
+        print("="*60)
+        print(f"Games Predicted: {games_predicted}")
+        print(f"Correct Winners: {correct_winners}/{games_predicted} ({win_accuracy:.1f}%)")
+        print(f"Avg Spread Error: {avg_spread_error:.1f} points")
+        print(f"Avg Total Error: {avg_total_error:.1f} points")
+        print("="*60)
+        print("✅ Report saved to weekly_report.json")
+        print("✅ Added to season_history.json")
+        
+        return report
+        
+    except Exception as e:
+        print(f"⚠️ Could not generate weekly report: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+        
+        # Load CURRENT (old) prediction models
+        try:
+            from app import ProductionGamePredictor
+            predictor = ProductionGamePredictor()
+            print(f"✅ Loaded current prediction models (before update)")
+        except Exception as e:
+            print(f"⚠️ Could not load prediction system: {e}")
+            return None
+        
+        report_games = []
+        correct_winners = 0
+        spread_errors = []
+        total_errors = []
+        
+        print(f"\nTesting predictions on {len(week_games)} completed games...")
+        print("-"*60)
+        
+        for _, game in week_games.iterrows():
+            home_team = game['home_team']
+            away_team = game['away_team']
+            
+            # Actual results
+            actual_home_score = game['home_score']
+            actual_away_score = game['away_score']
+            actual_total = actual_home_score + actual_away_score
+            actual_spread = actual_home_score - actual_away_score
+            
+            print(f"\n{away_team} @ {home_team}")
+            print(f"  Actual: {away_team} {actual_away_score} - {home_team} {actual_home_score}")
+            
+            # Make prediction using OLD models
+            try:
+                prediction = predictor.predict_game(away_team, home_team, home_team)
+                
+                # Extract predicted scores
+                if prediction['home_team'] == home_team:
+                    pred_home_score = prediction['team2_score'] if prediction['team2'] == home_team else prediction['team1_score']
+                    pred_away_score = prediction['team1_score'] if prediction['team1'] == away_team else prediction['team2_score']
+                else:
+                    pred_home_score = prediction['team1_score'] if prediction['team1'] == home_team else prediction['team2_score']
+                    pred_away_score = prediction['team2_score'] if prediction['team2'] == away_team else prediction['team1_score']
+                
+                pred_total = prediction['total']
+                pred_spread = prediction['spread']
+                
+                print(f"  Predicted: {away_team} {pred_away_score} - {home_team} {pred_home_score}")
+                
+                # Check if winner was correct
+                actual_winner = home_team if actual_home_score > actual_away_score else away_team
+                pred_winner = home_team if pred_home_score > pred_away_score else away_team
+                correct_winner = (actual_winner == pred_winner)
+                
+                if correct_winner:
+                    correct_winners += 1
+                    print(f"  ✅ Winner: CORRECT")
+                else:
+                    print(f"  ❌ Winner: INCORRECT")
+                
+                # Calculate errors
+                spread_error = pred_spread - actual_spread
+                total_error = pred_total - actual_total
+                
+                spread_errors.append(abs(spread_error))
+                total_errors.append(abs(total_error))
+                
+                print(f"  Spread Error: {abs(spread_error):.1f} pts | Total Error: {abs(total_error):.1f} pts")
+                
+                # Store game result
+                report_games.append({
+                    'away_team': away_team,
+                    'home_team': home_team,
+                    'predicted_away_score': round(pred_away_score, 1),
+                    'predicted_home_score': round(pred_home_score, 1),
+                    'predicted_total': round(pred_total, 1),
+                    'predicted_spread': round(pred_spread, 1),
+                    'actual_away_score': int(actual_away_score),
+                    'actual_home_score': int(actual_home_score),
+                    'actual_total': int(actual_total),
+                    'actual_spread': round(actual_spread, 1),
+                    'correct_winner': correct_winner,
+                    'spread_error': round(spread_error, 1),
+                    'total_error': round(total_error, 1)
+                })
+                
+            except Exception as e:
+                print(f"  ⚠️ Error: {e}")
+                continue
+        
+        # Calculate summary stats
+        games_predicted = len(report_games)
+        win_accuracy = (correct_winners / games_predicted * 100) if games_predicted > 0 else 0
+        avg_spread_error = np.mean(spread_errors) if spread_errors else 0
+        avg_total_error = np.mean(total_errors) if total_errors else 0
+        
+        # Create report
+        report = {
+            'week': week_number,
+            'season': season,
+            'date': datetime.now().isoformat(),
+            'games_predicted': games_predicted,
+            'correct_winners': correct_winners,
+            'win_accuracy': round(win_accuracy, 1),
+            'avg_spread_error': round(avg_spread_error, 1),
+            'avg_total_error': round(avg_total_error, 1),
+            'games': report_games
+        }
+        
+        # Save report
+        with open('weekly_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        # ALSO save to season history
+        try:
+            with open('season_history.json', 'r') as f:
+                season_history = json.load(f)
+        except FileNotFoundError:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Update season if changed
+        if season_history.get('season') != season:
+            season_history = {'season': season, 'weeks': []}
+        
+        # Check if this week already exists, update if so
+        existing_week_idx = None
+        for idx, week in enumerate(season_history['weeks']):
+            if week['week'] == week_number:
+                existing_week_idx = idx
+                break
+        
+        if existing_week_idx is not None:
+            season_history['weeks'][existing_week_idx] = report
+            print(f"   ℹ️ Updated existing Week {week_number} in season history")
+        else:
+            season_history['weeks'].append(report)
+            print(f"   ✅ Added Week {week_number} to season history")
+        
+        # Save updated history
+        with open('season_history.json', 'w') as f:
+            json.dump(season_history, f, indent=2)
+        
+        print(f"   📚 Season history saved ({len(season_history['weeks'])} weeks tracked)")
+        
+        # Print summary
+        print("\n" + "="*60)
+        print(f"📊 WEEK {week_number} ACCURACY REPORT")
+        print("="*60)
+        print(f"Games Predicted: {games_predicted}")
+        print(f"Correct Winners: {correct_winners}/{games_predicted} ({win_accuracy:.1f}%)")
+        print(f"Avg Spread Error: {avg_spread_error:.1f} points")
+        print(f"Avg Total Error: {avg_total_error:.1f} points")
+        print("="*60)
+        print("✅ Report saved to weekly_report.json")
+        print("✅ Added to season_history.json")
+        
+        return report
+        
+    except Exception as e:
+        print(f"⚠️ Could not generate weekly report: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+
 class NFLWeeklyUpdater:
     """Enhanced NFL prediction system with calibration"""
     
@@ -49,7 +908,7 @@ class NFLWeeklyUpdater:
         
         self.models = {}
         self.ensemble_models = {}
-        self.calibration_params = {}  # NEW: Store calibration parameters
+        self.calibration_params = {}
         self.team_data = {}
         self.player_data = {'qb': {}, 'wr': {}, 'rb': {}}
         self.defense_rankings = {}
@@ -664,24 +1523,20 @@ class NFLWeeklyUpdater:
             win_accuracy = accuracy_score(y_test_spread > 0, spread_pred_raw > 0)
             print(f"✅ Point Spread Model: MAE {spread_mae:.1f} points, Win Accuracy {win_accuracy:.1%} (ensemble)")
             
-            # NEW: CALIBRATION
+            # Calibration
             print(f"\n   🎯 Calibrating spread predictions...")
-            # Calculate calibration factor to align with typical spreads
             avg_pred_spread = np.mean(np.abs(spread_pred_raw))
             avg_actual_spread = np.mean(np.abs(y_test_spread))
             
-            # Typical NFL spreads are 3-7 points, so we want to scale to that range
             if avg_pred_spread > 0:
                 spread_calibration_factor = avg_actual_spread / avg_pred_spread
             else:
-                spread_calibration_factor = 0.7  # Default conservative factor
+                spread_calibration_factor = 0.7
             
-            # Additional regression factor (spreads tend to regress to mean)
-            spread_calibration_factor *= 0.85  # Make predictions slightly more conservative
+            spread_calibration_factor *= 0.85
             
             self.calibration_params['spread_factor'] = spread_calibration_factor
             
-            # Test calibrated predictions
             spread_pred_calibrated = spread_pred_raw * spread_calibration_factor
             calibrated_mae = mean_absolute_error(y_test_spread, spread_pred_calibrated)
             calibrated_accuracy = accuracy_score(y_test_spread > 0, spread_pred_calibrated > 0)
@@ -690,7 +1545,6 @@ class NFLWeeklyUpdater:
             print(f"   Calibrated MAE: {calibrated_mae:.1f} points")
             print(f"   Calibrated Win Accuracy: {calibrated_accuracy:.1%}")
         else:
-            # Default calibration if no test set
             self.calibration_params['spread_factor'] = 0.7
         
         # Retrain on ALL data for production
@@ -722,136 +1576,47 @@ class NFLWeeklyUpdater:
         
         print(f"✅ Game outcome ensemble models trained with calibration")
     
-    def create_weekly_schedule_predictions(self):
-        """Create predictions for upcoming games using calibrated models"""
-        print(f"\n📅 Creating weekly schedule predictions...")
+    def create_team_data(self):
+        """Create team performance data for app"""
+        print(f"\n🏟️ Creating team performance data...")
         
         current_season = max(self.data_years)
-        current_week_games = self.schedule_regular[
-            self.schedule_regular['season'] == current_season
+        
+        # Get the most recent week with completed games
+        completed_games = self.schedule_regular[
+            (self.schedule_regular['season'] == current_season) &
+            (self.schedule_regular['home_score'].notna())
         ]
         
-        if len(current_week_games) == 0:
-            print("⚠️ No games found for current season")
-            return
+        if len(completed_games) > 0:
+            latest_week = int(completed_games['week'].max())
+            latest_date = completed_games['gameday'].max()
+            print(f"   Using data through Week {latest_week} of {current_season}")
+        else:
+            # No completed games this season, use last game of previous season
+            latest_week = 18
+            latest_date = f"{current_season}-01-15"
+            print(f"   No completed games in {current_season}, using {current_season-1} data")
         
-        today = datetime.now().date()
+        team_stats = {}
+        for team in self.schedule_regular['home_team'].unique():
+            # Get stats up through the most recent completed week
+            stats = self.get_team_stats_before_game(
+                team, 
+                current_season,
+                latest_week + 1,  # Next week after latest completed
+                latest_date
+            )
+            team_stats[team] = stats
         
-        upcoming_games = []
-        for _, game in current_week_games.iterrows():
-            game_date = pd.to_datetime(game['gameday']).date()
-            if game_date >= today - timedelta(days=7):
-                upcoming_games.append(game)
+        self.team_data = team_stats
         
-        if not upcoming_games:
-            latest_week = current_week_games['week'].max()
-            upcoming_games = current_week_games[
-                current_week_games['week'] == latest_week
-            ].to_dict('records')
+        # Verify data quality
+        valid_teams = sum(1 for stats in team_stats.values() if stats['points_L4'] > 0)
+        print(f"✅ Created team data for {len(team_stats)} teams ({valid_teams} with valid stats)")
         
-        weekly_predictions = []
-        
-        for game in upcoming_games[:16]:
-            home_team = game['home_team']
-            away_team = game['away_team']
-            game_date = game['gameday']
-            season = game['season']
-            week = game['week']
-            
-            home_stats = self.get_team_stats_before_game(home_team, season, week, game_date)
-            away_stats = self.get_team_stats_before_game(away_team, season, week, game_date)
-            
-            home_rest = self.calculate_rest_days(home_team, game_date)
-            away_rest = self.calculate_rest_days(away_team, game_date)
-            division_game = self.is_division_game(home_team, away_team)
-            
-            if self.ensemble_models.get('game_total') and self.ensemble_models.get('game_spread'):
-                features = np.array([[
-                    home_stats['points_L4'], home_stats['opp_points_L4'], home_stats['yards_L4'],
-                    home_stats['points_L8'], home_stats['opp_points_L8'],
-                    home_stats['win_pct_L8'], home_stats['turnovers_L4'],
-                    away_stats['points_L4'], away_stats['opp_points_L4'], away_stats['yards_L4'],
-                    away_stats['points_L8'], away_stats['opp_points_L8'],
-                    away_stats['win_pct_L8'], away_stats['turnovers_L4'],
-                    home_rest, away_rest, home_rest - away_rest,
-                    1 if division_game else 0
-                ]])
-                
-                # Ensemble predictions
-                total_preds = [m.predict(features)[0] for m in self.ensemble_models['game_total']]
-                total_pred = np.mean(total_preds)
-                
-                spread_preds = [m.predict(features)[0] for m in self.ensemble_models['game_spread']]
-                spread_pred_raw = np.mean(spread_preds)
-                
-                # NEW: Apply calibration to spread
-                spread_factor = self.calibration_params.get('spread_factor', 0.7)
-                spread_pred = spread_pred_raw * spread_factor
-                
-                home_score = (total_pred + spread_pred) / 2
-                away_score = (total_pred - spread_pred) / 2
-                
-                # Enhanced betting context
-                if abs(spread_pred) > 10:
-                    context = "🌟 Significant favorite"
-                elif total_pred > 50:
-                    context = "🔥 High-scoring game expected"
-                elif abs(spread_pred) < 3:
-                    context = "⚖️ Toss-up game"
-                elif home_rest - away_rest >= 3:
-                    context = "💤 Rest advantage matters"
-                elif division_game:
-                    context = "🏆 Division rivalry"
-                else:
-                    context = "📊 Standard matchup"
-                
-                weekly_predictions.append({
-                    'game_id': game['game_id'],
-                    'week': week,
-                    'home_team': home_team,
-                    'away_team': away_team,
-                    'gameday': pd.to_datetime(game_date).strftime('%Y-%m-%d'),
-                    'gametime': game.get('gametime', 'TBD'),
-                    'predicted_home_score': round(home_score, 1),
-                    'predicted_away_score': round(away_score, 1),
-                    'actual_home_score': game.get('home_score', None),
-                    'actual_away_score': game.get('away_score', None),
-                    'predicted_total': round(total_pred, 1),
-                    'predicted_spread': round(spread_pred, 1),
-                    'raw_spread': round(spread_pred_raw, 1),  # Keep raw for debugging
-                    'home_win_prob': round(1 / (1 + np.exp(-spread_pred/4)), 3),
-                    'betting_context': context,
-                    'home_rest_days': home_rest,
-                    'away_rest_days': away_rest,
-                    'division_game': division_game,
-                    'calibrated': True,
-                    'injury_notes': "Check latest injury reports before betting"
-                })
-        
-        with open('weekly_schedule.json', 'w') as f:
-            json.dump(weekly_predictions, f, indent=2)
-        
-        print(f"✅ Created calibrated predictions for {len(weekly_predictions)} games")
-        
-        return weekly_predictions
-    
-    def create_injury_adjustments(self):
-        """Injury framework placeholder"""
-        injury_adjustments = {
-            "method": "manual_review",
-            "note": "Always check official injury reports before finalizing bets",
-            "key_positions": ["QB", "RB1", "WR1", "Top_Pass_Rusher", "CB1"],
-            "impact_multipliers": {
-                "QB_out": 0.85,
-                "RB1_out": 0.95,
-                "WR1_out": 0.93
-            }
-        }
-        
-        with open('injury_framework.json', 'w') as f:
-            json.dump(injury_adjustments, f, indent=2)
-        
-        print("💊 Basic injury framework created - manual review recommended")
+        if valid_teams == 0:
+            print(f"⚠️ WARNING: No teams have valid stats! Check data availability.")
     
     def extract_current_players(self):
         """Extract current player data for predictions"""
@@ -869,7 +1634,7 @@ class NFLWeeklyUpdater:
         
         print(f"   Using {current_season} season data, weeks {min_week}-{current_week}")
         
-        # QB data with minimum games filter
+        # QB data
         qb_recent = self.passing_features[
             (self.passing_features['season'] == current_season) &
             (self.passing_features['week'] >= min_week) &
@@ -894,6 +1659,7 @@ class NFLWeeklyUpdater:
                     'attempts_L8': float(stats.get('attempts_L8', stats['attempts_L4'])),
                     'passing_tds_L4': float(stats['passing_tds_L4']),
                     'passing_tds_L8': float(stats.get('passing_tds_L8', stats['passing_tds_L4'])),
+                    'interception_L4': float(stats.get('interception_L4', 0.5)),
                     'team': stats['posteam'],
                     'last_opponent': stats['defteam']
                 }
@@ -919,11 +1685,13 @@ class NFLWeeklyUpdater:
                     'receiving_yards_L16': float(stats.get('receiving_yards_L16', stats['receiving_yards_L8'])),
                     'receptions_L4': float(stats['receptions_L4']),
                     'receptions_L8': float(stats.get('receptions_L8', stats['receptions_L4'])),
+                    'receptions_L16': float(stats.get('receptions_L16', stats['receptions_L8'])),
                     'yards_per_rec_L4': float(stats['yards_per_rec_L4']),
                     'yards_per_rec_L8': float(stats.get('yards_per_rec_L8', stats['yards_per_rec_L4'])),
                     'receiving_tds_L4': float(stats['receiving_tds_L4']),
                     'receiving_tds_L8': float(stats.get('receiving_tds_L8', stats['receiving_tds_L4'])),
                     'target_share_L4': float(stats.get('target_share_L4', 0.15)),
+                    'target_share_L8': float(stats.get('target_share_L8', 0.15)),
                     'team': stats['posteam'],
                     'last_opponent': stats['defteam']
                 }
@@ -970,26 +1738,6 @@ class NFLWeeklyUpdater:
         
         print(f"✅ Extracted: {len(self.player_data['qb'])} QBs, {len(self.player_data['wr'])} WRs, {len(self.player_data['rb'])} RBs")
     
-    def create_team_data(self):
-        """Create team performance data for app"""
-        print(f"\n🏟️ Creating team performance data...")
-        
-        # Get current season team stats for the app
-        current_season = max(self.data_years)
-        
-        team_stats = {}
-        for team in self.schedule_regular['home_team'].unique():
-            stats = self.get_team_stats_before_game(
-                team, 
-                current_season + 1,  # Future date to get all current season stats
-                20,  # Week 20 (after season)
-                '2026-01-01'  # Future date
-            )
-            team_stats[team] = stats
-        
-        self.team_data = team_stats
-        print(f"✅ Created team data for {len(team_stats)} teams")
-    
     def save_all_data(self):
         """Save ensemble models and data files"""
         print(f"\n💾 Saving all data and models...")
@@ -1021,7 +1769,14 @@ class NFLWeeklyUpdater:
         
         # Save team data
         with open('team_data.json', 'w') as f:
-            json.dump(self.team_data, f, indent=2)
+            # Convert numpy types to native Python types
+            team_data_serializable = {}
+            for team, stats in self.team_data.items():
+                team_data_serializable[team] = {
+                    k: float(v) if hasattr(v, 'item') else v 
+                    for k, v in stats.items()
+                }
+            json.dump(team_data_serializable, f, indent=2)
         
         # Save defense rankings
         with open('defense_rankings.json', 'w') as f:
@@ -1032,20 +1787,12 @@ class NFLWeeklyUpdater:
         # Create update log
         update_info = {
             'last_updated': datetime.now().isoformat(),
-            'version': '2.1 - With Calibration',
+            'version': '2.1 - With Weekly Reports',
             'data_years': self.data_years,
             'ensemble_models_trained': list(self.ensemble_models.keys()),
             'calibration_applied': True,
             'spread_calibration_factor': self.calibration_params.get('spread_factor', 'N/A'),
-            'improvements': [
-                'Fixed data leakage in game predictions',
-                'Added ensemble models (GB + NN + LR)',
-                'Exponential recency weighting',
-                'Split defense rankings (pass/rush)',
-                'Enhanced features (rest days, division games, turnovers)',
-                'Minimum games played filter',
-                '**NEW: Spread calibration to align with Vegas accuracy**'
-            ],
+            'weekly_report_generated': True,
             'players': {
                 'qb_count': len(self.player_data['qb']),
                 'wr_count': len(self.player_data['wr']),
@@ -1061,8 +1808,22 @@ class NFLWeeklyUpdater:
     def run_full_update(self):
         """Run the complete weekly update process"""
         print("=" * 60)
-        print("NFL PREDICTION SYSTEM v2.1 - WEEKLY UPDATE WITH CALIBRATION")
+        print("NFL PREDICTION SYSTEM v2.1 - WEEKLY UPDATE")
         print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 60)
+        
+        # STEP 0: Generate accuracy report BEFORE updating models
+        print("\n🎯 STEP 0: Generate Weekly Accuracy Report (using OLD models)")
+        print("="*60)
+        try:
+            generate_weekly_accuracy_report()
+            print("✅ Weekly report generated successfully\n")
+        except Exception as e:
+            print(f"⚠️ Could not generate weekly report: {e}")
+            print("   Continuing with model update...\n")
+        
+        print("=" * 60)
+        print("NOW UPDATING MODELS WITH NEW DATA")
         print("=" * 60)
         
         steps = [
@@ -1073,8 +1834,6 @@ class NFLWeeklyUpdater:
             ("Training Ensemble Player Models", self.train_models),
             ("Training Calibrated Game Models", self.train_game_models),
             ("Creating Team Data", self.create_team_data),
-            ("Creating Weekly Schedule", self.create_weekly_schedule_predictions),
-            ("Creating Injury Framework", self.create_injury_adjustments),
             ("Extracting Current Players", self.extract_current_players),
             ("Saving All Data", self.save_all_data)
         ]
@@ -1099,11 +1858,11 @@ class NFLWeeklyUpdater:
         print(f"QBs: {len(self.player_data['qb'])}")
         print(f"WRs: {len(self.player_data['wr'])}")
         print(f"RBs: {len(self.player_data['rb'])}")
-        print(f"\n🚀 Your calibrated NFL prediction system is now updated!")
-        print("\n✨ Key Improvements in v2.1:")
-        print("  • Spread predictions now calibrated to match Vegas accuracy")
-        print("  • Typical spreads should be within 2-3 points of market lines")
-        print("  • More conservative predictions = more realistic")
+        print(f"\n🚀 Your NFL prediction system is now updated!")
+        print("\n✨ This Week's Update:")
+        print("  • Generated accuracy report using old models (true out-of-sample test)")
+        print("  • Updated all models with latest game data")
+        print("  • Check Weekly Report tab in app for results")
         
         return True
 
@@ -1118,10 +1877,9 @@ def main():
     
     if success:
         print("\n🎯 Next steps:")
-        print("1. Restart your Streamlit app")
-        print("2. Check weekly_schedule.json for calibrated predictions")
-        print("3. Predictions should now be within 2-3 points of Vegas")
-        print("4. Player props remain highly accurate")
+        print("1. Check weekly_report.json for accuracy results")
+        print("2. Restart your Streamlit app to see updated predictions")
+        print("3. View Weekly Report tab in app for detailed analysis")
     else:
         print("\n❌ Update failed - check error messages above")
 
