@@ -598,6 +598,7 @@ if system_status['teams_loaded'] == 0:
     st.stop()
 
 page = st.sidebar.selectbox("📊 CHOOSE ANALYSIS", [
+    "🏈 This Week's Games",
     "🎯 Game Predictions",
     "🎲 Player Props",
     "📈 Weekly Report",
@@ -852,6 +853,127 @@ elif page == "📈 Weekly Report":
         st.write("Weekly reports are generated automatically when you run the weekly update script.")
         st.write("After Week 1 games are completed, run:")
         st.code("python weekly_nfl_update.py", language="bash")
+
+elif page == "📊 Season History":
+    st.header("📊 SEASON PERFORMANCE HISTORY")
+    st.markdown("---")
+    
+    # Load all historical reports
+    try:
+        with open('season_history.json', 'r') as f:
+            season_history = json.load(f)
+    except FileNotFoundError:
+        season_history = {'season': 2025, 'weeks': []}
+    
+    if len(season_history.get('weeks', [])) == 0:
+        st.info("📊 NO HISTORICAL DATA YET")
+        st.write("Historical data will be recorded as you run weekly updates throughout the season.")
+        st.write("After each week's games are completed, run:")
+        st.code("python weekly_nfl_update.py", language="bash")
+    else:
+        weeks = season_history['weeks']
+        
+        # Calculate cumulative stats
+        total_games = sum([w['games_predicted'] for w in weeks])
+        total_correct = sum([w['correct_winners'] for w in weeks])
+        cumulative_accuracy = (total_correct / total_games * 100) if total_games > 0 else 0
+        
+        all_spread_errors = []
+        all_total_errors = []
+        for week in weeks:
+            all_spread_errors.extend([abs(g['spread_error']) for g in week.get('games', [])])
+            all_total_errors.extend([abs(g['total_error']) for g in week.get('games', [])])
+        
+        avg_spread_error = np.mean(all_spread_errors) if all_spread_errors else 0
+        avg_total_error = np.mean(all_total_errors) if all_total_errors else 0
+        
+        # Overall Summary
+        st.subheader(f"🏆 SEASON {season_history['season']} OVERALL")
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric("TOTAL GAMES", total_games)
+        with col2:
+            st.metric("WIN ACCURACY", f"{cumulative_accuracy:.1f}%")
+        with col3:
+            st.metric("AVG SPREAD ERROR", f"{avg_spread_error:.1f} pts")
+        with col4:
+            st.metric("WEEKS TRACKED", len(weeks))
+        
+        st.markdown("---")
+        
+        # Week-by-week performance chart
+        st.subheader("📈 WEEKLY PERFORMANCE TREND")
+        
+        week_numbers = [w['week'] for w in weeks]
+        win_accuracies = [w['win_accuracy'] for w in weeks]
+        
+        chart_data = pd.DataFrame({
+            'Week': week_numbers,
+            'Win Accuracy %': win_accuracies
+        })
+        
+        st.line_chart(chart_data.set_index('Week'), height=300)
+        
+        # Add 50% reference line context
+        if cumulative_accuracy > 55:
+            st.success("🔥 **BEATING THE MARKET!** You're consistently above 55% (professional level)")
+        elif cumulative_accuracy > 52.4:
+            st.info("📈 **PROFITABLE** Above break-even threshold (52.4% with juice)")
+        else:
+            st.warning("📊 Keep tracking - sample size is building")
+        
+        st.markdown("---")
+        
+        # Individual Week Results
+        st.subheader("📋 WEEK-BY-WEEK RESULTS")
+        
+        for week in sorted(weeks, key=lambda x: x['week'], reverse=True):
+            with st.expander(f"**WEEK {week['week']}** - {week['correct_winners']}/{week['games_predicted']} ({week['win_accuracy']:.1f}%) - Spread Error: {week['avg_spread_error']:.1f} pts"):
+                
+                col_summary1, col_summary2, col_summary3 = st.columns(3)
+                with col_summary1:
+                    st.metric("Games", week['games_predicted'])
+                with col_summary2:
+                    st.metric("Correct", week['correct_winners'])
+                with col_summary3:
+                    st.metric("Total Error", f"{week['avg_total_error']:.1f} pts")
+                
+                st.markdown("**GAMES:**")
+                
+                games = week.get('games', [])
+                for game in games:
+                    correct_emoji = "✅" if game['correct_winner'] else "❌"
+                    
+                    col_g1, col_g2 = st.columns([2, 1])
+                    
+                    with col_g1:
+                        st.write(f"{correct_emoji} **{game['away_team']} @ {game['home_team']}**")
+                        st.caption(f"Predicted: {game['away_team']} {game['predicted_away_score']} - {game['home_team']} {game['predicted_home_score']}")
+                        st.caption(f"Actual: {game['away_team']} {game['actual_away_score']} - {game['home_team']} {game['actual_home_score']}")
+                    
+                    with col_g2:
+                        st.caption(f"Spread Error: {abs(game['spread_error']):.1f}")
+                        st.caption(f"Total Error: {abs(game['total_error']):.1f}")
+                
+                st.caption(f"Report generated: {week.get('date', 'Unknown')}")
+        
+        st.markdown("---")
+        
+        # Best/Worst Performances
+        st.subheader("🏅 HIGHLIGHTS")
+        
+        col_best, col_worst = st.columns(2)
+        
+        with col_best:
+            st.markdown("**BEST WEEK:**")
+            best_week = max(weeks, key=lambda x: x['win_accuracy'])
+            st.info(f"Week {best_week['week']}: {best_week['win_accuracy']:.1f}% ({best_week['correct_winners']}/{best_week['games_predicted']})")
+        
+        with col_worst:
+            st.markdown("**MOST ACCURATE SPREAD:**")
+            most_accurate_week = min(weeks, key=lambda x: x['avg_spread_error'])
+            st.info(f"Week {most_accurate_week['week']}: {most_accurate_week['avg_spread_error']:.1f} pts avg error")
 
 elif page == "ℹ️ System Info":
     st.header("ℹ️ SYSTEM INFORMATION")

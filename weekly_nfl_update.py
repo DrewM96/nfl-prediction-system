@@ -1618,6 +1618,117 @@ class NFLWeeklyUpdater:
         if valid_teams == 0:
             print(f"⚠️ WARNING: No teams have valid stats! Check data availability.")
     
+    def create_weekly_schedule_predictions(self):
+        """Create predictions for upcoming games using calibrated models"""
+        print(f"\n📅 Creating weekly schedule predictions...")
+        
+        current_season = max(self.data_years)
+        current_week_games = self.schedule_regular[
+            self.schedule_regular['season'] == current_season
+        ]
+        
+        if len(current_week_games) == 0:
+            print("⚠️ No games found for current season")
+            return
+        
+        # Find the next week (most recent completed week + 1)
+        completed_games = current_week_games[current_week_games['home_score'].notna()]
+        if len(completed_games) > 0:
+            latest_completed_week = int(completed_games['week'].max())
+            target_week = latest_completed_week + 1
+        else:
+            target_week = 1
+        
+        print(f"   Generating predictions for Week {target_week}")
+        
+        # Get games for the target week
+        upcoming_games = current_week_games[current_week_games['week'] == target_week]
+        
+        if len(upcoming_games) == 0:
+            print(f"⚠️ No games scheduled for Week {target_week}")
+            return
+        
+        weekly_predictions = []
+        
+        for _, game in upcoming_games.iterrows():
+            home_team = game['home_team']
+            away_team = game['away_team']
+            game_date = game['gameday']
+            week = game['week']
+            
+            # Get team stats as of before this game
+            home_stats = self.get_team_stats_before_game(home_team, current_season, week, game_date)
+            away_stats = self.get_team_stats_before_game(away_team, current_season, week, game_date)
+            
+            home_rest = self.calculate_rest_days(home_team, game_date)
+            away_rest = self.calculate_rest_days(away_team, game_date)
+            division_game = self.is_division_game(home_team, away_team)
+            
+            if self.ensemble_models.get('game_total') and self.ensemble_models.get('game_spread'):
+                features = np.array([[
+                    home_stats['points_L4'], home_stats['opp_points_L4'], home_stats['yards_L4'],
+                    home_stats['points_L8'], home_stats['opp_points_L8'],
+                    home_stats['win_pct_L8'], home_stats['turnovers_L4'],
+                    away_stats['points_L4'], away_stats['opp_points_L4'], away_stats['yards_L4'],
+                    away_stats['points_L8'], away_stats['opp_points_L8'],
+                    away_stats['win_pct_L8'], away_stats['turnovers_L4'],
+                    home_rest, away_rest, home_rest - away_rest,
+                    1 if division_game else 0
+                ]])
+                
+                # Ensemble predictions
+                total_preds = [m.predict(features)[0] for m in self.ensemble_models['game_total']]
+                total_pred = np.mean(total_preds)
+                
+                spread_preds = [m.predict(features)[0] for m in self.ensemble_models['game_spread']]
+                spread_pred_raw = np.mean(spread_preds)
+                
+                # Apply calibration to spread
+                spread_factor = self.calibration_params.get('spread_factor', 0.7)
+                spread_pred = spread_pred_raw * spread_factor
+                
+                home_score = (total_pred + spread_pred) / 2
+                away_score = (total_pred - spread_pred) / 2
+                
+                # Betting context
+                if abs(spread_pred) > 10:
+                    context = "🌟 Significant favorite"
+                elif total_pred > 50:
+                    context = "🔥 High-scoring game expected"
+                elif abs(spread_pred) < 3:
+                    context = "⚖️ Toss-up game"
+                elif home_rest - away_rest >= 3:
+                    context = "💤 Rest advantage matters"
+                elif division_game:
+                    context = "🏆 Division rivalry"
+                else:
+                    context = "📊 Standard matchup"
+                
+                weekly_predictions.append({
+                    'game_id': game['game_id'],
+                    'week': week,
+                    'home_team': home_team,
+                    'away_team': away_team,
+                    'gameday': pd.to_datetime(game_date).strftime('%Y-%m-%d'),
+                    'gametime': game.get('gametime', 'TBD'),
+                    'predicted_home_score': round(home_score, 1),
+                    'predicted_away_score': round(away_score, 1),
+                    'predicted_total': round(total_pred, 1),
+                    'predicted_spread': round(spread_pred, 1),
+                    'home_win_prob': round(1 / (1 + np.exp(-spread_pred/4)), 3),
+                    'betting_context': context,
+                    'home_rest_days': home_rest,
+                    'away_rest_days': away_rest,
+                    'division_game': division_game
+                })
+        
+        with open('weekly_schedule.json', 'w') as f:
+            json.dump(weekly_predictions, f, indent=2)
+        
+        print(f"✅ Created predictions for {len(weekly_predictions)} games in Week {target_week}")
+        
+        return weekly_predictions
+    
     def extract_current_players(self):
         """Extract current player data for predictions"""
         print(f"\n👥 Extracting current player data...")
@@ -1834,6 +1945,7 @@ class NFLWeeklyUpdater:
             ("Training Ensemble Player Models", self.train_models),
             ("Training Calibrated Game Models", self.train_game_models),
             ("Creating Team Data", self.create_team_data),
+            ("Creating Weekly Schedule", self.create_weekly_schedule_predictions),
             ("Extracting Current Players", self.extract_current_players),
             ("Saving All Data", self.save_all_data)
         ]
