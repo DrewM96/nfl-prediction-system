@@ -606,7 +606,231 @@ page = st.sidebar.selectbox("📊 CHOOSE ANALYSIS", [
     "ℹ️ System Info"
 ])
 
-if page == "🎯 Game Predictions":
+if page == "🏈 This Week's Games":
+    st.header("🏈 THIS WEEK'S GAMES")
+    st.markdown("---")
+    
+    # Load this week's predictions
+    try:
+        with open('weekly_schedule.json', 'r') as f:
+            schedule = json.load(f)
+        
+        if not schedule or len(schedule) == 0:
+            st.warning("⚠️ No games in schedule")
+            schedule = []
+    except FileNotFoundError:
+        st.error("⚠️ NO SCHEDULE FOUND")
+        st.write("Run weekly update to generate predictions:")
+        st.code("python weekly_nfl_update.py", language="bash")
+        schedule = []
+    except Exception as e:
+        st.error(f"⚠️ Error loading schedule: {e}")
+        schedule = []
+    
+    # Load Vegas lines (if they exist)
+    try:
+        with open('vegas_lines.json', 'r') as f:
+            vegas_lines = json.load(f)
+    except FileNotFoundError:
+        vegas_lines = {}
+    except Exception as e:
+        st.warning(f"Could not load Vegas lines: {e}")
+        vegas_lines = {}
+    
+    if len(schedule) == 0:
+        st.info("📊 No games scheduled. Run weekly update script.")
+    else:
+        # Get current week from schedule
+        current_week = schedule[0].get('week', 'N/A')
+        st.subheader(f"WEEK {current_week} PREDICTIONS")
+        
+        # Summary stats
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("GAMES", len(schedule))
+        with col2:
+            avg_total = np.mean([g['predicted_total'] for g in schedule])
+            st.metric("AVG TOTAL", f"{avg_total:.1f}")
+        with col3:
+            games_with_lines = sum(1 for g in schedule if g['game_id'] in vegas_lines)
+            st.metric("VEGAS LINES", f"{games_with_lines}/{len(schedule)}")
+        
+        st.markdown("---")
+        
+        # Add Vegas lines interface
+        with st.expander("➕ ADD/UPDATE VEGAS LINES"):
+            st.write("**Enter Vegas lines to compare with model predictions**")
+            
+            game_options = [f"{g['away_team']} @ {g['home_team']}" for g in schedule]
+            selected_game_idx = st.selectbox("Select Game", range(len(game_options)), format_func=lambda x: game_options[x])
+            
+            selected_game = schedule[selected_game_idx]
+            game_id = selected_game['game_id']
+            
+            col_vegas1, col_vegas2 = st.columns(2)
+            
+            # Get existing Vegas line if available
+            existing_line = vegas_lines.get(game_id, {})
+            
+            with col_vegas1:
+                vegas_spread = st.number_input(
+                    f"Vegas Spread ({selected_game['home_team']})", 
+                    value=existing_line.get('spread', 0.0),
+                    step=0.5,
+                    help="Positive = home favored, Negative = away favored"
+                )
+            
+            with col_vegas2:
+                vegas_total = st.number_input(
+                    "Vegas Total (O/U)", 
+                    value=existing_line.get('total', 44.0),
+                    step=0.5
+                )
+            
+            if st.button("💾 SAVE VEGAS LINE", type="primary"):
+                vegas_lines[game_id] = {
+                    'spread': float(vegas_spread),
+                    'total': float(vegas_total),
+                    'updated': datetime.now().isoformat()
+                }
+                
+                with open('vegas_lines.json', 'w') as f:
+                    json.dump(vegas_lines, f, indent=2)
+                
+                st.success("✅ Vegas line saved!")
+                st.rerun()
+        
+        st.markdown("---")
+        
+        # Display games
+        st.subheader("GAMES & PREDICTIONS")
+        
+        # Sort games by game time
+        sorted_schedule = sorted(schedule, key=lambda x: x.get('gameday', ''))
+        
+        for game in sorted_schedule:
+            game_id = game['game_id']
+            away = game['away_team']
+            home = game['home_team']
+            
+            # Model predictions
+            pred_away = game['predicted_away_score']
+            pred_home = game['predicted_home_score']
+            pred_total = game['predicted_total']
+            pred_spread = game['predicted_spread']
+            
+            # Vegas lines
+            vegas_line = vegas_lines.get(game_id, {})
+            has_vegas = len(vegas_line) > 0
+            
+            with st.container():
+                # Game header
+                col_header, col_time = st.columns([3, 1])
+                with col_header:
+                    st.markdown(f"### {away} @ {home}")
+                with col_time:
+                    game_time = game.get('gametime', 'TBD')
+                    game_day = game.get('gameday', '')
+                    if game_day:
+                        st.caption(f"{game_day} {game_time}")
+                
+                # Predictions vs Vegas
+                col_pred, col_vegas, col_edge = st.columns([2, 2, 1])
+                
+                with col_pred:
+                    st.markdown("**MODEL PREDICTION**")
+                    st.write(f"**{away}:** {pred_away}")
+                    st.write(f"**{home}:** {pred_home}")
+                    st.caption(f"Total: {pred_total} | Spread: {home} {pred_spread:+.1f}")
+                
+                with col_vegas:
+                    if has_vegas:
+                        st.markdown("**VEGAS LINE**")
+                        vegas_spread_val = vegas_line['spread']
+                        vegas_total_val = vegas_line['total']
+                        
+                        st.write(f"**Spread:** {home} {vegas_spread_val:+.1f}")
+                        st.write(f"**Total:** {vegas_total_val}")
+                        st.caption(f"Updated: {vegas_line.get('updated', 'N/A')[:10]}")
+                    else:
+                        st.markdown("**VEGAS LINE**")
+                        st.info("No Vegas line entered")
+                
+                with col_edge:
+                    if has_vegas:
+                        st.markdown("**EDGE**")
+                        
+                        # Calculate edges
+                        spread_diff = abs(pred_spread - vegas_line['spread'])
+                        total_diff = abs(pred_total - vegas_line['total'])
+                        
+                        # Highlight significant edges
+                        if spread_diff >= 3:
+                            st.error(f"🔥 {spread_diff:.1f} pts")
+                            st.caption("Spread edge")
+                        elif spread_diff >= 2:
+                            st.warning(f"⚠️ {spread_diff:.1f} pts")
+                            st.caption("Spread edge")
+                        else:
+                            st.success(f"✓ {spread_diff:.1f} pts")
+                            st.caption("Spread edge")
+                        
+                        if total_diff >= 3:
+                            st.info(f"📊 {total_diff:.1f} pts")
+                            st.caption("Total edge")
+                    else:
+                        st.write("")
+                
+                st.markdown("---")
+        
+        # Best bets section
+        st.markdown("---")
+        st.subheader("💰 BEST BETS (3+ POINT EDGE)")
+        
+        best_bets = []
+        for game in sorted_schedule:
+            game_id = game['game_id']
+            if game_id in vegas_lines:
+                vegas = vegas_lines[game_id]
+                spread_diff = abs(game['predicted_spread'] - vegas['spread'])
+                total_diff = abs(game['predicted_total'] - vegas['total'])
+                
+                if spread_diff >= 3:
+                    best_bets.append({
+                        'game': f"{game['away_team']} @ {game['home_team']}",
+                        'type': 'SPREAD',
+                        'model': f"{game['home_team']} {game['predicted_spread']:+.1f}",
+                        'vegas': f"{game['home_team']} {vegas['spread']:+.1f}",
+                        'edge': spread_diff
+                    })
+                
+                if total_diff >= 3:
+                    best_bets.append({
+                        'game': f"{game['away_team']} @ {game['home_team']}",
+                        'type': 'TOTAL',
+                        'model': f"{game['predicted_total']:.1f}",
+                        'vegas': f"{vegas['total']:.1f}",
+                        'edge': total_diff
+                    })
+        
+        if len(best_bets) > 0:
+            for bet in sorted(best_bets, key=lambda x: x['edge'], reverse=True):
+                col1, col2, col3, col4, col5 = st.columns([3, 1, 2, 2, 1])
+                
+                with col1:
+                    st.write(f"**{bet['game']}**")
+                with col2:
+                    st.write(bet['type'])
+                with col3:
+                    st.write(f"Model: {bet['model']}")
+                with col4:
+                    st.write(f"Vegas: {bet['vegas']}")
+                with col5:
+                    st.error(f"🔥 {bet['edge']:.1f}")
+        else:
+            st.info("No significant edges found. Add Vegas lines to see opportunities!")
+
+elif page == "🎯 Game Predictions":
     st.header("🎯 GAME PREDICTIONS")
     st.markdown("---")
     col1, col2 = st.columns([2, 1])
