@@ -1,6 +1,6 @@
 {
-  "last_updated": "2025-10-14T17:29:13.445340",
-  "version": "2.1 - With Weekly Reports",
+  "last_updated": "2025-10-21T10:49:49.897853",
+  "version": "2.2 - WITH EPA & OL/DL",
   "data_years": [
     2023,
     2024,
@@ -15,11 +15,13 @@
     "game_spread"
   ],
   "calibration_applied": true,
-  "spread_calibration_factor": 2.356243737251106,
+  "spread_calibration_factor": 1.8916829434346647,
   "weekly_report_generated": true,
+  "epa_metrics_calculated": true,
+  "ol_dl_rankings_calculated": true,
   "players": {
-    "qb_count": 34,
-    "wr_count": 235,
-    "rb_count": 121
+    "qb_count": 38,
+    "wr_count": 256,
+    "rb_count": 131
   }
 }

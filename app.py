@@ -1,4 +1,4 @@
-# nfl_app.py - NFL Themed v2.1 with Weekly Report
+# app.py - NFL Themed v2.2 with EPA & OL/DL Integration
 
 import streamlit as st
 import pandas as pd
@@ -16,7 +16,7 @@ from injury_system import (
 
 # Page configuration
 st.set_page_config(
-    page_title="NFL Prediction System v2.1",
+    page_title="NFL Prediction System v2.2",
     page_icon="🏈",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -297,7 +297,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-MODEL_UPDATE_DATE = "2025-10-08"
+MODEL_UPDATE_DATE = "2025-10-17"
 
 class ProductionGamePredictor:
     def __init__(self, team_data_file='team_data.json'):
@@ -321,6 +321,20 @@ class ProductionGamePredictor:
                 self.defense_rankings = json.load(f)
         except FileNotFoundError:
             self.defense_rankings = {}
+        
+        # NEW: Load EPA metrics
+        try:
+            with open('epa_metrics.json', 'r') as f:
+                self.epa_metrics = json.load(f)
+        except FileNotFoundError:
+            self.epa_metrics = {}
+        
+        # NEW: Load OL/DL rankings
+        try:
+            with open('ol_dl_rankings.json', 'r') as f:
+                self.ol_dl_rankings = json.load(f)
+        except FileNotFoundError:
+            self.ol_dl_rankings = {}
     
     def _load_ensemble_models(self):
         ensemble_models = {}
@@ -356,6 +370,56 @@ class ProductionGamePredictor:
             return None
         return np.mean(predictions)
     
+    def get_epa_for_team(self, team, season=2025):
+        """Get EPA metrics for a team"""
+        if team not in self.epa_metrics or str(season) not in self.epa_metrics[team]:
+            return 0.0, 0.0
+        
+        epa_data = self.epa_metrics[team][str(season)]
+        return epa_data.get('epa_per_play', 0.0), epa_data.get('def_epa', 0.0)
+    
+    def get_ol_dl_matchup(self, offense_team, defense_team, season=2025):
+        """Get OL vs DL matchup info"""
+        if offense_team not in self.ol_dl_rankings or defense_team not in self.ol_dl_rankings:
+            return None
+        
+        if str(season) not in self.ol_dl_rankings[offense_team] or str(season) not in self.ol_dl_rankings[defense_team]:
+            return None
+        
+        ol_data = self.ol_dl_rankings[offense_team][str(season)].get('ol', {})
+        dl_data = self.ol_dl_rankings[defense_team][str(season)].get('dl', {})
+        
+        ol_score = ol_data.get('score', 50.0)
+        dl_score = dl_data.get('score', 50.0)
+        matchup_score = ol_score - dl_score
+        
+        # Determine advantage
+        if matchup_score > 15:
+            advantage = 'strong_offense'
+            explanation = f"{offense_team} OL dominates {defense_team} DL"
+        elif matchup_score > 5:
+            advantage = 'offense'
+            explanation = f"{offense_team} OL has edge"
+        elif matchup_score < -15:
+            advantage = 'strong_defense'
+            explanation = f"{defense_team} DL dominates - expect pressure"
+        elif matchup_score < -5:
+            advantage = 'defense'
+            explanation = f"{defense_team} DL has edge"
+        else:
+            advantage = 'neutral'
+            explanation = "Evenly matched trenches"
+        
+        return {
+            'matchup_score': matchup_score,
+            'advantage': advantage,
+            'explanation': explanation,
+            'ol_rank': ol_data.get('rank', 16),
+            'ol_score': ol_score,
+            'dl_rank': dl_data.get('rank', 16),
+            'dl_score': dl_score
+        }
+    
     def predict_game(self, team1, team2, home_team=None):
         if self.ensemble_models.get('game_total') and self.ensemble_models.get('game_spread'):
             try:
@@ -367,6 +431,15 @@ class ProductionGamePredictor:
                 away_stats = self.team_data.get(away_team, {})
                 if not home_stats or not away_stats:
                     raise ValueError("Missing team stats")
+                
+                # Get EPA metrics
+                home_epa, _ = self.get_epa_for_team(home_team)
+                
+                # Get OL/DL matchup
+                ol_dl_info = self.get_ol_dl_matchup(home_team, away_team)
+                ol_dl_score = ol_dl_info['matchup_score'] if ol_dl_info else 0.0
+                
+                # UPDATED: Now 20 features including EPA and OL/DL
                 features = np.array([[
                     home_stats.get('points_L4', 22),
                     home_stats.get('opp_points_L4', 22),
@@ -382,10 +455,13 @@ class ProductionGamePredictor:
                     away_stats.get('opp_points_L8', 22),
                     away_stats.get('win_pct_L8', 0.5),
                     away_stats.get('turnovers_L4', 1.0),
-                    7, 7, 0, 0
+                    7, 7, 0, 0,  # rest, division
+                    home_epa, ol_dl_score  # NEW: EPA and OL/DL
                 ]])
+                
                 total_pred = self.predict_with_ensemble('game_total', features)
                 spread_pred_raw = self.predict_with_ensemble('game_spread', features)
+                
                 if total_pred is not None and spread_pred_raw is not None:
                     try:
                         with open('calibration_params.json', 'r') as f:
@@ -406,7 +482,8 @@ class ProductionGamePredictor:
                         'home_team': home_team,
                         'away_team': away_team,
                         'confidence': f'Calibrated ({spread_factor:.2f})',
-                        'method': 'ensemble'
+                        'method': 'ensemble',
+                        'ol_dl_matchup': ol_dl_info  # NEW
                     }
             except:
                 pass
@@ -420,7 +497,8 @@ class ProductionGamePredictor:
             'home_team': home_team,
             'away_team': team1 if team2 == home_team else team2,
             'confidence': 'Fallback',
-            'method': 'fallback'
+            'method': 'fallback',
+            'ol_dl_matchup': None
         }
     
     def predict_player_passing(self, player_stats, opponent_team=None):
@@ -542,8 +620,10 @@ class ProductionGamePredictor:
             'ensemble_models': len([m for m in self.ensemble_models.values() if m]),
             'total_sub_models': total_models,
             'defense_rankings': len(self.defense_rankings),
+            'epa_teams': len(self.epa_metrics),
+            'ol_dl_teams': len(self.ol_dl_rankings),
             'last_update': MODEL_UPDATE_DATE,
-            'version': '2.1 - With Injuries'
+            'version': '2.2 - EPA & OL/DL'
         }
     
     def list_available_teams(self):
@@ -575,8 +655,8 @@ def load_player_data():
             data[file.replace('_data.json', '')] = {}
     return data
 
-st.title("🏈 NFL PREDICTION SYSTEM v2.1")
-st.caption(f"INJURY-ADJUSTED ANALYTICS | UPDATED: {MODEL_UPDATE_DATE}")
+st.title("🏈 NFL PREDICTION SYSTEM v2.2")
+st.caption(f"WITH EPA & OL/DL ANALYTICS | UPDATED: {MODEL_UPDATE_DATE}")
 
 prediction_system = load_prediction_system()
 player_data = load_player_data()
@@ -589,6 +669,11 @@ st.sidebar.title("⚙️ SYSTEM STATUS")
 st.sidebar.success(f"✅ **TEAMS:** {system_status['teams_loaded']}")
 st.sidebar.info(f"🤖 **MODELS:** {system_status['ensemble_models']}")
 st.sidebar.info(f"📦 **SUB-MODELS:** {system_status['total_sub_models']}")
+# NEW: Show EPA and OL/DL status
+if system_status['epa_teams'] > 0:
+    st.sidebar.success(f"⚡ **EPA METRICS:** {system_status['epa_teams']} teams")
+if system_status['ol_dl_teams'] > 0:
+    st.sidebar.success(f"🏈 **OL/DL RANKINGS:** {system_status['ol_dl_teams']} teams")
 st.sidebar.caption(f"**VERSION:** {system_status['version']}")
 
 render_injury_manager(injury_system, available_teams)
@@ -602,6 +687,7 @@ page = st.sidebar.selectbox("📊 CHOOSE ANALYSIS", [
     "🎯 Game Predictions",
     "🎲 Player Props",
     "📈 Weekly Report",
+    "🏆 Power Rankings",  # NEW
     "📊 Season History",
     "ℹ️ System Info"
 ])
@@ -649,7 +735,7 @@ if page == "🏈 This Week's Games":
         with col1:
             st.metric("GAMES", len(schedule))
         with col2:
-            avg_total = np.mean([g['predicted_total'] for g in schedule])
+            avg_total = np.mean([g['total'] for g in schedule])
             st.metric("AVG TOTAL", f"{avg_total:.1f}")
         with col3:
             games_with_lines = sum(1 for g in schedule if g['game_id'] in vegas_lines)
@@ -714,14 +800,14 @@ if page == "🏈 This Week's Games":
             home = game['home_team']
             
             # Model predictions
-            pred_away = game['predicted_away_score']
-            pred_home = game['predicted_home_score']
-            pred_total = game['predicted_total']
-            pred_spread = game['predicted_spread']
+            pred_away = game['away_score']
+            pred_home = game['home_score']
+            pred_total = game['total']
+            pred_spread = game['spread']
             
             # Vegas lines
             vegas_line = vegas_lines.get(game_id, {})
-            has_vegas = len(vegas_line) > 0
+            has_vegas = len(vegas_line) > 0;
             
             with st.container():
                 # Game header
@@ -741,7 +827,12 @@ if page == "🏈 This Week's Games":
                     st.markdown("**MODEL PREDICTION**")
                     st.write(f"**{away}:** {pred_away}")
                     st.write(f"**{home}:** {pred_home}")
-                    st.caption(f"Total: {pred_total} | Spread: {home} {pred_spread:+.1f}")
+                    # Fix the caption to show correct team with minus sign
+                    if pred_spread > 0:
+                        spread_display = f"{home} -{pred_spread:.1f}"
+                    else:
+                        spread_display = f"{away} -{abs(pred_spread):.1f}"
+                    st.caption(f"Total: {pred_total} | Spread: {spread_display}")
                 
                 with col_vegas:
                     if has_vegas:
@@ -781,6 +872,30 @@ if page == "🏈 This Week's Games":
                     else:
                         st.write("")
                 
+                # NEW: Display OL/DL matchup if available
+                if 'ol_dl_matchup' in game and game['ol_dl_matchup']:
+                    ol_dl = game['ol_dl_matchup']
+                    st.markdown("---")
+                    st.markdown("**🏈 TRENCH BATTLE**")
+                    
+                    matchup_col1, matchup_col2 = st.columns(2)
+                    with matchup_col1:
+                        st.caption(f"**{home} OL:** Rank #{ol_dl.get('ol_rank', '?')} (Score: {ol_dl.get('ol_score', 0):.1f})")
+                    with matchup_col2:
+                        st.caption(f"**{away} DL:** Rank #{ol_dl.get('dl_rank', '?')} (Score: {ol_dl.get('dl_score', 0):.1f})")
+                    
+                    advantage = ol_dl.get('advantage', 'neutral')
+                    if advantage == 'strong_offense':
+                        st.success(f"✅ {ol_dl.get('explanation', '')}")
+                    elif advantage == 'offense':
+                        st.info(f"ℹ️ {ol_dl.get('explanation', '')}")
+                    elif advantage == 'strong_defense':
+                        st.error(f"⚠️ {ol_dl.get('explanation', '')}")
+                    elif advantage == 'defense':
+                        st.warning(f"⚠️ {ol_dl.get('explanation', '')}")
+                    else:
+                        st.caption(f"⚖️ {ol_dl.get('explanation', '')}")
+                
                 st.markdown("---")
         
         # Best bets section
@@ -792,14 +907,14 @@ if page == "🏈 This Week's Games":
             game_id = game['game_id']
             if game_id in vegas_lines:
                 vegas = vegas_lines[game_id]
-                spread_diff = abs(game['predicted_spread'] - vegas['spread'])
-                total_diff = abs(game['predicted_total'] - vegas['total'])
+                spread_diff = abs(game['spread'] - vegas['spread'])
+                total_diff = abs(game['total'] - vegas['total'])
                 
                 if spread_diff >= 3:
                     best_bets.append({
                         'game': f"{game['away_team']} @ {game['home_team']}",
                         'type': 'SPREAD',
-                        'model': f"{game['home_team']} {game['predicted_spread']:+.1f}",
+                        'model': f"{game['home_team']} {game['spread']:+.1f}",
                         'vegas': f"{game['home_team']} {vegas['spread']:+.1f}",
                         'edge': spread_diff
                     })
@@ -808,7 +923,7 @@ if page == "🏈 This Week's Games":
                     best_bets.append({
                         'game': f"{game['away_team']} @ {game['home_team']}",
                         'type': 'TOTAL',
-                        'model': f"{game['predicted_total']:.1f}",
+                        'model': f"{game['total']:.1f}",
                         'vegas': f"{vegas['total']:.1f}",
                         'edge': total_diff
                     })
@@ -831,469 +946,754 @@ if page == "🏈 This Week's Games":
             st.info("No significant edges found. Add Vegas lines to see opportunities!")
 
 elif page == "🎯 Game Predictions":
-    st.header("🎯 GAME PREDICTIONS")
-    st.markdown("---")
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.subheader("SELECT MATCHUP")
-        col_away, col_home = st.columns(2)
-        with col_away:
-            away_team = st.selectbox("AWAY TEAM", available_teams, key="away")
-        with col_home:
-            home_team = st.selectbox("HOME TEAM", available_teams, key="home")
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🏈 PREDICT GAME", type="primary", use_container_width=True):
-            if away_team != home_team:
-                with st.spinner("ANALYZING MATCHUP..."):
-                    prediction = integrate_injuries_into_game_prediction(
-                        prediction_system, injury_system, away_team, home_team, home_team
-                    )
-                st.markdown("---")
-                st.success(f"**{prediction['away_team']} @ {prediction['home_team']}**")
-                st.caption(f"METHOD: {prediction.get('method', 'unknown').upper()}")
-                col_pred1, col_pred2 = st.columns(2)
-                with col_pred1:
-                    away_label = prediction['team1'] if prediction['team1'] == prediction['away_team'] else prediction['team2']
-                    away_score = prediction['team1_score'] if prediction['team1'] == prediction['away_team'] else prediction['team2_score']
-                    st.metric(f"**{away_label}** (AWAY)", f"{away_score} PTS")
-                with col_pred2:
-                    home_label = prediction['team1'] if prediction['team1'] == prediction['home_team'] else prediction['team2']
-                    home_score = prediction['team1_score'] if prediction['team1'] == prediction['home_team'] else prediction['team2_score']
-                    st.metric(f"**{home_label}** (HOME)", f"{home_score} PTS")
-                st.markdown("<br>", unsafe_allow_html=True)
-                col_total1, col_total2 = st.columns(2)
-                with col_total1:
-                    st.metric("TOTAL POINTS", f"{prediction['total']}")
-                with col_total2:
-                    if prediction['spread'] > 0:
-                        spread_text = f"{prediction['home_team']} by {abs(prediction['spread']):.1f}"
-                    else:
-                        spread_text = f"{prediction['away_team']} by {abs(prediction['spread']):.1f}"
-                    st.metric("SPREAD", spread_text)
-                if prediction.get('injury_adjusted'):
-                    st.warning(f"⚠️ {prediction['adjustment_note']}")
-                    if prediction.get('original_spread'):
-                        st.caption(f"ORIGINAL: {prediction['original_spread']:+.1f} → ADJUSTED: {prediction['spread']:+.1f}")
-                st.session_state.last_prediction = prediction
-            else:
-                st.error("⚠️ SELECT DIFFERENT TEAMS")
-    with col2:
-        st.subheader("BETTING CONTEXT")
-        if 'last_prediction' in st.session_state:
-            pred = st.session_state.last_prediction
-            st.markdown("**ANALYSIS:**")
-            st.markdown("<br>", unsafe_allow_html=True)
-            total = pred['total']
-            if total >= 50:
-                st.info("🔥 **HIGH-SCORING** expected")
-            elif total <= 38:
-                st.info("🛡️ **DEFENSIVE BATTLE** expected")
-            else:
-                st.info("📊 **AVERAGE SCORING** expected")
-            spread = abs(pred['spread'])
-            if spread >= 10:
-                st.info("💪 **SIGNIFICANT FAVORITE**")
-            elif spread <= 3:
-                st.info("⚖️ **TOSS-UP GAME**")
-            else:
-                st.info("📈 **MODERATE FAVORITE**")
-
-elif page == "🎲 Player Props":
-    st.header("🎲 PLAYER PROPS")
-    st.markdown("---")
-    position = st.selectbox("**POSITION**", ["Quarterback", "Wide Receiver/TE", "Running Back"])
-    if position == "Quarterback":
-        if 'qb' in player_data and player_data['qb']:
-            qb_names = sorted(list(player_data['qb'].keys()))
-            selected_qb = st.selectbox("**SELECT QB**", qb_names)
-            if selected_qb:
-                qb_stats = player_data['qb'][selected_qb]
-                col1, col2 = st.columns([1, 1])
-                with col1:
-                    st.subheader(f"📊 {selected_qb}")
-                    st.metric("YARDS (L4)", f"{qb_stats['passing_yards_L4']:.0f}")
-                    st.metric("YARDS (L8)", f"{qb_stats['passing_yards_L8']:.0f}")
-                    st.metric("COMPLETION %", f"{qb_stats['completion_pct_L4']:.1%}")
-                    st.caption(f"**TEAM:** {qb_stats['team']}")
-                with col2:
-                    st.subheader("🎯 PREDICTION")
-                    opponent = st.selectbox("**OPPONENT**", available_teams, key="qb_opp")
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    if st.button("🏈 PREDICT PASSING YARDS", type="primary", use_container_width=True):
-                        with st.spinner("CALCULATING..."):
-                            base_prediction, status = prediction_system.predict_player_passing(qb_stats, opponent)
-                            prediction, injury_status = integrate_injuries_into_player_prediction(
-                                injury_system, base_prediction, selected_qb, qb_stats['team']
-                            )
-                        if prediction is not None:
-                            st.success(f"## 🎯 {prediction} YARDS")
-                            st.caption(status.upper())
-                            if "Out" in injury_status or "Doubtful" in injury_status:
-                                st.error(f"🚨 {injury_status}")
-                            elif "Questionable" in injury_status:
-                                st.warning(f"⚠️ {injury_status}")
-                            if prediction >= qb_stats['passing_yards_L4'] * 1.1:
-                                st.info("📈 **STRONG MATCHUP**")
-                            elif prediction <= qb_stats['passing_yards_L4'] * 0.9:
-                                st.info("📉 **TOUGH MATCHUP**")
-                        else:
-                            st.error(f"⚠️ FAILED: {status}")
-        else:
-            st.warning("⚠️ NO QB DATA AVAILABLE")
-    elif position == "Wide Receiver/TE":
-        if 'wr' in player_data and player_data['wr']:
-            wr_names = sorted(list(player_data['wr'].keys()))
-            selected_wr = st.selectbox("**SELECT WR/TE**", wr_names)
-            if selected_wr:
-                wr_stats = player_data['wr'][selected_wr]
-                col1, col2 = st.columns([1, 1])
-                with col1:
-                    st.subheader(f"📊 {selected_wr}")
-                    st.metric("REC YARDS (L4)", f"{wr_stats['receiving_yards_L4']:.0f}")
-                    st.metric("RECEPTIONS (L4)", f"{wr_stats['receptions_L4']:.1f}")
-                    st.caption(f"**TEAM:** {wr_stats['team']}")
-                with col2:
-                    st.subheader("🎯 PREDICTIONS")
-                    opponent = st.selectbox("**OPPONENT**", available_teams, key="wr_opp")
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    col_btn1, col_btn2 = st.columns(2)
-                    with col_btn1:
-                        if st.button("REC YARDS", use_container_width=True):
-                            base_prediction, status = prediction_system.predict_player_receiving(wr_stats, opponent)
-                            prediction, injury_status = integrate_injuries_into_player_prediction(
-                                injury_system, base_prediction, selected_wr, wr_stats['team']
-                            )
-                            if prediction:
-                                st.success(f"**{prediction} YDS**")
-                                if "Out" in injury_status or "Doubtful" in injury_status:
-                                    st.error(f"🚨 {injury_status}")
-                            else:
-                                st.error(status)
-                    with col_btn2:
-                        if st.button("RECEPTIONS", use_container_width=True):
-                            base_prediction, status = prediction_system.predict_player_receptions(wr_stats, opponent)
-                            prediction, injury_status = integrate_injuries_into_player_prediction(
-                                injury_system, base_prediction, selected_wr, wr_stats['team']
-                            )
-                            if prediction:
-                                st.success(f"**{prediction} REC**")
-                                if "Out" in injury_status or "Doubtful" in injury_status:
-                                    st.error(f"🚨 {injury_status}")
-                            else:
-                                st.error(status)
-        else:
-            st.warning("⚠️ NO WR DATA AVAILABLE")
-    elif position == "Running Back":
-        if 'rb' in player_data and player_data['rb']:
-            rb_names = sorted(list(player_data['rb'].keys()))
-            selected_rb = st.selectbox("**SELECT RB**", rb_names)
-            if selected_rb:
-                rb_stats = player_data['rb'][selected_rb]
-                col1, col2 = st.columns([1, 1])
-                with col1:
-                    st.subheader(f"📊 {selected_rb}")
-                    st.metric("RUSH YARDS (L4)", f"{rb_stats['rushing_yards_L4']:.0f}")
-                    st.metric("ATTEMPTS (L4)", f"{rb_stats['attempts_L4']:.1f}")
-                    st.caption(f"**TEAM:** {rb_stats['team']}")
-                with col2:
-                    st.subheader("🎯 PREDICTION")
-                    opponent = st.selectbox("**OPPONENT**", available_teams, key="rb_opp")
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    if st.button("🏃 PREDICT RUSHING YARDS", type="primary", use_container_width=True):
-                        with st.spinner("CALCULATING..."):
-                            base_prediction, status = prediction_system.predict_player_rushing(rb_stats, opponent)
-                            prediction, injury_status = integrate_injuries_into_player_prediction(
-                                injury_system, base_prediction, selected_rb, rb_stats['team']
-                            )
-                        if prediction is not None:
-                            st.success(f"## 🎯 {prediction} YARDS")
-                            st.caption(status.upper())
-                            if "Out" in injury_status or "Doubtful" in injury_status:
-                                st.error(f"🚨 {injury_status}")
-                            elif "Questionable" in injury_status:
-                                st.warning(f"⚠️ {injury_status}")
-                            if prediction >= rb_stats['rushing_yards_L4'] * 1.15:
-                                st.info("📈 **GREAT MATCHUP**")
-                            elif prediction <= rb_stats['rushing_yards_L4'] * 0.85:
-                                st.info("📉 **TOUGH MATCHUP**")
-                        else:
-                            st.error(f"⚠️ FAILED: {status}")
-        else:
-            st.warning("⚠️ NO RB DATA AVAILABLE")
-
-elif page == "📈 Weekly Report":
-    st.header("📈 WEEKLY ACCURACY REPORT")
-    st.markdown("---")
-    weekly_report = load_weekly_report()
-    if weekly_report:
-        week_num = weekly_report.get('week', 'N/A')
-        report_date = weekly_report.get('date', 'N/A')
-        st.subheader(f"WEEK {week_num} RESULTS")
-        st.caption(f"Generated: {report_date}")
-        st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            games_predicted = weekly_report.get('games_predicted', 0)
-            st.metric("GAMES PREDICTED", games_predicted)
-        with col2:
-            correct_winners = weekly_report.get('correct_winners', 0)
-            win_accuracy = (correct_winners / games_predicted * 100) if games_predicted > 0 else 0
-            st.metric("WIN ACCURACY", f"{win_accuracy:.1f}%")
-        with col3:
-            avg_spread_error = weekly_report.get('avg_spread_error', 0)
-            st.metric("AVG SPREAD ERROR", f"{avg_spread_error:.1f} pts")
-        with col4:
-            avg_total_error = weekly_report.get('avg_total_error', 0)
-            st.metric("AVG TOTAL ERROR", f"{avg_total_error:.1f} pts")
-        st.markdown("---")
-        st.subheader("GAME-BY-GAME BREAKDOWN")
-        games = weekly_report.get('games', [])
-        if games:
-            for game in games:
-                correct_str = '✅ CORRECT' if game.get('correct_winner') else '❌ INCORRECT'
-                with st.expander(f"{game['away_team']} @ {game['home_team']} - {correct_str}"):
-                    col_pred, col_actual = st.columns(2)
-                    with col_pred:
-                        st.markdown("**PREDICTED**")
-                        st.write(f"{game['away_team']}: {game['predicted_away_score']} pts")
-                        st.write(f"{game['home_team']}: {game['predicted_home_score']} pts")
-                        st.write(f"Total: {game['predicted_total']}")
-                        st.write(f"Spread: {game['predicted_spread']}")
-                    with col_actual:
-                        st.markdown("**ACTUAL**")
-                        st.write(f"{game['away_team']}: {game['actual_away_score']} pts")
-                        st.write(f"{game['home_team']}: {game['actual_home_score']} pts")
-                        st.write(f"Total: {game['actual_total']}")
-                        st.write(f"Spread: {game['actual_spread']}")
-                    st.markdown("**ERRORS**")
-                    st.write(f"Spread Error: {abs(game['spread_error']):.1f} pts")
-                    st.write(f"Total Error: {abs(game['total_error']):.1f} pts")
-        else:
-            st.info("No game results available for this week")
-        st.markdown("---")
-        st.caption("💡 Weekly reports are generated automatically after running weekly_nfl_update.py")
-    else:
-        st.info("📊 NO WEEKLY REPORT AVAILABLE")
-        st.write("Weekly reports are generated automatically when you run the weekly update script.")
-        st.write("After Week 1 games are completed, run:")
-        st.code("python weekly_nfl_update.py", language="bash")
-
-elif page == "📊 Season History":
-    st.header("📊 SEASON PERFORMANCE HISTORY")
-    st.markdown("---")
-    
-    # Load all historical reports
-    try:
-        with open('season_history.json', 'r') as f:
-            season_history = json.load(f)
-    except FileNotFoundError:
-        season_history = {'season': 2025, 'weeks': []}
-    
-    if len(season_history.get('weeks', [])) == 0:
-        st.info("📊 NO HISTORICAL DATA YET")
-        st.write("Historical data will be recorded as you run weekly updates throughout the season.")
-        st.write("After each week's games are completed, run:")
-        st.code("python weekly_nfl_update.py", language="bash")
-    else:
-        weeks = season_history['weeks']
-        
-        # Calculate cumulative stats
-        total_games = sum([w['games_predicted'] for w in weeks])
-        total_correct = sum([w['correct_winners'] for w in weeks])
-        cumulative_accuracy = (total_correct / total_games * 100) if total_games > 0 else 0
-        
-        all_spread_errors = []
-        all_total_errors = []
-        for week in weeks:
-            all_spread_errors.extend([abs(g['spread_error']) for g in week.get('games', [])])
-            all_total_errors.extend([abs(g['total_error']) for g in week.get('games', [])])
-        
-        avg_spread_error = np.mean(all_spread_errors) if all_spread_errors else 0
-        avg_total_error = np.mean(all_total_errors) if all_total_errors else 0
-        
-        # Overall Summary
-        st.subheader(f"🏆 SEASON {season_history['season']} OVERALL")
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            st.metric("TOTAL GAMES", total_games)
-        with col2:
-            st.metric("WIN ACCURACY", f"{cumulative_accuracy:.1f}%")
-        with col3:
-            st.metric("AVG SPREAD ERROR", f"{avg_spread_error:.1f} pts")
-        with col4:
-            st.metric("WEEKS TRACKED", len(weeks))
-        
-        st.markdown("---")
-        
-        # Week-by-week performance chart
-        st.subheader("📈 WEEKLY PERFORMANCE TREND")
-        
-        week_numbers = [w['week'] for w in weeks]
-        win_accuracies = [w['win_accuracy'] for w in weeks]
-        
-        chart_data = pd.DataFrame({
-            'Week': week_numbers,
-            'Win Accuracy %': win_accuracies
-        })
-        
-        st.line_chart(chart_data.set_index('Week'), height=300)
-        
-        # Add 50% reference line context
-        if cumulative_accuracy > 55:
-            st.success("🔥 **BEATING THE MARKET!** You're consistently above 55% (professional level)")
-        elif cumulative_accuracy > 52.4:
-            st.info("📈 **PROFITABLE** Above break-even threshold (52.4% with juice)")
-        else:
-            st.warning("📊 Keep tracking - sample size is building")
-        
-        st.markdown("---")
-        
-        # Individual Week Results
-        st.subheader("📋 WEEK-BY-WEEK RESULTS")
-        
-        for week in sorted(weeks, key=lambda x: x['week'], reverse=True):
-            with st.expander(f"**WEEK {week['week']}** - {week['correct_winners']}/{week['games_predicted']} ({week['win_accuracy']:.1f}%) - Spread Error: {week['avg_spread_error']:.1f} pts"):
-                
-                col_summary1, col_summary2, col_summary3 = st.columns(3)
-                with col_summary1:
-                    st.metric("Games", week['games_predicted'])
-                with col_summary2:
-                    st.metric("Correct", week['correct_winners'])
-                with col_summary3:
-                    st.metric("Total Error", f"{week['avg_total_error']:.1f} pts")
-                
-                st.markdown("**GAMES:**")
-                
-                games = week.get('games', [])
-                for game in games:
-                    correct_emoji = "✅" if game['correct_winner'] else "❌"
-                    
-                    col_g1, col_g2 = st.columns([2, 1])
-                    
-                    with col_g1:
-                        st.write(f"{correct_emoji} **{game['away_team']} @ {game['home_team']}**")
-                        st.caption(f"Predicted: {game['away_team']} {game['predicted_away_score']} - {game['home_team']} {game['predicted_home_score']}")
-                        st.caption(f"Actual: {game['away_team']} {game['actual_away_score']} - {game['home_team']} {game['actual_home_score']}")
-                    
-                    with col_g2:
-                        st.caption(f"Spread Error: {abs(game['spread_error']):.1f}")
-                        st.caption(f"Total Error: {abs(game['total_error']):.1f}")
-                
-                st.caption(f"Report generated: {week.get('date', 'Unknown')}")
-        
-        st.markdown("---")
-        
-        # Best/Worst Performances
-        st.subheader("🏅 HIGHLIGHTS")
-        
-        col_best, col_worst = st.columns(2)
-        
-        with col_best:
-            st.markdown("**BEST WEEK:**")
-            best_week = max(weeks, key=lambda x: x['win_accuracy'])
-            st.info(f"Week {best_week['week']}: {best_week['win_accuracy']:.1f}% ({best_week['correct_winners']}/{best_week['games_predicted']})")
-        
-        with col_worst:
-            st.markdown("**MOST ACCURATE SPREAD:**")
-            most_accurate_week = min(weeks, key=lambda x: x['avg_spread_error'])
-            st.info(f"Week {most_accurate_week['week']}: {most_accurate_week['avg_spread_error']:.1f} pts avg error")
-
-elif page == "ℹ️ System Info":
-    st.header("ℹ️ SYSTEM INFORMATION")
-    st.markdown("---")
-    
-    # Weekly Update Button
-    st.subheader("🔄 DATA MANAGEMENT")
-    col_update1, col_update2 = st.columns([1, 2])
-    
-    with col_update1:
-        if st.button("🔄 RUN WEEKLY UPDATE", type="primary", use_container_width=True):
-            with st.spinner("Running weekly update... This may take 2-3 minutes..."):
-                try:
-                    import subprocess
-                    result = subprocess.run(
-                        ['python', 'weekly_nfl_update.py'],
-                        capture_output=True,
-                        text=True,
-                        timeout=300
-                    )
-                    
-                    if result.returncode == 0:
-                        st.success("✅ WEEKLY UPDATE COMPLETE!")
-                        st.info("Data and models have been updated. Refresh the page to see changes.")
-                        
-                        # Show update log if available
-                        try:
-                            with open('update_log.json', 'r') as f:
-                                log = json.load(f)
-                                st.caption(f"Updated: {log.get('timestamp', 'N/A')}")
-                        except:
-                            pass
-                        
-                        # Clear cache to reload new data
-                        st.cache_data.clear()
-                        st.cache_resource.clear()
-                    else:
-                        st.error(f"⚠️ UPDATE FAILED")
-                        st.code(result.stderr)
-                        
-                except subprocess.TimeoutExpired:
-                    st.error("⚠️ UPDATE TIMED OUT (>5 minutes)")
-                except Exception as e:
-                    st.error(f"⚠️ ERROR: {str(e)}")
-    
-    with col_update2:
-        st.markdown("""
-        **What this does:**
-        - Downloads latest NFL data
-        - Retrains all prediction models
-        - Updates player statistics
-        - Generates weekly accuracy report
-        - Typically takes 2-3 minutes
-        """)
-    
-    st.markdown("---")
+    st.header("🎯 CUSTOM GAME PREDICTION")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("FEATURES")
-        st.markdown("""
-        ✅ **ENSEMBLE MODELS** (3 per prediction)  
-        ✅ **CALIBRATED GAME PREDICTIONS**  
-        ✅ **SPLIT DEFENSE RANKINGS**  
-        ✅ **INJURY ADJUSTMENTS**  
-        ✅ **POINT-IN-TIME STATS** (no leakage)  
-        ✅ **WEEKLY ACCURACY REPORTS**
-        """)
+        away_team = st.selectbox("🏈 AWAY TEAM", available_teams, key='away')
     
     with col2:
-        st.subheader("DATA COVERAGE")
-        st.metric("TEAMS", len(available_teams))
-        st.metric("QBS", len(player_data.get('qb', {})))
-        st.metric("WRS/TES", len(player_data.get('wr', {})))
-        st.metric("RBS", len(player_data.get('rb', {})))
+        home_team = st.selectbox("🏠 HOME TEAM", available_teams, key='home')
+    
+    if st.button("🔮 PREDICT GAME", type="primary"):
+        if away_team == home_team:
+            st.error("❌ TEAMS MUST BE DIFFERENT")
+        else:
+            with st.spinner("⚙️ RUNNING PREDICTION..."):
+                base_prediction = prediction_system.predict_game(away_team, home_team, home_team=home_team)
+                
+                # Apply injury adjustments
+                prediction = integrate_injuries_into_game_prediction(
+                    base_prediction, 
+                    injury_system, 
+                    away_team, 
+                    home_team
+                )
+                
+                st.success("✅ PREDICTION COMPLETE")
+                
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    st.metric(f"{away_team} Score", f"{prediction['team1_score']:.1f}")
+                
+                with col2:
+                    st.metric(f"{home_team} Score", f"{prediction['team2_score']:.1f}")
+                
+                with col3:
+                    st.metric("Total Points", f"{prediction['total']:.1f}")
+                
+                with col4:
+                    spread_value = prediction['spread']
+                    spread_display = f"{home_team} {spread_value:+.1f}"
+                    st.metric("Spread", spread_display)
+                
+                st.caption(f"**METHOD:** {prediction.get('confidence', 'N/A')} | {prediction.get('method', 'ensemble').upper()}")
+                
+                # NEW: Display OL/DL matchup analysis
+                if prediction.get('ol_dl_matchup'):
+                    st.markdown("---")
+                    st.markdown("### 🏈 TRENCH WARFARE ANALYSIS")
+                    
+                    ol_dl = prediction['ol_dl_matchup']
+                    
+                    trench_col1, trench_col2, trench_col3 = st.columns(3)
+                    
+                    with trench_col1:
+                        st.metric(f"{home_team} OL Rank", f"#{ol_dl['ol_rank']}")
+                        st.caption(f"Score: {ol_dl['ol_score']:.1f}")
+                    
+                    with trench_col2:
+                        st.metric("Matchup Score", f"{ol_dl['matchup_score']:+.1f}")
+                        advantage = ol_dl['advantage']
+                        if advantage in ['strong_offense', 'offense']:
+                            st.success("Offense has edge")
+                        elif advantage in ['strong_defense', 'defense']:
+                            st.error("Defense has edge")
+                        else:
+                            st.info("Even matchup")
+                    
+                    with trench_col3:
+                        st.metric(f"{away_team} DL Rank", f"#{ol_dl['dl_rank']}")
+                        st.caption(f"Score: {ol_dl['dl_score']:.1f}")
+                    
+                    st.info(f"**📊 ANALYSIS:** {ol_dl['explanation']}")
+                
+                # Show injury adjustments if any
+                if prediction.get('injury_adjusted'):
+                    st.markdown("---")
+                    st.warning("⚠️ **INJURY ADJUSTMENTS APPLIED**")
+                    
+                    if prediction.get('away_adjustments'):
+                        st.markdown(f"**{away_team}:**")
+                        for adj in prediction['away_adjustments']:
+                            st.caption(f"• {adj}")
+                    
+                    if prediction.get('home_adjustments'):
+                        st.markdown(f"**{home_team}:**")
+                        for adj in prediction['home_adjustments']:
+                            st.caption(f"• {adj}")
+
+elif page == "🎲 Player Props":
+    st.header("🎲 PLAYER PROP PREDICTIONS")
+    
+    prop_type = st.radio(
+        "📋 SELECT PROP TYPE",
+        ["Passing Yards", "Receiving Yards", "Receptions", "Rushing Yards"],
+        horizontal=True
+    )
+    
+    if prop_type == "Passing Yards":
+        player_list = list(player_data.get('qb', {}).keys())
+        position = 'qb'
+        pred_func = prediction_system.predict_player_passing
+    elif prop_type == "Receiving Yards":
+        player_list = list(player_data.get('wr', {}).keys())
+        position = 'wr'
+        pred_func = prediction_system.predict_player_receiving
+    elif prop_type == "Receptions":
+        player_list = list(player_data.get('wr', {}).keys())
+        position = 'wr'
+        pred_func = prediction_system.predict_player_receptions
+    else:
+        player_list = list(player_data.get('rb', {}).keys())
+        position = 'rb'
+        pred_func = prediction_system.predict_player_rushing
+    
+    if not player_list:
+        st.warning(f"⚠️ NO {position.upper()} DATA AVAILABLE")
+        st.stop()
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        player_name = st.selectbox("🏃 SELECT PLAYER", sorted(player_list))
+    
+    with col2:
+        opponent = st.selectbox("🏈 OPPONENT", ['League Average'] + available_teams)
+    
+    if st.button("🔮 PREDICT PERFORMANCE", type="primary"):
+        player_stats = player_data[position][player_name]
+        opp_team = None if opponent == 'League Average' else opponent
+        
+        with st.spinner("⚙️ CALCULATING..."):
+            base_prediction, method = pred_func(player_stats, opp_team)
+            
+            if base_prediction is None:
+                st.error(f"❌ PREDICTION FAILED: {method}")
+            else:
+                # Apply injury adjustments
+                prediction, injury_note = integrate_injuries_into_player_prediction(
+                    base_prediction,
+                    injury_system,
+                    player_name,
+                    player_stats.get('team', ''),
+                   
+                )
+                
+                st.success("✅ PREDICTION COMPLETE")
+                
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    st.metric("PREDICTION", f"{prediction:.1f}")
+                
+                with col2:
+                    recent_avg = player_stats.get(f"{prop_type.lower().replace(' ', '_')}_L4", 0)
+                    if recent_avg > 0:
+                        diff = prediction - recent_avg
+                        st.metric("vs L4 AVG", f"{diff:+.1f}", delta=f"{diff:+.1f}")
+                
+                with col3:
+                    if opp_team and opp_team in prediction_system.defense_rankings:
+                        def_rank = prediction_system.defense_rankings[opp_team].get('pass_def_rank' if prop_type != "Rushing Yards" else 'rush_def_rank', 16)
+                        st.metric("Opp Def Rank", f"#{int(def_rank)}")
+                
+                st.caption(f"**METHOD:** {method}")
+                
+                if injury_note:
+                    st.warning(f"⚠️ **INJURY ADJUSTMENT:** {injury_note}")
+                
+                # Show recent performance
+                st.markdown("---")
+                st.markdown("### 📊 RECENT PERFORMANCE")
+                
+                perf_col1, perf_col2, perf_col3 = st.columns(3)
+                
+                with perf_col1:
+                    l4_key = f"{prop_type.lower().replace(' ', '_')}_L4"
+                    st.metric("Last 4 Games", f"{player_stats.get(l4_key, 0):.1f}")
+                
+                with perf_col2:
+                    l8_key = f"{prop_type.lower().replace(' ', '_')}_L8"
+                    st.metric("Last 8 Games", f"{player_stats.get(l8_key, 0):.1f}")
+                
+                with perf_col3:
+                    l16_key = f"{prop_type.lower().replace(' ', '_')}_L16"
+                    if l16_key in player_stats:
+                        st.metric("Last 16 Games", f"{player_stats.get(l16_key, 0):.1f}")
+
+elif page == "📈 Weekly Report":
+    st.header("📈 WEEKLY ANALYSIS REPORT")
+    
+    weekly_report = load_weekly_report()
+    
+    if not weekly_report:
+        st.warning("⚠️ NO WEEKLY REPORT AVAILABLE. RUN weekly_nfl_update.py")
+        st.stop()
+    
+    st.info(f"📅 **WEEK {weekly_report.get('week', 'N/A')}** | Generated: {weekly_report.get('generated_date', 'N/A')}")
+    
+    if 'betting_opportunities' in weekly_report:
+        st.markdown("## 💰 BETTING OPPORTUNITIES")
+        
+        for opp in weekly_report['betting_opportunities']:
+            with st.expander(f"🎯 {opp['game']}", expanded=True):
+                st.markdown(f"**TYPE:** {opp['type']}")
+                st.markdown(f"**ANGLE:** {opp['angle']}")
+                st.markdown(f"**CONFIDENCE:** {opp['confidence']}")
+                
+                if 'prediction' in opp:
+                    pred_col1, pred_col2 = st.columns(2)
+                    with pred_col1:
+                        st.metric("Predicted Total", f"{opp['prediction']:.1f}")
+                    with pred_col2:
+                        if 'vegas_line' in opp:
+                            st.metric("Vegas Line", f"{opp['vegas_line']:.1f}")
+    
+    if 'top_performers' in weekly_report:
+        st.markdown("---")
+        st.markdown("## ⭐ PROJECTED TOP PERFORMERS")
+        
+        perf_col1, perf_col2, perf_col3 = st.columns(3)
+        
+        with perf_col1:
+            st.markdown("### 🎯 QUARTERBACKS")
+            for qb in weekly_report['top_performers'].get('qbs', [])[:5]:
+                st.metric(qb['name'], f"{qb['prediction']:.1f} yds", f"vs {qb['opponent']}")
+        
+        with perf_col2:
+            st.markdown("### 🏃 RECEIVERS")
+            for wr in weekly_report['top_performers'].get('wrs', [])[:5]:
+                st.metric(wr['name'], f"{wr['prediction']:.1f} yds", f"vs {wr['opponent']}")
+        
+        with perf_col3:
+            st.markdown("### 💨 RUNNING BACKS")
+            for rb in weekly_report['top_performers'].get('rbs', [])[:5]:
+                st.metric(rb['name'], f"{rb['prediction']:.1f} yds", f"vs {rb['opponent']}")
+
+elif page == "🏆 Power Rankings":
+    st.header("🏆 NFL POWER RANKINGS")
+    st.caption("Teams ranked by predicted spread vs average NFL team on neutral field")
+    st.markdown("---")
+    
+    # Calculate power rankings for each team
+    power_rankings = []
+    
+    for team in available_teams:
+        team_stats = prediction_system.team_data.get(team, {})
+        
+        if not team_stats:
+            continue
+        
+        # Get EPA metrics
+        epa_off, epa_def = prediction_system.get_epa_for_team(team, 2025)
+        
+        # Get OL/DL rankings
+        ol_rank = 16
+        ol_score = 50.0
+        dl_rank = 16
+        dl_score = 50.0
+        
+        if team in prediction_system.ol_dl_rankings and '2025' in prediction_system.ol_dl_rankings[team]:
+            ol_data = prediction_system.ol_dl_rankings[team]['2025'].get('ol', {})
+            dl_data = prediction_system.ol_dl_rankings[team]['2025'].get('dl', {})
+            ol_rank = ol_data.get('rank', 16)
+            ol_score = ol_data.get('score', 50.0)
+            dl_rank = dl_data.get('rank', 16)
+            dl_score = dl_data.get('score', 50.0)
+        
+        # Calculate power rating using offensive/defensive efficiency
+        points_scored = team_stats.get('points_L4', 22.0)
+        points_allowed = team_stats.get('opp_points_L4', 22.0)
+        win_pct = team_stats.get('win_pct_L8', 0.5)
+        
+        # Calculate how much better/worse than league average (22 ppg)
+        offensive_advantage = (points_scored - 22.0) * 0.4
+        defensive_advantage = (22.0 - points_allowed) * 0.4
+        
+        # Add EPA contribution (scaled) - BOTH offense AND defense
+        epa_off_contribution = epa_off * 8  # Offensive EPA
+        epa_def_contribution = -epa_def * 8  # Defensive EPA (negative is good, so flip it)
+        
+        # Add OL/DL contribution (scaled)
+        ol_contribution = (ol_score - 50.0) * 0.05
+        dl_contribution = (dl_score - 50.0) * 0.05
+        
+        # Add win percentage adjustment
+        win_adjustment = (win_pct - 0.5) * 8  # 0.25 difference = 2 points
+        
+        # Combine all factors
+        power_rating = (offensive_advantage + defensive_advantage + 
+                       epa_off_contribution + epa_def_contribution + 
+                       ol_contribution + dl_contribution + 
+                       win_adjustment)
+        
+        
+        power_rankings.append({
+            'team': team,
+            'power_rating': power_rating,
+            'record': f"{int(team_stats.get('win_pct_L8', 0.5) * 8)}-{8 - int(team_stats.get('win_pct_L8', 0.5) * 8)}",
+            'points_L4': team_stats.get('points_L4', 22.0),
+            'opp_points_L4': team_stats.get('opp_points_L4', 22.0),
+            'epa_off': epa_off,
+            'epa_def': epa_def,
+            'ol_rank': ol_rank,
+            'ol_score': ol_score,
+            'dl_rank': dl_rank,
+            'dl_score': dl_score
+        })
+    
+    # Sort by power rating (descending)
+    power_rankings.sort(key=lambda x: x['power_rating'], reverse=True)
+    
+    # Display summary metrics
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        best_team = power_rankings[0]
+        st.metric("🥇 BEST TEAM", best_team['team'])
+        st.caption(f"Would be favored by {best_team['power_rating']:.1f} pts vs average team")
+    
+    with col2:
+        worst_team = power_rankings[-1]
+        st.metric("📉 WORST TEAM", worst_team['team'])
+        st.caption(f"Would be underdog by {abs(worst_team['power_rating']):.1f} pts vs average team")
+    
+    with col3:
+        avg_rating = np.mean([t['power_rating'] for t in power_rankings])
+        st.metric("SPREAD RANGE", f"{best_team['power_rating'] - worst_team['power_rating']:.1f} pts")
+        st.caption(f"Difference between best and worst")
     
     st.markdown("---")
-    st.subheader("PERFORMANCE TARGETS")
-    st.markdown("""
-    • **GAME PREDICTIONS:** 55-58% win accuracy  
-    • **SPREAD MAE:** ~10 points  
-    • **PLAYER PROPS:** Highly accurate vs closing lines
-    """)
+    
+    # Tier breakdown
+    st.subheader("📊 TIER BREAKDOWN")
+    
+    tier_col1, tier_col2, tier_col3, tier_col4 = st.columns(4)
+    
+    elite = [t for t in power_rankings if t['power_rating'] >= 7]
+    good = [t for t in power_rankings if 3 <= t['power_rating'] < 7]
+    average = [t for t in power_rankings if -3 <= t['power_rating'] < 3]
+    poor = [t for t in power_rankings if t['power_rating'] < -3]
+    
+    with tier_col1:
+        st.metric("🔥 ELITE", len(elite))
+        st.caption("≥ 7 pt favorites")
+    
+    with tier_col2:
+        st.metric("💪 GOOD", len(good))
+        st.caption("3-7 pt favorites")
+    
+    with tier_col3:
+        st.metric("📊 AVERAGE", len(average))
+        st.caption("±3 pts")
+    
+    with tier_col4:
+        st.metric("📉 POOR", len(poor))
+        st.caption("< -3 pts")
+    
     st.markdown("---")
-    st.subheader("METHODOLOGY")
-    st.markdown("""
-    **ENSEMBLE APPROACH:** Each prediction uses 3 separate models trained on different data splits  
-    **CALIBRATION:** Spread predictions are calibrated to historical performance  
-    **INJURY SYSTEM:** Manual tracking with automatic adjustments based on position importance  
-    **CROSS-SEASON STATS:** Rolling averages across multiple seasons for stability
-    """)
-    st.markdown("---")
-    st.caption("💡 Last updated: " + MODEL_UPDATE_DATE)
+    
+    # Display full rankings table
+    st.subheader("🏅 FULL RANKINGS")
+    
+    # Create rankings display
+    for idx, team_data in enumerate(power_rankings, 1):
+        # Determine tier badge and color
+        rating = team_data['power_rating']
+        if rating >= 7:
+            tier_badge = "🔥"
+            header_color = "#00C800"  # Green
+        elif rating >= 3:
+            tier_badge = "💪"
+            header_color = "#0047AB"  # Blue
+        elif rating >= -3:
+            tier_badge = "📊"
+            header_color = "#FFA500"  # Orange
+        else:
+            tier_badge = "📉"
+            header_color = "#CC0000"  # Red
+        
+        # Add visual separator between teams
+        if idx > 1:
+            st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Team header with colored border
+        st.markdown(f"""
+        <div style="background: linear-gradient(90deg, {header_color}22 0%, #1a1a1a 100%); 
+                    border-left: 6px solid {header_color}; 
+                    padding: 20px; 
+                    margin: 15px 0; 
+                    border-radius: 8px;">
+            <h2 style="margin: 0; color: white; font-family: 'Roboto Condensed', sans-serif;">
+                <span style="color: {header_color}; font-size: 1.2em;">#{idx}</span> 
+                {tier_badge} 
+                <span style="font-weight: 900;">{team_data['team']}</span>
+                <span style="color: {header_color}; font-size: 0.9em; margin-left: 15px;">({team_data['power_rating']:+.1f})</span>
+            </h2>
+            <p style="margin: 8px 0 0 0; color: #CCCCCC; font-size: 0.9em;">
+                Record: {team_data['record']} | Power Rating vs Average Team: {team_data['power_rating']:+.1f} pts
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Main metrics
+        metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
+        
+        with metric_col1:
+            st.metric("Power Rating", f"{team_data['power_rating']:+.1f}")
+            st.caption("vs Avg Team")
+        
+        with metric_col2:
+            st.metric("Record (L8)", team_data['record'])
+        
+        with metric_col3:
+            st.metric("PPG (L4)", f"{team_data['points_L4']:.1f}")
+            st.caption(f"Allow: {team_data['opp_points_L4']:.1f}")
+        
+        with metric_col4:
+            net_points = team_data['points_L4'] - team_data['opp_points_L4']
+            st.metric("Point Diff", f"{net_points:+.1f}")
+        
+        # Expandable advanced metrics
+        with st.expander("⚡ VIEW ADVANCED METRICS", expanded=False):
+            adv_col1, adv_col2, adv_col3 = st.columns(3)
+            
+            with adv_col1:
+                st.markdown("**EPA METRICS**")
+                st.markdown("---")
+                
+                st.markdown("**Offensive EPA**")
+                epa_off = team_data['epa_off']
+                if epa_off > 0.1:
+                    st.success(f"{epa_off:+.3f} EPA/Play")
+                    st.caption("✅ Above average offense")
+                elif epa_off < -0.1:
+                    st.error(f"{epa_off:+.3f} EPA/Play")
+                    st.caption("❌ Below average offense")
+                else:
+                    st.info(f"{epa_off:+.3f} EPA/Play")
+                    st.caption("📊 Average offense")
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                st.markdown("**Defensive EPA**")
+                epa_def = team_data['epa_def']
+                if epa_def < -0.1:
+                    st.success(f"{epa_def:+.3f} EPA/Play")
+                    st.caption("✅ Above average defense")
+                elif epa_def > 0.1:
+                    st.error(f"{epa_def:+.3f} EPA/Play")
+                    st.caption("❌ Below average defense")
+                else:
+                    st.info(f"{epa_def:+.3f} EPA/Play")
+                    st.caption("📊 Average defense")
+            
+            with adv_col2:
+                st.markdown("**OFFENSIVE LINE**")
+                st.markdown("---")
+                st.metric("National Rank", f"#{int(team_data['ol_rank'])}")
+                st.metric("OL Score", f"{team_data['ol_score']:.1f}")
+                
+                if team_data['ol_rank'] <= 10:
+                    st.caption("✅ Elite pass protection")
+                elif team_data['ol_rank'] <= 20:
+                    st.caption("📊 Average pass protection")
+                else:
+                    st.caption("❌ Struggles in pass pro")
+            
+            with adv_col3:
+                st.markdown("**DEFENSIVE LINE**")
+                st.markdown("---")
+                st.metric("National Rank", f"#{int(team_data['dl_rank'])}")
+                st.metric("DL Score", f"{team_data['dl_score']:.1f}")
+                
+                if team_data['dl_rank'] <= 10:
+                    st.caption("✅ Elite pass rush")
+                elif team_data['dl_rank'] <= 20:
+                    st.caption("📊 Average pass rush")
+                else:
+                    st.caption("❌ Struggles to pressure QB")
+        
+        # Divider between teams
+        st.markdown("---")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.info("💡 **Power Rating:** Predicted point spread if this team played an average NFL team on a neutral field. Positive = team would be favored, Negative = team would be underdog")
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("**🚀 PRODUCTION v2.1**")
-st.sidebar.markdown("**INJURY SYSTEM ACTIVE**")
-st.sidebar.markdown(f"**UPDATED:** {MODEL_UPDATE_DATE}")
+
+elif page == "📊 Season History":
+    st.header("📊 SEASON PERFORMANCE HISTORY")
+    
+    try:
+        with open('prediction_history.json', 'r') as f:
+            history = json.load(f)
+        
+        if not history or 'games' not in history:
+            st.warning("⚠️ NO HISTORICAL DATA AVAILABLE")
+            st.stop()
+        
+        games = history['games']
+        
+        # Calculate statistics
+        total_games = len(games)
+        
+        spread_correct = sum(1 for g in games if g.get('spread_correct', False))
+        total_correct = sum(1 for g in games if g.get('total_correct', False))
+        winner_correct = sum(1 for g in games if g.get('winner_correct', False))
+        
+        spread_acc = (spread_correct / total_games * 100) if total_games > 0 else 0
+        total_acc = (total_correct / total_games * 100) if total_games > 0 else 0
+        winner_acc = (winner_correct / total_games * 100) if total_games > 0 else 0
+        
+        # Display overall stats
+        st.markdown("## 🎯 OVERALL ACCURACY")
+        
+        stat_col1, stat_col2, stat_col3, stat_col4 = st.columns(4)
+        
+        with stat_col1:
+            st.metric("Total Games", total_games)
+        
+        with stat_col2:
+            st.metric("Spread Accuracy", f"{spread_acc:.1f}%", f"{spread_correct}/{total_games}")
+        
+        with stat_col3:
+            st.metric("Total Accuracy", f"{total_acc:.1f}%", f"{total_correct}/{total_games}")
+        
+        with stat_col4:
+            st.metric("Winner Accuracy", f"{winner_acc:.1f}%", f"{winner_correct}/{total_games}")
+        
+        # Detailed game results
+        st.markdown("---")
+        st.markdown("## 📋 DETAILED RESULTS")
+        
+        for game in sorted(games, key=lambda x: x.get('date', ''), reverse=True)[:20]:
+            with st.expander(f"{game.get('date', 'N/A')} - {game['away_team']} @ {game['home_team']}"):
+                result_col1, result_col2, result_col3 = st.columns(3)
+                
+                with result_col1:
+                    st.markdown("**PREDICTED**")
+                    st.caption(f"{game['away_team']}: {game['predicted_away_score']:.1f}")
+                    st.caption(f"{game['home_team']}: {game['predicted_home_score']:.1f}")
+                    st.caption(f"Total: {game['predicted_total']:.1f}")
+                    st.caption(f"Spread: {game['predicted_spread']:+.1f}")
+                
+                with result_col2:
+                    st.markdown("**ACTUAL**")
+                    st.caption(f"{game['away_team']}: {game.get('actual_away_score', 'N/A')}")
+                    st.caption(f"{game['home_team']}: {game.get('actual_home_score', 'N/A')}")
+                    st.caption(f"Total: {game.get('actual_total', 'N/A')}")
+                    st.caption(f"Spread: {game.get('actual_spread', 'N/A')}")
+                
+                with result_col3:
+                    st.markdown("**RESULTS**")
+                    if game.get('spread_correct'):
+                        st.success("✅ Spread")
+                    else:
+                        st.error("❌ Spread")
+                    
+                    if game.get('total_correct'):
+                        st.success("✅ Total")
+                    else:
+                        st.error("❌ Total")
+                    
+                    if game.get('winner_correct'):
+                        st.success("✅ Winner")
+                    else:
+                        st.error("❌ Winner")
+    
+    except FileNotFoundError:
+        st.warning("⚠️ NO PREDICTION HISTORY FILE FOUND")
+
+elif page == "ℹ️ System Info":
+    st.header("ℹ️ SYSTEM INFORMATION")
+    
+    st.markdown("## 🤖 MODEL ARCHITECTURE")
+    
+    st.markdown("""
+    **VERSION 2.2** introduces advanced analytics:
+    - ⚡ **EPA (Expected Points Added)** metrics for offensive efficiency
+    - 🏈 **OL/DL Rankings** for trench warfare analysis
+    - 🎯 **Enhanced game predictions** with line battle context
+    
+    The system uses **ensemble machine learning** with 3 models per prediction type:
+    - 🎯 **Game Totals & Spreads:** 20-feature models with EPA and OL/DL data
+    - 🏈 **Player Props:** Position-specific models with matchup analysis
+    - 🛡️ **Defense Rankings:** Dynamic opponent strength ratings
+    - 🤕 **Injury System:** Real-time adjustments for player availability
+    """)
+    
+    st.markdown("---")
+    st.markdown("## 📊 CURRENT STATUS")
+    
+    status_col1, status_col2 = st.columns(2)
+    
+    with status_col1:
+        st.metric("Teams Loaded", system_status['teams_loaded'])
+        st.metric("Ensemble Models", system_status['ensemble_models'])
+        st.metric("Total Sub-Models", system_status['total_sub_models'])
+    
+    with status_col2:
+        st.metric("Defense Rankings", system_status['defense_rankings'])
+        st.metric("EPA Teams", system_status['epa_teams'])
+        st.metric("OL/DL Teams", system_status['ol_dl_teams'])
+    
+    st.caption(f"Last Update: {system_status['last_update']}")
+    
+    st.markdown("---")
+    st.markdown("## 📚 FEATURE DETAILS")
+    
+    with st.expander("⚡ EPA METRICS"):
+        st.markdown("""
+        **Expected Points Added (EPA)** measures offensive efficiency:
+        - Positive EPA = efficient offense
+        - Negative EPA = struggling offense
+        - Integrated into game prediction models
+        - Helps identify high-powered vs low-powered offenses
+        """)
+    
+    with st.expander("🏈 OL/DL RANKINGS"):
+        st.markdown("""
+        **Offensive Line vs Defensive Line** matchup analysis:
+        - OL Score: Pass/run blocking effectiveness
+        - DL Score: Pressure and run stopping ability
+        - Matchup Score: OL - DL difference
+        - Helps predict QB protection and running game success
+        
+        **Matchup Interpretation:**
+        - +15 or more: Strong offensive line advantage
+        - +5 to +15: Moderate offensive edge
+        - -5 to +5: Even matchup
+        - -15 to -5: Moderate defensive edge  
+        - -15 or worse: Strong defensive line dominance
+        """)
+    
+    with st.expander("🎯 GAME PREDICTION MODEL"):
+        st.markdown("""
+        **20-Feature Ensemble Model:**
+        - Home/Away offensive stats (points, yards, turnovers)
+        - Recent form (L4 and L8 game averages)
+        - Win percentages and momentum
+        - Rest days and division rivalry factors
+        - ⚡ EPA offensive efficiency (NEW)
+        - 🏈 OL/DL matchup score (NEW)
+        
+        **Output:** Total points and point spread with calibration
+        """)
+    
+    with st.expander("🏃 PLAYER PREDICTION MODELS"):
+        st.markdown("""
+        **Position-Specific Models:**
+        
+        **QB Model (11 features):**
+        - Passing yards (L4, L8, L16)
+        - Completion percentage trends
+        - Attempt volume
+        - TD and INT rates
+        - Opponent pass defense rank
+        
+        **WR Model (12 features):**
+        - Receiving yards (L4, L8, L16)
+        - Reception totals and trends
+        - Yards per reception
+        - Target share
+        - TD rate
+        - Opponent pass defense rank
+        
+        **RB Model (10 features):**
+        - Rushing yards (L4, L8, L16)
+        - Attempt volume
+        - Yards per carry
+        - TD rate
+        - Opponent rush defense rank
+        """)
+    
+    with st.expander("🤕 INJURY ADJUSTMENT SYSTEM"):
+        st.markdown("""
+        **Dynamic Injury Management:**
+        - Manual injury tracking by position
+        - Severity levels: Minor (5%), Moderate (15%), Severe (30%)
+        - Automatic prediction adjustments
+        - Team-level game score impacts
+        - Player-level prop adjustments
+        
+        **Integration:**
+        - Game predictions account for key player absences
+        - Player props automatically adjusted for injury status
+        - Visual warnings when adjustments applied
+        """)
+    
+    st.markdown("---")
+    st.markdown("## 🔄 UPDATE WORKFLOW")
+    
+    st.markdown("""
+    **Weekly Update Process:**
+    1. 📥 Fetch latest NFL data (nfl_data_fetcher.py)
+    2. 🔄 Update team statistics and rankings
+    3. ⚡ Calculate EPA metrics
+    4. 🏈 Update OL/DL rankings
+    5. 🤖 Retrain all ensemble models
+    6. 📊 Generate weekly predictions
+    7. 💾 Save to JSON files
+    8. 🚀 Deploy to Streamlit
+    
+    **Run:** `python weekly_nfl_update.py`
+    """)
+    
+    st.markdown("---")
+    st.markdown("## ⚙️ TECHNICAL STACK")
+    
+    tech_col1, tech_col2 = st.columns(2)
+    
+    with tech_col1:
+        st.markdown("""
+        **Machine Learning:**
+        - Scikit-learn ensemble models
+        - 3-model voting for robustness
+        - Feature engineering pipeline
+        - Model calibration system
+        """)
+    
+    with tech_col2:
+        st.markdown("""
+        **Data & Deployment:**
+        - JSON data storage
+        - Streamlit web interface
+        - Real-time prediction engine
+        - Modular Python architecture
+        """)
+    
+    st.markdown("---")
+    st.markdown("## 📈 PERFORMANCE TARGETS")
+    
+    perf_col1, perf_col2, perf_col3 = st.columns(3)
+    
+    with perf_col1:
+        st.markdown("### 🎯 SPREAD")
+        st.markdown("**Target:** 52.8%+")
+        st.caption("Break-even for -110 odds")
+    
+    with perf_col2:
+        st.markdown("### 📊 TOTAL")
+        st.markdown("**Target:** 52.8%+")
+        st.caption("Break-even for -110 odds")
+    
+    with perf_col3:
+        st.markdown("### 🏆 WINNER")
+        st.markdown("**Target:** 65%+")
+        st.caption("Straight up accuracy")
+    
+    st.markdown("---")
+    st.info("💡 **TIP:** Run `python weekly_nfl_update.py` every Monday to refresh all data and predictions for the upcoming week.")

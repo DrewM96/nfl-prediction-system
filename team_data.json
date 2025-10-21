@@ -1,21 +1,21 @@
 {
   "KC": {
-    "points_L4": 29.25,
-    "points_L8": 23.0,
-    "opp_points_L4": 19.25,
-    "opp_points_L8": 21.5,
-    "yards_L4": 379.75,
+    "points_L4": 31.5,
+    "points_L8": 23.25,
+    "opp_points_L4": 17.0,
+    "opp_points_L8": 20.25,
+    "yards_L4": 411.75,
     "win_pct_L8": 0.5,
     "turnovers_L4": 0.25
   },
   "ATL": {
-    "points_L4": 19.0,
-    "points_L8": 23.375,
-    "opp_points_L4": 21.5,
-    "opp_points_L8": 22.0,
-    "yards_L4": 362.75,
-    "win_pct_L8": 0.5,
-    "turnovers_L4": 1.75
+    "points_L4": 17.0,
+    "points_L8": 21.5,
+    "opp_points_L4": 22.75,
+    "opp_points_L8": 24.25,
+    "yards_L4": 375.5,
+    "win_pct_L8": 0.375,
+    "turnovers_L4": 1.5
   },
   "BAL": {
     "points_L4": 15.75,
@@ -27,94 +27,94 @@
     "turnovers_L4": 2.25
   },
   "CLE": {
-    "points_L4": 12.25,
-    "points_L8": 11.875,
-    "opp_points_L4": 22.0,
-    "opp_points_L8": 25.125,
-    "yards_L4": 260.0,
-    "win_pct_L8": 0.125,
-    "turnovers_L4": 1.0
+    "points_L4": 16.75,
+    "points_L8": 15.375,
+    "opp_points_L4": 21.0,
+    "opp_points_L8": 23.375,
+    "yards_L4": 256.25,
+    "win_pct_L8": 0.25,
+    "turnovers_L4": 0.75
   },
   "IND": {
-    "points_L4": 33.0,
-    "points_L8": 31.625,
-    "opp_points_L4": 20.0,
-    "opp_points_L8": 23.0,
-    "yards_L4": 343.0,
-    "win_pct_L8": 0.75,
+    "points_L4": 32.25,
+    "points_L8": 32.25,
+    "opp_points_L4": 21.0,
+    "opp_points_L8": 20.375,
+    "yards_L4": 352.5,
+    "win_pct_L8": 0.875,
     "turnovers_L4": 1.0
   },
   "MIN": {
-    "points_L4": 24.0,
-    "points_L8": 23.25,
-    "opp_points_L4": 18.25,
-    "opp_points_L8": 22.125,
-    "yards_L4": 318.25,
-    "win_pct_L8": 0.625,
-    "turnovers_L4": 1.75
+    "points_L4": 28.0,
+    "points_L8": 22.625,
+    "opp_points_L4": 19.75,
+    "opp_points_L8": 22.625,
+    "yards_L4": 365.5,
+    "win_pct_L8": 0.5,
+    "turnovers_L4": 1.5
   },
   "NO": {
-    "points_L4": 19.25,
-    "points_L8": 17.5,
-    "opp_points_L4": 28.5,
-    "opp_points_L8": 26.5,
-    "yards_L4": 302.5,
+    "points_L4": 19.5,
+    "points_L8": 18.0,
+    "opp_points_L4": 24.0,
+    "opp_points_L8": 26.625,
+    "yards_L4": 294.75,
     "win_pct_L8": 0.125,
-    "turnovers_L4": 0.75
+    "turnovers_L4": 1.5
   },
   "PIT": {
-    "points_L4": 21.25,
-    "points_L8": 20.375,
-    "opp_points_L4": 18.75,
-    "opp_points_L8": 23.625,
-    "yards_L4": 280.0,
+    "points_L4": 24.75,
+    "points_L8": 22.125,
+    "opp_points_L4": 19.25,
+    "opp_points_L8": 23.5,
+    "yards_L4": 311.75,
     "win_pct_L8": 0.5,
     "turnovers_L4": 0.75
   },
   "WAS": {
-    "points_L4": 28.25,
-    "points_L8": 27.875,
-    "opp_points_L4": 23.75,
-    "opp_points_L8": 22.125,
-    "yards_L4": 329.25,
-    "win_pct_L8": 0.75,
-    "turnovers_L4": 0.75
+    "points_L4": 25.0,
+    "points_L8": 25.375,
+    "opp_points_L4": 28.25,
+    "opp_points_L8": 23.625,
+    "yards_L4": 338.75,
+    "win_pct_L8": 0.5,
+    "turnovers_L4": 1.75
   },
   "CHI": {
-    "points_L4": 25.25,
-    "points_L8": 19.625,
-    "opp_points_L4": 29.25,
-    "opp_points_L8": 26.125,
-    "yards_L4": 328.0,
-    "win_pct_L8": 0.375,
-    "turnovers_L4": 1.0
-  },
-  "DEN": {
-    "points_L4": 20.5,
-    "points_L8": 24.0,
-    "opp_points_L4": 13.5,
-    "opp_points_L8": 15.625,
-    "yards_L4": 345.75,
+    "points_L4": 26.75,
+    "points_L8": 22.375,
+    "opp_points_L4": 19.0,
+    "opp_points_L8": 22.875,
+    "yards_L4": 355.75,
     "win_pct_L8": 0.625,
     "turnovers_L4": 0.5
   },
-  "LAC": {
-    "points_L4": 20.0,
+  "DEN": {
+    "points_L4": 23.75,
     "points_L8": 25.125,
-    "opp_points_L4": 23.75,
-    "opp_points_L8": 19.0,
-    "yards_L4": 363.75,
+    "opp_points_L4": 15.75,
+    "opp_points_L8": 15.875,
+    "yards_L4": 382.25,
     "win_pct_L8": 0.75,
+    "turnovers_L4": 0.5
+  },
+  "LAC": {
+    "points_L4": 20.25,
+    "points_L8": 23.125,
+    "opp_points_L4": 28.25,
+    "opp_points_L8": 22.875,
+    "yards_L4": 381.0,
+    "win_pct_L8": 0.625,
     "turnovers_L4": 1.75
   },
   "NE": {
-    "points_L4": 26.0,
-    "points_L8": 22.5,
-    "opp_points_L4": 18.25,
-    "opp_points_L8": 22.0,
-    "yards_L4": 337.25,
-    "win_pct_L8": 0.625,
-    "turnovers_L4": 1.5
+    "points_L4": 30.25,
+    "points_L8": 25.5,
+    "opp_points_L4": 16.25,
+    "opp_points_L8": 18.625,
+    "yards_L4": 341.75,
+    "win_pct_L8": 0.75,
+    "turnovers_L4": 0.25
   },
   "SEA": {
     "points_L4": 30.5,
@@ -126,49 +126,49 @@
     "turnovers_L4": 0.75
   },
   "NYG": {
-    "points_L4": 19.5,
-    "points_L8": 22.375,
-    "opp_points_L4": 20.75,
+    "points_L4": 25.25,
+    "points_L8": 20.75,
+    "opp_points_L4": 23.5,
     "opp_points_L8": 24.625,
-    "yards_L4": 308.5,
-    "win_pct_L8": 0.375,
-    "turnovers_L4": 1.75
+    "yards_L4": 335.0,
+    "win_pct_L8": 0.25,
+    "turnovers_L4": 1.5
   },
   "NYJ": {
-    "points_L4": 20.25,
-    "points_L8": 21.125,
-    "opp_points_L4": 26.5,
-    "opp_points_L8": 28.75,
-    "yards_L4": 280.0,
+    "points_L4": 15.0,
+    "points_L8": 20.125,
+    "opp_points_L4": 22.5,
+    "opp_points_L8": 25.375,
+    "yards_L4": 268.25,
     "win_pct_L8": 0.125,
     "turnovers_L4": 1.5
   },
   "PHI": {
-    "points_L4": 24.5,
-    "points_L8": 25.375,
-    "opp_points_L4": 26.5,
-    "opp_points_L8": 20.375,
-    "yards_L4": 282.25,
+    "points_L4": 23.25,
+    "points_L8": 23.75,
+    "opp_points_L4": 25.5,
+    "opp_points_L8": 22.25,
+    "yards_L4": 300.5,
     "win_pct_L8": 0.75,
-    "turnovers_L4": 0.75
+    "turnovers_L4": 0.5
   },
   "BUF": {
-    "points_L4": 28.0,
-    "points_L8": 29.125,
-    "opp_points_L4": 18.25,
-    "opp_points_L8": 21.375,
-    "yards_L4": 370.5,
-    "win_pct_L8": 0.75,
-    "turnovers_L4": 1.0
+    "points_L4": 24.0,
+    "points_L8": 27.875,
+    "opp_points_L4": 21.75,
+    "opp_points_L8": 21.75,
+    "yards_L4": 342.5,
+    "win_pct_L8": 0.625,
+    "turnovers_L4": 1.5
   },
   "CIN": {
-    "points_L4": 13.75,
-    "points_L8": 19.0,
-    "opp_points_L4": 35.0,
-    "opp_points_L8": 28.0,
-    "yards_L4": 230.5,
+    "points_L4": 19.5,
+    "points_L8": 19.375,
+    "opp_points_L4": 30.75,
+    "opp_points_L8": 28.875,
+    "yards_L4": 305.25,
     "win_pct_L8": 0.5,
-    "turnovers_L4": 2.0
+    "turnovers_L4": 0.75
   },
   "DET": {
     "points_L4": 31.5,
@@ -189,13 +189,13 @@
     "turnovers_L4": 0.75
   },
   "JAX": {
-    "points_L4": 21.5,
-    "points_L8": 22.75,
-    "opp_points_L4": 19.75,
-    "opp_points_L8": 19.875,
-    "yards_L4": 302.0,
-    "win_pct_L8": 0.625,
-    "turnovers_L4": 0.75
+    "points_L4": 19.0,
+    "points_L8": 21.125,
+    "opp_points_L4": 26.0,
+    "opp_points_L8": 22.625,
+    "yards_L4": 318.75,
+    "win_pct_L8": 0.5,
+    "turnovers_L4": 0.5
   },
   "TB": {
     "points_L4": 30.5,
@@ -207,84 +207,84 @@
     "turnovers_L4": 0.5
   },
   "TEN": {
-    "points_L4": 13.0,
+    "points_L4": 11.25,
     "points_L8": 13.75,
-    "opp_points_L4": 27.0,
-    "opp_points_L8": 25.5,
-    "yards_L4": 252.25,
+    "opp_points_L4": 24.5,
+    "opp_points_L8": 26.875,
+    "yards_L4": 245.5,
     "win_pct_L8": 0.125,
-    "turnovers_L4": 2.0
+    "turnovers_L4": 2.25
   },
   "ARI": {
-    "points_L4": 20.75,
-    "points_L8": 23.25,
-    "opp_points_L4": 23.0,
-    "opp_points_L8": 20.5,
-    "yards_L4": 318.25,
+    "points_L4": 22.75,
+    "points_L8": 25.0,
+    "opp_points_L4": 25.75,
+    "opp_points_L8": 22.25,
+    "yards_L4": 335.75,
     "win_pct_L8": 0.375,
-    "turnovers_L4": 1.5
+    "turnovers_L4": 1.75
   },
   "LA": {
-    "points_L4": 23.25,
-    "points_L8": 22.25,
-    "opp_points_L4": 20.5,
-    "opp_points_L8": 18.625,
-    "yards_L4": 378.75,
+    "points_L4": 25.5,
+    "points_L8": 25.0,
+    "opp_points_L4": 14.0,
+    "opp_points_L8": 18.375,
+    "yards_L4": 357.5,
     "win_pct_L8": 0.625,
-    "turnovers_L4": 1.25
-  },
-  "DAL": {
-    "points_L4": 29.5,
-    "points_L8": 25.5,
-    "opp_points_L4": 30.75,
-    "opp_points_L8": 31.0,
-    "yards_L4": 385.5,
-    "win_pct_L8": 0.25,
     "turnovers_L4": 1.0
   },
+  "DAL": {
+    "points_L4": 37.0,
+    "points_L8": 30.125,
+    "opp_points_L4": 28.5,
+    "opp_points_L8": 28.625,
+    "yards_L4": 388.25,
+    "win_pct_L8": 0.375,
+    "turnovers_L4": 0.0
+  },
   "CAR": {
-    "points_L4": 25.0,
-    "points_L8": 23.75,
-    "opp_points_L4": 23.25,
-    "opp_points_L8": 29.0,
-    "yards_L4": 344.5,
-    "win_pct_L8": 0.5,
+    "points_L4": 20.75,
+    "points_L8": 23.625,
+    "opp_points_L4": 24.75,
+    "opp_points_L8": 23.75,
+    "yards_L4": 364.0,
+    "win_pct_L8": 0.625,
     "turnovers_L4": 0.75
   },
   "SF": {
-    "points_L4": 20.5,
-    "points_L8": 22.875,
-    "opp_points_L4": 23.5,
-    "opp_points_L8": 26.875,
-    "yards_L4": 379.0,
-    "win_pct_L8": 0.5,
+    "points_L4": 21.5,
+    "points_L8": 21.125,
+    "opp_points_L4": 22.25,
+    "opp_points_L8": 23.125,
+    "yards_L4": 371.25,
+    "win_pct_L8": 0.625,
     "turnovers_L4": 1.75
   },
   "GB": {
     "points_L4": 26.0,
-    "points_L8": 26.5,
-    "opp_points_L4": 22.25,
-    "opp_points_L8": 19.125,
-    "yards_L4": 383.0,
+    "points_L8": 25.625,
+    "opp_points_L4": 23.5,
+    "opp_points_L8": 22.0,
+    "yards_L4": 347.5,
     "win_pct_L8": 0.5,
     "turnovers_L4": 0.75
   },
   "MIA": {
-    "points_L4": 24.75,
-    "points_L8": 21.75,
+    "points_L4": 21.0,
+    "points_L8": 20.0,
     "opp_points_L4": 27.0,
-    "opp_points_L8": 26.125,
-    "yards_L4": 291.25,
-    "win_pct_L8": 0.25,
-    "turnovers_L4": 1.0
+    "opp_points_L8": 29.625,
+    "yards_L4": 277.0,
+    "win_pct_L8": 0.125,
+    "turnovers_L4": 1.75
   },
   "LV": {
-    "points_L4": 18.5,
-    "points_L8": 18.5,
-    "opp_points_L4": 29.0,
-    "opp_points_L8": 24.125,
-    "yards_L4": 308.75,
-    "win_pct_L8": 0.375,
-    "turnovers_L4": 1.75
+    "points_L4": 12.5,
+    "points_L8": 15.375,
+    "opp_points_L4": 26.5,
+    "opp_points_L8": 26.75,
+    "yards_L4": 243.5,
+    "win_pct_L8": 0.25,
+    "turnovers_L4": 2.0
   }
 }

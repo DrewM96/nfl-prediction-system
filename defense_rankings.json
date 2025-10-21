@@ -1,130 +1,130 @@
 {
   "ARI": {
-    "pass_def_rank": 15,
-    "rush_def_rank": 17
+    "pass_def_rank": 13,
+    "rush_def_rank": 16
   },
   "ATL": {
     "pass_def_rank": 2,
-    "rush_def_rank": 26
+    "rush_def_rank": 25
   },
   "BAL": {
-    "pass_def_rank": 21,
+    "pass_def_rank": 24,
     "rush_def_rank": 24
   },
   "BUF": {
-    "pass_def_rank": 8,
+    "pass_def_rank": 7,
     "rush_def_rank": 32
   },
   "CAR": {
-    "pass_def_rank": 24,
+    "pass_def_rank": 17,
     "rush_def_rank": 15
   },
   "CHI": {
-    "pass_def_rank": 29,
+    "pass_def_rank": 28,
     "rush_def_rank": 30
   },
   "CIN": {
-    "pass_def_rank": 30,
-    "rush_def_rank": 19
+    "pass_def_rank": 32,
+    "rush_def_rank": 23
   },
   "CLE": {
-    "pass_def_rank": 13,
-    "rush_def_rank": 1
+    "pass_def_rank": 8,
+    "rush_def_rank": 2
   },
   "DAL": {
-    "pass_def_rank": 32,
+    "pass_def_rank": 31,
     "rush_def_rank": 27
   },
   "DEN": {
     "pass_def_rank": 1,
-    "rush_def_rank": 7
+    "rush_def_rank": 5
   },
   "DET": {
-    "pass_def_rank": 18,
-    "rush_def_rank": 13
+    "pass_def_rank": 9,
+    "rush_def_rank": 11
   },
   "GB": {
     "pass_def_rank": 3,
     "rush_def_rank": 4
   },
   "HOU": {
-    "pass_def_rank": 7,
-    "rush_def_rank": 8
+    "pass_def_rank": 6,
+    "rush_def_rank": 7
   },
   "IND": {
-    "pass_def_rank": 11,
-    "rush_def_rank": 16
+    "pass_def_rank": 15,
+    "rush_def_rank": 13
   },
   "JAX": {
-    "pass_def_rank": 23,
-    "rush_def_rank": 14
+    "pass_def_rank": 22,
+    "rush_def_rank": 12
   },
   "KC": {
-    "pass_def_rank": 16,
-    "rush_def_rank": 25
+    "pass_def_rank": 11,
+    "rush_def_rank": 22
   },
   "LA": {
-    "pass_def_rank": 6,
+    "pass_def_rank": 4,
     "rush_def_rank": 6
   },
   "LAC": {
-    "pass_def_rank": 5,
+    "pass_def_rank": 10,
     "rush_def_rank": 28
   },
   "LV": {
-    "pass_def_rank": 12,
+    "pass_def_rank": 18,
     "rush_def_rank": 10
   },
   "MIA": {
-    "pass_def_rank": 28,
-    "rush_def_rank": 31
+    "pass_def_rank": 27,
+    "rush_def_rank": 29
   },
   "MIN": {
-    "pass_def_rank": 4,
-    "rush_def_rank": 21
+    "pass_def_rank": 19,
+    "rush_def_rank": 14
   },
   "NE": {
-    "pass_def_rank": 31,
+    "pass_def_rank": 29,
     "rush_def_rank": 3
   },
   "NO": {
     "pass_def_rank": 26,
-    "rush_def_rank": 11
+    "rush_def_rank": 18
   },
   "NYG": {
-    "pass_def_rank": 17,
-    "rush_def_rank": 29
+    "pass_def_rank": 12,
+    "rush_def_rank": 31
   },
   "NYJ": {
-    "pass_def_rank": 25,
-    "rush_def_rank": 20
+    "pass_def_rank": 23,
+    "rush_def_rank": 17
   },
   "PHI": {
-    "pass_def_rank": 14,
-    "rush_def_rank": 22
+    "pass_def_rank": 16,
+    "rush_def_rank": 21
   },
   "PIT": {
-    "pass_def_rank": 10,
-    "rush_def_rank": 9
+    "pass_def_rank": 14,
+    "rush_def_rank": 19
   },
   "SEA": {
-    "pass_def_rank": 9,
-    "rush_def_rank": 2
+    "pass_def_rank": 5,
+    "rush_def_rank": 1
   },
   "SF": {
     "pass_def_rank": 20,
-    "rush_def_rank": 12
+    "rush_def_rank": 9
   },
   "TB": {
-    "pass_def_rank": 19,
-    "rush_def_rank": 5
+    "pass_def_rank": 21,
+    "rush_def_rank": 8
   },
   "TEN": {
-    "pass_def_rank": 22,
-    "rush_def_rank": 23
+    "pass_def_rank": 25,
+    "rush_def_rank": 26
   },
   "WAS": {
-    "pass_def_rank": 27,
-    "rush_def_rank": 18
+    "pass_def_rank": 30,
+    "rush_def_rank": 20
   }
 }

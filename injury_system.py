@@ -313,69 +313,99 @@ def render_injury_manager(injury_system, available_teams):
                 st.rerun()
 
 # Example integration into your existing prediction code:
-def integrate_injuries_into_game_prediction(predictor, injury_system, team1, team2, home_team):
+def integrate_injuries_into_game_prediction(base_prediction, injury_system, team1, team2, home_team):
     """
-    FIXED: Wrapper function that adds injury adjustments to game predictions
-    Use this in place of predictor.predict_game()
-    """
-    # Get base prediction
-    base_prediction = predictor.predict_game(team1, team2, home_team)
-    
-    # Determine home and away teams
-    if home_team == team1:
-        home_team_name = team1
-        away_team_name = team2
-    else:
-        home_team_name = team2
-        away_team_name = team1
-    
-    # Create prediction in format expected by injury system
-    # The base_prediction already has correct team1_score and team2_score
-    # We need to map them to home/away for the injury adjustment
-    prediction_for_adjustment = {
-        'home_score': base_prediction['team1_score'] if team1 == home_team_name else base_prediction['team2_score'],
-        'away_score': base_prediction['team2_score'] if team2 == away_team_name else base_prediction['team1_score'],
-        'spread': base_prediction['spread'],
-        'total': base_prediction['total']
-    }
-    
-    # Apply injury adjustments (returns adjusted home_score and away_score)
-    adjusted = injury_system.adjust_game_prediction(
-        prediction_for_adjustment,
-        home_team_name,
-        away_team_name
-    )
-    
-    # FIXED: Map adjusted home/away scores back to team1/team2 correctly
-    if team1 == home_team_name:
-        # team1 is home, team2 is away
-        adjusted_team1_score = adjusted['home_score']
-        adjusted_team2_score = adjusted['away_score']
-    else:
-        # team1 is away, team2 is home
-        adjusted_team1_score = adjusted['away_score']
-        adjusted_team2_score = adjusted['home_score']
-    
-    # Merge back into original format
-    base_prediction.update({
-        'team1_score': adjusted_team1_score,
-        'team2_score': adjusted_team2_score,
-        'spread': adjusted['spread'],
-        'total': adjusted['total'],
-        'injury_adjusted': adjusted['injury_adjusted'],
-        'adjustment_note': adjusted['adjustment_note'],
-        'original_spread': adjusted['original_spread'] if adjusted['injury_adjusted'] else None
-    })
-    
-    return base_prediction
+    Wrapper: apply injury adjustments to an already-computed prediction dict.
 
-def integrate_injuries_into_player_prediction(injury_system, prediction, player_name, team):
+    Expected `base_prediction` format (as produced by ProductionGamePredictor.predict_game):
+      {
+        'team1': <team1_code>,
+        'team1_score': <float>,
+        'team2': <team2_code>,
+        'team2_score': <float>,
+        'spread': <float>,
+        'total': <float>,
+        'home_team': <home_team_code>,
+        'away_team': <away_team_code>,
+        ...
+      }
+
+    Returns: adjusted prediction (same dict updated) — matches how app.py calls this function.
     """
-    Wrapper for player predictions with injury adjustments
+    try:
+        # Defensive copy so we don't mutate caller's dict unexpectedly
+        pred = dict(base_prediction)
+        # Determine which team is home/away according to the argument
+        if home_team == team1:
+            home_team_name = team1
+            away_team_name = team2
+        else:
+            home_team_name = team2
+            away_team_name = team1
+
+        # Map existing prediction into home/away scores for the injury system
+        # Handle both shapes where team1/2 may represent home/away already
+        if pred.get('home_team') == home_team_name:
+            home_score = float(pred.get('team2_score') if pred.get('team2') == home_team_name else pred.get('team1_score'))
+            away_score = float(pred.get('team1_score') if pred.get('team1') == away_team_name else pred.get('team2_score'))
+        else:
+            # Fallback: infer by comparing names
+            home_score = float(pred.get('team1_score') if team1 == home_team_name else pred.get('team2_score'))
+            away_score = float(pred.get('team2_score') if team2 == away_team_name else pred.get('team1_score'))
+
+        prediction_for_adjustment = {
+            'home_score': home_score,
+            'away_score': away_score,
+            'spread': float(pred.get('spread', 0.0)),
+            'total': float(pred.get('total', home_score + away_score))
+        }
+
+        adjusted = injury_system.adjust_game_prediction(
+            prediction_for_adjustment,
+            home_team_name,
+            away_team_name
+        )
+
+        # Map adjusted back to team1/team2 ordering expected by the app
+        if team1 == home_team_name:
+            adjusted_team1_score = adjusted['home_score']
+            adjusted_team2_score = adjusted['away_score']
+        else:
+            adjusted_team1_score = adjusted['away_score']
+            adjusted_team2_score = adjusted['home_score']
+
+        # Update and return
+        pred.update({
+            'team1_score': round(adjusted_team1_score, 1),
+            'team2_score': round(adjusted_team2_score, 1),
+            'spread': round(adjusted['spread'], 1),
+            'total': round(adjusted['total'], 1),
+            'injury_adjusted': adjusted.get('injury_adjusted', False),
+            'adjustment_note': adjusted.get('adjustment_note', ''),
+            'original_spread': adjusted.get('original_spread') if adjusted.get('injury_adjusted') else None
+        })
+        return pred
+
+    except Exception as e:
+        # Fail-safe: return original prediction plus an error note
+        base_prediction['injury_adjustment_error'] = str(e)
+        return base_prediction
+
+
+def integrate_injuries_into_player_prediction(prediction_value, injury_system, player_name, team, prop_type=None):
     """
-    if prediction is None:
-        return None, "Prediction failed"
-    
-    adjusted_pred, confidence = injury_system.adjust_player_prediction(prediction, player_name, team)
-    
-    return adjusted_pred, confidence
+    Wrapper for player prop predictions.
+
+    - `prediction_value`: numeric base prediction (e.g., passing yards)
+    - `injury_system`: InjuryAdjustmentSystem instance
+    - `player_name`, `team`: strings
+    - `prop_type` is optional (kept for compatibility)
+
+    Returns: (adjusted_value, note)
+    """
+    try:
+        adjusted, confidence = injury_system.adjust_player_prediction(prediction_value, player_name, team)
+        return adjusted, confidence
+    except Exception as e:
+        # Return original with error note
+        return prediction_value, f"Error applying injury adjustment: {str(e)}"
