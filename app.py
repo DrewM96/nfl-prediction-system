@@ -313,6 +313,15 @@ class ProductionGamePredictor:
             self.team_data = {}
             self.league_avg_points = 22.0
             self.league_avg_allowed = 22.0
+
+        # Load dynamic league average from saved file (overrides calculated value for consistency)
+        try:
+            with open('league_average.json', 'r') as f:
+                league_avg_data = json.load(f)
+                self.league_avg_points = league_avg_data.get('ppg', self.league_avg_points)
+        except FileNotFoundError:
+            # If file doesn't exist, use the calculated value from team_data
+            pass
         
         self.ensemble_models = self._load_ensemble_models()
         
@@ -441,18 +450,18 @@ class ProductionGamePredictor:
                 
                 # UPDATED: Now 20 features including EPA and OL/DL
                 features = np.array([[
-                    home_stats.get('points_L4', 22),
-                    home_stats.get('opp_points_L4', 22),
+                    home_stats.get('points_L4', self.league_avg_points),
+                    home_stats.get('opp_points_L4', self.league_avg_points),
                     home_stats.get('yards_L4', 350),
-                    home_stats.get('points_L8', 22),
-                    home_stats.get('opp_points_L8', 22),
+                    home_stats.get('points_L8', self.league_avg_points),
+                    home_stats.get('opp_points_L8', self.league_avg_points),
                     home_stats.get('win_pct_L8', 0.5),
                     home_stats.get('turnovers_L4', 1.0),
-                    away_stats.get('points_L4', 22),
-                    away_stats.get('opp_points_L4', 22),
+                    away_stats.get('points_L4', self.league_avg_points),
+                    away_stats.get('opp_points_L4', self.league_avg_points),
                     away_stats.get('yards_L4', 350),
-                    away_stats.get('points_L8', 22),
-                    away_stats.get('opp_points_L8', 22),
+                    away_stats.get('points_L8', self.league_avg_points),
+                    away_stats.get('opp_points_L8', self.league_avg_points),
                     away_stats.get('win_pct_L8', 0.5),
                     away_stats.get('turnovers_L4', 1.0),
                     7, 7, 0, 0,  # rest, division
@@ -489,10 +498,10 @@ class ProductionGamePredictor:
                 pass
         return {
             'team1': team1,
-            'team1_score': 22.0,
+            'team1_score': self.league_avg_points,
             'team2': team2,
-            'team2_score': 22.0,
-            'total': 44.0,
+            'team2_score': self.league_avg_points,
+            'total': self.league_avg_points * 2,
             'spread': 0.0,
             'home_team': home_team,
             'away_team': team1 if team2 == home_team else team2,
@@ -1215,13 +1224,14 @@ elif page == "🏆 Power Rankings":
             dl_score = dl_data.get('score', 50.0)
         
         # Calculate power rating using offensive/defensive efficiency
-        points_scored = team_stats.get('points_L4', 22.0)
-        points_allowed = team_stats.get('opp_points_L4', 22.0)
+        league_avg = prediction_system.league_avg_points
+        points_scored = team_stats.get('points_L4', league_avg)
+        points_allowed = team_stats.get('opp_points_L4', league_avg)
         win_pct = team_stats.get('win_pct_L8', 0.5)
-        
-        # Calculate how much better/worse than league average (22 ppg)
-        offensive_advantage = (points_scored - 22.0) * 0.4
-        defensive_advantage = (22.0 - points_allowed) * 0.4
+
+        # Calculate how much better/worse than league average
+        offensive_advantage = (points_scored - league_avg) * 0.4
+        defensive_advantage = (league_avg - points_allowed) * 0.4
         
         # Add EPA contribution (scaled) - BOTH offense AND defense
         epa_off_contribution = epa_off * 8  # Offensive EPA
