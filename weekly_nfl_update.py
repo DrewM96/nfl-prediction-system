@@ -1225,7 +1225,16 @@ class NFLWeeklyUpdater:
             team_stats[team] = stats
         
         self.team_data = team_stats
-        
+
+        # Calculate and save actual league average
+        all_points = [stats['points_L4'] for stats in team_stats.values() if 'points_L4' in stats]
+        league_avg_ppg = np.mean(all_points) if all_points else 22.0
+
+        with open('league_average.json', 'w') as f:
+            json.dump({'ppg': float(league_avg_ppg), 'season': int(current_season)}, f, indent=2)
+
+        print(f"   League average PPG: {league_avg_ppg:.1f}")
+
         # Verify data quality
         valid_teams = sum(1 for stats in team_stats.values() if stats['points_L4'] > 0)
         print(f"✅ Created team data for {len(team_stats)} teams ({valid_teams} with valid stats)")
