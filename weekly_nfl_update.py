@@ -64,7 +64,10 @@ class NFLWeeklyUpdater:
         # NEW: EPA and OL/DL data structures
         self.epa_metrics = {}
         self.ol_dl_rankings = {}
-        
+
+        # Dynamic league average (calculated from actual data)
+        self.league_avg_ppg = 22.0  # Default, will be updated with actual data
+
         os.makedirs("models", exist_ok=True)
         os.makedirs("data", exist_ok=True)
     
@@ -175,18 +178,18 @@ class NFLWeeklyUpdater:
                 if expected_features == 18:
                     # OLD model format (no EPA/OL-DL)
                     features = np.array([[
-                        float(home_stats.get('points_L4', 22.0)),
-                        float(home_stats.get('opp_points_L4', 22.0)),
+                        float(home_stats.get('points_L4', self.league_avg_ppg)),
+                        float(home_stats.get('opp_points_L4', self.league_avg_ppg)),
                         float(home_stats.get('yards_L4', 350.0)),
-                        float(home_stats.get('points_L8', 22.0)),
-                        float(home_stats.get('opp_points_L8', 22.0)),
+                        float(home_stats.get('points_L8', self.league_avg_ppg)),
+                        float(home_stats.get('opp_points_L8', self.league_avg_ppg)),
                         float(home_stats.get('win_pct_L8', 0.5)),
                         float(home_stats.get('turnovers_L4', 1.0)),
-                        float(away_stats.get('points_L4', 22.0)),
-                        float(away_stats.get('opp_points_L4', 22.0)),
+                        float(away_stats.get('points_L4', self.league_avg_ppg)),
+                        float(away_stats.get('opp_points_L4', self.league_avg_ppg)),
                         float(away_stats.get('yards_L4', 350.0)),
-                        float(away_stats.get('points_L8', 22.0)),
-                        float(away_stats.get('opp_points_L8', 22.0)),
+                        float(away_stats.get('points_L8', self.league_avg_ppg)),
+                        float(away_stats.get('opp_points_L8', self.league_avg_ppg)),
                         float(away_stats.get('win_pct_L8', 0.5)),
                         float(away_stats.get('turnovers_L4', 1.0)),
                         7.0, 7.0, 0.0, 0.0  # rest and division
@@ -207,19 +210,19 @@ class NFLWeeklyUpdater:
                         ol_dl_score = ol_score - dl_score
                     
                     features = np.array([[
-                        float(home_stats.get('points_L4', 22.0)),
-                        float(home_stats.get('opp_points_L4', 22.0)),
+                        float(home_stats.get('points_L4', self.league_avg_ppg)),
+                        float(home_stats.get('opp_points_L4', self.league_avg_ppg)),
                         float(home_stats.get('yards_L4', 350.0)),
-                        float(home_stats.get('points_L8', 22.0)),
-                        float(home_stats.get('opp_points_L8', 22.0)),
+                        float(home_stats.get('points_L8', self.league_avg_ppg)),
+                        float(home_stats.get('opp_points_L8', self.league_avg_ppg)),
                         float(home_stats.get('win_pct_L8', 0.5)),
                         float(home_stats.get('turnovers_L4', 1.0)),
-                        float(away_stats.get('points_L4', 22.0)),
-                        float(away_stats.get('opp_points_L4', 22.0)),
+                        float(away_stats.get('points_L4', self.league_avg_ppg)),
+                        float(away_stats.get('opp_points_L4', self.league_avg_ppg)),
                         float(away_stats.get('yards_L4', 350.0)),
-                        float(away_stats.get('points_L8', 22.0)),
-                        float(away_stats.get('opp_points_L8', 22.0)),
-                        float(away_stats.get('win_pct_L8', 0.5)),
+                        float(away_stats.get('points_L8', self.league_avg_ppg)),
+                        float(away_stats.get('opp_points_L8', self.league_avg_ppg)),
+                        float(home_stats.get('win_pct_L8', 0.5)),
                         float(away_stats.get('turnovers_L4', 1.0)),
                         7.0, 7.0, 0.0, 0.0,  # rest and division
                         float(home_epa),
@@ -382,7 +385,33 @@ class NFLWeeklyUpdater:
         except Exception as e:
             print(f"❌ Error loading NFL data: {e}")
             return False
-    
+
+    def calculate_league_average(self):
+        """Calculate league average PPG from recent games"""
+        print(f"\n📊 Calculating league average PPG...")
+
+        current_season = max(self.data_years)
+
+        # Get completed games from current season
+        completed_games = self.schedule_regular[
+            (self.schedule_regular['season'] == current_season) &
+            (self.schedule_regular['home_score'].notna())
+        ]
+
+        if len(completed_games) == 0:
+            print("   ⚠️ No completed games found, using default 22.0 PPG")
+            self.league_avg_ppg = 22.0
+            return
+
+        # Calculate average points per team across all games
+        all_scores = []
+        for _, game in completed_games.iterrows():
+            all_scores.append(float(game['home_score']))
+            all_scores.append(float(game['away_score']))
+
+        self.league_avg_ppg = np.mean(all_scores)
+        print(f"   ✅ League average: {self.league_avg_ppg:.2f} PPG (from {len(completed_games)} games)")
+
     def calculate_epa_metrics(self):
         """Calculate EPA (Expected Points Added) metrics for all teams"""
         print(f"\n⚡ Calculating EPA metrics...")
@@ -899,8 +928,8 @@ class NFLWeeklyUpdater:
         
         if len(prior_games) == 0:
             return {
-                'points_L4': 22.0, 'points_L8': 22.0,
-                'opp_points_L4': 22.0, 'opp_points_L8': 22.0,
+                'points_L4': self.league_avg_ppg, 'points_L8': self.league_avg_ppg,
+                'opp_points_L4': self.league_avg_ppg, 'opp_points_L8': self.league_avg_ppg,
                 'yards_L4': 350.0, 'win_pct_L8': 0.5,
                 'turnovers_L4': 1.0
             }
@@ -928,10 +957,10 @@ class NFLWeeklyUpdater:
             turnovers.append(game_turnovers if len(game_plays) > 0 else 1)
         
         stats = {
-            'points_L4': np.mean(team_scores[-4:]) if len(team_scores) >= 1 else 22.0,
-            'points_L8': np.mean(team_scores[-8:]) if len(team_scores) >= 1 else 22.0,
-            'opp_points_L4': np.mean(opp_scores[-4:]) if len(opp_scores) >= 1 else 22.0,
-            'opp_points_L8': np.mean(opp_scores[-8:]) if len(opp_scores) >= 1 else 22.0,
+            'points_L4': np.mean(team_scores[-4:]) if len(team_scores) >= 1 else self.league_avg_ppg,
+            'points_L8': np.mean(team_scores[-8:]) if len(team_scores) >= 1 else self.league_avg_ppg,
+            'opp_points_L4': np.mean(opp_scores[-4:]) if len(opp_scores) >= 1 else self.league_avg_ppg,
+            'opp_points_L8': np.mean(opp_scores[-8:]) if len(opp_scores) >= 1 else self.league_avg_ppg,
             'yards_L4': np.mean(total_yards[-4:]) if len(total_yards) >= 1 else 350.0,
             'win_pct_L8': np.mean([1 if ts > os else 0 for ts, os in zip(team_scores[-8:], opp_scores[-8:])]) if len(team_scores) >= 1 else 0.5,
             'turnovers_L4': np.mean(turnovers[-4:]) if len(turnovers) >= 1 else 1.0
@@ -1338,18 +1367,18 @@ class NFLWeeklyUpdater:
                 
                 # Build 20-feature array with NaN protection
                 features = np.array([[
-                    float(home_stats.get('points_L4', 22.0)),
-                    float(home_stats.get('opp_points_L4', 22.0)),
+                    float(home_stats.get('points_L4', self.league_avg_ppg)),
+                    float(home_stats.get('opp_points_L4', self.league_avg_ppg)),
                     float(home_stats.get('yards_L4', 350.0)),
-                    float(home_stats.get('points_L8', 22.0)),
-                    float(home_stats.get('opp_points_L8', 22.0)),
+                    float(home_stats.get('points_L8', self.league_avg_ppg)),
+                    float(home_stats.get('opp_points_L8', self.league_avg_ppg)),
                     float(home_stats.get('win_pct_L8', 0.5)),
                     float(home_stats.get('turnovers_L4', 1.0)),
-                    float(away_stats.get('points_L4', 22.0)),
-                    float(away_stats.get('opp_points_L4', 22.0)),
+                    float(away_stats.get('points_L4', self.league_avg_ppg)),
+                    float(away_stats.get('opp_points_L4', self.league_avg_ppg)),
                     float(away_stats.get('yards_L4', 350.0)),
-                    float(away_stats.get('points_L8', 22.0)),
-                    float(away_stats.get('opp_points_L8', 22.0)),
+                    float(away_stats.get('points_L8', self.league_avg_ppg)),
+                    float(away_stats.get('opp_points_L8', self.league_avg_ppg)),
                     float(away_stats.get('win_pct_L8', 0.5)),
                     float(away_stats.get('turnovers_L4', 1.0)),
                     7.0, 7.0, 0.0, 0.0,  # rest days and division
@@ -1656,6 +1685,7 @@ class NFLWeeklyUpdater:
         
         steps = [
             ("Loading NFL Data", self.load_nfl_data),
+            ("Calculating League Average", self.calculate_league_average),
             ("Calculating EPA Metrics", self.calculate_epa_metrics),
             ("Calculating OL/DL Strength", self.calculate_ol_dl_strength),
             ("Creating Player Logs", self.create_player_logs),
