@@ -777,8 +777,8 @@ if page == "🏈 This Week's Games":
             
             with col_vegas2:
                 vegas_total = st.number_input(
-                    "Vegas Total (O/U)", 
-                    value=existing_line.get('total', 44.0),
+                    "Vegas Total (O/U)",
+                    value=existing_line.get('total', prediction_system.league_avg_points * 2),
                     step=0.5
                 )
             
@@ -1255,8 +1255,8 @@ elif page == "🏆 Power Rankings":
             'team': team,
             'power_rating': power_rating,
             'record': f"{int(team_stats.get('win_pct_L8', 0.5) * 8)}-{8 - int(team_stats.get('win_pct_L8', 0.5) * 8)}",
-            'points_L4': team_stats.get('points_L4', 22.0),
-            'opp_points_L4': team_stats.get('opp_points_L4', 22.0),
+            'points_L4': team_stats.get('points_L4', league_avg),
+            'opp_points_L4': team_stats.get('opp_points_L4', league_avg),
             'epa_off': epa_off,
             'epa_def': epa_def,
             'ol_rank': ol_rank,
