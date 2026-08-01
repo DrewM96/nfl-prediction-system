@@ -21,6 +21,7 @@ def _fetch() -> OddsFetchResult:
     def book(key: str, spread: float, total: float, price: float) -> dict:
         return {
             "key": key,
+            "last_update": "2026-09-10T15:55:00Z",
             "markets": [
                 {
                     "key": "spreads",
@@ -66,6 +67,7 @@ def test_consensus_normalizes_team_names_spread_sign_prices_and_dispersion() -> 
     assert game["spread"]["home_price"] == -110
     assert game["spread"]["book_count"] == 2
     assert game["spread"]["line_iqr"] == 0.25
+    assert game["spread"]["latest_book_update"] == "2026-09-10T15:55:00+00:00"
     assert game["total"]["total"] == 46.5
     assert "bookmakers" not in game
 

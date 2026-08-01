@@ -186,7 +186,7 @@ def _rounded_median(values: list[float]) -> float | None:
     return round(float(statistics.median(values)), 3) if values else None
 
 
-def _market_summary(values: list[dict[str, float]], line_key: str) -> dict[str, Any] | None:
+def _market_summary(values: list[dict[str, Any]], line_key: str) -> dict[str, Any] | None:
     if not values:
         return None
     lines = [row[line_key] for row in values]
@@ -203,6 +203,18 @@ def _market_summary(values: list[dict[str, float]], line_key: str) -> dict[str, 
         prices = [row[key] for row in values if key in row]
         if prices:
             result[key] = _rounded_median(prices)
+    updates = []
+    for row in values:
+        if not row.get("last_update"):
+            continue
+        try:
+            updates.append(parse_timestamp(row["last_update"]).isoformat())
+        except (TypeError, ValueError):
+            continue
+    updates.sort()
+    if updates:
+        result["oldest_book_update"] = updates[0]
+        result["latest_book_update"] = updates[-1]
     return result
 
 
@@ -220,8 +232,8 @@ def build_consensus(
         away_code = TEAM_NAME_TO_CODE.get(away_name)
         if not home_code or not away_code:
             continue
-        spread_rows: list[dict[str, float]] = []
-        total_rows: list[dict[str, float]] = []
+        spread_rows: list[dict[str, Any]] = []
+        total_rows: list[dict[str, Any]] = []
         for bookmaker in event.get("bookmakers", []):
             for market in bookmaker.get("markets", []):
                 outcomes = market.get("outcomes", [])
@@ -229,7 +241,11 @@ def build_consensus(
                     home = next((row for row in outcomes if row.get("name") == home_name), None)
                     away = next((row for row in outcomes if row.get("name") == away_name), None)
                     if home is not None and home.get("point") is not None:
-                        row = {"home_spread": float(home["point"])}
+                        row = {
+                            "home_spread": float(home["point"]),
+                            "last_update": market.get("last_update")
+                            or bookmaker.get("last_update"),
+                        }
                         if home.get("price") is not None:
                             row["home_price"] = float(home["price"])
                         if away is not None and away.get("price") is not None:
@@ -239,7 +255,11 @@ def build_consensus(
                     over = next((row for row in outcomes if row.get("name") == "Over"), None)
                     under = next((row for row in outcomes if row.get("name") == "Under"), None)
                     if over is not None and over.get("point") is not None:
-                        row = {"total": float(over["point"])}
+                        row = {
+                            "total": float(over["point"]),
+                            "last_update": market.get("last_update")
+                            or bookmaker.get("last_update"),
+                        }
                         if over.get("price") is not None:
                             row["over_price"] = float(over["price"])
                         if under is not None and under.get("price") is not None:

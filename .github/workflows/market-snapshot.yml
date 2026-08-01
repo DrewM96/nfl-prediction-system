@@ -2,6 +2,16 @@ name: NFL market snapshot
 
 on:
   workflow_dispatch:
+    inputs:
+      historical_at:
+        description: "Optional paid historical UTC timestamp; leaves live consensus unchanged"
+        required: false
+        type: string
+      max_credits:
+        description: "Hard request budget"
+        required: true
+        default: "20"
+        type: string
   pull_request:
     types: [labeled]
   schedule:
@@ -38,10 +48,14 @@ jobs:
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: |
-          python market_update.py --max-credits 2
+          if [ -n "${{ inputs.historical_at }}" ]; then
+            python market_update.py --historical-at "${{ inputs.historical_at }}" --max-credits "${{ inputs.max_credits }}"
+          else
+            python market_update.py --max-credits 2
+          fi
           python -m pytest -q tests/test_market.py tests/test_odds.py
       - name: Publish only the derived consensus
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.historical_at == '')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

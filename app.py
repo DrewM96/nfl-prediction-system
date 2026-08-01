@@ -186,26 +186,26 @@ def render_market_comparison(game: dict[str, Any], key: str) -> None:
     price_col1, price_col2, price_col3, price_col4 = st.columns(4)
     home_spread_price = price_col1.number_input(
         "Home spread price",
-        value=int(consensus_spread.get("home_price", -110)),
-        step=5,
+        value=float(consensus_spread.get("home_price", -110)),
+        step=1.0,
         key=f"home_spread_price_{key}",
     )
     away_spread_price = price_col2.number_input(
         "Away spread price",
-        value=int(consensus_spread.get("away_price", -110)),
-        step=5,
+        value=float(consensus_spread.get("away_price", -110)),
+        step=1.0,
         key=f"away_spread_price_{key}",
     )
     over_price = price_col3.number_input(
         "Over price",
-        value=int(consensus_total.get("over_price", -110)),
-        step=5,
+        value=float(consensus_total.get("over_price", -110)),
+        step=1.0,
         key=f"over_price_{key}",
     )
     under_price = price_col4.number_input(
         "Under price",
-        value=int(consensus_total.get("under_price", -110)),
-        step=5,
+        value=float(consensus_total.get("under_price", -110)),
+        step=1.0,
         key=f"under_price_{key}",
     )
     observed_at = st.text_input(
