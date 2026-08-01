@@ -22,7 +22,7 @@ from .features import (
 )
 from .io import atomic_write_json, sha256_file
 from .ledger import PredictionLedger
-from .modeling import FittedEnsemble, fit_ensemble, save_model_bundle
+from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import attach_market_consensus, load_market_consensus
 
 
@@ -618,6 +618,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
             target_name="home_margin",
             baseline=margin_baseline,
             min_train_rows=350,
+            ridge_alpha=GAME_RIDGE_ALPHA,
         ),
         "game_total": fit_ensemble(
             completed,
@@ -626,6 +627,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
             target_name="total_points",
             baseline=total_baseline,
             min_train_rows=350,
+            ridge_alpha=GAME_RIDGE_ALPHA,
         ),
     }
     raw_player_logs = build_player_game_logs(data.pbp)

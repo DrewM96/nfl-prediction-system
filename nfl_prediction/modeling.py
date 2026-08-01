@@ -21,10 +21,12 @@ from sklearn.preprocessing import StandardScaler
 from .config import MODEL_MANIFEST_PATH, MODELS_DIR
 from .io import atomic_write_json, read_json, sha256_file
 
+GAME_RIDGE_ALPHA = 50.0
 
-def _candidate_models() -> list[Any]:
+
+def _candidate_models(*, ridge_alpha: float = 10.0) -> list[Any]:
     return [
-        Pipeline([("scale", StandardScaler()), ("ridge", Ridge(alpha=10.0))]),
+        Pipeline([("scale", StandardScaler()), ("ridge", Ridge(alpha=ridge_alpha))]),
         GradientBoostingRegressor(
             n_estimators=150,
             max_depth=2,
@@ -37,10 +39,12 @@ def _candidate_models() -> list[Any]:
     ]
 
 
-def _clone_candidates() -> list[Any]:
+def _clone_candidates(
+    candidates: list[Any] | None = None, *, ridge_alpha: float = 10.0
+) -> list[Any]:
     from sklearn.base import clone
 
-    return [clone(model) for model in _candidate_models()]
+    return [clone(model) for model in (candidates or _candidate_models(ridge_alpha=ridge_alpha))]
 
 
 def _learn_two_model_weight(y: np.ndarray, first: np.ndarray, second: np.ndarray) -> float:
@@ -78,6 +82,8 @@ def chronological_oof_predictions(
     target_name: str,
     *,
     min_train_rows: int,
+    candidate_models: list[Any] | None = None,
+    ridge_alpha: float = 10.0,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     ordered = frame.sort_values(
         ["season", "week", "gameday" if "gameday" in frame else "game_date"]
@@ -96,7 +102,9 @@ def chronological_oof_predictions(
         validate = ordered[(ordered["season"] == season) & (ordered["week"] == week)]
         if len(train) < min_train_rows or validate.empty:
             continue
-        candidates = _clone_candidates()
+        candidates = _clone_candidates(candidate_models, ridge_alpha=ridge_alpha)
+        if len(candidates) != 2:
+            raise ValueError("chronological validation requires exactly two candidate models")
         X_train = train[feature_names].astype(float)
         y_train = train[target_name].astype(float)
         X_validate = validate[feature_names].astype(float)
@@ -180,6 +188,7 @@ def fit_ensemble(
     baseline: pd.Series | np.ndarray | None = None,
     baseline_feature: str | None = None,
     min_train_rows: int = 200,
+    ridge_alpha: float = 10.0,
 ) -> FittedEnsemble:
     needed = feature_names + [target_name, "season", "week"]
     clean = frame.dropna(subset=needed).copy()
@@ -189,7 +198,7 @@ def fit_ensemble(
         )
 
     actual, first, second, validation_indices = chronological_oof_predictions(
-        clean, feature_names, target_name, min_train_rows=min_train_rows
+        clean, feature_names, target_name, min_train_rows=min_train_rows, ridge_alpha=ridge_alpha
     )
     if not len(actual):
         raise ValueError(f"{name} could not produce chronological validation predictions")
@@ -220,6 +229,7 @@ def fit_ensemble(
     interval_low = ensemble_oof - 1.2816 * residual_std
     interval_high = ensemble_oof + 1.2816 * residual_std
     metrics = {
+        "ridge_alpha": float(ridge_alpha),
         "oof_rows": float(len(actual)),
         "mae": float(mean_absolute_error(actual, ensemble_oof)),
         "rmse": float(mean_squared_error(actual, ensemble_oof) ** 0.5),
@@ -268,7 +278,7 @@ def fit_ensemble(
             mean_absolute_error(actual[latest_mask], baseline_values[latest_mask])
         )
 
-    models = _clone_candidates()
+    models = _clone_candidates(ridge_alpha=ridge_alpha)
     X = clean[feature_names].astype(float)
     y = clean[target_name].astype(float)
     for model in models:

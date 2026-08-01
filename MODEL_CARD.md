@@ -8,9 +8,11 @@ It is not a source of guaranteed outcomes, individualized financial advice, or a
 
 ## Model design
 
-Each target combines a standardized ridge regression with a shallow gradient-boosted regressor. The blend weight is learned from chronological out-of-fold predictions. The final production estimators are fitted on every eligible record through the manifest cutoff.
+Each target combines a standardized ridge regression with a shallow gradient-boosted regressor. Game models use Ridge alpha 50, selected on 2023-2024 and checked separately on 2025; player models retain alpha 10. The blend weight is learned from chronological out-of-fold predictions. The final production estimators are fitted on every eligible record through the manifest cutoff.
 
 Game inputs use shrunk rolling team form, EPA/play, pressure rates on a shared rate scale, turnovers, rest, division status, week, and home field. Player inputs use shifted opportunity and efficiency features, real intended targets, stable player IDs, opponent defense, and offensive snap participation when published.
+
+The feature builder also derives point-in-time success rate, early-down EPA, explosive-play rate, sack rate, neutral pass tendency, quarterback continuity, and performance volatility for research. A 723-game expanding-window ablation found that every predeclared combination worsened both game targets, so these candidates are published in the team snapshot for continued monitoring but are not production model inputs. Stronger game-model Ridge shrinkage produced a smaller, consistent gain: prequential margin MAE moved from 10.383 to 10.362 and total MAE from 10.536 to 10.527.
 
 Prediction intervals use the standard deviation of chronological residuals. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
 
@@ -38,6 +40,7 @@ Required release checks:
 ## Known limitations
 
 - The game model does not yet consume timestamped weather, travel distance, quarterback starter changes, or coaching continuity.
+- The added quarterback continuity statistic observes only prior primary passers. It does not assume that a retrospective starter field or an un-timestamped depth chart was known before kickoff.
 - Live market history is collected separately but is not yet a trained input. A useful market residual/blend model requires multiple seasons of paid historical snapshots and walk-forward proof.
 - Current preseason player membership falls back to the latest published weekly roster if the new-season roster feed is not available. The UI records the roster season.
 - Snap counts do not measure routes or pass-block/run-block assignments; they are participation signals.

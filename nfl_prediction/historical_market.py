@@ -17,7 +17,7 @@ from .config import MARKET_PRIVATE_DIR
 from .data import load_nflverse_data
 from .features import GAME_FEATURES, build_point_in_time_game_features
 from .io import atomic_write_json, read_json
-from .modeling import chronological_oof_predictions
+from .modeling import GAME_RIDGE_ALPHA, chronological_oof_predictions
 from .odds import (
     DEFAULT_MARKETS,
     MarketSnapshotStore,
@@ -136,6 +136,7 @@ def build_independent_oof_games(
             GAME_FEATURES,
             target,
             min_train_rows=min_train_rows,
+            ridge_alpha=GAME_RIDGE_ALPHA,
         )
         validation = completed.loc[indices].copy()
         predictions, weights = prequential_component_blend(validation, actual, first, second)
