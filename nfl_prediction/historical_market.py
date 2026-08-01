@@ -370,6 +370,31 @@ def build_aggregate_report(
             total_actual, frame["blended_total"].to_numpy(dtype=float)
         ),
     }
+    kickoff_times = frame.apply(_kickoff_utc, axis=1)
+    snapshot_times = frame["market_snapshot_at"].map(parse_timestamp)
+    lead_minutes = np.asarray(
+        [
+            (kickoff - snapshot).total_seconds() / 60.0
+            for kickoff, snapshot in zip(kickoff_times, snapshot_times, strict=True)
+        ],
+        dtype=float,
+    )
+    spread_sign_violations = int(
+        (frame["market_home_spread"].astype(float) + frame["market_home_margin"].astype(float))
+        .abs()
+        .gt(1e-9)
+        .sum()
+    )
+    production_margin_weight = learn_mae_weight(
+        margin_actual,
+        frame["market_home_margin"].to_numpy(dtype=float),
+        frame["independent_home_margin"].to_numpy(dtype=float),
+    )
+    production_total_weight = learn_mae_weight(
+        total_actual,
+        frame["market_total"].to_numpy(dtype=float),
+        frame["independent_total"].to_numpy(dtype=float),
+    )
     by_season = []
     for season, subset in frame.groupby("season"):
         by_season.append(
@@ -402,12 +427,20 @@ def build_aggregate_report(
             "raw_market_data_published": False,
         },
         "collection": collection_metadata,
+        "audit": {
+            "timestamp_violations": int(np.sum(lead_minutes <= 0.0)),
+            "spread_sign_violations": spread_sign_violations,
+            "minimum_snapshot_lead_minutes": float(np.min(lead_minutes)),
+            "maximum_snapshot_lead_minutes": float(np.max(lead_minutes)),
+        },
         "games": int(len(frame)),
         "average_spread_books": float(frame["spread_book_count"].mean()),
         "average_total_books": float(frame["total_book_count"].mean()),
         "variants": variants,
         "latest_market_margin_weight": float(frame["market_margin_weight"].iloc[-1]),
         "latest_market_total_weight": float(frame["market_total_weight"].iloc[-1]),
+        "future_production_market_margin_weight": production_margin_weight,
+        "future_production_market_total_weight": production_total_weight,
         "by_season": by_season,
         "disagreement_buckets": _disagreement_buckets(frame),
     }

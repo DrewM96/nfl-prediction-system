@@ -70,7 +70,7 @@ jobs:
             --output market_benchmark.json
       - name: Verify aggregate-only artifact
         run: |
-          python -c "import json; p=json.load(open('market_benchmark.json')); assert p['methodology']['raw_market_data_published'] is False; assert 'game_id' not in p"
+          python -c "import json; p=json.load(open('market_benchmark.json')); assert p['methodology']['raw_market_data_published'] is False; assert 'game_id' not in p; assert p['audit']['timestamp_violations'] == 0; assert p['audit']['spread_sign_violations'] == 0"
           python -m pytest -q tests/test_historical_market.py tests/test_odds.py tests/test_market.py
       - uses: actions/upload-artifact@v4
         with:

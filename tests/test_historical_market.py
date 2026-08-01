@@ -71,7 +71,9 @@ def _benchmark_frame() -> pd.DataFrame:
                 "independent_home_margin": float(week + 2),
                 "independent_total": 42.0 + week,
                 "market_home_margin": float(week),
+                "market_home_spread": -float(week),
                 "market_total": 40.0 + week,
+                "market_snapshot_at": f"2025-09-{week + 6:02d}T16:30:00+00:00",
                 "spread_book_count": 8,
                 "total_book_count": 7,
             }
@@ -98,6 +100,10 @@ def test_aggregate_report_contains_metrics_not_game_records() -> None:
     assert report["variants"]["market_margin"]["mae"] == 0.0
     assert "game_id" not in report
     assert report["methodology"]["raw_market_data_published"] is False
+    assert report["audit"]["timestamp_violations"] == 0
+    assert report["audit"]["spread_sign_violations"] == 0
+    assert report["audit"]["minimum_snapshot_lead_minutes"] == 30.0
+    assert report["future_production_market_margin_weight"] == 1.0
     assert datetime.fromisoformat(report["generated_at"]).tzinfo == UTC
 
 
