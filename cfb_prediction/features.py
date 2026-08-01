@@ -231,18 +231,31 @@ def _elo_expected(home_elo: float, away_elo: float, home_field: float) -> tuple[
     return probability, expected_margin
 
 
-def build_point_in_time_features(data: CFBHistoricalData) -> pd.DataFrame:
+def build_point_in_time_features(
+    data: CFBHistoricalData,
+    *,
+    include_scheduled: bool = False,
+) -> pd.DataFrame:
+    """Build features using only results available before each game's kickoff.
+
+    Historical benchmarking keeps the default completed-game behavior. Production
+    calls may include scheduled games; those rows receive pregame features but
+    never update Elo, form, advanced metrics, or last-played state.
+    """
     games = data.games.copy()
-    games = games[
+    eligible = (
         games["fbs_vs_fbs"].fillna(False)
-        & games["completed"].fillna(False)
-        & games["home_points"].notna()
-        & games["away_points"].notna()
         & games["home_id"].notna()
         & games["away_id"].notna()
         & games["week"].notna()
         & games["start_date"].notna()
-    ].copy()
+    )
+    completed = (
+        games["completed"].fillna(False)
+        & games["home_points"].notna()
+        & games["away_points"].notna()
+    )
+    games = games[eligible & (True if include_scheduled else completed)].copy()
     games = games.sort_values(["season", "week", "start_date", "game_id"], ignore_index=True)
     if games.empty:
         return pd.DataFrame()
@@ -269,6 +282,11 @@ def build_point_in_time_features(data: CFBHistoricalData) -> pd.DataFrame:
         home_team = str(game["home_team"])
         away_team = str(game["away_team"])
         kickoff = pd.Timestamp(game["start_date"])
+        is_completed = (
+            bool(game["completed"])
+            and pd.notna(game["home_points"])
+            and pd.notna(game["away_points"])
+        )
         home_field = 0.0 if bool(game["neutral_site"]) else 1.0
         home_elo = float(ratings[home_id])
         away_elo = float(ratings[away_id])
@@ -298,8 +316,13 @@ def build_point_in_time_features(data: CFBHistoricalData) -> pd.DataFrame:
             "home_rest_days": float(home_rest),
             "away_rest_days": float(away_rest),
             "rest_advantage": float(home_rest - away_rest),
-            "home_margin": float(game["home_points"] - game["away_points"]),
-            "total_points": float(game["home_points"] + game["away_points"]),
+            "completed": is_completed,
+            "home_margin": (
+                float(game["home_points"] - game["away_points"]) if is_completed else np.nan
+            ),
+            "total_points": (
+                float(game["home_points"] + game["away_points"]) if is_completed else np.nan
+            ),
             "form_expected_total": 0.5
             * (
                 home_state["points_for_l6"]
@@ -328,6 +351,13 @@ def build_point_in_time_features(data: CFBHistoricalData) -> pd.DataFrame:
             row["market_total"] = np.nan
             row["market_provider_count"] = 0
         rows.append(row)
+
+        if not is_completed:
+            # Scheduled dates are known at forecast time and determine rest for
+            # later games; unknown results never update performance state.
+            last_played[home_id] = kickoff
+            last_played[away_id] = kickoff
+            continue
 
         actual_margin = float(game["home_points"] - game["away_points"])
         home_advanced = advanced.get((int(game["game_id"]), home_team))

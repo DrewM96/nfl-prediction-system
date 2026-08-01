@@ -8,6 +8,10 @@ CFB_DATA_DIR = PROJECT_ROOT / "data" / "cfb"
 CFB_CACHE_DIR = CFB_DATA_DIR / "cache"
 CFB_FOUNDATION_PATH = CFB_DATA_DIR / "foundation.json"
 CFB_HISTORICAL_BENCHMARK_PATH = CFB_DATA_DIR / "historical_benchmark.json"
+CFB_MODELS_DIR = CFB_DATA_DIR / "models"
+CFB_MODEL_MANIFEST_PATH = CFB_MODELS_DIR / "manifest.json"
+CFB_PREDICTIONS_DIR = CFB_DATA_DIR / "predictions"
+CFB_LATEST_PREDICTION_PATH = CFB_DATA_DIR / "latest_prediction.json"
 CFBD_API_BASE_URL = "https://api.collegefootballdata.com"
 
 
