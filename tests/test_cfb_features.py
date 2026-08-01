@@ -143,3 +143,45 @@ def test_features_include_opponent_and_preseason_context() -> None:
     assert first["home_talent_z"] > first["away_talent_z"]
     assert first["home_portal_net_rating_z"] > first["away_portal_net_rating_z"]
     assert first["market_home_margin"] == 6.5
+
+
+def test_scheduled_games_receive_features_without_updating_team_state() -> None:
+    data = _historical()
+    scheduled = pd.DataFrame(
+        [
+            {
+                **data.games.iloc[-1].to_dict(),
+                "game_id": game_id,
+                "season": 2026,
+                "week": week,
+                "start_date": pd.Timestamp(start_date),
+                "completed": False,
+                "home_points": None,
+                "away_points": None,
+            }
+            for game_id, week, start_date in (
+                (3, 1, "2026-08-29T16:00:00Z"),
+                (4, 2, "2026-09-05T16:00:00Z"),
+            )
+        ]
+    )
+    combined = CFBHistoricalData(
+        games=pd.concat([data.games, scheduled], ignore_index=True),
+        advanced=data.advanced,
+        returning=data.returning,
+        portal=data.portal,
+        talent=data.talent,
+        recruiting=data.recruiting,
+        lines=data.lines,
+    )
+
+    historical_only = build_point_in_time_features(combined)
+    with_schedule = build_point_in_time_features(combined, include_scheduled=True)
+
+    assert len(historical_only) == 2
+    assert len(with_schedule) == 4
+    assert pd.isna(with_schedule.iloc[2]["home_margin"])
+    assert (
+        with_schedule.iloc[2]["home_points_for_l6"] == with_schedule.iloc[3]["home_points_for_l6"]
+    )
+    assert with_schedule.iloc[3]["home_rest_days"] == 7

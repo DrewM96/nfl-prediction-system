@@ -11,45 +11,15 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 
 from cfb_prediction.client import CFBDClient
 from cfb_prediction.features import CFB_FEATURE_CONFIGURATIONS, build_point_in_time_features
 from cfb_prediction.historical import load_historical_data
+from cfb_prediction.modeling import (
+    chronological_ridge_predictions as _chronological_ridge_predictions,
+)
 from nfl_prediction.io import atomic_write_json
-
-
-def _chronological_ridge_predictions(
-    games: pd.DataFrame,
-    features: list[str],
-    target: str,
-    *,
-    min_train_rows: int,
-    alpha: float,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    clean = games.dropna(subset=[*features, target, "season", "week"]).copy()
-    actual: list[float] = []
-    predicted: list[float] = []
-    indices: list[int] = []
-    groups = clean[["season", "week"]].drop_duplicates().sort_values(["season", "week"])
-    for _, group in groups.iterrows():
-        before = (clean["season"] < group["season"]) | (
-            clean["season"].eq(group["season"]) & clean["week"].lt(group["week"])
-        )
-        validate = clean["season"].eq(group["season"]) & clean["week"].eq(group["week"])
-        train = clean[before]
-        validation = clean[validate]
-        if len(train) < min_train_rows or validation.empty:
-            continue
-        model = make_pipeline(StandardScaler(), Ridge(alpha=alpha))
-        model.fit(train[features].astype(float), train[target].astype(float))
-        predicted.extend(model.predict(validation[features].astype(float)).tolist())
-        actual.extend(validation[target].astype(float).tolist())
-        indices.extend(validation.index.astype(int).tolist())
-    return np.asarray(actual), np.asarray(predicted), np.asarray(indices)
 
 
 def _metrics(actual: np.ndarray, predicted: np.ndarray, mask: np.ndarray) -> dict[str, Any]:

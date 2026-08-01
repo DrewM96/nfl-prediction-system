@@ -17,7 +17,14 @@
 3. Confirm `data/cfb/foundation.json` reports the expected FBS team, schedule, FBS-vs-FBS, and regular-season week counts.
 4. Confirm `raw_data_published` remains `false` and neither `.env` nor `data/cfb/cache/` appears in staged changes.
 5. Use the manual `CFB foundation validation` workflow to verify the repository secret without publishing raw responses.
-6. Do not label the CFB tab as predictive until a checked-in model manifest contains chronological OOF metrics.
+6. Generate the next immutable forecast with `python cfb_production_update.py --season 2026`.
+7. Review `data/cfb/models/manifest.json`: both checksums, selected schemas, 4,470 OOF rows,
+   and 2025 holdout MAE must match the fixed benchmark.
+8. Review `data/cfb/latest_prediction.json` and its batch under `data/cfb/predictions/`. Every
+   kickoff must be later than `data_cutoff`, `market_data_used` must be false, and the game count
+   must match the intended week.
+9. Run the full test suite and inspect the College Football tab before merging. Never overwrite
+   an old batch; postgame outcomes belong in a separate results record.
 
 The manual `CFB historical benchmark` workflow makes 56 season-level requests when its ephemeral
 runner has no cache: seven endpoints for each season from 2018 through 2025. Run it intentionally,

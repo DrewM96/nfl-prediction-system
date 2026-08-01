@@ -196,8 +196,8 @@ python weekly_cfb_update.py --season 2026
 The foundation validates stable FBS team and game IDs, conferences, regular-season calendar,
 kickoff timestamps, neutral sites, and FBS/FCS classification. Raw CFBD responses are cached
 under ignored `data/cfb/cache/`; the checked-in `data/cfb/foundation.json` contains aggregate
-connectivity metadata only. The College Football tab does not present predictions as model
-output until the selected historical models are trained into checksummed production artifacts.
+connectivity metadata only. The College Football tab verifies a separate checksummed model bundle
+and matching immutable prediction batch before it displays forecasts.
 
 The first fixed benchmark uses 5,705 completed FBS-vs-FBS games from 2018-2025. Features are
 created before each result updates team state, while Ridge folds train on earlier weeks only.
@@ -220,7 +220,24 @@ python cfb_historical_benchmark.py \
 `data/cfb/historical_benchmark.json` contains aggregate configurations, data coverage, rejected
 alternatives, and development/holdout results without raw games.
 
-See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and the next model stage.
+The first production bundle fits those fixed schemas on all completed 2018-2025 FBS-vs-FBS
+games and records 51 Week 1 forecasts from an August 1, 2026 cutoff. Generate the earliest
+upcoming week, or intentionally select another week, with:
+
+```bash
+python cfb_production_update.py --season 2026
+python cfb_production_update.py --season 2026 --week 2
+```
+
+Each run writes checksummed estimators to `data/cfb/models/`, an immutable batch under
+`data/cfb/predictions/`, and a small latest-run pointer used by the app. The independent model
+does not consume sportsbook lines. Forecasts remain labeled provisional because the margin
+residual standard deviation is roughly 16 points and early-season roster inputs retain the
+timing limitations described in the model documentation. As of the first August 1 run, CFBD's
+2026 returning-production and team-talent feeds were empty; those features are visibly reported
+as neutral-imputed until a later refresh supplies them.
+
+See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and production safeguards.
 
 ## Operations
 

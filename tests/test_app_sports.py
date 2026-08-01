@@ -16,3 +16,4 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.error
     assert not app.exception
     assert any("College Football" in markdown.value for markdown in app.markdown)
+    assert any("2026 Week 1 Forecasts" in markdown.value for markdown in app.markdown)

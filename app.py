@@ -8,7 +8,13 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 
-from cfb_prediction.config import CFB_FOUNDATION_PATH, CFB_HISTORICAL_BENCHMARK_PATH
+from cfb_prediction.config import (
+    CFB_FOUNDATION_PATH,
+    CFB_HISTORICAL_BENCHMARK_PATH,
+    CFB_MODEL_MANIFEST_PATH,
+)
+from cfb_prediction.ledger import load_latest_cfb_prediction_batch
+from cfb_prediction.modeling import load_cfb_model_bundle
 from injury_system import (
     InjuryAdjustmentSystem,
     integrate_injuries_into_game_prediction,
@@ -16,7 +22,7 @@ from injury_system import (
     render_injury_manager,
 )
 from nfl_prediction.config import MODEL_MANIFEST_PATH, PROJECT_ROOT, is_division_game
-from nfl_prediction.io import read_json
+from nfl_prediction.io import read_json, sha256_file
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
     home_cover_probability,
@@ -464,6 +470,20 @@ def load_cfb_state() -> dict[str, Any]:
         },
     )
     state["historical_benchmark"] = read_json(CFB_HISTORICAL_BENCHMARK_PATH)
+    try:
+        _, model_manifest = load_cfb_model_bundle()
+        prediction_batch = load_latest_cfb_prediction_batch()
+        if prediction_batch is None:
+            raise ValueError("No immutable CFB prediction batch is available")
+        model_hash = sha256_file(CFB_MODEL_MANIFEST_PATH)
+        if prediction_batch.get("model_hash") != model_hash:
+            raise ValueError("The CFB prediction batch does not match the active model bundle")
+        state["model_manifest"] = model_manifest
+        state["prediction_batch"] = prediction_batch
+        state["production_status"] = "forecast_ready"
+    except Exception as exc:
+        state["production_status"] = "not_built"
+        state["production_error"] = str(exc)
     return state
 
 
@@ -1197,7 +1217,12 @@ def render_model_card(manifest: dict[str, Any]) -> None:
 
 def render_cfb_foundation(state: dict[str, Any]) -> None:
     ready = state.get("status") == "data_ready"
-    badge = "Data foundation ready" if ready else "Run weekly_cfb_update.py"
+    forecast_ready = state.get("production_status") == "forecast_ready"
+    badge = (
+        "Provisional forecasts ready"
+        if forecast_ready
+        else ("Data foundation ready" if ready else "Run weekly_cfb_update.py")
+    )
     page_header("College Football", badge)
     st.markdown(
         f"""
@@ -1221,10 +1246,76 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             "Run `python weekly_cfb_update.py --season 2026`."
         )
         return
-    st.info(
-        "Data connectivity and canonical IDs are ready. Predictions are intentionally withheld "
-        "until historical features pass chronological backtesting."
-    )
+    prediction_batch = state.get("prediction_batch")
+    model_manifest = state.get("model_manifest")
+    if prediction_batch and model_manifest:
+        forecast_week = prediction_batch.get("metadata", {}).get("forecast_week", "—")
+        predictions = prediction_batch.get("predictions", [])
+        rows = []
+        for prediction in predictions:
+            margin = float(prediction["predicted_home_margin"])
+            favorite = prediction["home_team"] if margin >= 0 else prediction["away_team"]
+            kickoff = datetime.fromisoformat(str(prediction["start_date"])).astimezone(
+                ZoneInfo("America/New_York")
+            )
+            rows.append(
+                {
+                    "Kickoff (ET)": (
+                        f"{kickoff.strftime('%a')} {kickoff.month}/{kickoff.day} "
+                        f"{kickoff.strftime('%I:%M%p').lstrip('0').lower()}"
+                    ),
+                    "Matchup": f"{prediction['away_team']} at {prediction['home_team']}",
+                    "Model score": (
+                        f"{prediction['away_team']} {float(prediction['predicted_away_score']):.1f} · "
+                        f"{prediction['home_team']} {float(prediction['predicted_home_score']):.1f}"
+                    ),
+                    "Projected line": f"{favorite} -{abs(margin):.1f}",
+                    "Total": f"{float(prediction['predicted_total']):.1f}",
+                    "Home win": format_probability(prediction["home_win_probability"]),
+                }
+            )
+        st.markdown(
+            f"""
+            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">First immutable production run</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Margin model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["margin"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Total model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["total"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Provisional</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+        st.caption(
+            "Independent football-model forecasts recorded before kickoff. Sportsbook lines are "
+            "not model inputs. Wide residual uncertainty remains, especially before teams play."
+        )
+        coverage = model_manifest.get("input_coverage", {})
+        covered_teams = int(coverage.get("scheduled_fbs_teams", 0))
+        returning_teams = int(coverage.get("returning_production_teams", 0))
+        talent_teams = int(coverage.get("talent_teams", 0))
+        if covered_teams and (returning_teams < covered_teams or talent_teams < covered_teams):
+            st.warning(
+                "2026 preseason feed coverage is not final: returning production is available "
+                f"for {returning_teams}/{covered_teams} scheduled FBS teams and talent for "
+                f"{talent_teams}/{covered_teams}. Missing values are neutral-imputed. Regenerate "
+                "this batch when CFBD publishes those feeds and final rosters settle."
+            )
+        with st.expander("Model and forecast audit"):
+            st.write(
+                f"Run {prediction_batch.get('run_id')} · model {prediction_batch.get('model_hash', '')[:12]}… · "
+                f"data cutoff {prediction_batch.get('data_cutoff')}"
+            )
+            st.write(
+                "Margin uses Elo, recent form, advanced efficiency, and preseason roster/talent "
+                "context where available. Total uses Elo, form, and advanced efficiency."
+            )
+    else:
+        st.info(
+            "The historical benchmark passed, but no checksummed production forecast is installed. "
+            "Run `python cfb_production_update.py --season 2026`."
+        )
     benchmark = state.get("historical_benchmark")
     if benchmark:
         selected = benchmark["selected_by_development"]
@@ -1247,11 +1338,11 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             "market lines remained more accurate and are comparison-only; CFBD does not provide "
             "a timestamp proving that these were closing lines."
         )
-    with st.expander("Next production stage"):
+    with st.expander("Production safeguards"):
         st.write(
-            "Fit checksummed margin and total bundles with residual uncertainty, build identical "
-            "point-in-time features for the 2026 schedule, and add an immutable college prediction "
-            "ledger before forecasts appear in the app."
+            "The app shows a forecast only when both model files pass their manifest checksums and "
+            "the immutable prediction batch matches that exact manifest. Future results never update "
+            "pregame features, and each weekly run is stored separately for honest scoring."
         )
     st.caption(
         f"Source: {state.get('source', 'CollegeFootballData')} · derived through "
