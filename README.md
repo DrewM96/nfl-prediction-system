@@ -103,6 +103,23 @@ python market_update.py --historical-at 2025-09-07T15:00:00Z --max-credits 20
 
 Historical raw and consensus files remain private and ignored. Current public consensus is a small analytical summary, not a standalone odds feed. The automated workflow uses the repository secret `ODDS_API_KEY` and opens a draft pull request containing only `market_consensus.json`.
 
+### Historical model-versus-market benchmark
+
+The historical benchmark rebuilds the independent model's expanding-window predictions, groups games by kickoff window, and requests consensus 30 minutes before kickoff. Both the ridge/boosting component weight and any later model/market blend use only residuals from earlier validation weeks.
+
+Estimate the exact cost before making a paid request:
+
+```bash
+python historical_market_benchmark.py \
+  --training-seasons 2022-2025 \
+  --evaluation-seasons 2025 \
+  --weeks 1-2 \
+  --max-credits 300 \
+  --dry-run
+```
+
+The guarded pilot is 14 snapshots and 280 credits for 32 games. The full matching 2023–2025 OOF period is 334 snapshots and 6,680 credits for 723 eligible games. Exact team/game records and all provider responses remain under ignored `data/market_private/`; only an aggregate report containing errors, learned weights, season splits, coverage, and disagreement buckets may be published.
+
 ## Evaluation policy
 
 Model selection uses expanding weekly splits. Production models are then fitted on every eligible row through the recorded cutoff. The manifest reports MAE, RMSE, bias, 80% interval coverage, pinball loss, latest-season holdout results, and rolling-baseline improvement. Game-margin models also report winner Brier score, log loss, and calibration error.

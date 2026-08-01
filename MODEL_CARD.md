@@ -16,6 +16,8 @@ Prediction intervals use the standard deviation of chronological residuals. They
 
 The football model is independent of sportsbook lines. When a fresh market snapshot is available, the application also shows the consensus spread and total as a separate benchmark. It does not blend that line into the model until a chronological historical test demonstrates that a learned blend improves genuinely unseen games.
 
+Historical comparison uses a nested chronology. Candidate football models train on earlier games; their weekly component weights use only earlier out-of-fold residuals; the model/market weight then uses only earlier matched market weeks. A line captured after kickoff is rejected. This prevents a closing-line benchmark or blend weight from leaking information backward into its own evaluation.
+
 ## Evaluation
 
 All model evaluation is expanding walk-forward. A week's validation rows are predicted only by models trained on earlier seasons or earlier weeks. The manifest is authoritative for the exact metrics of the checked-in bundle.

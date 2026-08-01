@@ -22,4 +22,4 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: python -m pytest -q
-      - run: python -m py_compile app.py injury_system.py weekly_nfl_update.py nfl_prediction/*.py
+      - run: python -m py_compile app.py injury_system.py weekly_nfl_update.py market_update.py historical_market_benchmark.py nfl_prediction/*.py

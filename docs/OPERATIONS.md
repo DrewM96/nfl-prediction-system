@@ -24,6 +24,8 @@ Before first merge, applying the `live-market-test` label to a same-repository p
 
 Paid history is opt-in only. Estimate first with `python market_update.py --historical-at <UTC> --dry-run`. The workflow's manual form accepts the same optional UTC timestamp and hard credit budget, but it is a smoke test: historical output stays private, is never published, and disappears with the ephemeral runner. Run the command locally to retain ignored research snapshots. The default guard refuses a request above 20 credits. Use targeted weekly checkpoints, deduplicate stored snapshots, and monitor the quota rather than crawling five-minute history.
 
+For model benchmarking, use `historical_market_benchmark.py` or the `Historical market benchmark` workflow. The pilot label is capped at 300 credits and evaluates 2025 Weeks 1–2. The full label is capped at 9,000 credits and evaluates the exact 723-game OOF period from 2023–2025; the current plan estimates 6,680 credits. Always run the pilot and audit match coverage, timestamps, spread direction, book counts, and quota headers before authorizing the full label. The workflow uploads only `market_benchmark.json`; private game-level and book-level records disappear with the runner.
+
 ## Freshness and fail-closed behavior
 
 The application stops when the schema-v3 manifest is missing, malformed, or fails a model checksum. It never substitutes a generic score. The header displays model creation date and training cutoff. Official injuries are labeled stale and are not applied when their available season differs from the prediction season.
