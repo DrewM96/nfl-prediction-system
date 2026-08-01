@@ -1,6 +1,12 @@
 from __future__ import annotations
 
-from cfb_prediction.data import normalize_calendar, normalize_games, normalize_teams
+from cfb_prediction.data import (
+    normalize_advanced_game_stats,
+    normalize_calendar,
+    normalize_games,
+    normalize_lines,
+    normalize_teams,
+)
 
 
 def test_cfbd_records_are_normalized_to_stable_ids() -> None:
@@ -75,3 +81,38 @@ def test_non_fbs_opponent_is_flagged() -> None:
         ]
     )
     assert bool(games.iloc[0]["fbs_vs_fbs"]) is False
+
+
+def test_advanced_stats_and_market_lines_are_normalized() -> None:
+    advanced = normalize_advanced_game_stats(
+        [
+            {
+                "gameId": 7,
+                "season": 2025,
+                "week": 1,
+                "team": "Alpha",
+                "opponent": "Beta",
+                "offense": {"ppa": 0.2, "successRate": 0.5, "plays": 72},
+                "defense": {"ppa": -0.1, "successRate": 0.35},
+            }
+        ]
+    )
+    lines = normalize_lines(
+        [
+            {
+                "id": 7,
+                "season": 2025,
+                "week": 1,
+                "lines": [
+                    {"provider": "A", "spread": -3.0, "overUnder": 50.0},
+                    {"provider": "B", "spread": -4.0, "overUnder": 52.0},
+                ],
+            }
+        ]
+    )
+
+    assert advanced.iloc[0]["off_ppa"] == 0.2
+    assert advanced.iloc[0]["def_success_rate"] == 0.35
+    assert lines.iloc[0]["market_home_margin"] == 3.5
+    assert lines.iloc[0]["market_total"] == 51.0
+    assert lines.iloc[0]["market_provider_count"] == 2

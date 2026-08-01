@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 
-from cfb_prediction.config import CFB_FOUNDATION_PATH
+from cfb_prediction.config import CFB_FOUNDATION_PATH, CFB_HISTORICAL_BENCHMARK_PATH
 from injury_system import (
     InjuryAdjustmentSystem,
     integrate_injuries_into_game_prediction,
@@ -447,7 +447,7 @@ def load_state() -> dict[str, Any]:
 
 @st.cache_data
 def load_cfb_state() -> dict[str, Any]:
-    return read_json(
+    state = read_json(
         CFB_FOUNDATION_PATH,
         {
             "status": "not_built",
@@ -463,6 +463,8 @@ def load_cfb_state() -> dict[str, Any]:
             "models": {},
         },
     )
+    state["historical_benchmark"] = read_json(CFB_HISTORICAL_BENCHMARK_PATH)
+    return state
 
 
 class PredictionService:
@@ -1223,11 +1225,33 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         "Data connectivity and canonical IDs are ready. Predictions are intentionally withheld "
         "until historical features pass chronological backtesting."
     )
-    with st.expander("Next model stage"):
+    benchmark = state.get("historical_benchmark")
+    if benchmark:
+        selected = benchmark["selected_by_development"]
+        margin = benchmark["results"][selected["margin"]]["margin"]
+        total = benchmark["results"][selected["total"]]["total"]
+        st.markdown(
+            f"""
+            <div class="grid-page-head" style="padding-bottom:12px"><h2 class="grid-page-title" style="font-size:20px">Historical Football Benchmark</h2></div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">Evaluated games</div><div class="grid-result-value">{int(benchmark["completed_fbs_games"]):,}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">2025 margin MAE</div><div class="grid-result-value">{float(margin["model"]["holdout"]["mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">2025 total MAE</div><div class="grid-result-value">{float(total["model"]["holdout"]["mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Research</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            "Configurations were selected before the untouched 2025 season. Listed historical "
+            "market lines remained more accurate and are comparison-only; CFBD does not provide "
+            "a timestamp proving that these were closing lines."
+        )
+    with st.expander("Next production stage"):
         st.write(
-            "Build opponent-adjusted, point-in-time team features from historical games and plays; "
-            "add returning production, transfers, talent, and coaching context; then benchmark margin "
-            "and total models with expanding weekly validation."
+            "Fit checksummed margin and total bundles with residual uncertainty, build identical "
+            "point-in-time features for the 2026 schedule, and add an immutable college prediction "
+            "ledger before forecasts appear in the app."
         )
     st.caption(
         f"Source: {state.get('source', 'CollegeFootballData')} · derived through "

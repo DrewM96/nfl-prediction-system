@@ -1,0 +1,39 @@
+name: CFB historical benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Run the fixed historical benchmark
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: >-
+          python cfb_historical_benchmark.py
+          --seasons 2018 2019 2020 2021 2022 2023 2024 2025
+          --holdout-season 2025
+          --min-train-rows 1200
+      - name: Verify aggregate-only output
+        run: >-
+          python -c "import json;
+          p=json.load(open('data/cfb/historical_benchmark.json'));
+          assert p['methodology']['raw_data_published'] is False;
+          assert 'game_id' not in p;
+          assert p['holdout_season'] == 2025"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cfb-historical-benchmark
+          path: data/cfb/historical_benchmark.json
+          retention-days: 7
