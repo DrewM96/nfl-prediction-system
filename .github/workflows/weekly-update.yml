@@ -1,0 +1,48 @@
+name: Weekly model update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * 2"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-model-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: python weekly_nfl_update.py
+      - run: python -m pytest -q
+      - name: Publish a reviewable artifact update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="automation/weekly-model-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add data models performance_history.json official_injuries.json qb_data.json rb_data.json team_data.json update_log.json weekly_report.json weekly_schedule.json wr_data.json
+          if git diff --cached --quiet; then
+            echo "No artifact changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh weekly NFL forecasts"
+          git push --force-with-lease origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
+            gh pr create --draft --base main --head "$branch" --title "chore: refresh weekly NFL forecasts" --body "Automated point-in-time data, model, forecast, and performance refresh. Review CI and the model manifest before merging."
+          fi
