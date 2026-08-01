@@ -48,4 +48,4 @@ Artifacts and code are released in the same reviewed commit. Revert the artifact
 
 ## 2026 launch gate
 
-Before Week 1 publication, verify current 53-player rosters, official injury reports, quarterback starters, kickoff times, neutral venues, data cutoff, market timestamps, and quota health. Keep market comparison in paper mode until multiple held-out seasons and calibration monitoring establish a credible advantage over strong baselines and timestamped market prices.
+Before Week 1 publication, rerun the updater after final roster cuts and verify all 32 team snapshots contain `roster_qb_returning`, `roster_ol_continuity`, and `roster_skill_continuity` without missing values. Review major quarterback-change flags and extreme offensive-line continuity values against the public roster, then verify official injury reports, quarterback starters, kickoff times, neutral venues, data cutoff, market timestamps, and quota health. Keep market comparison in paper mode until multiple held-out seasons and calibration monitoring establish a credible advantage over strong baselines and timestamped market prices.

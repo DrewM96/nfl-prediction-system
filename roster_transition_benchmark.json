@@ -1,0 +1,1348 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-01T20:26:09.446004+00:00",
+  "data_source": "nflverse rosters and snap counts; no Odds API calls",
+  "seasons_requested": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "holdout_season": 2025,
+  "completed_games": 1087,
+  "min_train_rows": 350,
+  "methodology": {
+    "validation": "expanding-window chronological out-of-fold by NFL week",
+    "selection_window": "Weeks 1-4, when roster features have non-zero weight",
+    "confirmation": "2025 is reported separately",
+    "roster_timing": "opening roster membership; game-day active/inactive status ignored",
+    "player_weight": "prior regular-season offensive or defensive snaps",
+    "decay": "100%, 75%, 50%, 25%, then zero after Week 4",
+    "comparison": "all predeclared combinations of four roster feature groups"
+  },
+  "feature_groups": {
+    "roster_overall": [
+      "home_roster_offense_continuity_delta",
+      "home_roster_defense_continuity_delta",
+      "away_roster_offense_continuity_delta",
+      "away_roster_defense_continuity_delta"
+    ],
+    "roster_offense_positions": [
+      "home_roster_qb_returning_delta",
+      "home_roster_ol_continuity_delta",
+      "home_roster_skill_continuity_delta",
+      "away_roster_qb_returning_delta",
+      "away_roster_ol_continuity_delta",
+      "away_roster_skill_continuity_delta"
+    ],
+    "roster_defense_positions": [
+      "home_roster_front_continuity_delta",
+      "home_roster_secondary_continuity_delta",
+      "away_roster_front_continuity_delta",
+      "away_roster_secondary_continuity_delta"
+    ],
+    "roster_veteran_additions": [
+      "home_roster_incoming_offense_share_delta",
+      "home_roster_incoming_defense_share_delta",
+      "away_roster_incoming_offense_share_delta",
+      "away_roster_incoming_defense_share_delta"
+    ]
+  },
+  "results": {
+    "core": {
+      "feature_count": 24,
+      "groups": [],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.36169656125134,
+          "mae_change_vs_core": 0.0
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.256357299884202,
+          "mae_change_vs_core": 0.0
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.031591201977696,
+          "mae_change_vs_core": 0.0
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.481123397790707,
+          "mae_change_vs_core": 0.0
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.031591201977696
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.481123397790707
+          }
+        },
+        "mean_ridge_weight": 0.5517980636237898
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.52726885788743,
+          "mae_change_vs_core": 0.0
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.503088550706925,
+          "mae_change_vs_core": 0.0
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.81719114436674,
+          "mae_change_vs_core": 0.0
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.18898595704711,
+          "mae_change_vs_core": 0.0
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.81719114436674
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 11.18898595704711
+          }
+        },
+        "mean_ridge_weight": 0.593969571230982
+      }
+    },
+    "core+roster_overall": {
+      "feature_count": 28,
+      "groups": [
+        "roster_overall"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.372576149827903,
+          "mae_change_vs_core": 0.010879588576562682
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.357326447665898,
+          "mae_change_vs_core": 0.10096914778169541
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.143279678105383,
+          "mae_change_vs_core": 0.11168847612768751
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.571373217226412,
+          "mae_change_vs_core": 0.09024981943570509
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.143279678105383
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.571373217226412
+          }
+        },
+        "mean_ridge_weight": 0.4299446749654219
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.52101262686575,
+          "mae_change_vs_core": -0.006256231021680492
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.621937593687907,
+          "mae_change_vs_core": 0.11884904298098142
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.603175854377481,
+          "mae_change_vs_core": 0.7859847100107409
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.64069933299833,
+          "mae_change_vs_core": -0.5482866240487798
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.603175854377481
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.64069933299833
+          }
+        },
+        "mean_ridge_weight": 0.5996818810511757
+      }
+    },
+    "core+roster_offense_positions": {
+      "feature_count": 30,
+      "groups": [
+        "roster_offense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.404497168908687,
+          "mae_change_vs_core": 0.04280060765734639
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.55028002204983,
+          "mae_change_vs_core": 0.2939227221656271
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.41996175233397,
+          "mae_change_vs_core": 0.38837055035627444
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.680598291765687,
+          "mae_change_vs_core": 0.19947489397497975
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.41996175233397
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.680598291765687
+          }
+        },
+        "mean_ridge_weight": 0.47699861687413553
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.386917588951157,
+          "mae_change_vs_core": -0.14035126893627314
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 9.810299111659393,
+          "mae_change_vs_core": -0.692789439047532
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 8.896192226280773,
+          "mae_change_vs_core": -0.9209989180859672
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.724405997038014,
+          "mae_change_vs_core": -0.46457996000909674
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 8.896192226280773
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.724405997038014
+          }
+        },
+        "mean_ridge_weight": 0.7410926694329183
+      }
+    },
+    "core+roster_defense_positions": {
+      "feature_count": 28,
+      "groups": [
+        "roster_defense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.394899679458474,
+          "mae_change_vs_core": 0.033203118207133286
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.335918110072345,
+          "mae_change_vs_core": 0.0795608101881431
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.895611263056638,
+          "mae_change_vs_core": -0.1359799389210572
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.776224957088054,
+          "mae_change_vs_core": 0.29510155929734694
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.895611263056638
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.776224957088054
+          }
+        },
+        "mean_ridge_weight": 0.4874550484094053
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.594280821734408,
+          "mae_change_vs_core": 0.06701196384697816
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.84249119574218,
+          "mae_change_vs_core": 0.3394026450352552
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.40198468820683,
+          "mae_change_vs_core": 0.5847935438400906
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.282997703277532,
+          "mae_change_vs_core": 0.09401174623042152
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.40198468820683
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 11.282997703277532
+          }
+        },
+        "mean_ridge_weight": 0.4704149377593361
+      }
+    },
+    "core+roster_veteran_additions": {
+      "feature_count": 28,
+      "groups": [
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.411449377120988,
+          "mae_change_vs_core": 0.04975281586964719
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.567471706279406,
+          "mae_change_vs_core": 0.3111144063952036
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.303434680277867,
+          "mae_change_vs_core": 0.2718434783001715
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.831508732280948,
+          "mae_change_vs_core": 0.350385334490241
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.303434680277867
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.831508732280948
+          }
+        },
+        "mean_ridge_weight": 0.5028077455048409
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.525988926021203,
+          "mae_change_vs_core": -0.001279931866227102
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.506410111242463,
+          "mae_change_vs_core": 0.003321560535537671
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.687807099494254,
+          "mae_change_vs_core": -0.12938404487248611
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.325013122990676,
+          "mae_change_vs_core": 0.136027165943565
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.687807099494254
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 11.325013122990676
+          }
+        },
+        "mean_ridge_weight": 0.5183679114799448
+      }
+    },
+    "core+roster_overall+roster_offense_positions": {
+      "feature_count": 34,
+      "groups": [
+        "roster_overall",
+        "roster_offense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.40848579025203,
+          "mae_change_vs_core": 0.04678922900068905
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.495248002660023,
+          "mae_change_vs_core": 0.23889070277582114
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.359939111099859,
+          "mae_change_vs_core": 0.3283479091221633
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.630556894220186,
+          "mae_change_vs_core": 0.149433496429479
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.359939111099859
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.630556894220186
+          }
+        },
+        "mean_ridge_weight": 0.3938450899031812
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.466170520156961,
+          "mae_change_vs_core": -0.0610983377304688
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.364292343386982,
+          "mae_change_vs_core": -0.13879620731994358
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.076216961254119,
+          "mae_change_vs_core": 0.25902581688737847
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.652367725519849,
+          "mae_change_vs_core": -0.5366182315272621
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.076216961254119
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.652367725519849
+          }
+        },
+        "mean_ridge_weight": 0.6913831258644537
+      }
+    },
+    "core+roster_overall+roster_defense_positions": {
+      "feature_count": 32,
+      "groups": [
+        "roster_overall",
+        "roster_defense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.410921724925538,
+          "mae_change_vs_core": 0.0492251636741976
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.432136624487576,
+          "mae_change_vs_core": 0.17577932460337387
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.092616555415352,
+          "mae_change_vs_core": 0.061025353437656804
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.771656693559802,
+          "mae_change_vs_core": 0.2905332957690945
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.092616555415352
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.771656693559802
+          }
+        },
+        "mean_ridge_weight": 0.4660442600276626
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.540367692712245,
+          "mae_change_vs_core": 0.013098834824814887
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.709016315947283,
+          "mae_change_vs_core": 0.20592776524035727
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.650782945901572,
+          "mae_change_vs_core": 0.8335918015348316
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.76724968599299,
+          "mae_change_vs_core": -0.4217362710541206
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.650782945901572
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.76724968599299
+          }
+        },
+        "mean_ridge_weight": 0.602240663900415
+      }
+    },
+    "core+roster_overall+roster_veteran_additions": {
+      "feature_count": 32,
+      "groups": [
+        "roster_overall",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.41050502100906,
+          "mae_change_vs_core": 0.04880845975771919
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.570802476659567,
+          "mae_change_vs_core": 0.3144451767753651
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.37674060712563,
+          "mae_change_vs_core": 0.345149405147934
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.764864346193505,
+          "mae_change_vs_core": 0.28374094840279795
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.37674060712563
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.764864346193505
+          }
+        },
+        "mean_ridge_weight": 0.4507053941908714
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.507432911031499,
+          "mae_change_vs_core": -0.01983594685593104
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.488840863837995,
+          "mae_change_vs_core": -0.014247686868930742
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.40186074202371,
+          "mae_change_vs_core": 0.5846695976569691
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.57582098565228,
+          "mae_change_vs_core": -0.6131649713948306
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.40186074202371
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.57582098565228
+          }
+        },
+        "mean_ridge_weight": 0.6361687413554634
+      }
+    },
+    "core+roster_offense_positions+roster_defense_positions": {
+      "feature_count": 34,
+      "groups": [
+        "roster_offense_positions",
+        "roster_defense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.432246586171965,
+          "mae_change_vs_core": 0.07055002492062457
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.567725267009045,
+          "mae_change_vs_core": 0.31136796712484305
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.260000613446804,
+          "mae_change_vs_core": 0.22840941146910865
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.875449920571288,
+          "mae_change_vs_core": 0.394326522780581
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.260000613446804
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.875449920571288
+          }
+        },
+        "mean_ridge_weight": 0.46921161825726143
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.457098197245926,
+          "mae_change_vs_core": -0.07017066064150335
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.351085251235181,
+          "mae_change_vs_core": -0.15200329947174396
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.971726146082839,
+          "mae_change_vs_core": 0.15453500171609846
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.730444356387524,
+          "mae_change_vs_core": -0.4585416006595864
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.971726146082839
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.730444356387524
+          }
+        },
+        "mean_ridge_weight": 0.6857814661134164
+      }
+    },
+    "core+roster_offense_positions+roster_veteran_additions": {
+      "feature_count": 34,
+      "groups": [
+        "roster_offense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.439511529326415,
+          "mae_change_vs_core": 0.07781496807507438
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.735797552896123,
+          "mae_change_vs_core": 0.47944025301192106
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.512617111337022,
+          "mae_change_vs_core": 0.4810259093593263
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.958977994455223,
+          "mae_change_vs_core": 0.4778545966645158
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.512617111337022
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.958977994455223
+          }
+        },
+        "mean_ridge_weight": 0.46438450899031813
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.382644554058166,
+          "mae_change_vs_core": -0.14462430382926428
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 9.819155269195706,
+          "mae_change_vs_core": -0.6839332815112193
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 8.99935183855219,
+          "mae_change_vs_core": -0.8178393058145499
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.638958699839225,
+          "mae_change_vs_core": -0.5500272572078853
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 8.99935183855219
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.638958699839225
+          }
+        },
+        "mean_ridge_weight": 0.7388520055325034
+      }
+    },
+    "core+roster_defense_positions+roster_veteran_additions": {
+      "feature_count": 32,
+      "groups": [
+        "roster_defense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.438645193164302,
+          "mae_change_vs_core": 0.07694863191296086
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.558795203518075,
+          "mae_change_vs_core": 0.3024379036338729
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.058707054068183,
+          "mae_change_vs_core": 0.02711585209048728
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.058883352967966,
+          "mae_change_vs_core": 0.5777599551772585
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.058707054068183
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.058883352967966
+          }
+        },
+        "mean_ridge_weight": 0.44257261410788384
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.600066331354276,
+          "mae_change_vs_core": 0.07279747346684573
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.93072659605134,
+          "mae_change_vs_core": 0.4276380453444144
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.388145108448033,
+          "mae_change_vs_core": 0.5709539640812924
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.473308083654647,
+          "mae_change_vs_core": 0.2843221266075364
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.388145108448033
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 11.473308083654647
+          }
+        },
+        "mean_ridge_weight": 0.49442600276625176
+      }
+    },
+    "core+roster_overall+roster_offense_positions+roster_defense_positions": {
+      "feature_count": 38,
+      "groups": [
+        "roster_overall",
+        "roster_offense_positions",
+        "roster_defense_positions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.416757794428678,
+          "mae_change_vs_core": 0.05506123317733724
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.486480427705786,
+          "mae_change_vs_core": 0.2301231278215834
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.187506551940633,
+          "mae_change_vs_core": 0.1559153499629371
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.785454303470937,
+          "mae_change_vs_core": 0.3043309056802297
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.187506551940633
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.785454303470937
+          }
+        },
+        "mean_ridge_weight": 0.36293222683264176
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.472024454156523,
+          "mae_change_vs_core": -0.055244403730906555
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.395596243205489,
+          "mae_change_vs_core": -0.10749230750143646
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.14348475934261,
+          "mae_change_vs_core": 0.32629361497586906
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.64770772706837,
+          "mae_change_vs_core": -0.5412782299787402
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.14348475934261
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.64770772706837
+          }
+        },
+        "mean_ridge_weight": 0.7450207468879668
+      }
+    },
+    "core+roster_overall+roster_offense_positions+roster_veteran_additions": {
+      "feature_count": 38,
+      "groups": [
+        "roster_overall",
+        "roster_offense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.434636940271425,
+          "mae_change_vs_core": 0.07294037902008377
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.713857622268652,
+          "mae_change_vs_core": 0.4575003223844494
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.517125531652082,
+          "mae_change_vs_core": 0.4855343296743868
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.910589712885217,
+          "mae_change_vs_core": 0.42946631509451016
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.517125531652082
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.910589712885217
+          }
+        },
+        "mean_ridge_weight": 0.43753803596127244
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.457267708537024,
+          "mae_change_vs_core": -0.07000114935040536
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.319247397617438,
+          "mae_change_vs_core": -0.183841153089487
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.899974228419815,
+          "mae_change_vs_core": 0.08278308405307477
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.73852056681506,
+          "mae_change_vs_core": -0.45046539023205057
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.899974228419815
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.73852056681506
+          }
+        },
+        "mean_ridge_weight": 0.6710926694329183
+      }
+    },
+    "core+roster_overall+roster_defense_positions+roster_veteran_additions": {
+      "feature_count": 36,
+      "groups": [
+        "roster_overall",
+        "roster_defense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.433104120944805,
+          "mae_change_vs_core": 0.0714075596934638
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.567701593967373,
+          "mae_change_vs_core": 0.3113442940831703
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.192343976596188,
+          "mae_change_vs_core": 0.16075277461849247
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.943059211338559,
+          "mae_change_vs_core": 0.46193581354785174
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.192343976596188
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 9.943059211338559
+          }
+        },
+        "mean_ridge_weight": 0.4205255878284924
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.51549073523199,
+          "mae_change_vs_core": -0.011778122655439205
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.540803985091472,
+          "mae_change_vs_core": 0.0377154343845465
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.437313527703548,
+          "mae_change_vs_core": 0.6201223833368079
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.644294442479397,
+          "mae_change_vs_core": -0.5446915145677131
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 10.437313527703548
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.644294442479397
+          }
+        },
+        "mean_ridge_weight": 0.6474688796680498
+      }
+    },
+    "core+roster_offense_positions+roster_defense_positions+roster_veteran_additions": {
+      "feature_count": 38,
+      "groups": [
+        "roster_offense_positions",
+        "roster_defense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.440456911702304,
+          "mae_change_vs_core": 0.0787603504509633
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.625111804951025,
+          "mae_change_vs_core": 0.36875450506682306
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.198419747131531,
+          "mae_change_vs_core": 0.1668285451538356
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.05180386277052,
+          "mae_change_vs_core": 0.5706804649798123
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.198419747131531
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.05180386277052
+          }
+        },
+        "mean_ridge_weight": 0.42012448132780084
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.46338890598858,
+          "mae_change_vs_core": -0.06387995189884954
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.33175182082608,
+          "mae_change_vs_core": -0.1713367298808457
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.824629216146112,
+          "mae_change_vs_core": 0.0074380717793722795
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.838874425506047,
+          "mae_change_vs_core": -0.35011153154106367
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.824629216146112
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.838874425506047
+          }
+        },
+        "mean_ridge_weight": 0.6744398340248962
+      }
+    },
+    "core+roster_overall+roster_offense_positions+roster_defense_positions+roster_veteran_additions": {
+      "feature_count": 42,
+      "groups": [
+        "roster_overall",
+        "roster_offense_positions",
+        "roster_defense_positions",
+        "roster_veteran_additions"
+      ],
+      "margin": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.44651986213938,
+          "mae_change_vs_core": 0.08482330088803991
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.617225606067601,
+          "mae_change_vs_core": 0.3608683061833986
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 11.233594005871534,
+          "mae_change_vs_core": 0.20200280389383884
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.000857206263667,
+          "mae_change_vs_core": 0.5197338084729601
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 11.233594005871534
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.000857206263667
+          }
+        },
+        "mean_ridge_weight": 0.3826002766251729
+      },
+      "total": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.476209765092507,
+          "mae_change_vs_core": -0.05105909279492238
+        },
+        "weeks_1_4": {
+          "rows": 128,
+          "mae": 10.416036130388957,
+          "mae_change_vs_core": -0.08705242031796878
+        },
+        "development_weeks_1_4": {
+          "rows": 64,
+          "mae": 9.9994676989789,
+          "mae_change_vs_core": 0.18227655461216052
+        },
+        "holdout_weeks_1_4": {
+          "rows": 64,
+          "mae": 10.832604561799013,
+          "mae_change_vs_core": -0.3563813952480981
+        },
+        "weeks_1_4_by_season": {
+          "2023": {
+            "rows": 0,
+            "mae": null
+          },
+          "2024": {
+            "rows": 64,
+            "mae": 9.9994676989789
+          },
+          "2025": {
+            "rows": 64,
+            "mae": 10.832604561799013
+          }
+        },
+        "mean_ridge_weight": 0.6904979253112034
+      }
+    }
+  }
+}

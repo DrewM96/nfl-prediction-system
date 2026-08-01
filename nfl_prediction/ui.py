@@ -159,6 +159,28 @@ def game_reasoning(game: dict[str, Any]) -> list[str]:
             f"{leader} has the stronger recent scoring differential (points for minus against)."
         )
 
+    home_roster = sum(
+        float(features.get(f"home_{feature}", 0.0))
+        for feature in (
+            "roster_qb_returning_delta",
+            "roster_ol_continuity_delta",
+            "roster_skill_continuity_delta",
+        )
+    )
+    away_roster = sum(
+        float(features.get(f"away_{feature}", 0.0))
+        for feature in (
+            "roster_qb_returning_delta",
+            "roster_ol_continuity_delta",
+            "roster_skill_continuity_delta",
+        )
+    )
+    if abs(home_roster - away_roster) > 0.15:
+        leader = home if home_roster > away_roster else away
+        lines.append(
+            f"{leader} returns more continuity across quarterback, offensive line, and skill positions."
+        )
+
     home_pressure = float(features.get("home_pressure_generated_l4", 0.0)) - float(
         features.get("home_pressure_allowed_l4", 0.0)
     )

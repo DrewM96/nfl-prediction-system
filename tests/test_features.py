@@ -4,10 +4,18 @@ import pandas as pd
 import pytest
 
 from nfl_prediction.features import (
+    GAME_MARGIN_FEATURES,
+    GAME_TOTAL_FEATURES,
     add_shifted_rolling_features,
     build_player_game_logs,
     build_point_in_time_game_features,
 )
+
+
+def test_roster_features_are_selected_for_totals_only() -> None:
+    roster_features = [feature for feature in GAME_TOTAL_FEATURES if "roster_" in feature]
+    assert len(roster_features) == 6
+    assert not any("roster_" in feature for feature in GAME_MARGIN_FEATURES)
 
 
 def schedules() -> pd.DataFrame:

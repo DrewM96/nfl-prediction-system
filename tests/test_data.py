@@ -20,6 +20,9 @@ def test_future_schedule_does_not_require_future_pbp(monkeypatch) -> None:
             {"season": seasons, "game_id": [f"schedule-{season}" for season in seasons]}
         ),
         load_rosters_weekly=by_season,
+        load_rosters=lambda season: pd.DataFrame(
+            {"season": [season], "game_id": [f"offseason-roster-{season}"]}
+        ),
         load_injuries=by_season,
         load_snap_counts=by_season,
     )
@@ -30,3 +33,4 @@ def test_future_schedule_does_not_require_future_pbp(monkeypatch) -> None:
     assert set(result.pbp["season"]) == {2024, 2025}
     assert set(result.schedules["season"]) == {2024, 2025, 2026}
     assert set(result.injuries["season"]) == {2024, 2025}
+    assert set(result.rosters["season"]) == {2024, 2025, 2026}

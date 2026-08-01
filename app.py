@@ -24,6 +24,7 @@ from nfl_prediction.market import (
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus
+from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
     american_moneyline,
     format_american,
@@ -385,9 +386,17 @@ class PredictionService:
         )
         for feature in feature_names:
             if feature.startswith("home_") and feature not in record:
-                record[feature] = float(home[feature.removeprefix("home_")])
+                record[feature] = decay_roster_feature(
+                    feature,
+                    float(home[feature.removeprefix("home_")]),
+                    week,
+                )
             elif feature.startswith("away_") and feature not in record:
-                record[feature] = float(away[feature.removeprefix("away_")])
+                record[feature] = decay_roster_feature(
+                    feature,
+                    float(away[feature.removeprefix("away_")]),
+                    week,
+                )
         return pd.DataFrame([record], columns=feature_names)
 
     def predict_game(

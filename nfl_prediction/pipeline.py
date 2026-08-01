@@ -15,6 +15,8 @@ from .config import MODEL_MANIFEST_PATH, PROJECT_ROOT, get_season_context
 from .data import load_nflverse_data
 from .features import (
     GAME_FEATURES,
+    GAME_MARGIN_FEATURES,
+    GAME_TOTAL_FEATURES,
     PLAYER_FEATURES,
     add_shifted_rolling_features,
     build_player_game_logs,
@@ -606,7 +608,13 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
     context = get_season_context(now)
     data = load_nflverse_data(list(context.training_seasons))
     raw_data_hash = _raw_data_fingerprint(data)
-    game_result = build_point_in_time_game_features(data.schedules, data.pbp, include_unplayed=True)
+    game_result = build_point_in_time_game_features(
+        data.schedules,
+        data.pbp,
+        include_unplayed=True,
+        rosters=data.rosters,
+        snap_counts=data.snap_counts,
+    )
     games = game_result.games
     completed = games.dropna(subset=["home_margin", "total_points"]).copy()
     margin_baseline, total_baseline = _game_baselines(completed)
@@ -614,7 +622,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         "game_margin": fit_ensemble(
             completed,
             name="game_margin",
-            feature_names=GAME_FEATURES,
+            feature_names=GAME_MARGIN_FEATURES,
             target_name="home_margin",
             baseline=margin_baseline,
             min_train_rows=350,
@@ -623,7 +631,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         "game_total": fit_ensemble(
             completed,
             name="game_total",
-            feature_names=GAME_FEATURES,
+            feature_names=GAME_TOTAL_FEATURES,
             target_name="total_points",
             baseline=total_baseline,
             min_train_rows=350,
