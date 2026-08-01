@@ -23,6 +23,7 @@ from .features import (
 from .io import atomic_write_json, sha256_file
 from .ledger import PredictionLedger
 from .modeling import FittedEnsemble, fit_ensemble, save_model_bundle
+from .odds import attach_market_consensus, load_market_consensus
 
 
 @dataclass
@@ -511,11 +512,26 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
                     "total_absolute_error": abs(prediction["total"] - actual_total),
                     "winner_correct": (prediction["predicted_home_margin"] > 0)
                     == (actual_margin > 0),
+                    **(
+                        {
+                            "market_margin_absolute_error": abs(
+                                prediction["market_informed"]["home_margin"] - actual_margin
+                            ),
+                            "market_total_absolute_error": abs(
+                                prediction["market_informed"]["total"] - actual_total
+                            ),
+                            "model_market_margin_difference": prediction["predicted_home_margin"]
+                            - prediction["market_informed"]["home_margin"],
+                        }
+                        if prediction.get("market_informed")
+                        else {}
+                    ),
                 }
             )
         if scored and not result_path.exists():
             ledger.score_batch(payload["run_id"], scored)
         if scored:
+            market_rows = [row for row in scored if "market_margin_absolute_error" in row]
             summaries.append(
                 {
                     "run_id": payload["run_id"],
@@ -523,6 +539,17 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
                     "margin_mae": float(np.mean([row["margin_absolute_error"] for row in scored])),
                     "total_mae": float(np.mean([row["total_absolute_error"] for row in scored])),
                     "winner_accuracy": float(np.mean([row["winner_correct"] for row in scored])),
+                    "market_games": len(market_rows),
+                    "market_margin_mae": (
+                        float(np.mean([row["market_margin_absolute_error"] for row in market_rows]))
+                        if market_rows
+                        else None
+                    ),
+                    "market_total_mae": (
+                        float(np.mean([row["market_total_absolute_error"] for row in market_rows]))
+                        if market_rows
+                        else None
+                    ),
                 }
             )
     return {"runs": summaries, "updated_at": datetime.now(UTC).isoformat()}
@@ -628,6 +655,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         next_week = int(current_season["week"].min())
         upcoming = current_season[current_season["week"].eq(next_week)]
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
+    predictions = attach_market_consensus(predictions, load_market_consensus(), as_of=now)
 
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
@@ -638,6 +666,14 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         metadata={
             "git_commit": _git_commit(),
             "week": int(upcoming["week"].min()) if not upcoming.empty else None,
+            "market_snapshot_at": next(
+                (
+                    prediction["market_consensus"]["snapshot_at"]
+                    for prediction in predictions
+                    if prediction.get("market_consensus")
+                ),
+                None,
+            ),
         },
     )
     performance = _score_ledger(ledger, data.schedules)

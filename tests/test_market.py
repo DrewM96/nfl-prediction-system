@@ -3,6 +3,7 @@ import pytest
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
     home_cover_probability,
+    no_vig_probabilities,
     sportsbook_home_spread_to_market_margin,
 )
 
@@ -22,3 +23,9 @@ def test_american_odds_implied_probability() -> None:
     assert american_odds_to_implied_probability(150) == pytest.approx(100 / 250)
     with pytest.raises(ValueError):
         american_odds_to_implied_probability(0)
+
+
+def test_two_way_prices_are_normalized_without_vig() -> None:
+    side_a, side_b = no_vig_probabilities(-110, -110)
+    assert side_a == pytest.approx(0.5)
+    assert side_b == pytest.approx(0.5)

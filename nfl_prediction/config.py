@@ -8,6 +8,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODELS_DIR = PROJECT_ROOT / "models"
 DATA_DIR = PROJECT_ROOT / "data"
 PREDICTIONS_DIR = DATA_DIR / "predictions"
+MARKET_PRIVATE_DIR = DATA_DIR / "market_private"
+MARKET_CONSENSUS_PATH = PROJECT_ROOT / "market_consensus.json"
 MODEL_MANIFEST_PATH = MODELS_DIR / "manifest.json"
 
 

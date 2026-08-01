@@ -1,4 +1,4 @@
-# Model Card: NFL Prediction System v3
+# Model Card: NFL Prediction System v4
 
 ## Intended use
 
@@ -14,6 +14,8 @@ Game inputs use shrunk rolling team form, EPA/play, pressure rates on a shared r
 
 Prediction intervals use the standard deviation of chronological residuals. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
 
+The football model is independent of sportsbook lines. When a fresh market snapshot is available, the application also shows the consensus spread and total as a separate benchmark. It does not blend that line into the model until a chronological historical test demonstrates that a learned blend improves genuinely unseen games.
+
 ## Evaluation
 
 All model evaluation is expanding walk-forward. A week's validation rows are predicted only by models trained on earlier seasons or earlier weeks. The manifest is authoritative for the exact metrics of the checked-in bundle.
@@ -26,13 +28,17 @@ Required release checks:
 - latest-season holdout metrics are reviewed separately;
 - interval coverage and game winner calibration remain visible;
 - Streamlit starts and loads the checksummed bundle without fallback values.
+- market comparisons use a snapshot known at prediction time, before kickoff, with the home-spread sign normalized once;
+- independent-model and market errors are scored on the identical game subset.
 
 ## Known limitations
 
-- The game model does not yet consume timestamped weather, travel distance, quarterback starter changes, coaching continuity, or live market history.
+- The game model does not yet consume timestamped weather, travel distance, quarterback starter changes, or coaching continuity.
+- Live market history is collected separately but is not yet a trained input. A useful market residual/blend model requires multiple seasons of paid historical snapshots and walk-forward proof.
 - Current preseason player membership falls back to the latest published weekly roster if the new-season roster feed is not available. The UI records the roster season.
 - Snap counts do not measure routes or pass-block/run-block assignments; they are participation signals.
 - Residual distributions are simplified and can understate correlated injury or quarterback uncertainty.
+- Consensus medians can hide book-specific limits, stale books, price differences, and line availability.
 - Small apparent betting edges are dominated by model error and sportsbook vig. The UI remains paper-only.
 
 ## Monitoring and retraining

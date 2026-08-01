@@ -19,6 +19,14 @@ def american_odds_to_implied_probability(odds: int | float) -> float:
     return (-price) / ((-price) + 100.0) if price < 0 else 100.0 / (price + 100.0)
 
 
+def no_vig_probabilities(price_a: int | float, price_b: int | float) -> tuple[float, float]:
+    """Normalize a two-way market's implied probabilities to remove bookmaker margin."""
+    implied_a = american_odds_to_implied_probability(price_a)
+    implied_b = american_odds_to_implied_probability(price_b)
+    total = implied_a + implied_b
+    return implied_a / total, implied_b / total
+
+
 def home_cover_probability(
     predicted_home_margin: float, sportsbook_home_spread: float, margin_std: float
 ) -> float:

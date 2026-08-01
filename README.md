@@ -1,10 +1,20 @@
 # NFL Prediction System
 
-A point-in-time NFL forecasting system for game margins, totals, win probabilities, and player props. Version 3 rebuilds the original prototype around one rule: a forecast may use only information that existed before kickoff.
+A point-in-time NFL forecasting system for game margins, totals, win probabilities, player props, and timestamped market comparison. Version 4 keeps the independent football model separate from The Odds API consensus so model accuracy and market disagreement can be measured honestly.
 
 The current application is configured for the 2026 season. It loads the upcoming schedule independently from the completed seasons used for training, so preseason updates no longer fail when play-by-play for the new season does not yet exist.
 
-## What changed in version 3
+## What changed in version 4
+
+- The Odds API adapter collects NFL spreads, totals, American prices, provider timestamps, and quota headers without logging the API key.
+- Book-level responses stay in ignored `data/market_private/` storage. The public `market_consensus.json` contains only median lines, prices, book counts, and dispersion.
+- Sportsbook team names map to nflverse team codes, and home spreads are converted exactly once (`-6` becomes an expected home margin of `+6`).
+- Snapshots after kickoff, snapshots from the future relative to a replay, and snapshots more than eight days before kickoff are rejected.
+- Weekly predictions retain the independent model output and add a separately labeled market-consensus benchmark. No unvalidated blend is presented as a model improvement.
+- The immutable ledger records the market timestamp and later scores model and market errors on the same games.
+- A guarded workflow collects early-week, Thursday, game-day, and prime-time snapshots for two credits per live request when using one region and two markets.
+
+## Version 3 foundation
 
 - Every historical feature is created before that game's result updates team or player state.
 - Validation is chronological and expanding; no future season can train a model evaluated on an earlier season.
@@ -28,6 +38,10 @@ flowchart LR
     E --> F[Pregame forecast ledger]
     E --> G[Streamlit read layer]
     F --> H[Postgame scoring and drift history]
+    I[The Odds API] --> J[Private raw snapshot]
+    I --> K[Derived consensus]
+    K --> F
+    K --> G
 ```
 
 Production code lives in `nfl_prediction/`:
@@ -39,6 +53,7 @@ Production code lives in `nfl_prediction/`:
 - `pipeline.py`: atomic training, forecasting, current rosters/injuries, and artifact publication.
 - `ledger.py`: immutable prediction batches and separate result records.
 - `market.py`: sportsbook sign and price-probability conversions.
+- `odds.py`: provider client, quota accounting, team normalization, consensus, freshness, and private snapshot storage.
 
 ## Quick start
 
@@ -70,11 +85,29 @@ The updater fetches schedules, play-by-play, weekly rosters, injury reports, and
 
 Never load model bundles from an untrusted source. Checksums detect corruption, but Python model serialization is still a trusted-artifact boundary.
 
+## Market snapshots
+
+Create `.env` from `.env.example`, set `ODDS_API_KEY`, and fetch current NFL spreads and totals:
+
+```bash
+python market_update.py --dry-run
+python market_update.py
+```
+
+The dry run estimates credits without contacting the provider. Current `us` spreads plus totals are budgeted at two credits. A paid historical request is explicitly gated and estimated at 20 credits:
+
+```bash
+python market_update.py --historical-at 2025-09-07T15:00:00Z --dry-run
+python market_update.py --historical-at 2025-09-07T15:00:00Z --max-credits 20
+```
+
+Historical raw and consensus files remain private and ignored. Current public consensus is a small analytical summary, not a standalone odds feed. The automated workflow uses the repository secret `ODDS_API_KEY` and opens a draft pull request containing only `market_consensus.json`.
+
 ## Evaluation policy
 
 Model selection uses expanding weekly splits. Production models are then fitted on every eligible row through the recorded cutoff. The manifest reports MAE, RMSE, bias, 80% interval coverage, pinball loss, latest-season holdout results, and rolling-baseline improvement. Game-margin models also report winner Brier score, log loss, and calibration error.
 
-The app intentionally labels market analysis as paper analysis. A displayed difference is not evidence of a profitable edge. Market claims require timestamped prices, calibrated probabilities, closing-line comparisons, adequate sample size, and uncertainty-aware evaluation.
+The app intentionally labels market analysis as paper analysis. A displayed difference is not evidence of a profitable edge. Agreement with the market usually means the independent forecast adds little actionable information; disagreement is a hypothesis to track, not a bet. Market claims require timestamped prices, no-vig probabilities, closing-line comparisons, adequate sample size, and uncertainty-aware evaluation.
 
 ## Operations
 

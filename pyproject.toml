@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nfl-prediction-system"
-version = "3.0.0"
-description = "Point-in-time NFL game and player forecasting system"
+version = "4.0.0"
+description = "Point-in-time NFL forecasts with timestamped market consensus"
 requires-python = ">=3.11,<3.14"
 dependencies = [
   "streamlit==1.49.1",
