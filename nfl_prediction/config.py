@@ -10,6 +10,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 PREDICTIONS_DIR = DATA_DIR / "predictions"
 MARKET_PRIVATE_DIR = DATA_DIR / "market_private"
 MARKET_CONSENSUS_PATH = PROJECT_ROOT / "market_consensus.json"
+MARKET_BENCHMARK_PATH = PROJECT_ROOT / "market_benchmark.json"
 MODEL_MANIFEST_PATH = MODELS_DIR / "manifest.json"
 
 

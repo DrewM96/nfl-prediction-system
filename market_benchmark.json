@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-01T18:04:09.525641+00:00",
+  "source_workflow_run": 30711466646,
+  "provider": "The Odds API",
+  "methodology": {
+    "training_seasons": [2022, 2023, 2024, 2025],
+    "evaluation_seasons": [2023, 2024, 2025],
+    "snapshot_minutes_before_kickoff": 30,
+    "independent_predictions": "weekly expanding-window OOF; component weights use prior OOF weeks only",
+    "market_blend": "MAE-optimal convex weight learned from prior matched weeks only",
+    "raw_market_data_published": false
+  },
+  "collection": {
+    "request_count": 334,
+    "api_requests": 334,
+    "cache_hits": 0,
+    "estimated_credits": 6680,
+    "actual_credits": 6680,
+    "matched_games": 723,
+    "missing_games": 0,
+    "quota_after": {
+      "remaining": 13038,
+      "used": 6962,
+      "last_request": 20
+    }
+  },
+  "audit": {
+    "timestamp_violations": 0,
+    "spread_sign_violations": 0,
+    "minimum_snapshot_lead_minutes": 34.266666666666666,
+    "maximum_snapshot_lead_minutes": 34.38333333333333
+  },
+  "games": 723,
+  "average_spread_books": 11.506224066390041,
+  "average_total_books": 11.489626556016598,
+  "variants": {
+    "independent_margin": {"mae": 10.383043224089286, "rmse": 13.355212598087672, "bias": -0.2178597851792113},
+    "market_margin": {"mae": 9.617911479944675, "rmse": 12.406960105500236, "bias": -0.729253112033195},
+    "walk_forward_blended_margin": {"mae": 9.648481258890804, "rmse": 12.455023702911442, "bias": -0.7678320107161984},
+    "independent_total": {"mae": 10.536012227694211, "rmse": 13.52327702365002, "bias": -1.2673620673444426},
+    "market_total": {"mae": 10.171853388658368, "rmse": 13.049521991425687, "bias": -1.362033195020747},
+    "walk_forward_blended_total": {"mae": 10.199334093905295, "rmse": 13.072258880048691, "bias": -1.3367638256038776}
+  },
+  "latest_market_margin_weight": 1.0,
+  "latest_market_total_weight": 1.0,
+  "future_production_market_margin_weight": 1.0,
+  "future_production_market_total_weight": 1.0,
+  "by_season": [
+    {"season": 2023, "games": 179, "independent_margin_mae": 10.426614540266662, "market_margin_mae": 9.498603351955307, "blended_margin_mae": 9.622077933955598},
+    {"season": 2024, "games": 272, "independent_margin_mae": 10.67483966070506, "market_margin_mae": 9.612132352941176, "blended_margin_mae": 9.612132352941176},
+    {"season": 2025, "games": 272, "independent_margin_mae": 10.062573016900902, "market_margin_mae": 9.702205882352942, "blended_margin_mae": 9.702205882352942}
+  ],
+  "disagreement_buckets": [
+    {"bucket": "under_2", "games": 256, "ats_decisions": 253, "ats_win_rate": 0.5138339920948617, "independent_margin_mae": 9.978484545652172, "market_margin_mae": 9.9375},
+    {"bucket": "2_to_4", "games": 212, "ats_decisions": 207, "ats_win_rate": 0.45893719806763283, "independent_margin_mae": 10.177179971342962, "market_margin_mae": 9.612028301886792},
+    {"bucket": "4_to_7", "games": 188, "ats_decisions": 181, "ats_win_rate": 0.5082872928176796, "independent_margin_mae": 10.436527352588122, "market_margin_mae": 9.460106382978724},
+    {"bucket": "7_plus", "games": 67, "ats_decisions": 66, "ats_win_rate": 0.4696969696969697, "independent_margin_mae": 12.430133001766025, "market_margin_mae": 8.85820895522388}
+  ]
+}
