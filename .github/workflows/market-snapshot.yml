@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       historical_at:
-        description: "Optional paid historical UTC timestamp; leaves live consensus unchanged"
+        description: "Optional paid UTC smoke test; private runner output is discarded"
         required: false
         type: string
       max_credits:

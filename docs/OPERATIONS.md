@@ -22,7 +22,7 @@ Before first merge, applying the `live-market-test` label to a same-repository p
 4. Merge the consensus PR before running the weekly model update if that immutable prediction batch should include the snapshot.
 5. Never add `data/market_private/` to Git. It contains the provider's book-level response and private historical research inputs.
 
-Paid history is opt-in only. Estimate first with `python market_update.py --historical-at <UTC> --dry-run`. The workflow's manual form accepts the same optional UTC timestamp and hard credit budget; historical output stays in ignored private storage and is never published by that job. The default guard refuses a request above 20 credits. Use targeted weekly checkpoints, deduplicate stored snapshots, and monitor the quota rather than crawling five-minute history.
+Paid history is opt-in only. Estimate first with `python market_update.py --historical-at <UTC> --dry-run`. The workflow's manual form accepts the same optional UTC timestamp and hard credit budget, but it is a smoke test: historical output stays private, is never published, and disappears with the ephemeral runner. Run the command locally to retain ignored research snapshots. The default guard refuses a request above 20 credits. Use targeted weekly checkpoints, deduplicate stored snapshots, and monitor the quota rather than crawling five-minute history.
 
 ## Freshness and fail-closed behavior
 
