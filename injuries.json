@@ -1,21 +1,4 @@
 {
-  "last_updated": "2025-10-15T16:46:10.561059",
-  "injuries": [
-    {
-      "team": "BAL",
-      "player_name": "L.Jackson",
-      "position": "QB",
-      "status": "OUT",
-      "notes": "",
-      "added_date": "2025-10-08T17:28:18.612890"
-    },
-    {
-      "team": "ARI",
-      "player_name": "K.Murray",
-      "position": "QB",
-      "status": "OUT",
-      "notes": "",
-      "added_date": "2025-10-15T16:46:10.561059"
-    }
-  ]
+  "last_updated": null,
+  "injuries": []
 }

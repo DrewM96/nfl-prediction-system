@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nfl-prediction-system"
+version = "3.0.0"
+description = "Point-in-time NFL game and player forecasting system"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "streamlit==1.49.1",
+  "pandas==2.3.2",
+  "numpy==2.2.6",
+  "scikit-learn==1.7.1",
+  "joblib==1.5.1",
+  "nflreadpy==0.1.5",
+  "polars==1.32.3",
+  "pyarrow==21.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["nfl_prediction*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]

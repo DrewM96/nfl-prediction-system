@@ -201,6 +201,10 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Local IDE and generated caches
+.vs/
+data/cache/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

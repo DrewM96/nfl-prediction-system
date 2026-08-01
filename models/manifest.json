@@ -1,0 +1,324 @@
+{
+  "schema_version": 3,
+  "created_at": "2026-08-01T06:57:35.993534+00:00",
+  "prediction_season": 2026,
+  "training_seasons": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "data_cutoff": "2026-01-04",
+  "raw_data_hash": "3ac89a911bb1eb627d5e5c19532fbf3734d183184aee3abf02a61497f2867f94",
+  "git_commit": "5558fd6150c2693a333a66ec66a0013558aee1ca",
+  "libraries": {
+    "scikit_learn": "1.7.1",
+    "joblib": "1.5.1"
+  },
+  "models": {
+    "game_margin": {
+      "target": "home_margin",
+      "features": [
+        "home_points_for_l4",
+        "home_points_against_l4",
+        "home_yards_l4",
+        "home_off_epa_l4",
+        "home_def_epa_l4",
+        "home_turnovers_l4",
+        "home_win_pct_l8",
+        "home_pressure_allowed_l4",
+        "home_pressure_generated_l4",
+        "away_points_for_l4",
+        "away_points_against_l4",
+        "away_yards_l4",
+        "away_off_epa_l4",
+        "away_def_epa_l4",
+        "away_turnovers_l4",
+        "away_win_pct_l8",
+        "away_pressure_allowed_l4",
+        "away_pressure_generated_l4",
+        "home_rest_days",
+        "away_rest_days",
+        "rest_advantage",
+        "division_game",
+        "week",
+        "home_field"
+      ],
+      "residual_std": 13.334210655274145,
+      "metrics": {
+        "oof_rows": 723.0,
+        "mae": 10.380133692615232,
+        "rmse": 13.3278139992023,
+        "bias": -0.2745425291611556,
+        "interval_80_coverage": 0.7869986168741355,
+        "pinball_p10": 2.289781809950092,
+        "pinball_p90": 2.487604375580436,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 272.0,
+        "latest_holdout_mae": 10.052454966809536,
+        "winner_brier": 0.2267990915654811,
+        "winner_log_loss": 0.6441438848965267,
+        "winner_calibration_error": 0.01973646165724,
+        "baseline_mae": 10.738589211618256,
+        "mae_improvement_vs_baseline": 0.35845551900302475,
+        "latest_holdout_baseline_mae": 10.295955882352942
+      },
+      "files": [
+        {
+          "path": "v3_game_margin_0.joblib",
+          "weight": 0.5681648099609853,
+          "sha256": "0f8eb1a228d4c51331359945f310ffd2319f2f0880d72df0cae0b89c30ac7a5f"
+        },
+        {
+          "path": "v3_game_margin_1.joblib",
+          "weight": 0.4318351900390147,
+          "sha256": "d3f37843347011f7e7d7714cde75232ae3e0fa2b21b87d1318dc8f9c588764de"
+        }
+      ]
+    },
+    "game_total": {
+      "target": "total_points",
+      "features": [
+        "home_points_for_l4",
+        "home_points_against_l4",
+        "home_yards_l4",
+        "home_off_epa_l4",
+        "home_def_epa_l4",
+        "home_turnovers_l4",
+        "home_win_pct_l8",
+        "home_pressure_allowed_l4",
+        "home_pressure_generated_l4",
+        "away_points_for_l4",
+        "away_points_against_l4",
+        "away_yards_l4",
+        "away_off_epa_l4",
+        "away_def_epa_l4",
+        "away_turnovers_l4",
+        "away_win_pct_l8",
+        "away_pressure_allowed_l4",
+        "away_pressure_generated_l4",
+        "home_rest_days",
+        "away_rest_days",
+        "rest_advantage",
+        "division_game",
+        "week",
+        "home_field"
+      ],
+      "residual_std": 13.430529434492788,
+      "metrics": {
+        "oof_rows": 723.0,
+        "mae": 10.5004205600202,
+        "rmse": 13.47775860005801,
+        "bias": -1.2330219049846438,
+        "interval_80_coverage": 0.7897648686030428,
+        "pinball_p10": 2.2653499507980137,
+        "pinball_p90": 2.553551051581333,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 272.0,
+        "latest_holdout_mae": 10.605673707702165,
+        "baseline_mae": 10.765536164614911,
+        "mae_improvement_vs_baseline": 0.26511560459471184,
+        "latest_holdout_baseline_mae": 10.934945815263317
+      },
+      "files": [
+        {
+          "path": "v3_game_total_0.joblib",
+          "weight": 0.7600345905880695,
+          "sha256": "6474917afceeb2db281750c3289c4acfcd707822a4c42673a1da5a296ca6fea0"
+        },
+        {
+          "path": "v3_game_total_1.joblib",
+          "weight": 0.23996540941193045,
+          "sha256": "1eee5b795b8f695bb80087e88a84e1767a51a017c9038d86c796b0acb032ee01"
+        }
+      ]
+    },
+    "passing_yards": {
+      "target": "passing_yards",
+      "features": [
+        "passing_yards_l4",
+        "passing_yards_l8",
+        "attempts_l4",
+        "attempts_l8",
+        "completion_pct_l4",
+        "passing_tds_l4",
+        "interceptions_l4",
+        "snap_share_l4",
+        "opponent_def_epa"
+      ],
+      "residual_std": 84.89704727489693,
+      "metrics": {
+        "oof_rows": 2286.0,
+        "mae": 66.52713284321823,
+        "rmse": 84.97957402550334,
+        "bias": 4.143942142067236,
+        "interval_80_coverage": 0.8145231846019247,
+        "pinball_p10": 14.944259851486494,
+        "pinball_p90": 15.403599267728673,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 683.0,
+        "latest_holdout_mae": 67.20592692404993,
+        "baseline_mae": 68.92468193369376,
+        "mae_improvement_vs_baseline": 2.397549090475536,
+        "latest_holdout_baseline_mae": 69.28588184193484
+      },
+      "files": [
+        {
+          "path": "v3_passing_yards_0.joblib",
+          "weight": 0.3224152150986645,
+          "sha256": "ee5fd7975848ed24b8cab2030fb678637b6ffb20e2b73c4d57b48d8055139874"
+        },
+        {
+          "path": "v3_passing_yards_1.joblib",
+          "weight": 0.46758478490133554,
+          "sha256": "e8c232f3ad848e3af35d9da0df62abb738caf2c038823b62b6784f15f49b11ea"
+        },
+        {
+          "path": "v3_passing_yards_2.joblib",
+          "weight": 0.20999999999999996,
+          "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
+        }
+      ]
+    },
+    "receiving_yards": {
+      "target": "receiving_yards",
+      "features": [
+        "receiving_yards_l4",
+        "receiving_yards_l8",
+        "targets_l4",
+        "targets_l8",
+        "receptions_l4",
+        "catch_rate_l4",
+        "yards_per_reception_l4",
+        "target_share_l4",
+        "snap_share_l4",
+        "opponent_def_epa"
+      ],
+      "residual_std": 23.13706805789666,
+      "metrics": {
+        "oof_rows": 21219.0,
+        "mae": 15.790638135695977,
+        "rmse": 23.136987634413742,
+        "bias": -0.1466526407225961,
+        "interval_80_coverage": 0.8535274989396295,
+        "pinball_p10": 3.5202078425777934,
+        "pinball_p90": 5.139776216775106,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 5793.0,
+        "latest_holdout_mae": 14.990380005353956,
+        "baseline_mae": 16.482882071576864,
+        "mae_improvement_vs_baseline": 0.692243935880887,
+        "latest_holdout_baseline_mae": 15.623790823510943
+      },
+      "files": [
+        {
+          "path": "v3_receiving_yards_0.joblib",
+          "weight": 0.5890068634783551,
+          "sha256": "5a4d69803a1f52f80a1d2c8bd16a42975bdbf0e777c7a3ff9561aafe6243d5fd"
+        },
+        {
+          "path": "v3_receiving_yards_1.joblib",
+          "weight": 0.22099313652164496,
+          "sha256": "4207e137e8d4f0a04e7bc83680fd72a02ec689758fe91a025ce0048f105e036f"
+        },
+        {
+          "path": "v3_receiving_yards_2.joblib",
+          "weight": 0.18999999999999995,
+          "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
+        }
+      ]
+    },
+    "receptions": {
+      "target": "receptions",
+      "features": [
+        "receptions_l4",
+        "receptions_l8",
+        "targets_l4",
+        "targets_l8",
+        "catch_rate_l4",
+        "target_share_l4",
+        "snap_share_l4",
+        "opponent_def_epa"
+      ],
+      "residual_std": 1.694605618818665,
+      "metrics": {
+        "oof_rows": 21219.0,
+        "mae": 1.2421665638479873,
+        "rmse": 1.694581419440234,
+        "bias": 0.007302018870372095,
+        "interval_80_coverage": 0.8389179508930675,
+        "pinball_p10": 0.266859721671941,
+        "pinball_p90": 0.35645621719029413,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 5793.0,
+        "latest_holdout_mae": 1.1831796888305863,
+        "baseline_mae": 1.2840859009820782,
+        "mae_improvement_vs_baseline": 0.041919337134090906,
+        "latest_holdout_baseline_mae": 1.2200861778500554
+      },
+      "files": [
+        {
+          "path": "v3_receptions_0.joblib",
+          "weight": 0.5633701991321084,
+          "sha256": "34068ad0d0892425cb8b8cfeb241789fdbfdf0a5b9e79ea9ccdfd79db8f77a74"
+        },
+        {
+          "path": "v3_receptions_1.joblib",
+          "weight": 0.2066298008678916,
+          "sha256": "98bb261b74c5ccdc67a7630a7200b0a8f9a190e2db501cb9a4ab7d3178bf2b38"
+        },
+        {
+          "path": "v3_receptions_2.joblib",
+          "weight": 0.22999999999999998,
+          "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
+        }
+      ]
+    },
+    "rushing_yards": {
+      "target": "rushing_yards",
+      "features": [
+        "rushing_yards_l4",
+        "rushing_yards_l8",
+        "carries_l4",
+        "carries_l8",
+        "yards_per_carry_l4",
+        "rushing_tds_l4",
+        "snap_share_l4",
+        "opponent_def_epa"
+      ],
+      "residual_std": 17.770153162208615,
+      "metrics": {
+        "oof_rows": 17674.0,
+        "mae": 9.130487689698318,
+        "rmse": 17.769766891903405,
+        "bias": -0.06433361226556904,
+        "interval_80_coverage": 0.8725811927124589,
+        "pinball_p10": 3.0771700816225933,
+        "pinball_p90": 3.8916580877594593,
+        "latest_holdout_season": 2025.0,
+        "latest_holdout_rows": 4868.0,
+        "latest_holdout_mae": 8.558070287736511,
+        "baseline_mae": 9.244927549079948,
+        "mae_improvement_vs_baseline": 0.11443985938162982,
+        "latest_holdout_baseline_mae": 8.698734229035177
+      },
+      "files": [
+        {
+          "path": "v3_rushing_yards_0.joblib",
+          "weight": 0.3035663079912487,
+          "sha256": "799ed4eea1a3ab56e3472952a7ddc874ffa43f5b21e527cbfef90f42428b0392"
+        },
+        {
+          "path": "v3_rushing_yards_1.joblib",
+          "weight": 0.13643369200875136,
+          "sha256": "f37853c00bf97c198466ce8f725e4ce2bda6f2d67ef7ef41efb45420414400f2"
+        },
+        {
+          "path": "v3_rushing_yards_2.joblib",
+          "weight": 0.56,
+          "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
+        }
+      ]
+    }
+  }
+}

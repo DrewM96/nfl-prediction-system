@@ -1,411 +1,251 @@
-"""
-Simple Injury Adjustment System
-Add this to your Streamlit app for manual injury tracking with auto-adjustments
+"""Session-scoped manual injury scenarios.
 
-How it works:
-1. You manually note key injuries in injuries.json
-2. System automatically adjusts predictions based on position/severity
-3. Updates are reflected immediately in predictions
+Official injury data belongs in the weekly data pipeline. This module lets a
+user explore an explicit scenario without mutating shared production files.
 """
 
-import json
+from __future__ import annotations
+
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
 import streamlit as st
-from datetime import datetime, timedelta
+
+from nfl_prediction.io import atomic_write_json, read_json
+
+AVAILABILITY_PROBABILITY = {
+    "OUT": 0.0,
+    "DOUBTFUL": 0.25,
+    "QUESTIONABLE": 0.65,
+}
+
+# Estimated points lost when unavailable. These are transparent scenario
+# assumptions, not trained model features or claims of causal value.
+OFFENSIVE_POINT_VALUE = {
+    "QB": 4.5,
+    "RB1": 0.7,
+    "RB2": 0.2,
+    "WR1": 0.9,
+    "WR2": 0.4,
+    "TE1": 0.5,
+    "OL_MULTIPLE": 1.0,
+}
+DEFENSIVE_POINT_VALUE = {"DEF_STAR": 0.8}
+
 
 class InjuryAdjustmentSystem:
-    """Simple injury tracking and adjustment system"""
-    
-    def __init__(self, injury_file='injuries.json'):
-        self.injury_file = injury_file
-        self.injuries = self._load_injuries()
-        
-        # Injury impact multipliers by position and status
-        self.impact_multipliers = {
-            'QB': {
-                'OUT': {'team_scoring': 0.75, 'team_spread': -6.0, 'player_passing': 0.0},
-                'DOUBTFUL': {'team_scoring': 0.85, 'team_spread': -3.5, 'player_passing': 0.3},
-                'QUESTIONABLE': {'team_scoring': 0.92, 'team_spread': -1.5, 'player_passing': 0.7},
-                'PROBABLE': {'team_scoring': 0.97, 'team_spread': -0.5, 'player_passing': 0.9}
-            },
-            'RB1': {
-                'OUT': {'team_scoring': 0.90, 'team_spread': -2.5, 'player_rushing': 0.0},
-                'DOUBTFUL': {'team_scoring': 0.94, 'team_spread': -1.5, 'player_rushing': 0.3},
-                'QUESTIONABLE': {'team_scoring': 0.97, 'team_spread': -0.5, 'player_rushing': 0.7},
-                'PROBABLE': {'team_scoring': 0.99, 'team_spread': -0.2, 'player_rushing': 0.9}
-            },
-            'WR1': {
-                'OUT': {'team_scoring': 0.93, 'team_spread': -2.0, 'player_receiving': 0.0},
-                'DOUBTFUL': {'team_scoring': 0.96, 'team_spread': -1.0, 'player_receiving': 0.3},
-                'QUESTIONABLE': {'team_scoring': 0.98, 'team_spread': -0.5, 'player_receiving': 0.7},
-                'PROBABLE': {'team_scoring': 0.99, 'team_spread': -0.2, 'player_receiving': 0.9}
-            },
-            'TE1': {
-                'OUT': {'team_scoring': 0.95, 'team_spread': -1.5, 'player_receiving': 0.0},
-                'DOUBTFUL': {'team_scoring': 0.97, 'team_spread': -0.8, 'player_receiving': 0.3},
-                'QUESTIONABLE': {'team_scoring': 0.98, 'team_spread': -0.3, 'player_receiving': 0.7},
-                'PROBABLE': {'team_scoring': 0.99, 'team_spread': -0.1, 'player_receiving': 0.9}
-            },
-            'OL_MULTIPLE': {
-                'OUT': {'team_scoring': 0.92, 'team_spread': -2.0},
-                'DOUBTFUL': {'team_scoring': 0.95, 'team_spread': -1.0},
-                'QUESTIONABLE': {'team_scoring': 0.97, 'team_spread': -0.5},
-            },
-            'DEF_STAR': {
-                'OUT': {'opp_scoring': 1.08, 'team_spread': -1.5},
-                'DOUBTFUL': {'opp_scoring': 1.04, 'team_spread': -0.8},
-                'QUESTIONABLE': {'opp_scoring': 1.02, 'team_spread': -0.3},
-            }
-        }
-    
-    def _load_injuries(self):
-        """Load current injuries from file"""
-        try:
-            with open(self.injury_file, 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return {'last_updated': datetime.now().isoformat(), 'injuries': []}
-    
-    def _save_injuries(self):
-        """Save injuries to file"""
-        self.injuries['last_updated'] = datetime.now().isoformat()
-        with open(self.injury_file, 'w') as f:
-            json.dump(self.injuries, f, indent=2)
-    
-    def add_injury(self, team, player_name, position, status, notes=''):
-        """Add or update an injury"""
-        # Remove old injury for same player if exists
-        self.injuries['injuries'] = [
-            inj for inj in self.injuries.get('injuries', []) 
-            if inj['player_name'] != player_name
-        ]
-        
-        # Add new injury
-        self.injuries.setdefault('injuries', []).append({
-            'team': team,
-            'player_name': player_name,
-            'position': position,
-            'status': status,
-            'notes': notes,
-            'added_date': datetime.now().isoformat()
-        })
-        
-        self._save_injuries()
-    
-    def remove_injury(self, player_name):
-        """Remove an injury (player returned)"""
-        self.injuries['injuries'] = [
-            inj for inj in self.injuries.get('injuries', []) 
-            if inj['player_name'] != player_name
-        ]
-        self._save_injuries()
-    
-    def get_team_injuries(self, team):
-        """Get all injuries for a team"""
-        return [
-            inj for inj in self.injuries.get('injuries', [])
-            if inj['team'] == team
-        ]
-    
-    def calculate_team_adjustment(self, team, is_offense=True):
-        """
-        Calculate aggregate injury adjustment for a team
-        Returns: (scoring_multiplier, spread_adjustment)
-        """
-        team_injuries = self.get_team_injuries(team)
-        
-        if not team_injuries:
-            return 1.0, 0.0
-        
-        scoring_multiplier = 1.0
-        spread_adjustment = 0.0
-        
-        for injury in team_injuries:
-            position = injury['position']
-            status = injury['status']
-            
-            if position in self.impact_multipliers and status in self.impact_multipliers[position]:
-                impact = self.impact_multipliers[position][status]
-                
-                if is_offense:
-                    # Offensive injuries reduce scoring
-                    if 'team_scoring' in impact:
-                        scoring_multiplier *= impact['team_scoring']
-                    if 'team_spread' in impact:
-                        spread_adjustment += impact['team_spread']
-                else:
-                    # Defensive injuries increase opponent scoring
-                    if 'opp_scoring' in impact:
-                        scoring_multiplier *= impact['opp_scoring']
-                    if 'team_spread' in impact:
-                        spread_adjustment += impact['team_spread']
-        
-        return scoring_multiplier, spread_adjustment
-    
-    def adjust_game_prediction(self, prediction, home_team, away_team):
-        """
-        Adjust a game prediction based on injuries
-        prediction: dict with 'home_score', 'away_score', 'spread', 'total'
-        """
-        # Get injury adjustments
-        home_off_mult, home_off_spread = self.calculate_team_adjustment(home_team, is_offense=True)
-        away_off_mult, away_off_spread = self.calculate_team_adjustment(away_team, is_offense=True)
-        
-        home_def_mult, home_def_spread = self.calculate_team_adjustment(home_team, is_offense=False)
-        away_def_mult, away_def_spread = self.calculate_team_adjustment(away_team, is_offense=False)
-        
-        # Adjust scores
-        adjusted_home = prediction['home_score'] * home_off_mult * away_def_mult
-        adjusted_away = prediction['away_score'] * away_off_mult * home_def_mult
-        
-        # Adjust spread (combine offensive and defensive impacts)
-        total_spread_adj = (home_off_spread + home_def_spread) - (away_off_spread + away_def_spread)
-        adjusted_spread = prediction['spread'] + total_spread_adj
-        
-        # Calculate if adjustment is significant
-        home_injuries = self.get_team_injuries(home_team)
-        away_injuries = self.get_team_injuries(away_team)
-        
-        adjustment_note = ""
-        if home_injuries or away_injuries:
-            adjustment_note = f"Injury-adjusted: "
-            if home_injuries:
-                adjustment_note += f"{home_team} ({len(home_injuries)} key injuries) "
-            if away_injuries:
-                adjustment_note += f"{away_team} ({len(away_injuries)} key injuries)"
-        
-        return {
-            'home_score': round(adjusted_home, 1),
-            'away_score': round(adjusted_away, 1),
-            'spread': round(adjusted_spread, 1),
-            'total': round(adjusted_home + adjusted_away, 1),
-            'original_home_score': prediction['home_score'],
-            'original_away_score': prediction['away_score'],
-            'original_spread': prediction['spread'],
-            'injury_adjusted': bool(home_injuries or away_injuries),
-            'adjustment_note': adjustment_note
-        }
-    
-    def adjust_player_prediction(self, prediction, player_name, team):
-        """
-        Adjust a player prediction based on their injury status
-        Returns: (adjusted_value, confidence_level)
-        """
-        team_injuries = self.get_team_injuries(team)
-        
-        # Check if this specific player is injured
-        player_injury = next((inj for inj in team_injuries if inj['player_name'] == player_name), None)
-        
-        if not player_injury:
-            return prediction, "Healthy"
-        
-        position = player_injury['position']
-        status = player_injury['status']
-        
-        if position not in self.impact_multipliers or status not in self.impact_multipliers[position]:
-            return prediction, f"{status} - Use caution"
-        
-        impact = self.impact_multipliers[position][status]
-        
-        # Determine which multiplier to use based on position
-        multiplier = 1.0
-        if 'QB' in position and 'player_passing' in impact:
-            multiplier = impact['player_passing']
-        elif 'RB' in position and 'player_rushing' in impact:
-            multiplier = impact['player_rushing']
-        elif 'WR' in position or 'TE' in position:
-            if 'player_receiving' in impact:
-                multiplier = impact['player_receiving']
-        
-        adjusted = prediction * multiplier if multiplier > 0 else 0
-        
-        confidence = {
-            'OUT': "❌ Out - Do not bet",
-            'DOUBTFUL': "⚠️ Doubtful - High risk",
-            'QUESTIONABLE': "🟡 Questionable - Monitor closely", 
-            'PROBABLE': "🟢 Probable - Slight concern"
-        }.get(status, "Unknown")
-        
-        return round(adjusted, 1), f"{confidence} ({status})"
-
-def render_injury_manager(injury_system, available_teams):
-    """Render the injury management UI in Streamlit sidebar"""
-    
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("🏥 Injury Tracker")
-    
-    # Show last update time
-    last_update = injury_system.injuries.get('last_updated', 'Never')
-    if last_update != 'Never':
-        last_update = datetime.fromisoformat(last_update).strftime('%m/%d %H:%M')
-    st.sidebar.caption(f"Last updated: {last_update}")
-    
-    # Current injuries summary
-    all_injuries = injury_system.injuries.get('injuries', [])
-    if all_injuries:
-        st.sidebar.info(f"📋 Tracking {len(all_injuries)} injuries")
-        
-        # Group by team
-        teams_with_injuries = {}
-        for inj in all_injuries:
-            team = inj['team']
-            teams_with_injuries.setdefault(team, []).append(inj)
-        
-        # Show summary
-        with st.sidebar.expander(f"View All ({len(all_injuries)} injuries)"):
-            for team, injuries in teams_with_injuries.items():
-                st.write(f"**{team}:**")
-                for inj in injuries:
-                    status_emoji = {
-                        'OUT': '❌',
-                        'DOUBTFUL': '⚠️',
-                        'QUESTIONABLE': '🟡',
-                        'PROBABLE': '🟢'
-                    }.get(inj['status'], '❓')
-                    st.write(f"{status_emoji} {inj['player_name']} ({inj['position']}) - {inj['status']}")
-                    if inj.get('notes'):
-                        st.caption(f"   {inj['notes']}")
-    else:
-        st.sidebar.success("✅ No tracked injuries")
-    
-    # Add injury form
-    with st.sidebar.expander("➕ Add/Update Injury"):
-        team = st.selectbox("Team", available_teams, key="injury_team")
-        player_name = st.text_input("Player Name", key="injury_player")
-        position = st.selectbox("Position", 
-            ['QB', 'RB1', 'RB2', 'WR1', 'WR2', 'TE1', 'OL_MULTIPLE', 'DEF_STAR'],
-            key="injury_position"
-        )
-        status = st.selectbox("Status", 
-            ['OUT', 'DOUBTFUL', 'QUESTIONABLE', 'PROBABLE'],
-            key="injury_status"
-        )
-        notes = st.text_input("Notes (optional)", 
-            placeholder="e.g., Ankle injury, game-time decision",
-            key="injury_notes"
-        )
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Add/Update", key="add_injury"):
-                if player_name:
-                    injury_system.add_injury(team, player_name, position, status, notes)
-                    st.success(f"Added {player_name}")
-                    st.rerun()
-        
-        with col2:
-            if st.button("Clear All", key="clear_injuries"):
-                injury_system.injuries['injuries'] = []
-                injury_system._save_injuries()
-                st.success("Cleared all injuries")
-                st.rerun()
-    
-    # Remove injury
-    if all_injuries:
-        with st.sidebar.expander("➖ Remove Injury"):
-            player_to_remove = st.selectbox(
-                "Select player to remove",
-                [inj['player_name'] for inj in all_injuries],
-                key="remove_player"
+    def __init__(self, injury_file: str | Path = "injuries.json", *, persist: bool = True):
+        self.injury_file = Path(injury_file)
+        self.persist = persist
+        if persist:
+            self.injuries = read_json(
+                self.injury_file,
+                {"last_updated": datetime.now(UTC).isoformat(), "injuries": []},
             )
-            if st.button("Remove", key="remove_injury"):
-                injury_system.remove_injury(player_to_remove)
-                st.success(f"Removed {player_to_remove}")
-                st.rerun()
-
-# Example integration into your existing prediction code:
-def integrate_injuries_into_game_prediction(base_prediction, injury_system, team1, team2, home_team):
-    """
-    Wrapper: apply injury adjustments to an already-computed prediction dict.
-
-    Expected `base_prediction` format (as produced by ProductionGamePredictor.predict_game):
-      {
-        'team1': <team1_code>,
-        'team1_score': <float>,
-        'team2': <team2_code>,
-        'team2_score': <float>,
-        'spread': <float>,
-        'total': <float>,
-        'home_team': <home_team_code>,
-        'away_team': <away_team_code>,
-        ...
-      }
-
-    Returns: adjusted prediction (same dict updated) — matches how app.py calls this function.
-    """
-    try:
-        # Defensive copy so we don't mutate caller's dict unexpectedly
-        pred = dict(base_prediction)
-        # Determine which team is home/away according to the argument
-        if home_team == team1:
-            home_team_name = team1
-            away_team_name = team2
         else:
-            home_team_name = team2
-            away_team_name = team1
+            self.injuries = st.session_state.setdefault(
+                "injury_scenario",
+                {"last_updated": datetime.now(UTC).isoformat(), "injuries": []},
+            )
 
-        # Map existing prediction into home/away scores for the injury system
-        # Handle both shapes where team1/2 may represent home/away already
-        if pred.get('home_team') == home_team_name:
-            home_score = float(pred.get('team2_score') if pred.get('team2') == home_team_name else pred.get('team1_score'))
-            away_score = float(pred.get('team1_score') if pred.get('team1') == away_team_name else pred.get('team2_score'))
+    def _save_injuries(self) -> None:
+        self.injuries["last_updated"] = datetime.now(UTC).isoformat()
+        if self.persist:
+            atomic_write_json(self.injury_file, self.injuries)
         else:
-            # Fallback: infer by comparing names
-            home_score = float(pred.get('team1_score') if team1 == home_team_name else pred.get('team2_score'))
-            away_score = float(pred.get('team2_score') if team2 == away_team_name else pred.get('team1_score'))
+            st.session_state["injury_scenario"] = self.injuries
 
-        prediction_for_adjustment = {
-            'home_score': home_score,
-            'away_score': away_score,
-            'spread': float(pred.get('spread', 0.0)),
-            'total': float(pred.get('total', home_score + away_score))
-        }
+    def add_injury(
+        self, team: str, player_name: str, position: str, status: str, notes: str = ""
+    ) -> None:
+        self.injuries["injuries"] = [
+            injury
+            for injury in self.injuries.get("injuries", [])
+            if not (injury["team"] == team and injury["player_name"] == player_name)
+        ]
+        self.injuries["injuries"].append(
+            {
+                "team": team,
+                "player_name": player_name,
+                "position": position,
+                "status": status,
+                "notes": notes,
+                "added_at": datetime.now(UTC).isoformat(),
+            }
+        )
+        self._save_injuries()
 
-        adjusted = injury_system.adjust_game_prediction(
-            prediction_for_adjustment,
-            home_team_name,
-            away_team_name
+    def remove_injury(self, team: str, player_name: str) -> None:
+        self.injuries["injuries"] = [
+            injury
+            for injury in self.injuries.get("injuries", [])
+            if not (injury["team"] == team and injury["player_name"] == player_name)
+        ]
+        self._save_injuries()
+
+    def clear(self) -> None:
+        self.injuries["injuries"] = []
+        self._save_injuries()
+
+    def get_team_injuries(self, team: str) -> list[dict[str, Any]]:
+        return [injury for injury in self.injuries.get("injuries", []) if injury["team"] == team]
+
+    def expected_score_effect(self, team: str) -> tuple[float, float, list[str]]:
+        offense_points_lost = 0.0
+        opponent_points_added = 0.0
+        notes = []
+        for injury in self.get_team_injuries(team):
+            availability = AVAILABILITY_PROBABILITY.get(injury["status"], 1.0)
+            unavailable = 1.0 - availability
+            position = injury["position"]
+            if position in OFFENSIVE_POINT_VALUE:
+                value = OFFENSIVE_POINT_VALUE[position] * unavailable
+                offense_points_lost += value
+            elif position in DEFENSIVE_POINT_VALUE:
+                value = DEFENSIVE_POINT_VALUE[position] * unavailable
+                opponent_points_added += value
+            else:
+                value = 0.0
+            notes.append(
+                f"{injury['player_name']} ({position}, {injury['status']}): "
+                f"{availability:.0%} availability assumption, {value:.1f}-point scenario effect"
+            )
+        return offense_points_lost, opponent_points_added, notes
+
+    def adjust_game_prediction(
+        self, prediction: dict[str, Any], home_team: str, away_team: str
+    ) -> dict[str, Any]:
+        home_offense_lost, home_opponent_added, home_notes = self.expected_score_effect(home_team)
+        away_offense_lost, away_opponent_added, away_notes = self.expected_score_effect(away_team)
+        home_score = max(
+            float(prediction["home_score"]) - home_offense_lost + away_opponent_added, 0.0
+        )
+        away_score = max(
+            float(prediction["away_score"]) - away_offense_lost + home_opponent_added, 0.0
+        )
+        home_margin = home_score - away_score
+        adjusted = dict(prediction)
+        adjusted.update(
+            {
+                "home_score": round(home_score, 1),
+                "away_score": round(away_score, 1),
+                "predicted_home_margin": round(home_margin, 1),
+                "spread": round(home_margin, 1),
+                "total": round(home_score + away_score, 1),
+                "injury_adjusted": bool(home_notes or away_notes),
+                "adjustment_note": "; ".join(home_notes + away_notes),
+            }
+        )
+        return adjusted
+
+    def adjust_player_prediction(
+        self, prediction: float, player_name: str, team: str
+    ) -> tuple[float, str]:
+        injury = next(
+            (
+                item
+                for item in self.get_team_injuries(team)
+                if item["player_name"].casefold() == player_name.casefold()
+            ),
+            None,
+        )
+        if not injury:
+            return prediction, "Healthy"
+        availability = AVAILABILITY_PROBABILITY.get(injury["status"], 1.0)
+        return (
+            round(max(prediction * availability, 0.0), 1),
+            f"Manual {injury['status']} scenario: {availability:.0%} availability assumption",
         )
 
-        # Map adjusted back to team1/team2 ordering expected by the app
-        if team1 == home_team_name:
-            adjusted_team1_score = adjusted['home_score']
-            adjusted_team2_score = adjusted['away_score']
-        else:
-            adjusted_team1_score = adjusted['away_score']
-            adjusted_team2_score = adjusted['home_score']
 
-        # Update and return
-        pred.update({
-            'team1_score': round(adjusted_team1_score, 1),
-            'team2_score': round(adjusted_team2_score, 1),
-            'spread': round(adjusted['spread'], 1),
-            'total': round(adjusted['total'], 1),
-            'injury_adjusted': adjusted.get('injury_adjusted', False),
-            'adjustment_note': adjusted.get('adjustment_note', ''),
-            'original_spread': adjusted.get('original_spread') if adjusted.get('injury_adjusted') else None
-        })
-        return pred
+def render_injury_manager(
+    injury_system: InjuryAdjustmentSystem, available_teams: list[str]
+) -> None:
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("Injury scenario")
+    st.sidebar.caption(
+        "Session-only manual assumptions; official reports come from the update pipeline."
+    )
+    injuries = injury_system.injuries.get("injuries", [])
+    if injuries:
+        with st.sidebar.expander(f"Current scenario ({len(injuries)})"):
+            for injury in injuries:
+                st.write(
+                    f"{injury['team']} · {injury['player_name']} · "
+                    f"{injury['position']} · {injury['status']}"
+                )
+    with st.sidebar.expander("Add or update"):
+        team = st.selectbox("Team", available_teams, key="injury_team")
+        player = st.text_input("Player", key="injury_player")
+        position = st.selectbox(
+            "Position",
+            ["QB", "RB1", "RB2", "WR1", "WR2", "TE1", "OL_MULTIPLE", "DEF_STAR"],
+            key="injury_position",
+        )
+        status = st.selectbox("Status", ["OUT", "DOUBTFUL", "QUESTIONABLE"], key="injury_status")
+        notes = st.text_input("Notes", key="injury_notes")
+        if st.button("Apply scenario") and player.strip():
+            injury_system.add_injury(team, player.strip(), position, status, notes)
+            st.rerun()
+        if st.button("Clear scenario"):
+            injury_system.clear()
+            st.rerun()
+    if injuries:
+        with st.sidebar.expander("Remove"):
+            choices = [(item["team"], item["player_name"]) for item in injuries]
+            selected = st.selectbox(
+                "Player", choices, format_func=lambda value: f"{value[0]} · {value[1]}"
+            )
+            if st.button("Remove selected"):
+                injury_system.remove_injury(*selected)
+                st.rerun()
 
-    except Exception as e:
-        # Fail-safe: return original prediction plus an error note
-        base_prediction['injury_adjustment_error'] = str(e)
-        return base_prediction
+
+def integrate_injuries_into_game_prediction(
+    base_prediction: dict[str, Any],
+    injury_system: InjuryAdjustmentSystem,
+    team1: str,
+    team2: str,
+    home_team: str,
+) -> dict[str, Any]:
+    away_team = team2 if home_team == team1 else team1
+    home_score = float(
+        base_prediction.get(
+            "home_score",
+            base_prediction["team1_score"]
+            if team1 == home_team
+            else base_prediction["team2_score"],
+        )
+    )
+    away_score = float(
+        base_prediction.get(
+            "away_score",
+            base_prediction["team2_score"]
+            if team2 == away_team
+            else base_prediction["team1_score"],
+        )
+    )
+    adjusted = injury_system.adjust_game_prediction(
+        {**base_prediction, "home_score": home_score, "away_score": away_score},
+        home_team,
+        away_team,
+    )
+    adjusted["team1_score"] = (
+        adjusted["home_score"] if team1 == home_team else adjusted["away_score"]
+    )
+    adjusted["team2_score"] = (
+        adjusted["home_score"] if team2 == home_team else adjusted["away_score"]
+    )
+    return adjusted
 
 
-def integrate_injuries_into_player_prediction(prediction_value, injury_system, player_name, team, prop_type=None):
-    """
-    Wrapper for player prop predictions.
-
-    - `prediction_value`: numeric base prediction (e.g., passing yards)
-    - `injury_system`: InjuryAdjustmentSystem instance
-    - `player_name`, `team`: strings
-    - `prop_type` is optional (kept for compatibility)
-
-    Returns: (adjusted_value, note)
-    """
-    try:
-        adjusted, confidence = injury_system.adjust_player_prediction(prediction_value, player_name, team)
-        return adjusted, confidence
-    except Exception as e:
-        # Return original with error note
-        return prediction_value, f"Error applying injury adjustment: {str(e)}"
+def integrate_injuries_into_player_prediction(
+    prediction_value: float,
+    injury_system: InjuryAdjustmentSystem,
+    player_name: str,
+    team: str,
+    prop_type: str | None = None,
+) -> tuple[float, str]:
+    del prop_type
+    return injury_system.adjust_player_prediction(prediction_value, player_name, team)
