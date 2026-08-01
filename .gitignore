@@ -204,6 +204,9 @@ cython_debug/
 # Local IDE and generated caches
 .vs/
 data/cache/
+data/market_private/
+.env.*
+!.env.example
 
 # Marimo
 marimo/_static/

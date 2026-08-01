@@ -1,0 +1,58 @@
+name: NFL market snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * 2"
+    - cron: "0 16 * * 4"
+    - cron: "0 0 * * 5"
+    - cron: "0 15 * * 0"
+    - cron: "0 19 * * 0"
+    - cron: "0 23 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: nfl-market-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Fetch and validate a consensus snapshot
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          python market_update.py --max-credits 2
+          python -m pytest -q tests/test_market.py tests/test_odds.py
+      - name: Publish only the derived consensus
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="automation/nfl-market-snapshot"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add market_consensus.json
+          if git diff --cached --quiet; then
+            echo "No consensus changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh NFL market consensus"
+          git push --force-with-lease origin "$branch"
+          number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')"
+          if [ -z "$number" ]; then
+            gh pr create --draft --base main --head "$branch" --title "chore: refresh NFL market consensus" --body "Automated timestamped consensus lines from The Odds API. Raw bookmaker responses and credentials are excluded."
+          fi

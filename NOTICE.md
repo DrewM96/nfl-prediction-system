@@ -9,3 +9,9 @@ This software retrieves NFL data through the nflverse ecosystem and `nflreadpy`.
 Upstream project: https://github.com/nflverse
 
 Loader documentation: https://github.com/nflverse/nflreadpy
+
+Market comparison can use The Odds API. The provider's terms and attribution requirements apply independently of this project's MIT license. Book-level API responses are retained only in private ignored storage; the public application publishes limited derived consensus analytics and attribution, not a replacement odds feed.
+
+Provider: https://the-odds-api.com/
+
+Terms: https://the-odds-api.com/terms-and-conditions.html

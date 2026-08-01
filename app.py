@@ -20,9 +20,11 @@ from nfl_prediction.io import read_json
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
     home_cover_probability,
+    no_vig_probabilities,
     over_probability,
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
+from nfl_prediction.odds import attach_market_consensus
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,16 +48,19 @@ def load_models() -> tuple[dict[str, FittedEnsemble], dict[str, Any]]:
 
 @st.cache_data
 def load_state() -> dict[str, Any]:
+    market = read_json(PROJECT_ROOT / "market_consensus.json")
+    schedule = attach_market_consensus(read_json(PROJECT_ROOT / "weekly_schedule.json", []), market)
     return {
         "teams": read_json(PROJECT_ROOT / "team_data.json", {}),
         "qb": read_json(PROJECT_ROOT / "qb_data.json", {}),
         "wr": read_json(PROJECT_ROOT / "wr_data.json", {}),
         "rb": read_json(PROJECT_ROOT / "rb_data.json", {}),
-        "schedule": read_json(PROJECT_ROOT / "weekly_schedule.json", []),
+        "schedule": schedule,
         "report": read_json(PROJECT_ROOT / "weekly_report.json", {}),
         "performance": read_json(PROJECT_ROOT / "performance_history.json", {"runs": []}),
         "official_injuries": read_json(PROJECT_ROOT / "official_injuries.json", {}),
         "update": read_json(PROJECT_ROOT / "update_log.json", {}),
+        "market": market,
     }
 
 
@@ -125,7 +130,7 @@ class PredictionService:
         total = self.models["game_total"].distribution(features)[0]
         home_score = max((total["mean"] + margin["mean"]) / 2.0, 0.0)
         away_score = max((total["mean"] - margin["mean"]) / 2.0, 0.0)
-        return {
+        prediction = {
             "team1": away_team,
             "team1_score": round(away_score, 1),
             "team2": home_team,
@@ -144,6 +149,7 @@ class PredictionService:
             "total_p90": round(max(total["p90"], 0.0), 1),
             "method": "schema-v3 walk-forward ensemble",
         }
+        return attach_market_consensus([prediction], self.state.get("market"))[0]
 
     def predict_player(self, model_name: str, player: dict[str, Any]) -> dict[str, float]:
         distribution = self.models[model_name].distribution(pd.DataFrame([player]))[0]
@@ -154,58 +160,104 @@ class PredictionService:
 
 def render_market_comparison(game: dict[str, Any], key: str) -> None:
     st.markdown("**Paper-market comparison**")
+    consensus = game.get("market_consensus") or {}
+    consensus_spread = consensus.get("spread") or {}
+    consensus_total = consensus.get("total") or {}
+    if consensus:
+        st.caption(
+            f"{consensus.get('provider', 'Market')} consensus captured "
+            f"{consensus['snapshot_at'][:16].replace('T', ' ')} UTC · "
+            f"{consensus_spread.get('book_count', 0)} spread books · "
+            f"spread range {consensus_spread.get('line_min', 0):+.1f} to "
+            f"{consensus_spread.get('line_max', 0):+.1f}"
+        )
     home_line = st.number_input(
         f"Sportsbook home spread ({game['home_team']}; favorite is negative)",
-        value=0.0,
+        value=float(consensus_spread.get("home_spread", 0.0)),
         step=0.5,
         key=f"spread_{key}",
     )
     market_total = st.number_input(
-        "Sportsbook total", value=float(game.get("total", 44.0)), step=0.5, key=f"total_{key}"
+        "Sportsbook total",
+        value=float(consensus_total.get("total", game.get("total", 44.0))),
+        step=0.5,
+        key=f"total_{key}",
     )
-    price_col1, price_col2 = st.columns(2)
-    spread_price = price_col1.number_input(
-        "Spread price (American)", value=-110, step=5, key=f"spread_price_{key}"
+    price_col1, price_col2, price_col3, price_col4 = st.columns(4)
+    home_spread_price = price_col1.number_input(
+        "Home spread price",
+        value=int(consensus_spread.get("home_price", -110)),
+        step=5,
+        key=f"home_spread_price_{key}",
     )
-    total_price = price_col2.number_input(
-        "Total price (American)", value=-110, step=5, key=f"total_price_{key}"
+    away_spread_price = price_col2.number_input(
+        "Away spread price",
+        value=int(consensus_spread.get("away_price", -110)),
+        step=5,
+        key=f"away_spread_price_{key}",
+    )
+    over_price = price_col3.number_input(
+        "Over price",
+        value=int(consensus_total.get("over_price", -110)),
+        step=5,
+        key=f"over_price_{key}",
+    )
+    under_price = price_col4.number_input(
+        "Under price",
+        value=int(consensus_total.get("under_price", -110)),
+        step=5,
+        key=f"under_price_{key}",
     )
     observed_at = st.text_input(
         "Line observed at (ET)",
         value=datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M"),
         key=f"line_time_{key}",
     )
+    if 0 in (home_spread_price, away_spread_price, over_price, under_price):
+        st.error("American odds cannot be zero. Enter a positive or negative price.")
+        return
     predicted_margin = float(game["predicted_home_margin"])
     margin_std = max(float(game["margin_std"]), 0.01)
     home_cover = home_cover_probability(predicted_margin, float(home_line), margin_std)
     if home_cover >= 0.5:
         spread_side = f"{game['home_team']} {home_line:+.1f}"
         spread_probability = home_cover
+        spread_price = home_spread_price
+        spread_fair, _ = no_vig_probabilities(home_spread_price, away_spread_price)
     else:
         spread_side = f"{game['away_team']} {-home_line:+.1f}"
         spread_probability = 1.0 - home_cover
+        spread_price = away_spread_price
+        _, spread_fair = no_vig_probabilities(home_spread_price, away_spread_price)
 
     total_std = max(float(game["total_std"]), 0.01)
     over = over_probability(float(game["total"]), market_total, total_std)
     total_side = "Over" if over >= 0.5 else "Under"
     total_probability = max(over, 1.0 - over)
+    if over >= 0.5:
+        total_price = over_price
+        total_fair, _ = no_vig_probabilities(over_price, under_price)
+    else:
+        total_price = under_price
+        _, total_fair = no_vig_probabilities(over_price, under_price)
     spread_implied = american_odds_to_implied_probability(spread_price)
     total_implied = american_odds_to_implied_probability(total_price)
     col1, col2 = st.columns(2)
     col1.metric(
         "Model spread side",
         spread_side,
-        f"{spread_probability - spread_implied:+.1%} vs implied",
+        f"{spread_probability - spread_fair:+.1%} vs no-vig",
     )
     col2.metric(
         "Model total side",
         f"{total_side} {market_total:.1f}",
-        f"{total_probability - total_implied:+.1%} vs implied",
+        f"{total_probability - total_fair:+.1%} vs no-vig",
     )
     st.caption(
         f"Observed {observed_at} ET. Model probabilities: spread {spread_probability:.1%}, "
-        f"total {total_probability:.1%}; price-implied: spread {spread_implied:.1%}, "
-        f"total {total_implied:.1%}. Paper analysis only."
+        f"total {total_probability:.1%}; raw implied: spread {spread_implied:.1%}, "
+        f"total {total_implied:.1%}; no-vig: spread {spread_fair:.1%}, "
+        f"total {total_fair:.1%}. Paper analysis only."
     )
 
 
@@ -265,6 +317,14 @@ if page == "This Week":
                 f"Predicted home margin: {game['predicted_home_margin']:+.1f} · "
                 f"80% total interval: {game['total_p10']:.1f}–{game['total_p90']:.1f}"
             )
+            market_forecast = game.get("market_informed")
+            if market_forecast:
+                st.info(
+                    f"Market benchmark: {game['away_team']} {market_forecast['away_score']:.1f}, "
+                    f"{game['home_team']} {market_forecast['home_score']:.1f} "
+                    f"(home margin {market_forecast['home_margin']:+.1f}, "
+                    f"total {market_forecast['total']:.1f})."
+                )
             render_market_comparison(game, game["game_id"])
 
 elif page == "Custom Game":
