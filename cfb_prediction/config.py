@@ -7,6 +7,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CFB_DATA_DIR = PROJECT_ROOT / "data" / "cfb"
 CFB_CACHE_DIR = CFB_DATA_DIR / "cache"
 CFB_FOUNDATION_PATH = CFB_DATA_DIR / "foundation.json"
+CFB_HISTORICAL_BENCHMARK_PATH = CFB_DATA_DIR / "historical_benchmark.json"
 CFBD_API_BASE_URL = "https://api.collegefootballdata.com"
 
 

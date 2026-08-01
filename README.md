@@ -197,7 +197,28 @@ The foundation validates stable FBS team and game IDs, conferences, regular-seas
 kickoff timestamps, neutral sites, and FBS/FCS classification. Raw CFBD responses are cached
 under ignored `data/cfb/cache/`; the checked-in `data/cfb/foundation.json` contains aggregate
 connectivity metadata only. The College Football tab does not present predictions as model
-output until opponent-adjusted historical features and expanding weekly backtests are complete.
+output until the selected historical models are trained into checksummed production artifacts.
+
+The first fixed benchmark uses 5,705 completed FBS-vs-FBS games from 2018-2025. Features are
+created before each result updates team state, while Ridge folds train on earlier weeks only.
+The selected margin configuration combines Elo, recent form, advanced efficiency, returning
+production, talent, recruiting, and portal context. The total configuration rejected preseason
+inputs and retained Elo, form, and advanced efficiency only.
+
+On the untouched 762-game 2025 season, margin MAE was 12.642 versus 14.062 for the Elo baseline;
+total MAE was 12.731 versus 12.807 for the scoring-form baseline. Listed market lines were more
+accurate at 11.846 and 12.366 respectively. Those lines lack snapshot timestamps, remain an
+evaluation-only reference, and are never model inputs.
+
+```bash
+python cfb_historical_benchmark.py \
+  --seasons 2018 2019 2020 2021 2022 2023 2024 2025 \
+  --holdout-season 2025 \
+  --min-train-rows 1200
+```
+
+`data/cfb/historical_benchmark.json` contains aggregate configurations, data coverage, rejected
+alternatives, and development/holdout results without raw games.
 
 See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and the next model stage.
 

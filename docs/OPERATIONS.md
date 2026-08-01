@@ -19,6 +19,11 @@
 5. Use the manual `CFB foundation validation` workflow to verify the repository secret without publishing raw responses.
 6. Do not label the CFB tab as predictive until a checked-in model manifest contains chronological OOF metrics.
 
+The manual `CFB historical benchmark` workflow makes 56 season-level requests when its ephemeral
+runner has no cache: seven endpoints for each season from 2018 through 2025. Run it intentionally,
+verify the remaining monthly CFBD allowance separately, and never schedule it as a frequent job.
+Its uploaded artifact is aggregate-only and expires after seven days.
+
 ## Market collection
 
 The `NFL market snapshot` workflow runs at six intentional weekly checkpoints: Tuesday and Thursday afternoon, shortly before Thursday night, before the Sunday early window, between the Sunday early and late windows, and before Monday night. It uses current `us` spreads and totals, budgeted at two credits per run.

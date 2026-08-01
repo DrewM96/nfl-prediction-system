@@ -1,0 +1,1111 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-01T22:09:59.907223+00:00",
+  "data_source": "CollegeFootballData REST API v2; raw responses remain private",
+  "seasons": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "holdout_season": 2025,
+  "completed_fbs_games": 5705,
+  "min_train_rows": 1200,
+  "ridge_alpha": 50.0,
+  "methodology": {
+    "validation": "features use earlier kickoffs; expanding model folds train on earlier weeks",
+    "selection": "lowest development MAE before the untouched 2025 season",
+    "market_role": "listed historical lines are comparison-only and never model inputs",
+    "market_timing_limit": "CFBD lines lack snapshot timestamps and are not labeled closing",
+    "opponent_adjustment": "pregame Elo, average opponent Elo, and margin residual versus Elo",
+    "portal_timing": "records must fall within 400 days before that season's first kickoff",
+    "preseason_timing_limit": "returning, talent, and recruiting feeds are season-level rather than timestamped snapshots",
+    "raw_data_published": false
+  },
+  "data_audit_by_season": {
+    "2018": {
+      "completed_fbs_games": 733,
+      "advanced_team_game_rows": 1684,
+      "returning_teams": 130,
+      "portal_records": 0,
+      "talent_teams": 236,
+      "recruiting_teams": 229,
+      "listed_line_games": 845
+    },
+    "2019": {
+      "completed_fbs_games": 734,
+      "advanced_team_game_rows": 1694,
+      "returning_teams": 130,
+      "portal_records": 0,
+      "talent_teams": 231,
+      "recruiting_teams": 223,
+      "listed_line_games": 848
+    },
+    "2020": {
+      "completed_fbs_games": 508,
+      "advanced_team_game_rows": 1084,
+      "returning_teams": 130,
+      "portal_records": 0,
+      "talent_teams": 219,
+      "recruiting_teams": 206,
+      "listed_line_games": 542
+    },
+    "2021": {
+      "completed_fbs_games": 732,
+      "advanced_team_game_rows": 1698,
+      "returning_teams": 128,
+      "portal_records": 1770,
+      "talent_teams": 224,
+      "recruiting_teams": 191,
+      "listed_line_games": 849
+    },
+    "2022": {
+      "completed_fbs_games": 734,
+      "advanced_team_game_rows": 2822,
+      "returning_teams": 130,
+      "portal_records": 2273,
+      "talent_teams": 233,
+      "recruiting_teams": 184,
+      "listed_line_games": 1417
+    },
+    "2023": {
+      "completed_fbs_games": 750,
+      "advanced_team_game_rows": 2850,
+      "returning_teams": 131,
+      "portal_records": 2502,
+      "talent_teams": 238,
+      "recruiting_teams": 177,
+      "listed_line_games": 1350
+    },
+    "2024": {
+      "completed_fbs_games": 752,
+      "advanced_team_game_rows": 3114,
+      "returning_teams": 133,
+      "portal_records": 3378,
+      "talent_teams": 134,
+      "recruiting_teams": 194,
+      "listed_line_games": 1523
+    },
+    "2025": {
+      "completed_fbs_games": 762,
+      "advanced_team_game_rows": 3216,
+      "returning_teams": 134,
+      "portal_records": 4499,
+      "talent_teams": 134,
+      "recruiting_teams": 232,
+      "listed_line_games": 1547
+    }
+  },
+  "feature_configurations": {
+    "elo_context": [
+      "home_elo",
+      "away_elo",
+      "elo_diff",
+      "elo_expected_margin",
+      "week",
+      "home_field",
+      "conference_game",
+      "home_rest_days",
+      "away_rest_days",
+      "rest_advantage"
+    ],
+    "elo_form": [
+      "home_elo",
+      "away_elo",
+      "elo_diff",
+      "elo_expected_margin",
+      "week",
+      "home_field",
+      "conference_game",
+      "home_rest_days",
+      "away_rest_days",
+      "rest_advantage",
+      "home_points_for_l6",
+      "home_points_against_l6",
+      "home_margin_vs_elo_l6",
+      "home_opponent_elo_l6",
+      "home_plays_l6",
+      "away_points_for_l6",
+      "away_points_against_l6",
+      "away_margin_vs_elo_l6",
+      "away_opponent_elo_l6",
+      "away_plays_l6"
+    ],
+    "elo_form_advanced": [
+      "home_elo",
+      "away_elo",
+      "elo_diff",
+      "elo_expected_margin",
+      "week",
+      "home_field",
+      "conference_game",
+      "home_rest_days",
+      "away_rest_days",
+      "rest_advantage",
+      "home_points_for_l6",
+      "home_points_against_l6",
+      "home_margin_vs_elo_l6",
+      "home_opponent_elo_l6",
+      "home_plays_l6",
+      "away_points_for_l6",
+      "away_points_against_l6",
+      "away_margin_vs_elo_l6",
+      "away_opponent_elo_l6",
+      "away_plays_l6",
+      "home_off_ppa_l6",
+      "home_def_ppa_l6",
+      "home_off_success_rate_l6",
+      "home_def_success_rate_l6",
+      "home_off_explosiveness_l6",
+      "home_def_explosiveness_l6",
+      "away_off_ppa_l6",
+      "away_def_ppa_l6",
+      "away_off_success_rate_l6",
+      "away_def_success_rate_l6",
+      "away_off_explosiveness_l6",
+      "away_def_explosiveness_l6"
+    ],
+    "elo_form_advanced_preseason": [
+      "home_elo",
+      "away_elo",
+      "elo_diff",
+      "elo_expected_margin",
+      "week",
+      "home_field",
+      "conference_game",
+      "home_rest_days",
+      "away_rest_days",
+      "rest_advantage",
+      "home_points_for_l6",
+      "home_points_against_l6",
+      "home_margin_vs_elo_l6",
+      "home_opponent_elo_l6",
+      "home_plays_l6",
+      "away_points_for_l6",
+      "away_points_against_l6",
+      "away_margin_vs_elo_l6",
+      "away_opponent_elo_l6",
+      "away_plays_l6",
+      "home_off_ppa_l6",
+      "home_def_ppa_l6",
+      "home_off_success_rate_l6",
+      "home_def_success_rate_l6",
+      "home_off_explosiveness_l6",
+      "home_def_explosiveness_l6",
+      "away_off_ppa_l6",
+      "away_def_ppa_l6",
+      "away_off_success_rate_l6",
+      "away_def_success_rate_l6",
+      "away_off_explosiveness_l6",
+      "away_def_explosiveness_l6",
+      "home_returning_ppa_z",
+      "home_returning_passing_ppa_z",
+      "home_returning_rushing_ppa_z",
+      "home_returning_receiving_ppa_z",
+      "home_talent_z",
+      "home_recruiting_points_z",
+      "home_portal_net_rating_z",
+      "away_returning_ppa_z",
+      "away_returning_passing_ppa_z",
+      "away_returning_rushing_ppa_z",
+      "away_returning_receiving_ppa_z",
+      "away_talent_z",
+      "away_recruiting_points_z",
+      "away_portal_net_rating_z"
+    ]
+  },
+  "selected_by_development": {
+    "margin": "elo_form_advanced_preseason",
+    "total": "elo_form_advanced"
+  },
+  "results": {
+    "elo_context": {
+      "feature_count": 10,
+      "margin": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.448265320205975,
+            "rmse": 16.868176567531673,
+            "bias": 0.14633364142077193,
+            "mae_change_vs_football_baseline": -0.6178046736870915
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.517767988920395,
+            "rmse": 16.914640186397843,
+            "bias": 0.37323754879516297,
+            "mae_change_vs_football_baseline": -0.5490910609526587
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 13.110055483469669,
+            "rmse": 16.640226400754578,
+            "bias": -0.9578129314719332,
+            "mae_change_vs_football_baseline": -0.9521748521900779
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 14.066069993893066,
+            "rmse": 17.961592454271674,
+            "bias": -1.4358834147930815
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 14.066859049873054,
+            "rmse": 17.955961387100988,
+            "bias": -1.1967752266767613
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 14.062230335659747,
+            "rmse": 17.988968866878405,
+            "bias": -2.599417747516594
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.201957494407159,
+            "rmse": 15.37471239795758,
+            "bias": 0.053970917225950786
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.275080906148867,
+            "rmse": 15.439274292168793,
+            "bias": 0.20900755124056095
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 11.846128608923884,
+            "rmse": 15.056594351464973,
+            "bias": -0.7004593175853019
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 12.54326067242757,
+            "rmse": 15.981720312408502,
+            "bias": -0.030233720050868877
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 13.854043421683894,
+            "rmse": 17.407691701787535,
+            "bias": 1.4162937900715988
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.756139364893649,
+            "rmse": 16.869245542431877,
+            "bias": 0.7711002498100962
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 13.41918419984812,
+            "rmse": 16.961613738944113,
+            "bias": 0.6352762317300271
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 12.97535601487801,
+            "rmse": 16.317778708167378,
+            "bias": -0.07802852345640486
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 13.996410824134355,
+            "rmse": 17.431676681555626,
+            "bias": -0.3998868826205232
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 13.110055483469669,
+            "rmse": 16.640226400754578,
+            "bias": -0.9578129314719332
+          }
+        }
+      },
+      "total": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.730361962931163,
+            "rmse": 17.223816344706588,
+            "bias": 1.4501110079697401,
+            "mae_change_vs_football_baseline": 0.5972976406654027
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.817336838058967,
+            "rmse": 17.37919617482811,
+            "bias": 1.2452243057777372,
+            "mae_change_vs_football_baseline": 0.6173021375628931
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 13.3071298934116,
+            "rmse": 16.446777865885565,
+            "bias": 2.4471187398961787,
+            "mae_change_vs_football_baseline": 0.4999529234791851
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.13306432226576,
+            "rmse": 16.54344389410095,
+            "bias": -0.11899784472990457
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.200034700496074,
+            "rmse": 16.69506658658169,
+            "bias": -0.3346540706191215
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.807176969932415,
+            "rmse": 15.784852890995849,
+            "bias": 0.9304159158963641
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.609451901565995,
+            "rmse": 15.898353632068034,
+            "bias": -0.4506152125279642
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.659452535059332,
+            "rmse": 16.012227642070563,
+            "bias": -0.49521305285868394
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.366141732283465,
+            "rmse": 15.332160031567497,
+            "bias": -0.2335958005249344
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 13.713609821304177,
+            "rmse": 17.318092227283255,
+            "bias": 1.0056961473843733
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 14.513003458038602,
+            "rmse": 18.627109570010507,
+            "bias": -1.2795523410042802
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.392067831856629,
+            "rmse": 17.057498690723893,
+            "bias": 1.454356710509665
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 14.004443149133138,
+            "rmse": 17.40897169343625,
+            "bias": 1.6385634916975536
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 14.05382084983091,
+            "rmse": 17.336580691123384,
+            "bias": 2.137543320130478
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 13.374868615080477,
+            "rmse": 16.839983867999848,
+            "bias": 1.5472481433030751
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 13.3071298934116,
+            "rmse": 16.446777865885565,
+            "bias": 2.4471187398961787
+          }
+        }
+      }
+    },
+    "elo_form": {
+      "feature_count": 20,
+      "margin": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.155037218843109,
+            "rmse": 16.57501855207173,
+            "bias": 0.14030259335731185,
+            "mae_change_vs_football_baseline": -0.9110327750499572
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.22421003078735,
+            "rmse": 16.620301848218357,
+            "bias": 0.35911376039887893,
+            "mae_change_vs_football_baseline": -0.8426490190857034
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.81843251190183,
+            "rmse": 16.352873975570603,
+            "bias": -0.9244635580733059,
+            "mae_change_vs_football_baseline": -1.243797823757916
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 14.066069993893066,
+            "rmse": 17.961592454271674,
+            "bias": -1.4358834147930815
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 14.066859049873054,
+            "rmse": 17.955961387100988,
+            "bias": -1.1967752266767613
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 14.062230335659747,
+            "rmse": 17.988968866878405,
+            "bias": -2.599417747516594
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.201957494407159,
+            "rmse": 15.37471239795758,
+            "bias": 0.053970917225950786
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.275080906148867,
+            "rmse": 15.439274292168793,
+            "bias": 0.20900755124056095
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 11.846128608923884,
+            "rmse": 15.056594351464973,
+            "bias": -0.7004593175853019
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 11.915239386335582,
+            "rmse": 15.24255749338692,
+            "bias": -0.31867498501093955
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 13.644546778744315,
+            "rmse": 17.129269166728225,
+            "bias": 1.3371935582333212
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.489994038622918,
+            "rmse": 16.627276005121068,
+            "bias": 0.806983040532284
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 13.20465239381632,
+            "rmse": 16.76871208584779,
+            "bias": 0.635632460142883
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 12.790182459016386,
+            "rmse": 16.153497773464203,
+            "bias": -0.035775952327027655
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 13.537337972516072,
+            "rmse": 16.98145130315208,
+            "bias": -0.4045236099337542
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.81843251190183,
+            "rmse": 16.352873975570603,
+            "bias": -0.9244635580733059
+          }
+        }
+      },
+      "total": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.11136593696499,
+            "rmse": 16.49485867940839,
+            "bias": 0.2474770626304404,
+            "mae_change_vs_football_baseline": -0.02169838530076973
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.183959354556837,
+            "rmse": 16.653568322932266,
+            "bias": 0.12578666162921207,
+            "mae_change_vs_football_baseline": -0.016075345939237096
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.75811607813223,
+            "rmse": 15.699672375354446,
+            "bias": 0.8396398013608268,
+            "mae_change_vs_football_baseline": -0.04906089180018469
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.13306432226576,
+            "rmse": 16.54344389410095,
+            "bias": -0.11899784472990457
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.200034700496074,
+            "rmse": 16.69506658658169,
+            "bias": -0.3346540706191215
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.807176969932415,
+            "rmse": 15.784852890995849,
+            "bias": 0.9304159158963641
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.609451901565995,
+            "rmse": 15.898353632068034,
+            "bias": -0.4506152125279642
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.659452535059332,
+            "rmse": 16.012227642070563,
+            "bias": -0.49521305285868394
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.366141732283465,
+            "rmse": 15.332160031567497,
+            "bias": -0.2335958005249344
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 13.418197503671827,
+            "rmse": 16.554210819598435,
+            "bias": 0.4601661985563453
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 14.232605155577156,
+            "rmse": 18.06441345648077,
+            "bias": -1.1808154568104567
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 12.947721405014263,
+            "rmse": 16.55358321251662,
+            "bias": 0.635881311507822
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 12.959685248067071,
+            "rmse": 16.331917369841207,
+            "bias": 0.5449644910775501
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 13.288717058398237,
+            "rmse": 16.478021851273706,
+            "bias": 0.1490406882045438
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 12.747682463379446,
+            "rmse": 16.268343158123614,
+            "bias": -0.023586352808905427
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.75811607813223,
+            "rmse": 15.699672375354446,
+            "bias": 0.8396398013608268
+          }
+        }
+      }
+    },
+    "elo_form_advanced": {
+      "feature_count": 32,
+      "margin": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.111930529368605,
+            "rmse": 16.512317588040787,
+            "bias": 0.22435341102448594,
+            "mae_change_vs_football_baseline": -0.9541394645244612
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.177394631680196,
+            "rmse": 16.558955902216784,
+            "bias": 0.44350890795275105,
+            "mae_change_vs_football_baseline": -0.8894644181928584
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.793372929143702,
+            "rmse": 16.283462511311413,
+            "bias": -0.8420882984374662,
+            "mae_change_vs_football_baseline": -1.2688574065160445
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 14.066069993893066,
+            "rmse": 17.961592454271674,
+            "bias": -1.4358834147930815
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 14.066859049873054,
+            "rmse": 17.955961387100988,
+            "bias": -1.1967752266767613
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 14.062230335659747,
+            "rmse": 17.988968866878405,
+            "bias": -2.599417747516594
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.201957494407159,
+            "rmse": 15.37471239795758,
+            "bias": 0.053970917225950786
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.275080906148867,
+            "rmse": 15.439274292168793,
+            "bias": 0.20900755124056095
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 11.846128608923884,
+            "rmse": 15.056594351464973,
+            "bias": -0.7004593175853019
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 12.012102211946353,
+            "rmse": 15.262185924275569,
+            "bias": -0.05827567601652498
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 13.616098710539381,
+            "rmse": 17.14668910580416,
+            "bias": 1.6731683521874818
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.346907591052412,
+            "rmse": 16.515344951473363,
+            "bias": 0.8914619401754215
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 13.176806639302029,
+            "rmse": 16.74420459279756,
+            "bias": 0.6750199099074706
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 12.787484773310693,
+            "rmse": 16.06797282590944,
+            "bias": -0.0343321601878547
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 13.46498327960576,
+            "rmse": 16.879170349873036,
+            "bias": -0.4177980975082539
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.793372929143702,
+            "rmse": 16.283462511311413,
+            "bias": -0.8420882984374662
+          }
+        }
+      },
+      "total": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.095273559688053,
+            "rmse": 16.478159265511877,
+            "bias": 0.37219999546925503,
+            "mae_change_vs_football_baseline": -0.03779076257770697
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.170101357529685,
+            "rmse": 16.63613988395736,
+            "bias": 0.2293472297131281,
+            "mae_change_vs_football_baseline": -0.029933342966389276
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.731150889876016,
+            "rmse": 15.686711381396432,
+            "bias": 1.067341800487259,
+            "mae_change_vs_football_baseline": -0.07602608005639944
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.13306432226576,
+            "rmse": 16.54344389410095,
+            "bias": -0.11899784472990457
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.200034700496074,
+            "rmse": 16.69506658658169,
+            "bias": -0.3346540706191215
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.807176969932415,
+            "rmse": 15.784852890995849,
+            "bias": 0.9304159158963641
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.609451901565995,
+            "rmse": 15.898353632068034,
+            "bias": -0.4506152125279642
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.659452535059332,
+            "rmse": 16.012227642070563,
+            "bias": -0.49521305285868394
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.366141732283465,
+            "rmse": 15.332160031567497,
+            "bias": -0.2335958005249344
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 13.41719744332759,
+            "rmse": 16.66718776006276,
+            "bias": 0.49306765357139476
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 14.212308302195824,
+            "rmse": 17.971424655536232,
+            "bias": -0.784088385008821
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 12.979464256555536,
+            "rmse": 16.563796944247816,
+            "bias": 0.8539468880816175
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 12.808318631922269,
+            "rmse": 16.201512329951104,
+            "bias": 0.4893249260829013
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 13.259682296432194,
+            "rmse": 16.44890213911758,
+            "bias": 0.10279220103619408
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 12.839172839626125,
+            "rmse": 16.360681580075408,
+            "bias": 0.09707042970007601
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.731150889876016,
+            "rmse": 15.686711381396432,
+            "bias": 1.067341800487259
+          }
+        }
+      }
+    },
+    "elo_form_advanced_preseason": {
+      "feature_count": 46,
+      "margin": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.972387123695098,
+            "rmse": 16.38532613305882,
+            "bias": 0.3747595676236901,
+            "mae_change_vs_football_baseline": -1.0936828701979682
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.040236187701709,
+            "rmse": 16.424446239368642,
+            "bias": 0.4998847674087659,
+            "mae_change_vs_football_baseline": -1.0266228621713456
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.642223961836166,
+            "rmse": 16.193613357528495,
+            "bias": -0.2341173888107733,
+            "mae_change_vs_football_baseline": -1.4200063738235809
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 14.066069993893066,
+            "rmse": 17.961592454271674,
+            "bias": -1.4358834147930815
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 14.066859049873054,
+            "rmse": 17.955961387100988,
+            "bias": -1.1967752266767613
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 14.062230335659747,
+            "rmse": 17.988968866878405,
+            "bias": -2.599417747516594
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.201957494407159,
+            "rmse": 15.37471239795758,
+            "bias": 0.053970917225950786
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.275080906148867,
+            "rmse": 15.439274292168793,
+            "bias": 0.20900755124056095
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 11.846128608923884,
+            "rmse": 15.056594351464973,
+            "bias": -0.7004593175853019
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 12.219953874537117,
+            "rmse": 15.211523506650071,
+            "bias": -0.2980724640411122
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 13.698011523317003,
+            "rmse": 16.97838148340213,
+            "bias": 0.939479145379023
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.153451984097899,
+            "rmse": 16.31245779942895,
+            "bias": 0.8374623183213545
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 12.9487942981989,
+            "rmse": 16.56555900075928,
+            "bias": 1.142914985786097
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 12.467999159397964,
+            "rmse": 15.616604462955955,
+            "bias": -0.033216340446526375
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 13.398717279885853,
+            "rmse": 17.14471521855834,
+            "bias": 0.02454835387415743
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.642223961836166,
+            "rmse": 16.193613357528495,
+            "bias": -0.2341173888107733
+          }
+        }
+      },
+      "total": {
+        "model": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.120636482159048,
+            "rmse": 16.529140195287837,
+            "bias": 0.2406377546235957,
+            "mae_change_vs_football_baseline": -0.01242784010671194
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.205982990505069,
+            "rmse": 16.694487756684484,
+            "bias": 0.19139043341440332,
+            "mae_change_vs_football_baseline": 0.005948290008994661
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.7053282761918,
+            "rmse": 15.6997002974389,
+            "bias": 0.48028219956281626,
+            "mae_change_vs_football_baseline": -0.10184869374061556
+          }
+        },
+        "football_baseline": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 13.13306432226576,
+            "rmse": 16.54344389410095,
+            "bias": -0.11899784472990457
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 13.200034700496074,
+            "rmse": 16.69506658658169,
+            "bias": -0.3346540706191215
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.807176969932415,
+            "rmse": 15.784852890995849,
+            "bias": 0.9304159158963641
+          }
+        },
+        "listed_market": {
+          "all_oof": {
+            "rows": 4470,
+            "mae": 12.609451901565995,
+            "rmse": 15.898353632068034,
+            "bias": -0.4506152125279642
+          },
+          "development": {
+            "rows": 3708,
+            "mae": 12.659452535059332,
+            "rmse": 16.012227642070563,
+            "bias": -0.49521305285868394
+          },
+          "holdout": {
+            "rows": 762,
+            "mae": 12.366141732283465,
+            "rmse": 15.332160031567497,
+            "bias": -0.2335958005249344
+          }
+        },
+        "by_season": {
+          "2019": {
+            "rows": 232,
+            "mae": 13.517261515938918,
+            "rmse": 16.722028581419867,
+            "bias": 0.4655172580953008
+          },
+          "2020": {
+            "rows": 508,
+            "mae": 14.185478646932488,
+            "rmse": 17.994876215029336,
+            "bias": -1.167036180628445
+          },
+          "2021": {
+            "rows": 732,
+            "mae": 13.091935875245994,
+            "rmse": 16.713617949579955,
+            "bias": 1.116590277841283
+          },
+          "2022": {
+            "rows": 734,
+            "mae": 12.841878229654126,
+            "rmse": 16.21507869539997,
+            "bias": 0.76442414082891
+          },
+          "2023": {
+            "rows": 750,
+            "mae": 13.289815130639981,
+            "rmse": 16.486166966001512,
+            "bias": 0.49648414536904223
+          },
+          "2024": {
+            "rows": 752,
+            "mae": 12.831063929823243,
+            "rmse": 16.42011622116009,
+            "bias": -0.7397133095655224
+          },
+          "2025": {
+            "rows": 762,
+            "mae": 12.7053282761918,
+            "rmse": 15.6997002974389,
+            "bias": 0.48028219956281626
+          }
+        }
+      }
+    }
+  }
+}
