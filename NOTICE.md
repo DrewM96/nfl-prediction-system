@@ -15,3 +15,13 @@ Market comparison can use The Odds API. The provider's terms and attribution req
 Provider: https://the-odds-api.com/
 
 Terms: https://the-odds-api.com/terms-and-conditions.html
+
+College Football foundation data is retrieved from CollegeFootballData. The API key and raw
+responses remain private; the repository publishes limited derived status, model, benchmark,
+and prediction artifacts rather than a replacement data feed. CollegeFootballData attribution
+is included in the application and documentation, and its terms apply independently of the
+project's MIT license.
+
+Provider: https://collegefootballdata.com/
+
+Terms: https://collegefootballdata.com/terms

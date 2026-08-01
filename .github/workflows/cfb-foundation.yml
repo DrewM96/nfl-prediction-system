@@ -1,0 +1,35 @@
+name: CFB foundation validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "College football season"
+        required: true
+        default: "2026"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Validate authenticated CFBD foundation
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python weekly_cfb_update.py --season "${{ inputs.season }}" --refresh
+      - run: python -m pytest -q tests/test_cfb_client.py tests/test_cfb_data.py tests/test_cfb_pipeline.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cfb-foundation-${{ inputs.season }}
+          path: data/cfb/foundation.json
+          retention-days: 7

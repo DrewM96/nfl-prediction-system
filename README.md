@@ -1,6 +1,6 @@
-# NFL Prediction System
+# GRIDLINE Football Prediction System
 
-A point-in-time NFL forecasting system for game margins, totals, win probabilities, player props, and timestamped market comparison. Version 4 keeps the independent football model separate from The Odds API consensus so model accuracy and market disagreement can be measured honestly.
+A point-in-time football forecasting application. The NFL side produces game margins, totals, win probabilities, player props, and timestamped market comparison. A separate College Football tab now has authenticated CollegeFootballData ingestion and isolated artifacts; CFB forecasts remain withheld until their historical models pass chronological validation.
 
 The current application is configured for the 2026 season. It loads the upcoming schedule independently from the completed seasons used for training, so preseason updates no longer fail when play-by-play for the new season does not yet exist.
 
@@ -42,6 +42,9 @@ flowchart LR
     I --> K[Derived consensus]
     K --> F
     K --> G
+    L[CollegeFootballData] --> M[Ignored CFB cache]
+    M --> N[Derived CFB artifacts]
+    N --> G
 ```
 
 Production code lives in `nfl_prediction/`:
@@ -64,6 +67,7 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 python weekly_nfl_update.py
+python weekly_cfb_update.py --season 2026
 streamlit run app.py
 ```
 
@@ -179,10 +183,28 @@ from 10.527 to 10.387. Every roster configuration worsened margin MAE, so the ma
 remains unchanged. `roster_transition_benchmark.json` preserves all accepted and rejected
 configurations.
 
+### College Football foundation
+
+College Football lives in the same Streamlit application but uses an independent package,
+cache, artifacts, and update entry point. Configure `CFBD_API_KEY` in the environment or an
+ignored local `.env`, then run:
+
+```bash
+python weekly_cfb_update.py --season 2026
+```
+
+The foundation validates stable FBS team and game IDs, conferences, regular-season calendar,
+kickoff timestamps, neutral sites, and FBS/FCS classification. Raw CFBD responses are cached
+under ignored `data/cfb/cache/`; the checked-in `data/cfb/foundation.json` contains aggregate
+connectivity metadata only. The College Football tab does not present predictions as model
+output until opponent-adjusted historical features and expanding weekly backtests are complete.
+
+See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and the next model stage.
+
 ## Operations
 
 See [MODEL_CARD.md](MODEL_CARD.md) for intended use and limitations and [docs/OPERATIONS.md](docs/OPERATIONS.md) for weekly refresh, failure, rollback, and launch procedures.
 
 ## Data attribution
 
-This project uses nflverse data. Licensing and attribution details are in [NOTICE.md](NOTICE.md). Application code is MIT licensed.
+This project uses nflverse and CollegeFootballData. Terms and attribution details are in [NOTICE.md](NOTICE.md). Application code is MIT licensed.

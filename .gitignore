@@ -205,6 +205,8 @@ cython_debug/
 .vs/
 data/cache/
 data/market_private/
+data/cfb/cache/
+data/cfb/private/
 .env.*
 !.env.example
 
