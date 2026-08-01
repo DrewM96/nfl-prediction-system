@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "sport": "college_football",
+  "status": "data_ready",
+  "prediction_season": 2026,
+  "created_at": "2026-08-01T21:47:01.238108+00:00",
+  "data_cutoff": "2026-08-01",
+  "source": "CollegeFootballData REST API v2",
+  "raw_data_published": false,
+  "team_count": 138,
+  "scheduled_game_count": 888,
+  "fbs_vs_fbs_game_count": 761,
+  "completed_game_count": 0,
+  "calendar_week_count": 15,
+  "season_start": "2026-08-29T07:00:00+00:00",
+  "season_end": "2026-12-12T07:59:00+00:00",
+  "models": {},
+  "next_stage": "historical feature construction and chronological game-model benchmark"
+}

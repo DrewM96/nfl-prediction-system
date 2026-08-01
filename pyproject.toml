@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["nfl_prediction*"]
+include = ["nfl_prediction*", "cfb_prediction*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

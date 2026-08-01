@@ -10,6 +10,15 @@
 6. Start Streamlit and verify This Week, Custom Game, all four prop paths, Performance, and Model Card.
 7. Merge/deploy only after the automated artifact pull request is reviewed.
 
+## College Football foundation refresh
+
+1. Keep `CFBD_API_KEY` only in GitHub Actions secrets or the ignored local `.env`.
+2. Run `python weekly_cfb_update.py --season 2026`; add `--refresh` only when a fresh upstream pull is required.
+3. Confirm `data/cfb/foundation.json` reports the expected FBS team, schedule, FBS-vs-FBS, and regular-season week counts.
+4. Confirm `raw_data_published` remains `false` and neither `.env` nor `data/cfb/cache/` appears in staged changes.
+5. Use the manual `CFB foundation validation` workflow to verify the repository secret without publishing raw responses.
+6. Do not label the CFB tab as predictive until a checked-in model manifest contains chronological OOF metrics.
+
 ## Market collection
 
 The `NFL market snapshot` workflow runs at six intentional weekly checkpoints: Tuesday and Thursday afternoon, shortly before Thursday night, before the Sunday early window, between the Sunday early and late windows, and before Monday night. It uses current `us` spreads and totals, budgeted at two credits per run.

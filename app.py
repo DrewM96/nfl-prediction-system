@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 
+from cfb_prediction.config import CFB_FOUNDATION_PATH
 from injury_system import (
     InjuryAdjustmentSystem,
     integrate_injuries_into_game_prediction,
@@ -48,6 +49,7 @@ PAGE_LABELS = [
     "Performance",
     "Model",
 ]
+SPORT_LABELS = ["NFL", "College Football"]
 
 st.set_page_config(
     page_title="GRIDLINE — Model-Based Forecasts",
@@ -340,6 +342,26 @@ def load_state() -> dict[str, Any]:
     }
 
 
+@st.cache_data
+def load_cfb_state() -> dict[str, Any]:
+    return read_json(
+        CFB_FOUNDATION_PATH,
+        {
+            "status": "not_built",
+            "prediction_season": datetime.now().year,
+            "created_at": "pending",
+            "data_cutoff": "not built",
+            "source": "CollegeFootballData REST API v2",
+            "team_count": 0,
+            "scheduled_game_count": 0,
+            "fbs_vs_fbs_game_count": 0,
+            "completed_game_count": 0,
+            "calendar_week_count": 0,
+            "models": {},
+        },
+    )
+
+
 class PredictionService:
     def __init__(
         self,
@@ -457,13 +479,13 @@ def page_header(title: str, badge: str | None = None) -> None:
     )
 
 
-def top_bar(manifest: dict[str, Any]) -> None:
+def top_bar(manifest: dict[str, Any], *, league: str = "NFL") -> None:
     st.markdown(
         f"""
         <div class="grid-topbar"><div class="grid-topbar-inner">
           <div class="grid-brand">
             <span class="grid-wordmark">GRIDLINE</span>
-            <span class="grid-eyebrow">Model-Based Forecasts</span>
+            <span class="grid-eyebrow">{html_text(league)} Forecasts</span>
           </div>
           <div class="grid-meta">Season {html_text(manifest["prediction_season"])} · data through {html_text(manifest["data_cutoff"])} · model built {html_text(str(manifest["created_at"])[:10])}</div>
         </div></div>
@@ -1009,6 +1031,65 @@ def render_model_card(manifest: dict[str, Any]) -> None:
     )
 
 
+def render_cfb_foundation(state: dict[str, Any]) -> None:
+    ready = state.get("status") == "data_ready"
+    badge = "Data foundation ready" if ready else "Run weekly_cfb_update.py"
+    page_header("College Football", badge)
+    st.markdown(
+        f"""
+        <div class="grid-hero">
+          <div class="grid-kicker">FBS · {html_text(state.get("prediction_season", "—"))}</div>
+          <h2 style="margin:8px 0 8px;font:500 28px 'Instrument Sans',sans-serif">A separate college model, inside the same GRIDLINE app.</h2>
+          <div class="grid-muted">The authenticated CollegeFootballData feed is isolated from the NFL pipeline. Raw API responses remain in a local ignored cache; only derived artifacts are eligible for publication.</div>
+        </div>
+        <div class="grid-results">
+          <div class="grid-result"><div class="grid-tile-label">FBS teams</div><div class="grid-result-value">{int(state.get("team_count", 0)):,}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">Scheduled games</div><div class="grid-result-value">{int(state.get("scheduled_game_count", 0)):,}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">FBS vs FBS</div><div class="grid-result-value">{int(state.get("fbs_vs_fbs_game_count", 0)):,}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">Regular-season weeks</div><div class="grid-result-value">{int(state.get("calendar_week_count", 0)):,}</div></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if not ready:
+        st.warning(
+            "The College Football artifact has not been built in this environment. "
+            "Run `python weekly_cfb_update.py --season 2026`."
+        )
+        return
+    st.info(
+        "Data connectivity and canonical IDs are ready. Predictions are intentionally withheld "
+        "until historical features pass chronological backtesting."
+    )
+    with st.expander("Next model stage"):
+        st.write(
+            "Build opponent-adjusted, point-in-time team features from historical games and plays; "
+            "add returning production, transfers, talent, and coaching context; then benchmark margin "
+            "and total models with expanding weekly validation."
+        )
+    st.caption(
+        f"Source: {state.get('source', 'CollegeFootballData')} · derived through "
+        f"{state.get('data_cutoff', 'unknown')} · no raw CFBD responses published."
+    )
+
+
+if "active_sport" not in st.session_state:
+    st.session_state.active_sport = SPORT_LABELS[0]
+
+active_sport = st.session_state.active_sport
+if active_sport == "College Football":
+    cfb_state = load_cfb_state()
+    top_bar(cfb_state, league="College Football")
+    st.radio(
+        "Sport",
+        SPORT_LABELS,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="active_sport",
+    )
+    render_cfb_foundation(cfb_state)
+    st.stop()
+
 try:
     models, manifest = load_models()
 except Exception as exc:
@@ -1020,7 +1101,14 @@ except Exception as exc:
 state = load_state()
 service = PredictionService(models, manifest, state)
 injury_system = InjuryAdjustmentSystem(persist=False)
-top_bar(manifest)
+top_bar(manifest, league="NFL")
+st.radio(
+    "Sport",
+    SPORT_LABELS,
+    horizontal=True,
+    label_visibility="collapsed",
+    key="active_sport",
+)
 
 render_injury_manager(injury_system, service.teams())
 official_injuries = state["official_injuries"]
