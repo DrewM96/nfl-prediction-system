@@ -15,7 +15,11 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 from .config import MARKET_PRIVATE_DIR
 from .data import load_nflverse_data
-from .features import GAME_FEATURES, build_point_in_time_game_features
+from .features import (
+    GAME_MARGIN_FEATURES,
+    GAME_TOTAL_FEATURES,
+    build_point_in_time_game_features,
+)
 from .io import atomic_write_json, read_json
 from .modeling import GAME_RIDGE_ALPHA, chronological_oof_predictions
 from .odds import (
@@ -123,17 +127,21 @@ def build_independent_oof_games(
 ) -> pd.DataFrame:
     data = load_nflverse_data(training_seasons)
     games = build_point_in_time_game_features(
-        data.schedules, data.pbp, include_unplayed=False
+        data.schedules,
+        data.pbp,
+        include_unplayed=False,
+        rosters=data.rosters,
+        snap_counts=data.snap_counts,
     ).games
     completed = games.dropna(subset=["home_margin", "total_points"]).copy()
     outputs: list[pd.DataFrame] = []
-    for target, output_name in (
-        ("home_margin", "independent_home_margin"),
-        ("total_points", "independent_total"),
+    for target, output_name, features in (
+        ("home_margin", "independent_home_margin", GAME_MARGIN_FEATURES),
+        ("total_points", "independent_total", GAME_TOTAL_FEATURES),
     ):
         actual, first, second, indices = chronological_oof_predictions(
             completed,
-            GAME_FEATURES,
+            features,
             target,
             min_train_rows=min_train_rows,
             ridge_alpha=GAME_RIDGE_ALPHA,

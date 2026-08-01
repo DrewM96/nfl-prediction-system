@@ -55,6 +55,24 @@ def test_reasoning_is_derived_from_real_features() -> None:
     assert all("BUF" in reason for reason in reasons)
 
 
+def test_reasoning_surfaces_early_season_roster_continuity() -> None:
+    reasons = game_reasoning(
+        {
+            "home_team": "BUF",
+            "away_team": "MIA",
+            "features": {
+                "home_roster_qb_returning_delta": 0.2,
+                "home_roster_ol_continuity_delta": 0.2,
+                "home_roster_skill_continuity_delta": 0.1,
+                "away_roster_qb_returning_delta": -0.2,
+                "away_roster_ol_continuity_delta": -0.1,
+                "away_roster_skill_continuity_delta": 0.0,
+            },
+        }
+    )
+    assert any("BUF returns more continuity" in reason for reason in reasons)
+
+
 def test_market_tile_uses_consensus_when_available() -> None:
     game = {
         "home_team": "BUF",

@@ -153,6 +153,32 @@ results, including rejected configurations and season splits. The published hist
 market benchmark remains a frozen comparison against the prior independent model; updating
 that matched benchmark requires a separately authorized market-data run.
 
+### Preseason roster transitions
+
+The updater now falls back to nflverse's current seasonal roster before the weekly roster
+feed opens for the new season. It compares each opening roster with prior-year regular-season
+snaps and derives league-centered continuity for offense, defense, quarterback, offensive
+line, skill positions, defensive front, secondary, and incoming veteran experience. Missing
+PFR identifiers are matched through normalized player names, which is required for current
+offensive-line coverage.
+
+Roster inputs are weighted 100%, 75%, 50%, and 25% in Weeks 1-4, then become neutral as
+current-season performance takes over. Historical opening membership is used without
+game-day active/inactive status to avoid leaking late lineup information.
+
+```bash
+python roster_transition_ablation.py \
+  --seasons 2022 2023 2024 2025 \
+  --holdout-season 2025
+```
+
+The corrected 723-game chronological OOF evaluation retained quarterback, offensive-line, and skill-position
+continuity for the total model only. Weeks 1-4 total MAE improved from 10.503 to 9.810;
+the separate 2025 confirmation improved from 11.189 to 10.724; and all-OOF total MAE moved
+from 10.527 to 10.387. Every roster configuration worsened margin MAE, so the margin model
+remains unchanged. `roster_transition_benchmark.json` preserves all accepted and rejected
+configurations.
+
 ## Operations
 
 See [MODEL_CARD.md](MODEL_CARD.md) for intended use and limitations and [docs/OPERATIONS.md](docs/OPERATIONS.md) for weekly refresh, failure, rollback, and launch procedures.

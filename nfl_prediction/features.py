@@ -9,6 +9,12 @@ import numpy as np
 import pandas as pd
 
 from .config import is_division_game
+from .roster import (
+    ROSTER_CANDIDATE_GAME_FEATURE_GROUPS,
+    attach_roster_transition_features,
+    build_roster_transition_table,
+    roster_snapshot_for_season,
+)
 
 CORE_GAME_FEATURES = [
     "home_points_for_l4",
@@ -79,7 +85,11 @@ CANDIDATE_GAME_FEATURE_GROUPS = {
 ALL_GAME_FEATURES = CORE_GAME_FEATURES + [
     feature for group in CANDIDATE_GAME_FEATURE_GROUPS.values() for feature in group
 ]
-GAME_FEATURES = CORE_GAME_FEATURES
+GAME_MARGIN_FEATURES = CORE_GAME_FEATURES
+GAME_TOTAL_FEATURES = (
+    CORE_GAME_FEATURES + ROSTER_CANDIDATE_GAME_FEATURE_GROUPS["roster_offense_positions"]
+)
+GAME_FEATURES = list(dict.fromkeys([*GAME_MARGIN_FEATURES, *GAME_TOTAL_FEATURES]))
 
 
 PLAYER_FEATURES = {
@@ -349,6 +359,8 @@ def build_point_in_time_game_features(
     pbp: pd.DataFrame,
     *,
     include_unplayed: bool = False,
+    rosters: pd.DataFrame | None = None,
+    snap_counts: pd.DataFrame | None = None,
 ) -> FeatureBuildResult:
     """Build leak-free game rows using only prior calendar dates.
 
@@ -469,7 +481,13 @@ def build_point_in_time_game_features(
     team_snapshot = {
         team: _team_state(history, DEFAULT_PRIORS) for team, history in histories.items()
     }
-    return FeatureBuildResult(pd.DataFrame(rows), team_snapshot, dict(histories))
+    transitions = build_roster_transition_table(rosters, snap_counts)
+    games = attach_roster_transition_features(pd.DataFrame(rows), transitions)
+    if not schedule.empty:
+        latest_season = int(schedule["season"].max())
+        for team, roster_state in roster_snapshot_for_season(transitions, latest_season).items():
+            team_snapshot.setdefault(team, _team_state([], DEFAULT_PRIORS)).update(roster_state)
+    return FeatureBuildResult(games, team_snapshot, dict(histories))
 
 
 def _player_identity(frame: pd.DataFrame, prefix: str) -> tuple[pd.Series, pd.Series]:

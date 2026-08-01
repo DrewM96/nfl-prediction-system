@@ -12,6 +12,8 @@ Each target combines a standardized ridge regression with a shallow gradient-boo
 
 Game inputs use shrunk rolling team form, EPA/play, pressure rates on a shared rate scale, turnovers, rest, division status, week, and home field. Player inputs use shifted opportunity and efficiency features, real intended targets, stable player IDs, opponent defense, and offensive snap participation when published.
 
+During Weeks 1-4, the total model also uses league-centered continuity for the prior season's primary quarterback, offensive line, and skill positions. Players are weighted by prior regular-season snaps; the roster effect decays from 100% to 25% and becomes neutral after Week 4. A chronological ablation reduced early-season total MAE from 10.503 to 9.810 and confirmed the direction independently in 2025 (11.189 to 10.724). Roster features worsened margins, so the margin model does not consume them.
+
 The feature builder also derives point-in-time success rate, early-down EPA, explosive-play rate, sack rate, neutral pass tendency, quarterback continuity, and performance volatility for research. A 723-game expanding-window ablation found that every predeclared combination worsened both game targets, so these candidates are published in the team snapshot for continued monitoring but are not production model inputs. Stronger game-model Ridge shrinkage produced a smaller, consistent gain: prequential margin MAE moved from 10.383 to 10.362 and total MAE from 10.536 to 10.527.
 
 Prediction intervals use the standard deviation of chronological residuals. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
@@ -39,10 +41,10 @@ Required release checks:
 
 ## Known limitations
 
-- The game model does not yet consume timestamped weather, travel distance, quarterback starter changes, or coaching continuity.
+- The game model does not yet consume timestamped weather, travel distance, confirmed current-week quarterback announcements, or coaching continuity. Its roster signal observes whether the prior primary quarterback remains on the opening roster, not whether that player is guaranteed to start.
 - The added quarterback continuity statistic observes only prior primary passers. It does not assume that a retrospective starter field or an un-timestamped depth chart was known before kickoff.
 - Live market history is collected separately but is not yet a trained input. A useful market residual/blend model requires multiple seasons of paid historical snapshots and walk-forward proof.
-- Current preseason player membership falls back to the latest published weekly roster if the new-season roster feed is not available. The UI records the roster season.
+- Current preseason player membership uses nflverse's seasonal roster until the new weekly roster feed becomes available. Offseason rosters remain fluid until final cuts, so the updater must be rerun before Week 1.
 - Snap counts do not measure routes or pass-block/run-block assignments; they are participation signals.
 - Residual distributions are simplified and can understate correlated injury or quarterback uncertainty.
 - Consensus medians can hide book-specific limits, stale books, price differences, and line availability.

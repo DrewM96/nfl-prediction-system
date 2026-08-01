@@ -75,7 +75,11 @@ def _evaluate(
 def run_ablation(seasons: list[int], *, min_train_rows: int) -> dict[str, Any]:
     data = load_nflverse_data(seasons)
     games = build_point_in_time_game_features(
-        data.schedules, data.pbp, include_unplayed=False
+        data.schedules,
+        data.pbp,
+        include_unplayed=False,
+        rosters=data.rosters,
+        snap_counts=data.snap_counts,
     ).games.dropna(subset=["home_margin", "total_points"])
     configurations = _feature_sets()
     results: dict[str, Any] = {}

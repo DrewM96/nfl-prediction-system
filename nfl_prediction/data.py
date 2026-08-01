@@ -73,10 +73,26 @@ def load_nflverse_data(seasons: list[int]) -> NFLData:
             frame = frame[frame["season"].isin(seasons)]
         return frame
 
+    rosters = optional("load_rosters_weekly")
+    roster_seasons = (
+        set(pd.to_numeric(rosters["season"], errors="coerce").dropna())
+        if "season" in rosters
+        else set()
+    )
+    missing_roster_seasons = [season for season in seasons if season not in roster_seasons]
+    seasonal_loader = getattr(nfl, "load_rosters", None)
+    if missing_roster_seasons and seasonal_loader is not None:
+        try:
+            seasonal_rosters = _load_by_available_season(seasonal_loader, missing_roster_seasons)
+        except Exception as exc:
+            LOGGER.warning("Offseason nflverse roster fallback failed: %s", exc)
+        else:
+            rosters = pd.concat([rosters, seasonal_rosters], ignore_index=True)
+
     return NFLData(
         pbp=pbp,
         schedules=schedules,
-        rosters=optional("load_rosters_weekly"),
+        rosters=rosters,
         injuries=optional("load_injuries"),
         snap_counts=optional("load_snap_counts"),
     )
