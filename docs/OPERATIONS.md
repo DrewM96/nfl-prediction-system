@@ -14,6 +14,8 @@
 
 The `NFL market snapshot` workflow runs at six intentional weekly checkpoints: Tuesday and Thursday afternoon, shortly before Thursday night, before the Sunday early window, between the Sunday early and late windows, and before Monday night. It uses current `us` spreads and totals, budgeted at two credits per run.
 
+Before first merge, applying the `live-market-test` label to a same-repository pull request performs one two-credit API smoke test. That labeled-PR path never publishes a snapshot or pushes an automation branch.
+
 1. Keep `ODDS_API_KEY` only in GitHub Actions secrets or a local ignored `.env`; never paste it into an issue, log, or artifact.
 2. Review the workflow's returned remaining/used/last-request quota fields after each run.
 3. Review the draft PR and confirm `snapshot_at`, game count, team mappings, spread direction, book count, and dispersion.
