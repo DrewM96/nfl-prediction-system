@@ -72,11 +72,13 @@ st.markdown(
       color: var(--grid-ink);
     }
     .stApp { background: #ffffff; }
-    [data-testid="stHeader"] { background: transparent; }
-    [data-testid="stToolbar"] { top: 0.35rem; }
-    .block-container {
-      max-width: 1120px;
-      padding: 0 2rem 7rem;
+    [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stSidebarCollapsedControl"] {
+      display: none !important;
+    }
+    [data-testid="stMain"] { width: 100% !important; }
+    [data-testid="stMainBlockContainer"], .block-container {
+      max-width: 1120px !important;
+      padding: 0 2rem 6rem !important;
     }
     h1, h2, h3, .grid-display {
       font-family: 'Instrument Sans', sans-serif;
@@ -87,7 +89,7 @@ st.markdown(
       top: 0;
       z-index: 50;
       width: 100vw;
-      margin-left: calc(50% - 50vw);
+      margin: -16px 0 0 calc(50% - 50vw);
       padding: 18px 32px;
       background: rgba(255,255,255,.97);
       border-bottom: 1px solid var(--grid-border);
@@ -108,7 +110,15 @@ st.markdown(
       letter-spacing: .6px;
       text-transform: uppercase;
     }
-    .grid-meta { color: var(--grid-muted); font-size: 13px; text-align: right; }
+    .grid-meta {
+      max-width: 520px;
+      overflow: hidden;
+      color: var(--grid-muted);
+      font-size: 13px;
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .grid-page-head {
       display: flex;
       justify-content: space-between;
@@ -116,7 +126,15 @@ st.markdown(
       gap: 16px;
       padding: 28px 0 20px;
     }
-    .grid-page-title { margin: 0; font: 500 26px 'Instrument Sans', sans-serif; }
+    h1.grid-page-title, h2.grid-page-title {
+      margin: 0 !important;
+      padding: 0 !important;
+      font-family: 'Instrument Sans', sans-serif !important;
+      font-size: 26px !important;
+      font-weight: 500 !important;
+      line-height: 1.22 !important;
+      letter-spacing: -0.01em !important;
+    }
     .grid-badge {
       padding: 6px 12px;
       border-radius: 20px;
@@ -250,10 +268,65 @@ st.markdown(
     .grid-ghost-chart { opacity: .35; pointer-events: none; padding-top: 14px; }
     .grid-ghost-row { display: grid; grid-template-columns: 54px 1fr; align-items: center; gap: 12px; margin: 12px 0; color: var(--grid-muted); font-size: 11px; }
     .grid-ghost-bar { height: 14px; border-radius: 7px; background: #cbd5e1; }
+    .grid-topbar, .grid-page-head, .grid-hero, .grid-card, .grid-results,
+    .grid-model-summary, .grid-model-card, .grid-market-grid, .grid-prop-panel {
+      line-height: normal;
+      box-sizing: border-box;
+    }
     div[data-testid="stVerticalBlockBorderWrapper"] {
-      border-color: var(--grid-border);
-      border-radius: 12px;
+      border: 1px solid var(--grid-border) !important;
+      border-radius: 12px !important;
       box-shadow: none;
+    }
+    [class*="st-key-game_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
+      padding: 10px 18px !important;
+    }
+    [class*="st-key-game_card_"] [data-testid="stVerticalBlock"] {
+      gap: 0 !important;
+    }
+    [class*="st-key-game_card_"] .stMarkdown p { margin: 0 !important; }
+    [class*="st-key-toggle_game_"] button {
+      min-height: 24px !important;
+      height: 24px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      color: var(--grid-orange) !important;
+      font-size: 12px !important;
+      box-shadow: none !important;
+    }
+    .st-key-custom_game_shell [data-testid="stVerticalBlockBorderWrapper"],
+    .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] {
+      padding: 24px !important;
+      border-radius: 14px !important;
+    }
+    .st-key-custom_game_shell [data-testid="stSelectbox"] label p,
+    .st-key-custom_game_shell [data-testid="stNumberInput"] label p,
+    .st-key-prop_shell [data-testid="stSelectbox"] label p,
+    .st-key-prop_shell [data-testid="stNumberInput"] label p {
+      color: var(--grid-faint) !important;
+      font: 500 11px 'Instrument Sans', sans-serif !important;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+    .st-key-custom_game_shell [data-baseweb="select"] > div,
+    .st-key-prop_shell [data-baseweb="select"] > div,
+    .st-key-custom_game_shell [data-testid="stNumberInput"] input,
+    .st-key-prop_shell [data-testid="stNumberInput"] input {
+      min-height: 44px !important;
+      background: var(--grid-recessed) !important;
+      border-color: var(--grid-border) !important;
+    }
+    .st-key-custom_game_shell [data-testid="stFormSubmitButton"] button {
+      min-height: 44px !important;
+    }
+    .st-key-prop_shell [data-testid="stPopover"] button {
+      min-height: 30px !important;
+      padding: 4px 10px !important;
+      border-color: var(--grid-border) !important;
+      background: #fff !important;
+      color: var(--grid-muted) !important;
+      font-size: 12px !important;
     }
     div[data-testid="stButton"] button, div[data-testid="stFormSubmitButton"] button {
       border-radius: 8px;
@@ -279,25 +352,54 @@ st.markdown(
       color: white;
     }
     div[data-testid="stRadio"] label > div:first-child { display: none; }
-    .st-key-bottom_nav {
+    .st-key-active_screen {
       position: fixed;
       z-index: 1000;
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 7px max(12px, calc((100vw - 1120px)/2));
+      width: 100vw !important;
+      max-width: none !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+      padding: 5px max(12px, calc((100vw - 1120px)/2));
       background: rgba(255,255,255,.98);
       border-top: 1px solid var(--grid-border);
     }
-    .st-key-bottom_nav [role="radiogroup"] { display: grid; grid-template-columns: repeat(6,1fr); width: 100%; gap: 0 !important; }
-    .st-key-bottom_nav label { justify-content: center; border: 0 !important; border-radius: 0 !important; background: transparent !important; color: var(--grid-faint); font-size: 11px; }
-    .st-key-bottom_nav label:has(input:checked) { color: var(--grid-ink); }
-    .st-key-bottom_nav label:has(input:checked)::before { content: ''; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: var(--grid-orange); }
+    .st-key-active_screen > div { width: 100% !important; }
+    .st-key-active_screen [role="radiogroup"] { display: grid; grid-template-columns: repeat(6,1fr); width: 100%; gap: 0 !important; }
+    .st-key-active_screen label {
+      min-height: 46px;
+      padding: 5px 4px !important;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: var(--grid-faint) !important;
+      font-size: 11px;
+    }
+    .st-key-active_screen label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+    .st-key-active_screen label:has(input:checked) { color: var(--grid-ink) !important; }
+    .st-key-active_screen label:has(input:checked)::before { background: var(--grid-orange); }
+    .st-key-active_screen label p {
+      margin: 0 !important;
+      color: inherit !important;
+      font-size: 11px !important;
+      line-height: 1 !important;
+    }
     [data-testid="stSidebar"] { background: #f8f9fb; border-right: 1px solid var(--grid-border); }
     .grid-muted { color: var(--grid-faint); font-size: 12px; }
     .grid-positive { color: #16a34a; }
     @media (max-width: 760px) {
-      .block-container { padding-left: 1rem; padding-right: 1rem; }
+      [data-testid="stMainBlockContainer"], .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
       .grid-topbar { padding: 14px 16px; }
       .grid-topbar-inner { align-items: flex-start; }
       .grid-eyebrow, .grid-meta { display: none; }
@@ -308,7 +410,8 @@ st.markdown(
       .grid-market-grid, .grid-prop-panel { grid-template-columns: 1fr; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
       .grid-rank-row { grid-template-columns: 26px 64px 1fr 44px; gap: 8px; }
-      .st-key-bottom_nav label { padding: 8px 2px !important; font-size: 9px; }
+      .st-key-active_screen label { padding: 6px 2px !important; font-size: 9px; }
+      .st-key-active_screen label p { font-size: 9px !important; white-space: nowrap; }
     }
     </style>
     """,
@@ -494,7 +597,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
             </div>
             <div class="grid-tiles">
               <div class="grid-tile"><div class="grid-tile-label">Spread</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Home ML</div><div class="grid-tile-value">{format_american(american_moneyline(game["home_win_probability"]))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Moneyline</div><div class="grid-tile-value">{format_american(american_moneyline(game["home_win_probability"]))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["total"]):.1f}</div></div>
               {market_tile(game)}
             </div>
@@ -506,16 +609,12 @@ def render_featured_game(game: dict[str, Any]) -> None:
     )
 
 
-def render_market_comparison(game: dict[str, Any], key: str) -> None:
-    consensus = game.get("market_consensus") or {}
-    consensus_spread = consensus.get("spread") or {}
-    consensus_total = consensus.get("total") or {}
-    if consensus:
-        snapshot = str(consensus.get("snapshot_at", ""))[:16].replace("T", " ")
-        st.caption(
-            f"{consensus.get('provider', 'Market')} consensus captured {snapshot} UTC · "
-            f"{consensus_spread.get('book_count', 0)} spread books"
-        )
+def market_inputs(
+    game: dict[str, Any],
+    key: str,
+    consensus_spread: dict[str, Any],
+    consensus_total: dict[str, Any],
+) -> tuple[float, float, float, float, float, float, str]:
     input_columns = st.columns(2)
     home_line = input_columns[0].number_input(
         f"Sportsbook home spread ({game['home_team']}; favorite is negative)",
@@ -559,6 +658,43 @@ def render_market_comparison(game: dict[str, Any], key: str) -> None:
         value=datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M"),
         key=f"line_time_{key}",
     )
+    return (
+        float(home_line),
+        float(market_total),
+        float(home_spread_price),
+        float(away_spread_price),
+        float(over_price),
+        float(under_price),
+        observed_at,
+    )
+
+
+def render_market_comparison(
+    game: dict[str, Any], key: str, *, compact_controls: bool = False
+) -> None:
+    consensus = game.get("market_consensus") or {}
+    consensus_spread = consensus.get("spread") or {}
+    consensus_total = consensus.get("total") or {}
+    if consensus:
+        snapshot = str(consensus.get("snapshot_at", ""))[:16].replace("T", " ")
+        st.caption(
+            f"{consensus.get('provider', 'Market')} consensus captured {snapshot} UTC · "
+            f"{consensus_spread.get('book_count', 0)} spread books"
+        )
+    if compact_controls:
+        with st.popover("Adjust sportsbook line"):
+            inputs = market_inputs(game, key, consensus_spread, consensus_total)
+    else:
+        inputs = market_inputs(game, key, consensus_spread, consensus_total)
+    (
+        home_line,
+        market_total,
+        home_spread_price,
+        away_spread_price,
+        over_price,
+        under_price,
+        observed_at,
+    ) = inputs
     if 0 in (home_spread_price, away_spread_price, over_price, under_price):
         st.error("American odds cannot be zero. Enter a positive or negative price.")
         return
@@ -609,7 +745,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
     game_id = str(game.get("game_id", index))
     expanded = st.session_state.get("expanded_game_id") == game_id
     with st.container(border=True, key=f"game_card_{index}"):
-        columns = st.columns([1.45, 2.0, 0.8, 0.75, 0.8, 0.85], vertical_alignment="center")
+        columns = st.columns([1.5, 4.8, 0.9, 0.9, 1.0, 0.9], vertical_alignment="center")
         columns[0].markdown(
             f'<div class="grid-row-date">{html_text(format_game_time(game))}</div>',
             unsafe_allow_html=True,
@@ -629,7 +765,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
             unsafe_allow_html=True,
         )
         columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Home ML</div>{format_american(american_moneyline(game["home_win_probability"]))}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">ML</div>{format_american(american_moneyline(game["home_win_probability"]))}</div>',
             unsafe_allow_html=True,
         )
         columns[4].markdown(
@@ -678,12 +814,10 @@ def render_this_week(state: dict[str, Any]) -> None:
         st.info("No upcoming games are available for the current prediction season.")
         return
     featured = max(schedule, key=lambda game: abs(float(game["predicted_home_margin"])))
+    if "expanded_game_id" not in st.session_state:
+        st.session_state.expanded_game_id = str(featured.get("game_id"))
     render_featured_game(featured)
-    with st.expander("Featured matchup market comparison"):
-        render_market_comparison(featured, f"featured_{featured['game_id']}")
     for index, game in enumerate(schedule):
-        if game.get("game_id") == featured.get("game_id"):
-            continue
         render_game_row(game, index)
 
 
@@ -717,21 +851,24 @@ def render_prediction_results(prediction: dict[str, Any] | None) -> None:
 def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSystem) -> None:
     page_header("Custom Game Builder")
     teams = service.teams()
-    with st.container(border=True):
-        with st.form("custom_game_form"):
+    away_default = teams.index("BUF") if "BUF" in teams else 0
+    home_default = teams.index("HOU") if "HOU" in teams else (1 if len(teams) > 1 else 0)
+    with st.container(border=True, key="custom_game_shell"):
+        with st.form("custom_game_form", border=False):
             team_columns = st.columns(2)
             away_team = team_columns[0].selectbox(
                 "Away team",
                 teams,
+                index=away_default,
                 format_func=lambda team: f"{team} — {team_name(team)}",
             )
             home_team = team_columns[1].selectbox(
                 "Home team",
                 teams,
-                index=1 if len(teams) > 1 else 0,
+                index=home_default,
                 format_func=lambda team: f"{team} — {team_name(team)}",
             )
-            context_columns = st.columns(3)
+            context_columns = st.columns([1, 1, 1, 0.8], vertical_alignment="bottom")
             away_rest = context_columns[0].number_input(
                 "Away rest days", min_value=3, max_value=21, value=7
             )
@@ -739,9 +876,9 @@ def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSy
                 "Home rest days", min_value=3, max_value=21, value=7
             )
             week = context_columns[2].number_input("Week", min_value=1, max_value=18, value=1)
-            neutral = st.checkbox("Neutral site")
+            neutral = context_columns[3].checkbox("Neutral site")
             submitted = st.form_submit_button("Predict Game", type="primary", width="stretch")
-        if submitted:
+        if submitted or "custom_prediction" not in st.session_state:
             if away_team == home_team:
                 st.error("Select two different teams.")
             else:
@@ -777,9 +914,21 @@ def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSy
                 '<div class="grid-kicker" style="margin-bottom:14px">Paper-market comparison</div>',
                 unsafe_allow_html=True,
             )
-            render_market_comparison(prediction, "custom")
+            render_market_comparison(prediction, "custom", compact_controls=True)
     else:
         st.caption("Choose a matchup and run the model to unlock the paper-market comparison.")
+    render_injury_manager(injury_system, service.teams(), container=st)
+    official_injuries = service.state["official_injuries"]
+    if official_injuries.get("stale_for_prediction_season"):
+        st.caption(
+            "Official injury reports are not yet published for the prediction season; "
+            "manual scenarios are session-only."
+        )
+    elif official_injuries.get("entries"):
+        st.caption(
+            f"Official injury feed: Week {official_injuries['available_week']} "
+            f"({len(official_injuries['entries'])} reported players)."
+        )
 
 
 def render_props(
@@ -806,10 +955,11 @@ def render_props(
         for player in players.values()
         if player.get("roster_season") is not None
     }
+    roster_notice = None
     if roster_seasons and max(roster_seasons) < int(service.manifest["prediction_season"]):
-        st.warning(
-            f"The newest published weekly roster is {max(roster_seasons)}. "
-            "Confirm current membership and roles before using preseason prop forecasts."
+        roster_notice = (
+            f"Newest published weekly roster: {max(roster_seasons)}. "
+            "Confirm current membership and roles for preseason forecasts."
         )
     choices = sorted(
         players, key=lambda player_id: players[player_id].get("player_name", player_id)
@@ -817,64 +967,72 @@ def render_props(
     if not choices:
         st.info("No current player records are available.")
         return
-    with st.container(border=True):
-        with st.form(f"prop_form_{model_name}"):
+    default_player_id = next(
+        (player_id for player_id in choices if players[player_id].get("player_name") == "D.Maye"),
+        choices[0],
+    )
+    with st.container(border=True, key="prop_shell"):
+        control_columns = st.columns([4, 1])
+        control_columns[0].markdown(
+            f'<div class="grid-kicker" style="padding-top:7px">Select player · {html_text(prop)}</div>',
+            unsafe_allow_html=True,
+        )
+        with control_columns[1].popover("Change player / line", use_container_width=True):
             player_id = st.selectbox(
                 "Player",
                 choices,
+                index=choices.index(default_player_id),
                 format_func=lambda value: (
-                    f"{players[value].get('player_name', value)} — {players[value].get('team', '')} "
-                    f"vs {players[value].get('opponent') or 'TBD'}"
+                    f"{players[value].get('player_name', value)} — "
+                    f"{players[value].get('team', '')} vs "
+                    f"{players[value].get('opponent') or 'TBD'}"
                 ),
             )
-            player = players[player_id]
-            st.markdown(
-                f"""
-                <div class="grid-player-chip"><span class="grid-team-rail" style="height:18px;background:{team_color(str(player.get("team", "")))}"></span><span><b>{html_text(player.get("player_name", player_id))}</b><br><span class="grid-muted">{html_text(player.get("team", ""))} · {html_text(state_key.upper())}</span></span></div>
-                """,
-                unsafe_allow_html=True,
-            )
-            line = st.number_input("Sportsbook prop line", value=0.0, step=0.5)
-            submitted = st.form_submit_button("Project Prop", type="primary", width="stretch")
-        if submitted:
-            distribution = service.predict_player(model_name, player)
-            adjusted, note = integrate_injuries_into_player_prediction(
-                distribution["mean"],
+            selected_player = players[player_id]
+            selected_distribution = service.predict_player(model_name, selected_player)
+            selected_adjusted, _ = integrate_injuries_into_player_prediction(
+                selected_distribution["mean"],
                 injury_system,
-                player["player_name"],
-                player["team"],
+                selected_player["player_name"],
+                selected_player["team"],
                 model_name,
             )
-            probability_over = over_probability(adjusted, line, max(distribution["std"], 0.01))
-            st.session_state.prop_prediction = {
-                "model": model_name,
-                "player_id": player_id,
-                "name": player["player_name"],
-                "projection": adjusted,
-                "p10": distribution["p10"],
-                "p90": distribution["p90"],
-                "line": line,
-                "over": probability_over,
-                "note": note,
-            }
-        result = st.session_state.get("prop_prediction")
-        if result and result.get("model") == model_name:
-            over = min(max(float(result["over"]), 0.0), 1.0)
-            under = 1.0 - over
-            st.markdown(
-                f"""
-                <div class="grid-prop-panel">
-                  <div><div class="grid-kicker">Model projection · {html_text(result["name"])}</div><div class="grid-projection">{float(result["projection"]):.1f}</div><div class="grid-muted">80% interval {float(result["p10"]):.1f}–{float(result["p90"]):.1f} · sportsbook line {float(result["line"]):.1f}</div></div>
-                  <div><div class="grid-prob-labels"><span>Under {under:.1%}</span><span>Over {over:.1%}</span></div><div class="grid-prop-bar"><div class="grid-under" style="width:{under:.2%}"></div><div class="grid-over" style="width:{over:.2%}"></div></div></div>
-                </div>
-                """,
-                unsafe_allow_html=True,
+            default_line = round(selected_adjusted * 2.0) / 2.0
+            line = st.number_input(
+                "Sportsbook prop line",
+                value=float(default_line),
+                step=0.5,
+                key=f"prop_line_{model_name}_{player_id}",
             )
-            if result["note"] != "Healthy":
-                st.warning(result["note"])
-            st.caption(
-                "The interval reflects model residuals; availability uncertainty is shown separately."
-            )
+        player = players[player_id]
+        distribution = service.predict_player(model_name, player)
+        adjusted, note = integrate_injuries_into_player_prediction(
+            distribution["mean"],
+            injury_system,
+            player["player_name"],
+            player["team"],
+            model_name,
+        )
+        probability_over = over_probability(adjusted, line, max(distribution["std"], 0.01))
+        over = min(max(float(probability_over), 0.0), 1.0)
+        under = 1.0 - over
+        st.markdown(
+            f"""
+            <div class="grid-player-chip"><span class="grid-team-rail" style="height:18px;background:{team_color(str(player.get("team", "")))}"></span><span><b>{html_text(player.get("player_name", player_id))}</b><br><span class="grid-muted">{html_text(player.get("team", ""))} · {html_text(state_key.upper())}</span></span></div>
+            <div class="grid-prop-panel">
+              <div><div class="grid-kicker">Projection — {html_text(player["player_name"])}</div><div class="grid-projection">{float(adjusted):.1f}</div><div class="grid-muted">80% interval {float(distribution["p10"]):.1f}–{float(distribution["p90"]):.1f}<br>Sportsbook line: <b style="color:#0f1419">{float(line):.1f}</b></div></div>
+              <div><div class="grid-prob-labels"><span>Under {under:.1%}</span><span>Over {over:.1%}</span></div><div class="grid-prop-bar"><div class="grid-under" style="width:{under:.2%}"></div><div class="grid-over" style="width:{over:.2%}"></div></div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        if note != "Healthy":
+            st.warning(note)
+    if roster_notice:
+        st.caption(roster_notice)
+    st.caption(
+        "The interval reflects model residuals; availability uncertainty is shown separately."
+    )
 
 
 def render_rankings(state: dict[str, Any]) -> None:
@@ -895,9 +1053,13 @@ def render_rankings(state: dict[str, Any]) -> None:
     rows.sort(key=lambda item: item[1], reverse=True)
     max_abs = max((abs(rating) for _, rating in rows), default=1.0)
     row_html = "".join(
-        f"""
-        <div class="grid-rank-row"><div class="grid-rank">{rank}</div><div class="grid-rank-team"><span class="grid-rank-chip" style="background:{team_color(team)}"></span>{html_text(team)}</div><div class="grid-rank-track"><div class="grid-rank-fill" style="width:{max(4.0, abs(rating) / max_abs * 100):.1f}%;background:{"#16a34a" if rating >= 0 else "#dc2626"}"></div></div><div class="grid-rank-value">{rating:+.1f}</div></div>
-        """
+        f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
+        f'<div class="grid-rank-team"><span class="grid-rank-chip" '
+        f'style="background:{team_color(team)}"></span>{html_text(team)}</div>'
+        f'<div class="grid-rank-track"><div class="grid-rank-fill" '
+        f'style="width:{max(4.0, abs(rating) / max_abs * 100):.1f}%;'
+        f'background:{"#16a34a" if rating >= 0 else "#dc2626"}"></div></div>'
+        f'<div class="grid-rank-value">{rating:+.1f}</div></div>'
         for rank, (team, rating) in enumerate(rows, start=1)
     )
     st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
@@ -1006,19 +1168,6 @@ state = load_state()
 service = PredictionService(models, manifest, state)
 injury_system = InjuryAdjustmentSystem(persist=False)
 top_bar(manifest)
-
-render_injury_manager(injury_system, service.teams())
-official_injuries = state["official_injuries"]
-if official_injuries.get("stale_for_prediction_season"):
-    st.sidebar.caption(
-        "Official injury reports are not yet published for the prediction season; "
-        "manual scenarios are session-only."
-    )
-elif official_injuries.get("entries"):
-    st.sidebar.caption(
-        f"Official injury feed: Week {official_injuries['available_week']} "
-        f"({len(official_injuries['entries'])} reported players)."
-    )
 
 if "active_screen" not in st.session_state:
     st.session_state.active_screen = PAGE_LABELS[0]

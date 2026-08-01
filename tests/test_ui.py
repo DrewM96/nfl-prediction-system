@@ -26,7 +26,7 @@ def test_moneyline_and_spread_formatting() -> None:
 
 
 def test_game_time_uses_compact_sportsbook_format() -> None:
-    assert format_game_time({"gameday": "2026-09-13", "gametime": "16:25"}) == "Sun 9/13 4:25pm"
+    assert format_game_time({"gameday": "2026-09-13", "gametime": "16:25"}) == "Sun 9/13 4:25p"
 
 
 def test_reasoning_is_derived_from_real_features() -> None:

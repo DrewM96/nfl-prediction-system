@@ -125,7 +125,13 @@ def format_game_time(game: dict[str, Any]) -> str:
         return date_text
     try:
         parsed_time = datetime.strptime(raw_time, "%H:%M")
-        time_text = parsed_time.strftime("%I:%M%p").lstrip("0").lower()
+        time_text = (
+            parsed_time.strftime("%I:%M%p")
+            .lstrip("0")
+            .lower()
+            .replace("am", "a")
+            .replace("pm", "p")
+        )
     except ValueError:
         time_text = raw_time
     return f"{date_text} {time_text}".strip()

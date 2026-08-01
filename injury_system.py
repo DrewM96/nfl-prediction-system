@@ -160,22 +160,25 @@ class InjuryAdjustmentSystem:
 
 
 def render_injury_manager(
-    injury_system: InjuryAdjustmentSystem, available_teams: list[str]
+    injury_system: InjuryAdjustmentSystem,
+    available_teams: list[str],
+    container: Any | None = None,
 ) -> None:
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("Injury scenario")
-    st.sidebar.caption(
+    target = container or st.sidebar
+    target.markdown("---")
+    target.subheader("Injury scenario")
+    target.caption(
         "Session-only manual assumptions; official reports come from the update pipeline."
     )
     injuries = injury_system.injuries.get("injuries", [])
     if injuries:
-        with st.sidebar.expander(f"Current scenario ({len(injuries)})"):
+        with target.expander(f"Current scenario ({len(injuries)})"):
             for injury in injuries:
                 st.write(
                     f"{injury['team']} · {injury['player_name']} · "
                     f"{injury['position']} · {injury['status']}"
                 )
-    with st.sidebar.expander("Add or update"):
+    with target.expander("Add or update"):
         team = st.selectbox("Team", available_teams, key="injury_team")
         player = st.text_input("Player", key="injury_player")
         position = st.selectbox(
@@ -192,7 +195,7 @@ def render_injury_manager(
             injury_system.clear()
             st.rerun()
     if injuries:
-        with st.sidebar.expander("Remove"):
+        with target.expander("Remove"):
             choices = [(item["team"], item["player_name"]) for item in injuries]
             selected = st.selectbox(
                 "Player", choices, format_func=lambda value: f"{value[0]} · {value[1]}"
