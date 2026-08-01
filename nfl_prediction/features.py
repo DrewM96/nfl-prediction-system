@@ -10,7 +10,7 @@ import pandas as pd
 
 from .config import is_division_game
 
-GAME_FEATURES = [
+CORE_GAME_FEATURES = [
     "home_points_for_l4",
     "home_points_against_l4",
     "home_yards_l4",
@@ -36,6 +36,50 @@ GAME_FEATURES = [
     "week",
     "home_field",
 ]
+
+
+CANDIDATE_GAME_FEATURE_GROUPS = {
+    "efficiency": [
+        "home_success_rate_for_l4",
+        "home_success_rate_allowed_l4",
+        "home_early_down_epa_for_l4",
+        "home_early_down_epa_allowed_l4",
+        "away_success_rate_for_l4",
+        "away_success_rate_allowed_l4",
+        "away_early_down_epa_for_l4",
+        "away_early_down_epa_allowed_l4",
+    ],
+    "explosiveness": [
+        "home_explosive_rate_for_l4",
+        "home_explosive_rate_allowed_l4",
+        "away_explosive_rate_for_l4",
+        "away_explosive_rate_allowed_l4",
+    ],
+    "sacks": [
+        "home_sack_rate_allowed_l4",
+        "home_sack_rate_generated_l4",
+        "away_sack_rate_allowed_l4",
+        "away_sack_rate_generated_l4",
+    ],
+    "stability": [
+        "home_neutral_pass_rate_l4",
+        "home_margin_volatility_l8",
+        "home_off_epa_volatility_l8",
+        "home_qb_continuity_l4",
+        "away_neutral_pass_rate_l4",
+        "away_margin_volatility_l8",
+        "away_off_epa_volatility_l8",
+        "away_qb_continuity_l4",
+    ],
+}
+
+# Candidate groups are benchmarked as blocks so model selection is less prone to
+# finding a chance improvement among dozens of individual statistics. The first
+# 2022-2025 ablation rejected every expanded set, so production remains on core.
+ALL_GAME_FEATURES = CORE_GAME_FEATURES + [
+    feature for group in CANDIDATE_GAME_FEATURE_GROUPS.values() for feature in group
+]
+GAME_FEATURES = CORE_GAME_FEATURES
 
 
 PLAYER_FEATURES = {
@@ -95,7 +139,20 @@ DEFAULT_PRIORS = {
     "win": 0.5,
     "pressure_allowed": 0.20,
     "pressure_generated": 0.20,
+    "success_rate_for": 0.45,
+    "success_rate_allowed": 0.45,
+    "early_down_epa_for": 0.0,
+    "early_down_epa_allowed": 0.0,
+    "explosive_rate_for": 0.10,
+    "explosive_rate_allowed": 0.10,
+    "neutral_pass_rate": 0.55,
+    "sack_rate_allowed": 0.07,
+    "sack_rate_generated": 0.07,
 }
+
+MARGIN_VOLATILITY_PRIOR = 13.0
+EPA_VOLATILITY_PRIOR = 0.18
+QB_CONTINUITY_PRIOR = 0.5
 
 
 @dataclass
@@ -120,6 +177,31 @@ def _rolling_shrunk(
     return (sum(observed) + prior * prior_weight) / (len(observed) + prior_weight)
 
 
+def _rolling_volatility(
+    history: list[dict[str, Any]], key: str, window: int, prior: float, prior_weight: float = 2.0
+) -> float:
+    observed = [float(row[key]) for row in history[-window:] if pd.notna(row.get(key))]
+    if len(observed) < 2:
+        return prior
+    volatility = float(np.std(observed, ddof=1))
+    return (volatility * len(observed) + prior * prior_weight) / (len(observed) + prior_weight)
+
+
+def _qb_continuity(history: list[dict[str, Any]], window: int = 4) -> float:
+    quarterbacks = [
+        str(row["primary_qb"])
+        for row in history[-window:]
+        if pd.notna(row.get("primary_qb")) and str(row["primary_qb"]).strip()
+    ]
+    if len(quarterbacks) < 2:
+        return QB_CONTINUITY_PRIOR
+    changes = sum(
+        current != previous
+        for previous, current in zip(quarterbacks, quarterbacks[1:], strict=False)
+    )
+    return 1.0 - changes / (len(quarterbacks) - 1)
+
+
 def _team_state(history: list[dict[str, Any]], priors: dict[str, float]) -> dict[str, float]:
     return {
         "points_for_l4": _rolling_shrunk(history, "points_for", 4, priors["points_for"]),
@@ -137,6 +219,36 @@ def _team_state(history: list[dict[str, Any]], priors: dict[str, float]) -> dict
         "pressure_generated_l4": _rolling_shrunk(
             history, "pressure_generated", 4, priors["pressure_generated"]
         ),
+        "success_rate_for_l4": _rolling_shrunk(
+            history, "success_rate_for", 4, priors["success_rate_for"]
+        ),
+        "success_rate_allowed_l4": _rolling_shrunk(
+            history, "success_rate_allowed", 4, priors["success_rate_allowed"]
+        ),
+        "early_down_epa_for_l4": _rolling_shrunk(
+            history, "early_down_epa_for", 4, priors["early_down_epa_for"]
+        ),
+        "early_down_epa_allowed_l4": _rolling_shrunk(
+            history, "early_down_epa_allowed", 4, priors["early_down_epa_allowed"]
+        ),
+        "explosive_rate_for_l4": _rolling_shrunk(
+            history, "explosive_rate_for", 4, priors["explosive_rate_for"]
+        ),
+        "explosive_rate_allowed_l4": _rolling_shrunk(
+            history, "explosive_rate_allowed", 4, priors["explosive_rate_allowed"]
+        ),
+        "neutral_pass_rate_l4": _rolling_shrunk(
+            history, "neutral_pass_rate", 4, priors["neutral_pass_rate"]
+        ),
+        "sack_rate_allowed_l4": _rolling_shrunk(
+            history, "sack_rate_allowed", 4, priors["sack_rate_allowed"]
+        ),
+        "sack_rate_generated_l4": _rolling_shrunk(
+            history, "sack_rate_generated", 4, priors["sack_rate_generated"]
+        ),
+        "margin_volatility_l8": _rolling_volatility(history, "margin", 8, MARGIN_VOLATILITY_PRIOR),
+        "off_epa_volatility_l8": _rolling_volatility(history, "off_epa", 8, EPA_VOLATILITY_PRIOR),
+        "qb_continuity_l4": _qb_continuity(history),
     }
 
 
@@ -149,7 +261,7 @@ def _regular_season(frame: pd.DataFrame) -> pd.DataFrame:
     return result
 
 
-def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, float]]:
+def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, Any]]:
     plays = _regular_season(pbp)
     if plays.empty:
         return {}
@@ -159,18 +271,44 @@ def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, f
     scrimmage = play_type.isin(["pass", "run"])
     dropback = _series(plays, "qb_dropback").eq(1)
     pressure = _series(plays, "qb_hit").eq(1) | _series(plays, "sack").eq(1)
+    sack = dropback & _series(plays, "sack").eq(1)
+    down = _series(plays, "down", np.nan)
+    early_down = scrimmage & down.isin([1, 2])
+    yards = _series(plays, "yards_gained")
+    explosive = ((play_type == "pass") & yards.ge(20)) | ((play_type == "run") & yards.ge(10))
+    quarter = _series(plays, "qtr", np.nan)
+    score_differential = _series(plays, "score_differential", np.nan)
+    neutral = scrimmage & quarter.le(3) & score_differential.abs().le(8)
+    if "success" in plays:
+        success = pd.to_numeric(plays["success"], errors="coerce")
+        success = success.where(success.notna(), _series(plays, "epa").gt(0).astype(float))
+    else:
+        success = _series(plays, "epa").gt(0).astype(float)
     plays["_scrimmage_epa"] = _series(plays, "epa").where(scrimmage)
+    plays["_success"] = success.where(scrimmage)
+    plays["_early_down_epa"] = _series(plays, "epa").where(early_down)
+    plays["_explosive"] = explosive.where(scrimmage).astype(float)
+    plays["_neutral_play"] = neutral.astype(float)
+    plays["_neutral_pass"] = (neutral & play_type.eq("pass")).astype(float)
     plays["_turnover"] = _series(plays, "interception") + _series(plays, "fumble_lost")
     plays["_dropback"] = dropback.astype(float)
     plays["_pressure"] = (dropback & pressure).astype(float)
+    plays["_sack"] = sack.astype(float)
 
-    summaries: dict[tuple[str, str], dict[str, float]] = {}
+    summaries: dict[tuple[str, str], dict[str, Any]] = {}
     for (game_id, team), offense in plays.dropna(subset=["game_id", "posteam"]).groupby(
         ["game_id", "posteam"], sort=False
     ):
         defense = plays[(plays["game_id"] == game_id) & (plays.get("defteam") == team)]
         offense_dropbacks = float(offense["_dropback"].sum())
         defense_dropbacks = float(defense["_dropback"].sum())
+        neutral_plays = float(offense["_neutral_play"].sum())
+        passer_ids = (
+            offense.loc[offense["_dropback"].eq(1), "passer_player_id"].dropna()
+            if "passer_player_id" in offense
+            else pd.Series(dtype=object)
+        )
+        primary_qb = str(passer_ids.value_counts().index[0]) if not passer_ids.empty else None
         summaries[(str(game_id), str(team))] = {
             "yards": float(_series(offense, "yards_gained").sum()),
             "off_epa": float(offense["_scrimmage_epa"].mean()),
@@ -186,6 +324,22 @@ def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, f
                 if defense_dropbacks
                 else np.nan
             ),
+            "success_rate_for": float(offense["_success"].mean()),
+            "success_rate_allowed": float(defense["_success"].mean()),
+            "early_down_epa_for": float(offense["_early_down_epa"].mean()),
+            "early_down_epa_allowed": float(defense["_early_down_epa"].mean()),
+            "explosive_rate_for": float(offense["_explosive"].mean()),
+            "explosive_rate_allowed": float(defense["_explosive"].mean()),
+            "neutral_pass_rate": (
+                float(offense["_neutral_pass"].sum()) / neutral_plays if neutral_plays else np.nan
+            ),
+            "sack_rate_allowed": (
+                float(offense["_sack"].sum()) / offense_dropbacks if offense_dropbacks else np.nan
+            ),
+            "sack_rate_generated": (
+                float(defense["_sack"].sum()) / defense_dropbacks if defense_dropbacks else np.nan
+            ),
+            "primary_qb": primary_qb,
         }
     return summaries
 
@@ -277,6 +431,7 @@ def build_point_in_time_game_features(
                                 "gameday": game_day,
                                 "points_for": home_score,
                                 "points_against": away_score,
+                                "margin": home_score - away_score,
                                 "win": 1.0
                                 if home_score > away_score
                                 else (0.5 if home_score == away_score else 0.0),
@@ -285,6 +440,7 @@ def build_point_in_time_game_features(
                                     for key in priors
                                     if key not in {"points_for", "points_against", "win"}
                                 },
+                                "primary_qb": home_summary.get("primary_qb"),
                             },
                         ),
                         (
@@ -293,6 +449,7 @@ def build_point_in_time_game_features(
                                 "gameday": game_day,
                                 "points_for": away_score,
                                 "points_against": home_score,
+                                "margin": away_score - home_score,
                                 "win": 1.0
                                 if away_score > home_score
                                 else (0.5 if away_score == home_score else 0.0),
@@ -301,6 +458,7 @@ def build_point_in_time_game_features(
                                     for key in priors
                                     if key not in {"points_for", "points_against", "win"}
                                 },
+                                "primary_qb": away_summary.get("primary_qb"),
                             },
                         ),
                     ]

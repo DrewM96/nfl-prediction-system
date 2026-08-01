@@ -128,6 +128,31 @@ Model selection uses expanding weekly splits. Production models are then fitted 
 
 The app intentionally labels market analysis as paper analysis. A displayed difference is not evidence of a profitable edge. Agreement with the market usually means the independent forecast adds little actionable information; disagreement is a hypothesis to track, not a bet. Market claims require timestamped prices, no-vig probabilities, closing-line comparisons, adequate sample size, and uncertainty-aware evaluation.
 
+### Football feature and model research
+
+Football-only experiments do not require an Odds API key. The feature ablation derives
+lagged success rate, early-down EPA, explosive-play rate, sack rate, neutral pass rate,
+quarterback continuity, and performance volatility from nflverse play-by-play, then tests
+all predeclared group combinations on the same expanding-window folds:
+
+```bash
+python football_feature_ablation.py --seasons 2022 2023 2024 2025
+python football_model_tuning.py --seasons 2022 2023 2024 2025 --holdout-season 2025
+```
+
+The 723-game feature ablation retained the 24-feature core: every expanded feature set
+worsened both margin and total MAE. The model-profile benchmark found that stronger Ridge
+shrinkage was the only conservative change that improved both the 2023-2024 development
+window and the separate 2025 confirmation season. Game models therefore use Ridge alpha
+50 while player models retain alpha 10. The prequential all-OOF game MAE moved from 10.383
+to 10.362 for margin and from 10.536 to 10.527 for totals. These are small improvements,
+not evidence that the expanded statistics or a betting strategy add value.
+
+`football_feature_benchmark.json` and `football_model_benchmark.json` preserve the full
+results, including rejected configurations and season splits. The published historical
+market benchmark remains a frozen comparison against the prior independent model; updating
+that matched benchmark requires a separately authorized market-data run.
+
 ## Operations
 
 See [MODEL_CARD.md](MODEL_CARD.md) for intended use and limitations and [docs/OPERATIONS.md](docs/OPERATIONS.md) for weekly refresh, failure, rollback, and launch procedures.

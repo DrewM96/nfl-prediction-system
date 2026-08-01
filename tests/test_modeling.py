@@ -39,6 +39,32 @@ def test_walk_forward_model_has_schema_and_uncertainty() -> None:
     assert prediction["p10"] < prediction["mean"] < prediction["p90"]
     assert 0.0 <= model.metrics["interval_80_coverage"] <= 1.0
     assert model.metrics["latest_holdout_season"] == 2024
+    assert model.metrics["ridge_alpha"] == 10.0
+
+
+def test_ridge_regularization_is_configurable_per_ensemble() -> None:
+    rows = []
+    for week in range(1, 13):
+        for game in range(2):
+            rows.append(
+                {
+                    "season": 2025,
+                    "week": week,
+                    "gameday": pd.Timestamp(2025, 9, 1) + pd.Timedelta(days=week * 7),
+                    "feature": float(week + game),
+                    "target": float(week - game),
+                }
+            )
+    model = fit_ensemble(
+        pd.DataFrame(rows),
+        name="regularized",
+        feature_names=["feature"],
+        target_name="target",
+        min_train_rows=8,
+        ridge_alpha=50.0,
+    )
+    assert model.metrics["ridge_alpha"] == 50.0
+    assert model.models[0].named_steps["ridge"].alpha == 50.0
 
 
 def test_zero_projection_is_a_valid_distribution() -> None:

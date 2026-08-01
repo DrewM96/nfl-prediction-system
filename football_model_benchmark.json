@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-01T18:47:57.825129+00:00",
+  "data_source": "nflverse play-by-play and schedules only; no Odds API calls",
+  "seasons_requested": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "holdout_season": 2025,
+  "min_train_rows": 350,
+  "methodology": {
+    "selection": "compare profiles on seasons before 2025",
+    "confirmation": "report 2025 separately as a final holdout",
+    "validation": "expanding-window chronological out-of-fold by NFL week",
+    "blending": "ridge/tree weights learned from earlier OOF weeks only",
+    "scope": "predeclared tree profiles plus a follow-up isolation of Ridge shrinkage"
+  },
+  "results": {
+    "current": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.576320156140818,
+          "ridge_mae": 10.704164944001333,
+          "tree_mae": 10.610213170105048,
+          "mean_ridge_weight": 0.34662971175166307
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.062573016900902,
+          "ridge_mae": 10.172547712361055,
+          "tree_mae": 10.153513958500383,
+          "mean_ridge_weight": 0.4575
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.383043224089286,
+          "ridge_mae": 10.504165100286041,
+          "tree_mae": 10.438398252322934,
+          "mean_ridge_weight": 0.38834024896265557
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.449002387185024,
+          "ridge_mae": 10.498419941083068,
+          "tree_mae": 10.438385498369778,
+          "mean_ridge_weight": 0.4852328159645233
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.680282220597311,
+          "ridge_mae": 10.585506337107734,
+          "tree_mae": 10.942771301522471,
+          "mean_ridge_weight": 0.5525367647058824
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.536012227694211,
+          "ridge_mae": 10.531182734608254,
+          "tree_mae": 10.628140599970791,
+          "mean_ridge_weight": 0.5105532503457815
+        }
+      }
+    },
+    "ridge30_current_tree": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.553485852405567,
+          "ridge_mae": 10.636261152509153,
+          "tree_mae": 10.610213170105048,
+          "mean_ridge_weight": 0.4584257206208426
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.068688907486171,
+          "ridge_mae": 10.154466395902741,
+          "tree_mae": 10.153513958500383,
+          "mean_ridge_weight": 0.5515441176470589
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.371100279766457,
+          "ridge_mae": 10.45500503384118,
+          "tree_mae": 10.438398252322934,
+          "mean_ridge_weight": 0.49345781466113414
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.43014268466559,
+          "ridge_mae": 10.469635039558984,
+          "tree_mae": 10.438385498369778,
+          "mean_ridge_weight": 0.5280709534368071
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.680184876531458,
+          "ridge_mae": 10.603719214574953,
+          "tree_mae": 10.942771301522471,
+          "mean_ridge_weight": 0.6094852941176472
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.524211116460217,
+          "ridge_mae": 10.52007887856914,
+          "tree_mae": 10.628140599970791,
+          "mean_ridge_weight": 0.5586998616874136
+        }
+      }
+    },
+    "ridge50_current_tree": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.54399362751434,
+          "ridge_mae": 10.597867325570991,
+          "tree_mae": 10.610213170105048,
+          "mean_ridge_weight": 0.5223946784922395
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.059431940352031,
+          "ridge_mae": 10.145443468726837,
+          "tree_mae": 10.153513958500383,
+          "mean_ridge_weight": 0.6005514705882353
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.36169656125134,
+          "ridge_mae": 10.427660840008599,
+          "tree_mae": 10.438398252322934,
+          "mean_ridge_weight": 0.5517980636237898
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.435069873263805,
+          "ridge_mae": 10.448764167346008,
+          "tree_mae": 10.438385498369778,
+          "mean_ridge_weight": 0.5636141906873614
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.680142909597924,
+          "ridge_mae": 10.617275455335994,
+          "tree_mae": 10.942771301522471,
+          "mean_ridge_weight": 0.6443014705882353
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.52726885788743,
+          "ridge_mae": 10.512159838623015,
+          "tree_mae": 10.628140599970791,
+          "mean_ridge_weight": 0.593969571230982
+        }
+      }
+    },
+    "ridge100_current_tree": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.517388748136806,
+          "ridge_mae": 10.541432510893486,
+          "tree_mae": 10.610213170105048,
+          "mean_ridge_weight": 0.6022172949002217
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.065961261989216,
+          "ridge_mae": 10.13837331517594,
+          "tree_mae": 10.153513958500383,
+          "mean_ridge_weight": 0.6463970588235295
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.347557107428447,
+          "ridge_mae": 10.389797516100717,
+          "tree_mae": 10.438398252322934,
+          "mean_ridge_weight": 0.6188381742738589
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.419007814972453,
+          "ridge_mae": 10.414626110452934,
+          "tree_mae": 10.438385498369778,
+          "mean_ridge_weight": 0.6317294900221728
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.687854832322103,
+          "ridge_mae": 10.63285609725948,
+          "tree_mae": 10.942771301522471,
+          "mean_ridge_weight": 0.692279411764706
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.520150814583939,
+          "ridge_mae": 10.496726465102146,
+          "tree_mae": 10.628140599970791,
+          "mean_ridge_weight": 0.654508990318119
+        }
+      }
+    },
+    "shallow_huber": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.492650427896573,
+          "ridge_mae": 10.636261152509153,
+          "tree_mae": 10.501226474193091,
+          "mean_ridge_weight": 0.37042128603104213
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.126405598049084,
+          "ridge_mae": 10.154466395902741,
+          "tree_mae": 10.235714427073356,
+          "mean_ridge_weight": 0.39272058823529415
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.35486537434399,
+          "ridge_mae": 10.45500503384118,
+          "tree_mae": 10.401338124515954,
+          "mean_ridge_weight": 0.3788105117565698
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.317092260685385,
+          "ridge_mae": 10.469635039558984,
+          "tree_mae": 10.287852738691889,
+          "mean_ridge_weight": 0.2079379157427938
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.827235633299036,
+          "ridge_mae": 10.603719214574953,
+          "tree_mae": 10.956892536059915,
+          "mean_ridge_weight": 0.28977941176470584
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.50901341884709,
+          "ridge_mae": 10.52007887856914,
+          "tree_mae": 10.539552358171976,
+          "mean_ridge_weight": 0.2387275242047026
+        }
+      }
+    },
+    "conservative_huber": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.50404465057887,
+          "ridge_mae": 10.597867325570991,
+          "tree_mae": 10.517470852342578,
+          "mean_ridge_weight": 0.3303769401330377
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.077146833244788,
+          "ridge_mae": 10.145443468726837,
+          "tree_mae": 10.175957576155954,
+          "mean_ridge_weight": 0.4555514705882353
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.343441322342533,
+          "ridge_mae": 10.427660840008599,
+          "tree_mae": 10.388990062407913,
+          "mean_ridge_weight": 0.37746887966804976
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.348674652563364,
+          "ridge_mae": 10.448764167346008,
+          "tree_mae": 10.321969219587022,
+          "mean_ridge_weight": 0.38669623059866964
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.748288425962114,
+          "ridge_mae": 10.617275455335994,
+          "tree_mae": 10.943152626743554,
+          "mean_ridge_weight": 0.4508823529411765
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.49901344421545,
+          "ridge_mae": 10.512159838623015,
+          "tree_mae": 10.555664775253103,
+          "mean_ridge_weight": 0.41084370677731674
+        }
+      }
+    },
+    "shallow_squared": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.478679776208889,
+          "ridge_mae": 10.636261152509153,
+          "tree_mae": 10.472727283673947,
+          "mean_ridge_weight": 0.29802660753880267
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.154050487377852,
+          "ridge_mae": 10.154466395902741,
+          "tree_mae": 10.27475591459713,
+          "mean_ridge_weight": 0.36386029411764703
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.356550915127224,
+          "ridge_mae": 10.45500503384118,
+          "tree_mae": 10.39824842836427,
+          "mean_ridge_weight": 0.3227939142461964
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.270306463068497,
+          "ridge_mae": 10.469635039558984,
+          "tree_mae": 10.237670594032778,
+          "mean_ridge_weight": 0.1633481152993348
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.865601938906122,
+          "ridge_mae": 10.603719214574953,
+          "tree_mae": 10.94965556447268,
+          "mean_ridge_weight": 0.21698529411764705
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.494262714006027,
+          "ridge_mae": 10.52007887856914,
+          "tree_mae": 10.505526627171996,
+          "mean_ridge_weight": 0.18352697095435686
+        }
+      }
+    },
+    "histogram_absolute": {
+      "margin": {
+        "development": {
+          "rows": 451,
+          "mae": 10.463131088754025,
+          "ridge_mae": 10.597867325570991,
+          "tree_mae": 10.487795175844157,
+          "mean_ridge_weight": 0.2823059866962306
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.107264566539254,
+          "ridge_mae": 10.145443468726837,
+          "tree_mae": 10.249470776542898,
+          "mean_ridge_weight": 0.4159926470588236
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.329250460756212,
+          "ridge_mae": 10.427660840008599,
+          "tree_mae": 10.398135097545481,
+          "mean_ridge_weight": 0.33260027662517294
+        }
+      },
+      "total": {
+        "development": {
+          "rows": 451,
+          "mae": 10.454886543630746,
+          "ridge_mae": 10.448764167346008,
+          "tree_mae": 10.564413011989494,
+          "mean_ridge_weight": 0.5076718403547672
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.674602921059167,
+          "ridge_mae": 10.617275455335994,
+          "tree_mae": 11.010918302222281,
+          "mean_ridge_weight": 0.7520220588235295
+        },
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.537546093645311,
+          "ridge_mae": 10.512159838623015,
+          "tree_mae": 10.732392872215382,
+          "mean_ridge_weight": 0.5995988934993085
+        }
+      }
+    }
+  }
+}

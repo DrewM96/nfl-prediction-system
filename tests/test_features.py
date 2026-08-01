@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pandas as pd
+import pytest
 
 from nfl_prediction.features import (
     add_shifted_rolling_features,
@@ -80,8 +81,12 @@ def pbp() -> pd.DataFrame:
                     "posteam": offense,
                     "defteam": defense,
                     "play_type": "pass",
+                    "down": 1,
+                    "qtr": 1,
+                    "score_differential": 0,
                     "yards_gained": 10,
                     "epa": 0.2,
+                    "success": 1,
                     "qb_dropback": 1,
                     "qb_hit": 0,
                     "sack": 0,
@@ -123,6 +128,71 @@ def test_preseason_is_excluded_and_unplayed_game_is_retained() -> None:
     games = build_point_in_time_game_features(schedules(), pbp(), include_unplayed=True).games
     assert "2025_01_PRE" not in set(games["game_id"])
     assert "2025_03_A_B" in set(games["game_id"])
+
+
+def test_situational_features_use_only_completed_prior_games() -> None:
+    original_plays = pbp()
+    original = build_point_in_time_game_features(
+        schedules(), original_plays, include_unplayed=True
+    ).games
+    changed_plays = original_plays.copy()
+    future = changed_plays["game_id"].eq("2025_02_A_B") & changed_plays["posteam"].eq("A")
+    changed_plays.loc[future, ["epa", "success", "yards_gained", "sack"]] = [
+        -5.0,
+        0,
+        99,
+        1,
+    ]
+    changed_plays.loc[future, "passer_player_id"] = "QB-REPLACEMENT"
+    changed = build_point_in_time_game_features(
+        schedules(), changed_plays, include_unplayed=True
+    ).games
+
+    candidate_columns = [
+        column
+        for column in original.columns
+        if any(
+            marker in column
+            for marker in (
+                "success_rate",
+                "early_down_epa",
+                "explosive_rate",
+                "sack_rate",
+                "neutral_pass_rate",
+                "volatility",
+                "qb_continuity",
+            )
+        )
+    ]
+    pd.testing.assert_series_equal(
+        original.loc[original["game_id"].eq("2025_02_A_B"), candidate_columns].iloc[0],
+        changed.loc[changed["game_id"].eq("2025_02_A_B"), candidate_columns].iloc[0],
+    )
+
+    week_two = original.loc[original["game_id"].eq("2025_02_A_B")].iloc[0]
+    assert week_two["home_success_rate_for_l4"] == 1.0
+    assert week_two["home_early_down_epa_for_l4"] == pytest.approx(0.2)
+    assert week_two["home_explosive_rate_for_l4"] == 0.0
+    assert week_two["home_neutral_pass_rate_l4"] == 1.0
+    assert week_two["home_sack_rate_allowed_l4"] == 0.0
+    assert week_two["home_qb_continuity_l4"] == 0.5
+
+
+def test_qb_continuity_is_based_on_prior_primary_passers() -> None:
+    original = build_point_in_time_game_features(schedules(), pbp(), include_unplayed=True).games
+    changed_plays = pbp()
+    changed_plays.loc[
+        changed_plays["game_id"].eq("2025_02_A_B") & changed_plays["posteam"].eq("A"),
+        "passer_player_id",
+    ] = "QB-A2"
+    changed = build_point_in_time_game_features(
+        schedules(), changed_plays, include_unplayed=True
+    ).games
+
+    original_week_three = original.loc[original["game_id"].eq("2025_03_A_B")].iloc[0]
+    changed_week_three = changed.loc[changed["game_id"].eq("2025_03_A_B")].iloc[0]
+    assert original_week_three["away_qb_continuity_l4"] == 1.0
+    assert changed_week_three["away_qb_continuity_l4"] == 0.0
 
 
 def test_receiving_targets_include_incompletions_and_zero_catch_rows() -> None:

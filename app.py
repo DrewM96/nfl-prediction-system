@@ -15,7 +15,6 @@ from injury_system import (
     render_injury_manager,
 )
 from nfl_prediction.config import MODEL_MANIFEST_PATH, PROJECT_ROOT, is_division_game
-from nfl_prediction.features import GAME_FEATURES
 from nfl_prediction.io import read_json
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
@@ -377,12 +376,19 @@ class PredictionService:
             "week": float(week),
             "home_field": 0.0 if neutral_site else 1.0,
         }
-        for feature in GAME_FEATURES:
+        feature_names = list(
+            dict.fromkeys(
+                feature
+                for model_name in ("game_margin", "game_total")
+                for feature in self.models[model_name].feature_names
+            )
+        )
+        for feature in feature_names:
             if feature.startswith("home_") and feature not in record:
                 record[feature] = float(home[feature.removeprefix("home_")])
             elif feature.startswith("away_") and feature not in record:
                 record[feature] = float(away[feature.removeprefix("away_")])
-        return pd.DataFrame([record], columns=GAME_FEATURES)
+        return pd.DataFrame([record], columns=feature_names)
 
     def predict_game(
         self,
