@@ -61,6 +61,7 @@ def load_state() -> dict[str, Any]:
         "official_injuries": read_json(PROJECT_ROOT / "official_injuries.json", {}),
         "update": read_json(PROJECT_ROOT / "update_log.json", {}),
         "market": market,
+        "market_benchmark": read_json(PROJECT_ROOT / "market_benchmark.json"),
     }
 
 
@@ -453,6 +454,29 @@ elif page == "Performance":
         st.info("No completed immutable prediction batches have been scored yet.")
     else:
         st.dataframe(pd.DataFrame(runs), hide_index=True, use_container_width=True)
+    benchmark = state.get("market_benchmark")
+    if benchmark:
+        st.subheader("Historical Model vs Market")
+        variants = benchmark["variants"]
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Matched games", benchmark["games"])
+        col2.metric("Independent margin MAE", f"{variants['independent_margin']['mae']:.2f}")
+        col3.metric("Market margin MAE", f"{variants['market_margin']['mae']:.2f}")
+        col4.metric(
+            "Validated market weight",
+            f"{benchmark['future_production_market_margin_weight']:.0%}",
+        )
+        st.caption(
+            f"Consensus captured about {benchmark['methodology']['snapshot_minutes_before_kickoff']} "
+            f"minutes before kickoff across {benchmark['methodology']['evaluation_seasons']}. "
+            "The independent forecast remains visible for research; historical disagreement did not "
+            "establish an ATS edge."
+        )
+        st.dataframe(
+            pd.DataFrame(benchmark["disagreement_buckets"]),
+            hide_index=True,
+            use_container_width=True,
+        )
 
 else:
     st.header("Model Card")

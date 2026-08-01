@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from nfl_prediction.config import MARKET_BENCHMARK_PATH
 from nfl_prediction.historical_market import (
     SnapshotRequest,
     add_prequential_market_blends,
@@ -15,7 +16,7 @@ from nfl_prediction.historical_market import (
     learn_mae_weight,
     prequential_component_blend,
 )
-from nfl_prediction.io import atomic_write_json
+from nfl_prediction.io import atomic_write_json, read_json
 
 
 def test_snapshot_plan_groups_one_request_per_kickoff_window() -> None:
@@ -163,3 +164,13 @@ def test_cached_snapshot_uses_zero_api_credits(tmp_path) -> None:
     assert metadata["cache_hits"] == 1
     assert metadata["estimated_credits"] == 0
     assert metadata["actual_credits"] == 0
+
+
+def test_published_benchmark_is_aggregate_only_and_audited() -> None:
+    payload = read_json(MARKET_BENCHMARK_PATH)
+    assert payload["games"] == 723
+    assert payload["audit"]["timestamp_violations"] == 0
+    assert payload["audit"]["spread_sign_violations"] == 0
+    assert payload["future_production_market_margin_weight"] == 1.0
+    assert "game_id" not in MARKET_BENCHMARK_PATH.read_text(encoding="utf-8")
+    assert "bookmakers" not in MARKET_BENCHMARK_PATH.read_text(encoding="utf-8")
