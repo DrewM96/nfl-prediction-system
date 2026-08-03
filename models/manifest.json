@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-08-01T06:57:35.993534+00:00",
+  "created_at": "2026-08-03T02:58:55.334077+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -9,8 +9,8 @@
     2025
   ],
   "data_cutoff": "2026-01-04",
-  "raw_data_hash": "3ac89a911bb1eb627d5e5c19532fbf3734d183184aee3abf02a61497f2867f94",
-  "git_commit": "5558fd6150c2693a333a66ec66a0013558aee1ca",
+  "raw_data_hash": "b70b59a679b171bd9b125742e0acb1a720721394dd88a043790cc8783893832f",
+  "git_commit": "c5613dddba78f44102070d9659c479ccb5af4336",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -44,34 +44,35 @@
         "week",
         "home_field"
       ],
-      "residual_std": 13.334210655274145,
+      "residual_std": 13.313672327176137,
       "metrics": {
+        "ridge_alpha": 50.0,
         "oof_rows": 723.0,
-        "mae": 10.380133692615232,
-        "rmse": 13.3278139992023,
-        "bias": -0.2745425291611556,
-        "interval_80_coverage": 0.7869986168741355,
-        "pinball_p10": 2.289781809950092,
-        "pinball_p90": 2.487604375580436,
+        "mae": 10.353670439355101,
+        "rmse": 13.307112409546372,
+        "bias": -0.26558286506167395,
+        "interval_80_coverage": 0.7828492392807745,
+        "pinball_p10": 2.2859327033002397,
+        "pinball_p90": 2.4839277021508543,
         "latest_holdout_season": 2025.0,
         "latest_holdout_rows": 272.0,
-        "latest_holdout_mae": 10.052454966809536,
-        "winner_brier": 0.2267990915654811,
-        "winner_log_loss": 0.6441438848965267,
-        "winner_calibration_error": 0.01973646165724,
+        "latest_holdout_mae": 10.057276386426837,
+        "winner_brier": 0.22660671957035974,
+        "winner_log_loss": 0.6436749319843958,
+        "winner_calibration_error": 0.020588371565513044,
         "baseline_mae": 10.738589211618256,
-        "mae_improvement_vs_baseline": 0.35845551900302475,
+        "mae_improvement_vs_baseline": 0.3849187722631555,
         "latest_holdout_baseline_mae": 10.295955882352942
       },
       "files": [
         {
           "path": "v3_game_margin_0.joblib",
-          "weight": 0.5681648099609853,
-          "sha256": "0f8eb1a228d4c51331359945f310ffd2319f2f0880d72df0cae0b89c30ac7a5f"
+          "weight": 0.6626693336911097,
+          "sha256": "c07e12970a457f2bfab51cd69a6350c2ceaa9e601c18da46d94e6fa45a25a25b"
         },
         {
           "path": "v3_game_margin_1.joblib",
-          "weight": 0.4318351900390147,
+          "weight": 0.3373306663088903,
           "sha256": "d3f37843347011f7e7d7714cde75232ae3e0fa2b21b87d1318dc8f9c588764de"
         }
       ]
@@ -102,34 +103,41 @@
         "rest_advantage",
         "division_game",
         "week",
-        "home_field"
+        "home_field",
+        "home_roster_qb_returning_delta",
+        "home_roster_ol_continuity_delta",
+        "home_roster_skill_continuity_delta",
+        "away_roster_qb_returning_delta",
+        "away_roster_ol_continuity_delta",
+        "away_roster_skill_continuity_delta"
       ],
-      "residual_std": 13.430529434492788,
+      "residual_std": 13.381505219877592,
       "metrics": {
+        "ridge_alpha": 50.0,
         "oof_rows": 723.0,
-        "mae": 10.5004205600202,
-        "rmse": 13.47775860005801,
-        "bias": -1.2330219049846438,
-        "interval_80_coverage": 0.7897648686030428,
-        "pinball_p10": 2.2653499507980137,
-        "pinball_p90": 2.553551051581333,
+        "mae": 10.357811589387836,
+        "rmse": 13.428034822806401,
+        "bias": -1.2227453724732347,
+        "interval_80_coverage": 0.7980636237897649,
+        "pinball_p10": 2.276080457673929,
+        "pinball_p90": 2.5611225337184997,
         "latest_holdout_season": 2025.0,
         "latest_holdout_rows": 272.0,
-        "latest_holdout_mae": 10.605673707702165,
+        "latest_holdout_mae": 10.529512020230534,
         "baseline_mae": 10.765536164614911,
-        "mae_improvement_vs_baseline": 0.26511560459471184,
+        "mae_improvement_vs_baseline": 0.40772457522707484,
         "latest_holdout_baseline_mae": 10.934945815263317
       },
       "files": [
         {
           "path": "v3_game_total_0.joblib",
-          "weight": 0.7600345905880695,
-          "sha256": "6474917afceeb2db281750c3289c4acfcd707822a4c42673a1da5a296ca6fea0"
+          "weight": 0.8308938050258671,
+          "sha256": "f35866b7b9dc99ee68397b9810318b5f0d4f01c25edc6836ae9512a7bdd2dcd2"
         },
         {
           "path": "v3_game_total_1.joblib",
-          "weight": 0.23996540941193045,
-          "sha256": "1eee5b795b8f695bb80087e88a84e1767a51a017c9038d86c796b0acb032ee01"
+          "weight": 0.16910619497413293,
+          "sha256": "a060fbe7fef8244117b62726112632518f0ef68c7449562667839c419ba449c3"
         }
       ]
     },
@@ -148,6 +156,7 @@
       ],
       "residual_std": 84.89704727489693,
       "metrics": {
+        "ridge_alpha": 10.0,
         "oof_rows": 2286.0,
         "mae": 66.52713284321823,
         "rmse": 84.97957402550334,
@@ -196,6 +205,7 @@
       ],
       "residual_std": 23.13706805789666,
       "metrics": {
+        "ridge_alpha": 10.0,
         "oof_rows": 21219.0,
         "mae": 15.790638135695977,
         "rmse": 23.136987634413742,
@@ -242,6 +252,7 @@
       ],
       "residual_std": 1.694605618818665,
       "metrics": {
+        "ridge_alpha": 10.0,
         "oof_rows": 21219.0,
         "mae": 1.2421665638479873,
         "rmse": 1.694581419440234,
@@ -288,6 +299,7 @@
       ],
       "residual_std": 17.770153162208615,
       "metrics": {
+        "ridge_alpha": 10.0,
         "oof_rows": 17674.0,
         "mae": 9.130487689698318,
         "rmse": 17.769766891903405,

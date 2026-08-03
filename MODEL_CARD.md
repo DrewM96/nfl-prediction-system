@@ -6,6 +6,12 @@ The system produces pregame analytical forecasts for NFL home margin, total poin
 
 It is not a source of guaranteed outcomes, individualized financial advice, or a substitute for current roster, weather, lineup, and market information.
 
+The Power Rankings screen is descriptive and is not an additional trained forecast model. Its
+default market view solves for zero-sum neutral-field team ratings and a shared home-field edge
+from the latest timestamped consensus spreads across the schedule. Its football-form view uses
+completed-game points, EPA, and pressure through the displayed cutoff. These sources stay
+separate; neither ranking establishes a betting edge.
+
 ## Model design
 
 Each target combines a standardized ridge regression with a shallow gradient-boosted regressor. Game models use Ridge alpha 50, selected on 2023-2024 and checked separately on 2025; player models retain alpha 10. The blend weight is learned from chronological out-of-fold predictions. The final production estimators are fitted on every eligible record through the manifest cutoff.

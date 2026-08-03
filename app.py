@@ -31,6 +31,7 @@ from nfl_prediction.market import (
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus
+from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
     american_moneyline,
@@ -259,10 +260,12 @@ st.markdown(
     .grid-prop-bar { display: flex; height: 14px; overflow: hidden; border-radius: 7px; background: var(--grid-border); }
     .grid-under { background: #dc2626; }
     .grid-over { background: #16a34a; }
-    .grid-rank-row { display: grid; grid-template-columns: 34px 72px 1fr 52px; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f3f5; }
+    .grid-rank-row { display: grid; grid-template-columns: 34px 240px 1fr 52px; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f3f5; }
     .grid-rank-row:last-child { border-bottom: none; }
     .grid-rank { color: var(--grid-faint); font-size: 14px; }
     .grid-rank-team { display: flex; align-items: center; gap: 9px; font-weight: 600; }
+    .grid-rank-team-copy { min-width: 0; }
+    .grid-rank-roster { margin-top: 3px; color: var(--grid-faint); font-size: 10px; font-weight: 400; white-space: nowrap; }
     .grid-rank-chip { width: 5px; height: 20px; border-radius: 2px; }
     .grid-rank-track { height: 10px; overflow: hidden; border-radius: 5px; background: #f1f3f5; }
     .grid-rank-fill { height: 100%; border-radius: 5px; }
@@ -417,7 +420,7 @@ st.markdown(
       .grid-tiles, .grid-results, .grid-model-summary { grid-template-columns: repeat(2,1fr); }
       .grid-market-grid, .grid-prop-panel { grid-template-columns: 1fr; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
-      .grid-rank-row { grid-template-columns: 26px 64px 1fr 44px; gap: 8px; }
+      .grid-rank-row { grid-template-columns: 26px 190px 1fr 44px; gap: 8px; }
       .st-key-active_screen label { padding: 6px 2px !important; font-size: 9px; }
       .st-key-active_screen label p { font-size: 9px !important; white-space: nowrap; }
     }
@@ -1096,32 +1099,94 @@ def render_props(
 
 def render_rankings(state: dict[str, Any]) -> None:
     page_header("Power Rankings")
-    st.markdown(
-        '<div class="grid-muted" style="margin-bottom:18px">Neutral-field rating · descriptive current-state, not a separately trained betting model</div>',
-        unsafe_allow_html=True,
+    market = build_market_power_ratings(state.get("market"))
+    football = build_football_form_ratings(state["teams"])
+    choices = (
+        ["Latest market consensus", "2025 football form"] if market else ["2025 football form"]
     )
-    rows: list[tuple[str, float]] = []
-    for team, values in state["teams"].items():
-        rating = (
-            values["points_for_l4"]
-            - values["points_against_l4"]
-            + 8.0 * (values["off_epa_l4"] - values["def_epa_l4"])
-            + 3.0 * (values["pressure_generated_l4"] - values["pressure_allowed_l4"])
+    source = st.radio(
+        "Ranking source",
+        choices,
+        horizontal=True,
+        key="power_ranking_source",
+    )
+    if source == "Latest market consensus" and market:
+        raw_snapshot = str(market.get("snapshot_at") or "")
+        try:
+            snapshot = datetime.fromisoformat(raw_snapshot.replace("Z", "+00:00")).astimezone(
+                ZoneInfo("America/New_York")
+            )
+            snapshot_text = (
+                f"{snapshot.strftime('%b %d, %Y')} · {snapshot.strftime('%I:%M%p').lstrip('0')} ET"
+            )
+        except (TypeError, ValueError):
+            snapshot_text = raw_snapshot or "unknown"
+        st.markdown(
+            f"""
+            <div class="grid-muted" style="margin-bottom:14px">Market-implied points above or below an average NFL team on a neutral field · snapshot {html_text(snapshot_text)}</div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">Schedule lines</div><div class="grid-result-value">{int(market["game_count"])}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Median books</div><div class="grid-result-value">{float(market["median_book_count"]):.0f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Implied home field</div><div class="grid-result-value">{float(market["home_field_points"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Line reconstruction MAE</div><div class="grid-result-value">{float(market["line_fit_mae"]):.2f}</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-        rows.append((team, rating))
-    rows.sort(key=lambda item: item[1], reverse=True)
-    max_abs = max((abs(rating) for _, rating in rows), default=1.0)
+        ranking_rows = market["ratings"]
+        st.caption(
+            "This view decomposes the latest consensus spreads across the full schedule. It is "
+            f"market information, not the independent GRIDLINE model and not evidence of betting value. "
+            f"Single-book games are excluded ({int(market['excluded_single_book_games'])}); many "
+            "later look-ahead lines currently have only two or three books and will move."
+        )
+    else:
+        st.markdown(
+            f'<div class="grid-muted" style="margin-bottom:18px">Completed-game form using points, EPA, and pressure · data through {html_text(football.get("data_cutoff") or "unknown")} · no offseason market input</div>',
+            unsafe_allow_html=True,
+        )
+        ranking_rows = football["ratings"]
+        st.caption(
+            "No new NFL games have been played since this cutoff. This descriptive view updates "
+            "after completed games; roster features remain excluded because they worsened margin validation."
+        )
+    roster_context = state["teams"]
+
+    def roster_label(team: str) -> str:
+        values = roster_context.get(team, {})
+        required = (
+            "roster_qb_returning",
+            "roster_ol_continuity",
+            "roster_skill_continuity",
+        )
+        if not all(key in values for key in required):
+            return "Roster context unavailable"
+        qb = "QB returns" if float(values["roster_qb_returning"]) >= 0.5 else "New QB room"
+        return (
+            f"{qb} | OL {float(values['roster_ol_continuity']):.0%} | "
+            f"Skill {float(values['roster_skill_continuity']):.0%}"
+        )
+
+    max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
         f'<div class="grid-rank-team"><span class="grid-rank-chip" '
-        f'style="background:{team_color(team)}"></span>{html_text(team)}</div>'
+        f'style="background:{team_color(str(row["team"]))}"></span>'
+        f'<div class="grid-rank-team-copy">{html_text(team_name(str(row["team"])))}'
+        f'<div class="grid-rank-roster">{html_text(roster_label(str(row["team"])))}</div></div></div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
-        f'style="width:{max(4.0, abs(rating) / max_abs * 100):.1f}%;'
-        f'background:{"#16a34a" if rating >= 0 else "#dc2626"}"></div></div>'
-        f'<div class="grid-rank-value">{rating:+.1f}</div></div>'
-        for rank, (team, rating) in enumerate(rows, start=1)
+        f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
+        f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
+        f'<div class="grid-rank-value">{float(row["rating"]):+.1f}</div></div>'
+        for rank, row in enumerate(ranking_rows, start=1)
     )
     st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
+    st.caption(
+        "Roster context compares the current 2026 roster with each team's 2025 snap distribution. "
+        "It informs the Weeks 1-4 totals model, with a weekly decay, but does not change the market "
+        "ranking order. QB status means the prior season's primary quarterback remains on the roster; "
+        "it is not a confirmed Week 1 starter designation."
+    )
 
 
 def render_performance(state: dict[str, Any]) -> None:
