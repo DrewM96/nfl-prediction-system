@@ -11,6 +11,9 @@ The current application is configured for the 2026 season. It loads the upcoming
 - Sportsbook team names map to nflverse team codes, and home spreads are converted exactly once (`-6` becomes an expected home margin of `+6`).
 - Snapshots after kickoff, snapshots from the future relative to a replay, and snapshots more than eight days before kickoff are rejected.
 - Weekly predictions retain the independent model output and add a separately labeled market-consensus benchmark. No unvalidated blend is presented as a model improvement.
+- Power Rankings provide two explicit views: a latest market-implied neutral-field rating inferred
+  from the full consensus schedule, and a football-only recent-form score frozen at the latest
+  completed-game cutoff. The market ranking is not presented as an independent model.
 - The immutable ledger records the market timestamp and later scores model and market errors on the same games.
 - A guarded workflow collects early-week, Thursday, game-day, and prime-time snapshots for two credits per live request when using one region and two markets.
 

@@ -31,6 +31,7 @@ from nfl_prediction.market import (
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus
+from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
     american_moneyline,
@@ -1096,30 +1097,67 @@ def render_props(
 
 def render_rankings(state: dict[str, Any]) -> None:
     page_header("Power Rankings")
-    st.markdown(
-        '<div class="grid-muted" style="margin-bottom:18px">Neutral-field rating · descriptive current-state, not a separately trained betting model</div>',
-        unsafe_allow_html=True,
+    market = build_market_power_ratings(state.get("market"))
+    football = build_football_form_ratings(state["teams"])
+    choices = (
+        ["Latest market consensus", "2025 football form"] if market else ["2025 football form"]
     )
-    rows: list[tuple[str, float]] = []
-    for team, values in state["teams"].items():
-        rating = (
-            values["points_for_l4"]
-            - values["points_against_l4"]
-            + 8.0 * (values["off_epa_l4"] - values["def_epa_l4"])
-            + 3.0 * (values["pressure_generated_l4"] - values["pressure_allowed_l4"])
+    source = st.radio(
+        "Ranking source",
+        choices,
+        horizontal=True,
+        key="power_ranking_source",
+    )
+    if source == "Latest market consensus" and market:
+        raw_snapshot = str(market.get("snapshot_at") or "")
+        try:
+            snapshot = datetime.fromisoformat(raw_snapshot.replace("Z", "+00:00")).astimezone(
+                ZoneInfo("America/New_York")
+            )
+            snapshot_text = (
+                f"{snapshot.strftime('%b %d, %Y')} · {snapshot.strftime('%I:%M%p').lstrip('0')} ET"
+            )
+        except (TypeError, ValueError):
+            snapshot_text = raw_snapshot or "unknown"
+        st.markdown(
+            f"""
+            <div class="grid-muted" style="margin-bottom:14px">Market-implied points above or below an average NFL team on a neutral field · snapshot {html_text(snapshot_text)}</div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">Schedule lines</div><div class="grid-result-value">{int(market["game_count"])}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Median books</div><div class="grid-result-value">{float(market["median_book_count"]):.0f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Implied home field</div><div class="grid-result-value">{float(market["home_field_points"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Line reconstruction MAE</div><div class="grid-result-value">{float(market["line_fit_mae"]):.2f}</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-        rows.append((team, rating))
-    rows.sort(key=lambda item: item[1], reverse=True)
-    max_abs = max((abs(rating) for _, rating in rows), default=1.0)
+        ranking_rows = market["ratings"]
+        st.caption(
+            "This view decomposes the latest consensus spreads across the full schedule. It is "
+            f"market information, not the independent GRIDLINE model and not evidence of betting value. "
+            f"Single-book games are excluded ({int(market['excluded_single_book_games'])}); many "
+            "later look-ahead lines currently have only two or three books and will move."
+        )
+    else:
+        st.markdown(
+            f'<div class="grid-muted" style="margin-bottom:18px">Completed-game form using points, EPA, and pressure · data through {html_text(football.get("data_cutoff") or "unknown")} · no offseason market input</div>',
+            unsafe_allow_html=True,
+        )
+        ranking_rows = football["ratings"]
+        st.caption(
+            "No new NFL games have been played since this cutoff. This descriptive view updates "
+            "after completed games; roster features remain excluded because they worsened margin validation."
+        )
+    max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
         f'<div class="grid-rank-team"><span class="grid-rank-chip" '
-        f'style="background:{team_color(team)}"></span>{html_text(team)}</div>'
+        f'style="background:{team_color(str(row["team"]))}"></span>{html_text(team_name(str(row["team"])))}</div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
-        f'style="width:{max(4.0, abs(rating) / max_abs * 100):.1f}%;'
-        f'background:{"#16a34a" if rating >= 0 else "#dc2626"}"></div></div>'
-        f'<div class="grid-rank-value">{rating:+.1f}</div></div>'
-        for rank, (team, rating) in enumerate(rows, start=1)
+        f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
+        f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
+        f'<div class="grid-rank-value">{float(row["rating"]):+.1f}</div></div>'
+        for rank, row in enumerate(ranking_rows, start=1)
     )
     st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
 
