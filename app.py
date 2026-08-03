@@ -260,10 +260,12 @@ st.markdown(
     .grid-prop-bar { display: flex; height: 14px; overflow: hidden; border-radius: 7px; background: var(--grid-border); }
     .grid-under { background: #dc2626; }
     .grid-over { background: #16a34a; }
-    .grid-rank-row { display: grid; grid-template-columns: 34px 72px 1fr 52px; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f3f5; }
+    .grid-rank-row { display: grid; grid-template-columns: 34px 240px 1fr 52px; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f3f5; }
     .grid-rank-row:last-child { border-bottom: none; }
     .grid-rank { color: var(--grid-faint); font-size: 14px; }
     .grid-rank-team { display: flex; align-items: center; gap: 9px; font-weight: 600; }
+    .grid-rank-team-copy { min-width: 0; }
+    .grid-rank-roster { margin-top: 3px; color: var(--grid-faint); font-size: 10px; font-weight: 400; white-space: nowrap; }
     .grid-rank-chip { width: 5px; height: 20px; border-radius: 2px; }
     .grid-rank-track { height: 10px; overflow: hidden; border-radius: 5px; background: #f1f3f5; }
     .grid-rank-fill { height: 100%; border-radius: 5px; }
@@ -418,7 +420,7 @@ st.markdown(
       .grid-tiles, .grid-results, .grid-model-summary { grid-template-columns: repeat(2,1fr); }
       .grid-market-grid, .grid-prop-panel { grid-template-columns: 1fr; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
-      .grid-rank-row { grid-template-columns: 26px 64px 1fr 44px; gap: 8px; }
+      .grid-rank-row { grid-template-columns: 26px 190px 1fr 44px; gap: 8px; }
       .st-key-active_screen label { padding: 6px 2px !important; font-size: 9px; }
       .st-key-active_screen label p { font-size: 9px !important; white-space: nowrap; }
     }
@@ -1148,11 +1150,30 @@ def render_rankings(state: dict[str, Any]) -> None:
             "No new NFL games have been played since this cutoff. This descriptive view updates "
             "after completed games; roster features remain excluded because they worsened margin validation."
         )
+    roster_context = state["teams"]
+
+    def roster_label(team: str) -> str:
+        values = roster_context.get(team, {})
+        required = (
+            "roster_qb_returning",
+            "roster_ol_continuity",
+            "roster_skill_continuity",
+        )
+        if not all(key in values for key in required):
+            return "Roster context unavailable"
+        qb = "QB returns" if float(values["roster_qb_returning"]) >= 0.5 else "New QB room"
+        return (
+            f"{qb} | OL {float(values['roster_ol_continuity']):.0%} | "
+            f"Skill {float(values['roster_skill_continuity']):.0%}"
+        )
+
     max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
         f'<div class="grid-rank-team"><span class="grid-rank-chip" '
-        f'style="background:{team_color(str(row["team"]))}"></span>{html_text(team_name(str(row["team"])))}</div>'
+        f'style="background:{team_color(str(row["team"]))}"></span>'
+        f'<div class="grid-rank-team-copy">{html_text(team_name(str(row["team"])))}'
+        f'<div class="grid-rank-roster">{html_text(roster_label(str(row["team"])))}</div></div></div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
         f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
         f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
@@ -1160,6 +1181,12 @@ def render_rankings(state: dict[str, Any]) -> None:
         for rank, row in enumerate(ranking_rows, start=1)
     )
     st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
+    st.caption(
+        "Roster context compares the current 2026 roster with each team's 2025 snap distribution. "
+        "It informs the Weeks 1-4 totals model, with a weekly decay, but does not change the market "
+        "ranking order. QB status means the prior season's primary quarterback remains on the roster; "
+        "it is not a confirmed Week 1 starter designation."
+    )
 
 
 def render_performance(state: dict[str, Any]) -> None:

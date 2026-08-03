@@ -30,6 +30,8 @@ def test_power_rankings_default_to_latest_market_consensus() -> None:
     assert not app.exception
     assert any("Market-implied points" in markdown.value for markdown in app.markdown)
     assert any("Los Angeles Rams" in markdown.value for markdown in app.markdown)
+    assert any("QB returns" in markdown.value for markdown in app.markdown)
+    assert any("Weeks 1-4 totals model" in caption.value for caption in app.caption)
 
     source.set_value("2025 football form").run(timeout=30)
     assert not app.error
