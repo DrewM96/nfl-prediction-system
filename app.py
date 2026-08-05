@@ -12,6 +12,7 @@ from cfb_prediction.config import (
     CFB_FOUNDATION_PATH,
     CFB_HISTORICAL_BENCHMARK_PATH,
     CFB_MODEL_MANIFEST_PATH,
+    CFB_POWER_RANKINGS_PATH,
 )
 from cfb_prediction.ledger import load_latest_cfb_prediction_batch
 from cfb_prediction.modeling import load_cfb_model_bundle
@@ -57,6 +58,7 @@ PAGE_LABELS = [
     "Model",
 ]
 SPORT_LABELS = ["NFL", "College Football"]
+CFB_PAGE_LABELS = ["This Week", "Top 30"]
 
 st.set_page_config(
     page_title="GRIDLINE — Model-Based Forecasts",
@@ -481,8 +483,12 @@ def load_cfb_state() -> dict[str, Any]:
         model_hash = sha256_file(CFB_MODEL_MANIFEST_PATH)
         if prediction_batch.get("model_hash") != model_hash:
             raise ValueError("The CFB prediction batch does not match the active model bundle")
+        rankings = read_json(CFB_POWER_RANKINGS_PATH)
+        if not rankings or rankings.get("model_hash") != model_hash:
+            raise ValueError("The CFB power rankings do not match the active model bundle")
         state["model_manifest"] = model_manifest
         state["prediction_batch"] = prediction_batch
+        state["power_rankings"] = rankings
         state["production_status"] = "forecast_ready"
     except Exception as exc:
         state["production_status"] = "not_built"
@@ -1415,6 +1421,67 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     )
 
 
+def render_cfb_rankings(state: dict[str, Any]) -> None:
+    rankings = state.get("power_rankings")
+    if not rankings:
+        page_header("College Football Top 30")
+        st.warning(
+            "The model-matched CFB ranking artifact is unavailable. Run "
+            "`python cfb_production_update.py --season 2026`."
+        )
+        return
+
+    display_count = int(rankings.get("display_count", 30))
+    ranking_rows = rankings.get("ratings", [])[:display_count]
+    page_header("College Football Top 30", "Provisional preseason ratings")
+    st.markdown(
+        f"""
+        <div class="grid-muted" style="margin-bottom:14px">Independent model-implied points above or below an average FBS team on a neutral field | data cutoff {html_text(str(rankings.get("data_cutoff", "unknown"))[:10])}</div>
+        <div class="grid-results">
+          <div class="grid-result"><div class="grid-tile-label">Ranked teams</div><div class="grid-result-value">{len(ranking_rows)}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">Schedule games</div><div class="grid-result-value">{int(rankings.get("game_count", 0)):,}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">Implied home field</div><div class="grid-result-value">{float(rankings.get("home_field_points", 0)):.2f}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">Margin reconstruction MAE</div><div class="grid-result-value">{float(rankings.get("line_fit_mae", 0)):.2f}</div></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "This is not the AP poll. The ranking scores every scheduled 2026 FBS-vs-FBS matchup "
+        "with GRIDLINE's independent margin model, then decomposes that full schedule into "
+        "neutral-field team strengths. Sportsbook lines are not inputs."
+    )
+    max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
+    row_html = "".join(
+        f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
+        f'<div class="grid-rank-team"><span class="grid-rank-chip" '
+        f'style="background:{team_color(str(row["team"]))}"></span>'
+        f'<div class="grid-rank-team-copy">{html_text(str(row["team"]))}'
+        f'<div class="grid-rank-roster">{int(row["scheduled_games"])} scheduled FBS games</div></div></div>'
+        f'<div class="grid-rank-track"><div class="grid-rank-fill" '
+        f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
+        f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
+        f'<div class="grid-rank-value">{float(row["rating"]):+.1f}</div></div>'
+        for rank, row in enumerate(ranking_rows, start=1)
+    )
+    st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
+    coverage = rankings.get("input_coverage", {})
+    team_count = int(coverage.get("scheduled_fbs_teams", rankings.get("team_count", 0)))
+    returning = int(coverage.get("returning_production_teams", 0))
+    talent = int(coverage.get("talent_teams", 0))
+    st.warning(
+        "Preseason limitation: 2026 recruiting and portal context are included, but CFBD had "
+        f"published returning production for {returning}/{team_count} teams and talent for "
+        f"{talent}/{team_count} when this model was built. The Top 30 should be regenerated as "
+        "those feeds and final rosters become available."
+    )
+    st.caption(
+        "The displayed value is a schedule-decomposed model rating, not a predicted margin for "
+        "any single game. Ranking order will update after completed games change Elo, recent form, "
+        "and advanced efficiency."
+    )
+
+
 if "active_sport" not in st.session_state:
     st.session_state.active_sport = SPORT_LABELS[0]
 
@@ -1429,7 +1496,19 @@ if active_sport == "College Football":
         label_visibility="collapsed",
         key="active_sport",
     )
-    render_cfb_foundation(cfb_state)
+    if "cfb_active_screen" not in st.session_state:
+        st.session_state.cfb_active_screen = CFB_PAGE_LABELS[0]
+    if st.session_state.cfb_active_screen == "Top 30":
+        render_cfb_rankings(cfb_state)
+    else:
+        render_cfb_foundation(cfb_state)
+    st.radio(
+        "Navigate",
+        CFB_PAGE_LABELS,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="cfb_active_screen",
+    )
     st.stop()
 
 try:

@@ -48,6 +48,8 @@ def main() -> int:
                 "forecast_week": result["forecast_week"],
                 "prediction_count": result["prediction_count"],
                 "prediction_path": result["prediction_path"],
+                "rankings_path": result["rankings_path"],
+                "ranking_count": result["ranking_count"],
                 "predictions": result["predictions"],
             },
             indent=2,
