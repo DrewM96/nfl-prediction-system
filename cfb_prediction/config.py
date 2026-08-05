@@ -12,6 +12,7 @@ CFB_MODELS_DIR = CFB_DATA_DIR / "models"
 CFB_MODEL_MANIFEST_PATH = CFB_MODELS_DIR / "manifest.json"
 CFB_PREDICTIONS_DIR = CFB_DATA_DIR / "predictions"
 CFB_LATEST_PREDICTION_PATH = CFB_DATA_DIR / "latest_prediction.json"
+CFB_POWER_RANKINGS_PATH = CFB_DATA_DIR / "power_rankings.json"
 CFBD_API_BASE_URL = "https://api.collegefootballdata.com"
 
 

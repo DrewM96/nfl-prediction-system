@@ -18,6 +18,15 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("College Football" in markdown.value for markdown in app.markdown)
     assert any("2026 Week 1 Forecasts" in markdown.value for markdown in app.markdown)
 
+    navigation = next(radio for radio in app.radio if radio.label == "Navigate")
+    navigation.set_value("Top 30").run(timeout=30)
+
+    assert not app.error
+    assert not app.exception
+    assert any("College Football Top 30" in markdown.value for markdown in app.markdown)
+    assert any("This is not the AP poll" in caption.value for caption in app.caption)
+    assert any("scheduled FBS games" in markdown.value for markdown in app.markdown)
+
 
 def test_power_rankings_default_to_latest_market_consensus() -> None:
     app = AppTest.from_file("app.py").run(timeout=30)

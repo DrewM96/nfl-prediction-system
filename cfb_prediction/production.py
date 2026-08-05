@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from nfl_prediction.io import read_json, sha256_file
+from nfl_prediction.io import atomic_write_json, read_json, sha256_file
 
 from .client import CFBDClient
 from .config import (
@@ -22,6 +22,7 @@ from .features import CFB_FEATURE_CONFIGURATIONS, build_point_in_time_features
 from .historical import load_historical_data
 from .ledger import record_cfb_prediction_batch
 from .modeling import fit_cfb_model, save_cfb_model_bundle
+from .rankings import build_cfb_power_ratings
 
 
 def _combine(parts: list[CFBHistoricalData]) -> CFBHistoricalData:
@@ -123,6 +124,7 @@ def run_cfb_production_update(
     models_dir: str | Path = CFB_MODELS_DIR,
     predictions_dir: str | Path = CFB_PREDICTIONS_DIR,
     latest_path: str | Path = CFB_LATEST_PREDICTION_PATH,
+    rankings_path: str | Path | None = None,
     git_commit: str | None = None,
 ) -> dict[str, Any]:
     timestamp = _as_utc(as_of)
@@ -139,15 +141,15 @@ def run_cfb_production_update(
     training = features[
         features["completed"].fillna(False) & features["start_date"].le(pd.Timestamp(timestamp))
     ].copy()
-    scheduled = features[
+    all_scheduled = features[
         features["season"].eq(prediction_season)
         & ~features["completed"].fillna(False)
         & features["start_date"].gt(pd.Timestamp(timestamp))
     ].copy()
-    if scheduled.empty:
+    if all_scheduled.empty:
         raise ValueError(f"No upcoming FBS-vs-FBS games are available for {prediction_season}")
-    forecast_week = int(week if week is not None else scheduled["week"].min())
-    scheduled = scheduled[scheduled["week"].eq(forecast_week)].sort_values("start_date")
+    forecast_week = int(week if week is not None else all_scheduled["week"].min())
+    scheduled = all_scheduled[all_scheduled["week"].eq(forecast_week)].sort_values("start_date")
     if scheduled.empty:
         raise ValueError(f"No upcoming FBS-vs-FBS games are available for Week {forecast_week}")
 
@@ -184,6 +186,21 @@ def run_cfb_production_update(
     )
     manifest_path = Path(models_dir) / "manifest.json"
     model_hash = sha256_file(manifest_path)
+    ranking_payload = build_cfb_power_ratings(
+        all_scheduled,
+        models["margin"].predict(all_scheduled),
+        created_at=timestamp,
+        prediction_season=prediction_season,
+        data_cutoff=timestamp.isoformat(),
+        model_hash=model_hash,
+        input_coverage=input_coverage,
+    )
+    ranking_target = (
+        Path(rankings_path)
+        if rankings_path is not None
+        else Path(latest_path).parent / "power_rankings.json"
+    )
+    atomic_write_json(ranking_target, ranking_payload)
     margin_distributions = models["margin"].distribution(scheduled)
     total_distributions = models["total"].distribution(scheduled)
     predictions: list[dict[str, Any]] = []
@@ -234,6 +251,8 @@ def run_cfb_production_update(
         "manifest": manifest,
         "model_hash": model_hash,
         "prediction_path": str(target),
+        "rankings_path": str(ranking_target),
+        "ranking_count": ranking_payload["display_count"],
         "forecast_week": forecast_week,
         "prediction_count": len(predictions),
         "predictions": predictions,

@@ -12,6 +12,13 @@ from the latest timestamped consensus spreads across the schedule. Its football-
 completed-game points, EPA, and pressure through the displayed cutoff. These sources stay
 separate; neither ranking establishes a betting edge.
 
+The College Football Top 30 is also descriptive. It predicts every remaining scheduled
+FBS-vs-FBS matchup with the selected CFB margin model and decomposes those margins into
+regularized, zero-centered neutral-field team ratings. The calculation separates the standard
+home edge from team strength and publishes schedule coverage plus reconstruction error. It is not
+the AP poll and does not use sportsbook lines. Before final preseason feeds arrive, missing
+returning-production and team-talent values are neutral-imputed and the ranking is provisional.
+
 ## Model design
 
 Each target combines a standardized ridge regression with a shallow gradient-boosted regressor. Game models use Ridge alpha 50, selected on 2023-2024 and checked separately on 2025; player models retain alpha 10. The blend weight is learned from chronological out-of-fold predictions. The final production estimators are fitted on every eligible record through the manifest cutoff.

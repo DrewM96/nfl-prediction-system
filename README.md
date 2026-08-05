@@ -1,6 +1,6 @@
 # GRIDLINE Football Prediction System
 
-A point-in-time football forecasting application. The NFL side produces game margins, totals, win probabilities, player props, and timestamped market comparison. A separate College Football tab now has authenticated CollegeFootballData ingestion and isolated artifacts; CFB forecasts remain withheld until their historical models pass chronological validation.
+A point-in-time football forecasting application. The NFL side produces game margins, totals, win probabilities, player props, and timestamped market comparison. A separate College Football section has authenticated CollegeFootballData ingestion, isolated artifacts, provisional weekly forecasts, and an independent-model Top 30.
 
 The current application is configured for the 2026 season. It loads the upcoming schedule independently from the completed seasons used for training, so preseason updates no longer fail when play-by-play for the new season does not yet exist.
 
@@ -233,7 +233,11 @@ python cfb_production_update.py --season 2026 --week 2
 ```
 
 Each run writes checksummed estimators to `data/cfb/models/`, an immutable batch under
-`data/cfb/predictions/`, and a small latest-run pointer used by the app. The independent model
+`data/cfb/predictions/`, a model-matched `data/cfb/power_rankings.json`, and a small latest-run
+pointer used by the app. The Top 30 scores every remaining scheduled FBS-vs-FBS matchup with the
+margin model, then uses a regularized schedule decomposition to express each team in points above
+or below an average FBS team on a neutral field. It is an independent model rating rather than an
+AP-style poll, and sportsbook lines are not ranking inputs. The independent forecast model
 does not consume sportsbook lines. Forecasts remain labeled provisional because the margin
 residual standard deviation is roughly 16 points and early-season roster inputs retain the
 timing limitations described in the model documentation. As of the first August 1 run, CFBD's
