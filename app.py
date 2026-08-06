@@ -208,6 +208,21 @@ st.markdown(
     .grid-row-date { color: var(--grid-muted); font-size: 12px; }
     .grid-reason { display: flex; gap: 8px; padding: 5px 0; color: var(--grid-body); font-size: 13px; }
     .grid-reason > span { color: var(--grid-orange); }
+    .grid-game-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--grid-border);
+    }
+    .grid-game-detail .grid-kicker { margin-bottom: 10px; }
+    .grid-game-reasons { display: grid; gap: 10px; }
+    .grid-game-detail .grid-reason { align-items: flex-start; padding: 0; line-height: 1.45; }
+    .grid-game-detail .grid-reason > div { min-width: 0; overflow-wrap: anywhere; }
+    .grid-game-detail .grid-probability { margin: 0 0 12px; }
+    .grid-detail-range { margin: 0 0 14px; color: var(--grid-muted); font-size: 12px; }
+    .grid-detail-range b { color: var(--grid-ink); }
     .grid-placeholder {
       display: flex;
       justify-content: space-between;
@@ -285,7 +300,8 @@ st.markdown(
     .grid-ghost-bar { height: 14px; border-radius: 7px; background: #cbd5e1; }
     .grid-mobile-hint { display: none; }
     .grid-topbar, .grid-page-head, .grid-hero, .grid-card, .grid-results,
-    .grid-model-summary, .grid-model-card, .grid-market-grid, .grid-prop-panel {
+    .grid-model-summary, .grid-model-card, .grid-market-grid, .grid-prop-panel,
+    .grid-game-detail {
       line-height: normal;
       box-sizing: border-box;
     }
@@ -424,7 +440,7 @@ st.markdown(
       [data-testid="stMainBlockContainer"], .block-container {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
-        padding-bottom: 8.5rem !important;
+        padding-bottom: 5rem !important;
       }
       [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
       .block-container:has(.st-key-cfb_active_screen) { padding-bottom: 5.5rem !important; }
@@ -450,25 +466,49 @@ st.markdown(
         width: auto !important;
         min-width: 0 !important;
       }
-      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1),
-      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2),
-      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 1 / -1; }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 3; grid-row: 1; }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
       [class*="st-key-toggle_game_"] button { min-height: 40px !important; height: 40px !important; }
       .grid-team-pair { justify-content: center; }
-      .st-key-active_screen label, .st-key-cfb_active_screen label { min-height: 52px; padding: 6px 2px !important; font-size: 10px; }
+      .grid-game-detail { grid-template-columns: 1fr; gap: 20px; margin-top: 12px; padding-top: 18px; }
+      .grid-game-detail .grid-kicker { margin-bottom: 12px; }
+      .grid-game-reasons { gap: 12px; }
+      .grid-game-detail .grid-reason { font-size: 14px; line-height: 1.5; }
+      .grid-game-detail .grid-probability { margin-bottom: 14px; }
+      .grid-detail-range { margin-bottom: 16px; line-height: 1.4; }
+      .st-key-active_screen, .st-key-cfb_active_screen {
+        padding-top: 0;
+        padding-bottom: max(6px, env(safe-area-inset-bottom));
+      }
+      .st-key-active_screen [role="radiogroup"],
+      .st-key-cfb_active_screen [role="radiogroup"] {
+        width: calc(100vw - 24px) !important;
+        max-width: none !important;
+      }
+      .st-key-active_screen label, .st-key-cfb_active_screen label { width: 100% !important; min-height: 48px; padding: 4px 1px !important; font-size: 10px; }
       .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: 10px !important; white-space: nowrap; }
       div[data-testid="stButton"] button, div[data-testid="stFormSubmitButton"] button { min-height: 44px; }
       [data-testid="stDataFrame"] { max-width: 100%; overflow: hidden; }
       .grid-mobile-hint { display: block; margin: 4px 0 8px; color: var(--grid-muted); font-size: 12px; }
     }
     @media (max-width: 520px) {
-      .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(3,1fr); }
+      .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(6,minmax(0,1fr)); }
+      .st-key-active_screen label::before, .st-key-cfb_active_screen label::before { display: none; }
+      .st-key-active_screen label, .st-key-cfb_active_screen label {
+        border-top: 2px solid transparent !important;
+      }
+      .st-key-active_screen label:has(input:checked),
+      .st-key-cfb_active_screen label:has(input:checked) {
+        border-top-color: var(--grid-orange) !important;
+        color: var(--grid-ink) !important;
+      }
       .grid-page-head { gap: 10px; }
       .grid-badge { max-width: 145px; }
       .grid-hero-main { display: block; }
-      .grid-matchup { justify-content: center; }
+      .grid-matchup { display: grid; grid-template-columns: auto auto auto; justify-content: center; gap: 8px 18px; }
+      .grid-date { grid-column: 1 / -1; margin: 0; text-align: center; }
       .grid-hero-main .grid-tiles { margin-top: 18px; }
-      .grid-date { display: block; margin: 8px 0 0; text-align: center; }
       .grid-card { padding: 18px 16px; }
       .st-key-custom_game_shell [data-testid="stVerticalBlockBorderWrapper"],
       .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] { padding: 18px !important; }
@@ -481,6 +521,7 @@ st.markdown(
       .grid-results, .grid-model-summary { grid-template-columns: 1fr; }
       .grid-hero { padding: 16px; }
       .grid-team-abbr { font-size: 20px; }
+      .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: 9px !important; }
     }
     </style>
     """,
@@ -904,27 +945,21 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
             st.session_state.expanded_game_id = None if expanded else game_id
             st.rerun()
         if expanded:
-            st.divider()
-            detail_columns = st.columns(2)
-            with detail_columns[0]:
-                st.markdown(
-                    '<div class="grid-kicker">Why the model leans this way</div>',
-                    unsafe_allow_html=True,
-                )
-                reasons = "".join(
-                    f'<div class="grid-reason"><span>›</span>{html_text(reason)}</div>'
-                    for reason in game_reasoning(game)
-                )
-                st.markdown(reasons, unsafe_allow_html=True)
-            with detail_columns[1]:
-                st.markdown(
-                    '<div class="grid-kicker">Win probability</div>', unsafe_allow_html=True
-                )
-                st.markdown(probability_bar(game), unsafe_allow_html=True)
-                st.markdown(
-                    f'<div style="font-size:12px;color:#64748b;margin:12px 0">80% total range: <b style="color:#0f1419">{float(game["total_p10"]):.1f}–{float(game["total_p90"]):.1f}</b></div>{market_tile(game).replace("grid-tile", "grid-placeholder", 1)}',
-                    unsafe_allow_html=True,
-                )
+            reasons = "".join(
+                f'<div class="grid-reason"><span>›</span><div>{html_text(reason)}</div></div>'
+                for reason in game_reasoning(game)
+            )
+            detail_html = (
+                '<div class="grid-game-detail"><section>'
+                '<div class="grid-kicker">Why the model leans this way</div>'
+                f'<div class="grid-game-reasons">{reasons}</div></section><section>'
+                '<div class="grid-kicker">Win probability</div>'
+                f"{probability_bar(game).strip()}"
+                f'<div class="grid-detail-range">80% total range: <b>{float(game["total_p10"]):.1f}–{float(game["total_p90"]):.1f}</b></div>'
+                f"{market_tile(game).replace('grid-tile', 'grid-placeholder', 1).strip()}"
+                "</section></div>"
+            )
+            st.markdown(detail_html, unsafe_allow_html=True)
             with st.expander("Compare a sportsbook line"):
                 render_market_comparison(game, game_id)
 
@@ -939,7 +974,7 @@ def render_this_week(state: dict[str, Any]) -> None:
         return
     featured = max(schedule, key=lambda game: abs(float(game["predicted_home_margin"])))
     if "expanded_game_id" not in st.session_state:
-        st.session_state.expanded_game_id = str(featured.get("game_id"))
+        st.session_state.expanded_game_id = None
     render_featured_game(featured)
     for index, game in enumerate(schedule):
         render_game_row(game, index)
