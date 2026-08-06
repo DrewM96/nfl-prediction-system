@@ -17,6 +17,9 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.exception
     assert any("College Football" in markdown.value for markdown in app.markdown)
     assert any("2026 Week 1 Forecasts" in markdown.value for markdown in app.markdown)
+    assert any("Featured CFB matchup" in markdown.value for markdown in app.markdown)
+    assert any("North Carolina" in markdown.value for markdown in app.markdown)
+    assert any("Home win" in markdown.value for markdown in app.markdown)
 
     navigation = next(radio for radio in app.radio if radio.label == "Navigate")
     navigation.set_value("Top 30").run(timeout=30)
