@@ -171,6 +171,17 @@ st.markdown(
       gap: 24px;
       flex-wrap: wrap;
     }
+    .grid-cfb-hero .grid-hero-main {
+      display: grid;
+      grid-template-columns: minmax(320px,.8fr) minmax(0,1.2fr);
+    }
+    .grid-cfb-hero .grid-matchup {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      justify-content: center;
+      gap: 8px 18px;
+    }
+    .grid-cfb-hero .grid-date { grid-column: 1 / -1; margin: 0; text-align: center; }
     .grid-matchup { display: flex; align-items: center; gap: 18px; }
     .grid-team { text-align: center; min-width: 44px; }
     .grid-team-chip { width: 14px; height: 44px; border-radius: 4px; margin: 0 auto 8px; }
@@ -204,6 +215,17 @@ st.markdown(
     .grid-team-inline { display: flex; align-items: center; gap: 9px; }
     .grid-team-rail { width: 6px; height: 34px; border-radius: 2px; flex: 0 0 auto; }
     .grid-team-pair { display: flex; align-items: center; gap: 8px; }
+    .grid-cfb-team-pair {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
+      align-items: center;
+      gap: 10px;
+    }
+    .grid-cfb-team-pair .grid-team-inline { min-width: 0; }
+    .grid-cfb-team-pair .grid-team-inline:first-child { justify-content: flex-end; text-align: right; }
+    .grid-cfb-team-name { line-height: 1.2; overflow-wrap: anywhere; }
+    .grid-cfb-team { width: min(150px, 38vw); text-align: center; }
+    .grid-cfb-team-name-large { font: 500 18px/1.15 'Instrument Sans', sans-serif; overflow-wrap: anywhere; }
     .grid-row-value { text-align: center; font-size: 14px; font-weight: 600; }
     .grid-row-date { color: var(--grid-muted); font-size: 12px; }
     .grid-reason { display: flex; gap: 8px; padding: 5px 0; color: var(--grid-body); font-size: 13px; }
@@ -313,10 +335,17 @@ st.markdown(
     [class*="st-key-game_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
       padding: 10px 18px !important;
     }
+    [class*="st-key-cfb_game_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
+      padding: 10px 18px !important;
+    }
     [class*="st-key-game_card_"] [data-testid="stVerticalBlock"] {
       gap: 0 !important;
     }
+    [class*="st-key-cfb_game_card_"] [data-testid="stVerticalBlock"] {
+      gap: 0 !important;
+    }
     [class*="st-key-game_card_"] .stMarkdown p { margin: 0 !important; }
+    [class*="st-key-cfb_game_card_"] .stMarkdown p { margin: 0 !important; }
     [class*="st-key-toggle_game_"] button {
       min-height: 24px !important;
       height: 24px !important;
@@ -452,6 +481,8 @@ st.markdown(
       .grid-hero { padding: 20px; }
       .grid-tiles, .grid-results, .grid-model-summary { grid-template-columns: repeat(2,1fr); }
       .grid-market-grid, .grid-prop-panel { grid-template-columns: 1fr; }
+      .grid-cfb-hero .grid-hero-main { display: block; }
+      .grid-cfb-hero .grid-tiles { margin-top: 18px; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
       .grid-rank-row { grid-template-columns: 26px minmax(0,1fr) 46px; gap: 6px 8px; padding: 12px 0; }
       .grid-rank-track { grid-column: 2 / 4; }
@@ -462,13 +493,24 @@ st.markdown(
         grid-template-columns: repeat(3,minmax(0,1fr));
         gap: 8px 6px !important;
       }
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] {
+        display: grid !important;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 8px 6px !important;
+      }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div {
+        width: auto !important;
+        min-width: 0 !important;
+      }
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div {
         width: auto !important;
         min-width: 0 !important;
       }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 3; grid-row: 1; }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1),
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
       [class*="st-key-toggle_game_"] button { min-height: 40px !important; height: 40px !important; }
       .grid-team-pair { justify-content: center; }
       .grid-game-detail { grid-template-columns: 1fr; gap: 20px; margin-top: 12px; padding-top: 18px; }
@@ -1377,68 +1419,133 @@ def render_model_card(manifest: dict[str, Any]) -> None:
     )
 
 
+def format_cfb_game_time(game: dict[str, Any]) -> str:
+    kickoff = datetime.fromisoformat(str(game["start_date"])).astimezone(
+        ZoneInfo("America/New_York")
+    )
+    time_text = (
+        kickoff.strftime("%I:%M%p").lstrip("0").lower().replace("am", "a").replace("pm", "p")
+    )
+    return f"{kickoff.strftime('%a')} {kickoff.month}/{kickoff.day} {time_text}"
+
+
+def cfb_spread_label(game: dict[str, Any]) -> str:
+    margin = float(game["predicted_home_margin"])
+    if abs(margin) < 0.05:
+        return "Pick"
+    favorite = game["home_team"] if margin > 0 else game["away_team"]
+    return f"{favorite} -{abs(margin):.1f}"
+
+
+def render_cfb_featured_game(game: dict[str, Any]) -> None:
+    away = html_text(game["away_team"])
+    home = html_text(game["home_team"])
+    venue = "Neutral site" if game.get("neutral_site") else "Campus game"
+    margin_range = f"{float(game['margin_p10']):+.1f} to {float(game['margin_p90']):+.1f}"
+    st.markdown(
+        f"""
+        <div class="grid-hero grid-cfb-hero">
+          <div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured CFB matchup</div>
+          <div class="grid-hero-main">
+            <div class="grid-matchup">
+              <div class="grid-cfb-team"><div class="grid-team-chip" style="background:#64748b"></div><div class="grid-cfb-team-name-large">{away}</div><div class="grid-score">{float(game["predicted_away_score"]):.1f}</div></div>
+              <div class="grid-at">{"vs" if game.get("neutral_site") else "@"}</div>
+              <div class="grid-cfb-team"><div class="grid-team-chip" style="background:#FF6B35"></div><div class="grid-cfb-team-name-large">{home}</div><div class="grid-score">{float(game["predicted_home_score"]):.1f}</div></div>
+              <div class="grid-date">{html_text(format_cfb_game_time(game))} · {venue}</div>
+            </div>
+            <div class="grid-tiles">
+              <div class="grid-tile"><div class="grid-tile-label">Spread</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Home win</div><div class="grid-tile-value">{format_probability(game["home_win_probability"])}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["predicted_total"]):.1f}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size:14px">{margin_range}</div></div>
+            </div>
+          </div>
+          {probability_bar(game)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
+    venue = " · neutral" if game.get("neutral_site") else ""
+    separator = "vs" if game.get("neutral_site") else "@"
+    with st.container(border=True, key=f"cfb_game_card_{index}"):
+        columns = st.columns([1.5, 4.8, 1.0, 1.0, 1.0], vertical_alignment="center")
+        columns[0].markdown(
+            f'<div class="grid-row-date">{html_text(format_cfb_game_time(game))}{venue}</div>',
+            unsafe_allow_html=True,
+        )
+        columns[1].markdown(
+            f"""
+            <div class="grid-cfb-team-pair">
+              <div class="grid-team-inline"><span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span><span class="grid-team-rail" style="background:#64748b"></span></div>
+              <span class="grid-at">{separator}</span>
+              <div class="grid-team-inline"><span class="grid-team-rail" style="background:#FF6B35"></span><span><b class="grid-cfb-team-name">{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["predicted_home_score"]):.1f}</span></span></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        columns[2].markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">Spread</div>{html_text(cfb_spread_label(game))}</div>',
+            unsafe_allow_html=True,
+        )
+        columns[3].markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">Home win</div>{format_probability(game["home_win_probability"])}</div>',
+            unsafe_allow_html=True,
+        )
+        columns[4].markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">Total</div>{float(game["predicted_total"]):.1f}</div>',
+            unsafe_allow_html=True,
+        )
+
+
 def render_cfb_foundation(state: dict[str, Any]) -> None:
     ready = state.get("status") == "data_ready"
     forecast_ready = state.get("production_status") == "forecast_ready"
+    prediction_batch = state.get("prediction_batch")
+    model_manifest = state.get("model_manifest")
+    predictions = prediction_batch.get("predictions", []) if prediction_batch else []
+    forecast_week = (
+        prediction_batch.get("metadata", {}).get("forecast_week", "—") if prediction_batch else "—"
+    )
     badge = (
         "Provisional forecasts ready"
         if forecast_ready
         else ("Data foundation ready" if ready else "Run weekly_cfb_update.py")
     )
-    page_header("College Football", badge)
-    st.markdown(
-        f"""
-        <div class="grid-hero">
-          <div class="grid-kicker">FBS · {html_text(state.get("prediction_season", "—"))}</div>
-          <h2 style="margin:8px 0 8px;font:500 28px 'Instrument Sans',sans-serif">A separate college model, inside the same GRIDLINE app.</h2>
-          <div class="grid-muted">The authenticated CollegeFootballData feed is isolated from the NFL pipeline. Raw API responses remain in a local ignored cache; only derived artifacts are eligible for publication.</div>
-        </div>
-        <div class="grid-results">
-          <div class="grid-result"><div class="grid-tile-label">FBS teams</div><div class="grid-result-value">{int(state.get("team_count", 0)):,}</div></div>
-          <div class="grid-result"><div class="grid-tile-label">Scheduled games</div><div class="grid-result-value">{int(state.get("scheduled_game_count", 0)):,}</div></div>
-          <div class="grid-result"><div class="grid-tile-label">FBS vs FBS</div><div class="grid-result-value">{int(state.get("fbs_vs_fbs_game_count", 0)):,}</div></div>
-          <div class="grid-result"><div class="grid-tile-label">Regular-season weeks</div><div class="grid-result-value">{int(state.get("calendar_week_count", 0)):,}</div></div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    if predictions:
+        page_header(f"College Football — Week {forecast_week}", badge)
+        featured = max(predictions, key=lambda game: abs(float(game["predicted_home_margin"])))
+        render_cfb_featured_game(featured)
+    else:
+        page_header("College Football", badge)
+        st.markdown(
+            f"""
+            <div class="grid-hero">
+              <div class="grid-kicker">FBS · {html_text(state.get("prediction_season", "—"))}</div>
+              <h2 style="margin:8px 0 8px;font:500 28px 'Instrument Sans',sans-serif">A separate college model, inside the same GRIDLINE app.</h2>
+              <div class="grid-muted">The authenticated CollegeFootballData feed is isolated from the NFL pipeline. Raw API responses remain in a local ignored cache; only derived artifacts are eligible for publication.</div>
+            </div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">FBS teams</div><div class="grid-result-value">{int(state.get("team_count", 0)):,}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Scheduled games</div><div class="grid-result-value">{int(state.get("scheduled_game_count", 0)):,}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">FBS vs FBS</div><div class="grid-result-value">{int(state.get("fbs_vs_fbs_game_count", 0)):,}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Regular-season weeks</div><div class="grid-result-value">{int(state.get("calendar_week_count", 0)):,}</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     if not ready:
         st.warning(
             "The College Football artifact has not been built in this environment. "
             "Run `python weekly_cfb_update.py --season 2026`."
         )
         return
-    prediction_batch = state.get("prediction_batch")
-    model_manifest = state.get("model_manifest")
     if prediction_batch and model_manifest:
-        forecast_week = prediction_batch.get("metadata", {}).get("forecast_week", "—")
-        predictions = prediction_batch.get("predictions", [])
-        rows = []
-        for prediction in predictions:
-            margin = float(prediction["predicted_home_margin"])
-            favorite = prediction["home_team"] if margin >= 0 else prediction["away_team"]
-            kickoff = datetime.fromisoformat(str(prediction["start_date"])).astimezone(
-                ZoneInfo("America/New_York")
-            )
-            rows.append(
-                {
-                    "Kickoff (ET)": (
-                        f"{kickoff.strftime('%a')} {kickoff.month}/{kickoff.day} "
-                        f"{kickoff.strftime('%I:%M%p').lstrip('0').lower()}"
-                    ),
-                    "Matchup": f"{prediction['away_team']} at {prediction['home_team']}",
-                    "Model score": (
-                        f"{prediction['away_team']} {float(prediction['predicted_away_score']):.1f} · "
-                        f"{prediction['home_team']} {float(prediction['predicted_home_score']):.1f}"
-                    ),
-                    "Projected line": f"{favorite} -{abs(margin):.1f}",
-                    "Total": f"{float(prediction['predicted_total']):.1f}",
-                    "Home win": format_probability(prediction["home_win_probability"]),
-                }
-            )
         st.markdown(
             f"""
-            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">First immutable production run</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
+            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · independent football model</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
             <div class="grid-results">
               <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Margin model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["margin"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
@@ -1448,11 +1555,10 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             """,
             unsafe_allow_html=True,
         )
-        st.markdown(
-            '<div class="grid-mobile-hint">Swipe sideways to see every forecast column.</div>',
-            unsafe_allow_html=True,
-        )
-        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+        for index, prediction in enumerate(
+            sorted(predictions, key=lambda game: game["start_date"])
+        ):
+            render_cfb_game_row(prediction, index)
         st.caption(
             "Independent football-model forecasts recorded before kickoff. Sportsbook lines are "
             "not model inputs. Wide residual uncertainty remains, especially before teams play."

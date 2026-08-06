@@ -21,4 +21,5 @@ def test_phone_layout_has_touch_navigation_and_compact_game_cards() -> None:
 def test_phone_rankings_and_forecast_table_avoid_page_overflow() -> None:
     assert ".grid-rank-track { grid-column: 2 / 4; }" in APP_SOURCE
     assert '[data-testid="stDataFrame"] { max-width: 100%; overflow: hidden; }' in APP_SOURCE
-    assert "Swipe sideways to see every forecast column." in APP_SOURCE
+    assert '[class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"]' in APP_SOURCE
+    assert "render_cfb_featured_game(featured)" in APP_SOURCE
