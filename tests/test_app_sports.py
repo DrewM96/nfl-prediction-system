@@ -19,6 +19,7 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("2026 Week 1 Forecasts" in markdown.value for markdown in app.markdown)
     assert any("Featured CFB matchup" in markdown.value for markdown in app.markdown)
     assert any("North Carolina" in markdown.value for markdown in app.markdown)
+    assert any("North Carolina logo" in markdown.value for markdown in app.markdown)
     assert any("Home win" in markdown.value for markdown in app.markdown)
 
     navigation = next(radio for radio in app.radio if radio.label == "Navigate")
@@ -27,8 +28,9 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.error
     assert not app.exception
     assert any("College Football Top 30" in markdown.value for markdown in app.markdown)
-    assert any("This is not the AP poll" in caption.value for caption in app.caption)
+    assert any("GRIDLINE scores every scheduled" in caption.value for caption in app.caption)
     assert any("scheduled FBS games" in markdown.value for markdown in app.markdown)
+    assert any("Ohio State logo" in markdown.value for markdown in app.markdown)
 
 
 def test_power_rankings_default_to_latest_market_consensus() -> None:
@@ -42,6 +44,7 @@ def test_power_rankings_default_to_latest_market_consensus() -> None:
     assert not app.exception
     assert any("Market-implied points" in markdown.value for markdown in app.markdown)
     assert any("Los Angeles Rams" in markdown.value for markdown in app.markdown)
+    assert any("Los Angeles Rams logo" in markdown.value for markdown in app.markdown)
     assert any("QB returns" in markdown.value for markdown in app.markdown)
     assert any("Weeks 1-4 totals model" in caption.value for caption in app.caption)
 

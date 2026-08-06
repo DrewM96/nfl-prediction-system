@@ -23,3 +23,20 @@ def test_phone_rankings_and_forecast_table_avoid_page_overflow() -> None:
     assert '[data-testid="stDataFrame"] { max-width: 100%; overflow: hidden; }' in APP_SOURCE
     assert '[class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"]' in APP_SOURCE
     assert "render_cfb_featured_game(featured)" in APP_SOURCE
+    assert ".grid-team-logo--hero" in APP_SOURCE
+    assert ".grid-team-logo--rank" in APP_SOURCE
+
+
+def test_application_copy_uses_direct_forecast_language() -> None:
+    defensive_phrases = (
+        "paper analysis",
+        "not betting advice",
+        "not financial advice",
+        "provisional",
+        "preseason limitation",
+        "This is not the AP poll",
+    )
+
+    assert all(phrase.lower() not in APP_SOURCE.lower() for phrase in defensive_phrases)
+    assert "Model forecasts · market context" in APP_SOURCE
+    assert "Forecasts ready" in APP_SOURCE
