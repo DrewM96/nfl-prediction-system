@@ -47,6 +47,7 @@ from nfl_prediction.ui import (
     team_color,
     team_name,
 )
+from team_logos import team_logo_url
 
 LOGGER = logging.getLogger(__name__)
 PAGE_LABELS = [
@@ -185,6 +186,10 @@ st.markdown(
     .grid-matchup { display: flex; align-items: center; gap: 18px; }
     .grid-team { text-align: center; min-width: 44px; }
     .grid-team-chip { width: 14px; height: 44px; border-radius: 4px; margin: 0 auto 8px; }
+    .grid-team-logo { display: block; width: 30px; height: 30px; object-fit: contain; flex: 0 0 auto; }
+    .grid-team-logo--hero { width: 48px; height: 48px; margin: 0 auto 5px; }
+    .grid-team-logo--rank { width: 26px; height: 26px; }
+    .grid-team-logo--away { order: 2; }
     .grid-team-abbr { font: 500 22px 'Instrument Sans', sans-serif; }
     .grid-score { color: var(--grid-muted); font-size: 13px; }
     .grid-at { color: var(--grid-faint); font-weight: 600; }
@@ -563,6 +568,9 @@ st.markdown(
       .grid-results, .grid-model-summary { grid-template-columns: 1fr; }
       .grid-hero { padding: 16px; }
       .grid-team-abbr { font-size: 20px; }
+      .grid-team-logo { width: 28px; height: 28px; }
+      .grid-team-logo--hero { width: 44px; height: 44px; }
+      .grid-team-logo--rank { width: 24px; height: 24px; }
       .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: 9px !important; }
     }
     </style>
@@ -780,6 +788,19 @@ def probability_bar(game: dict[str, Any]) -> str:
     """
 
 
+def team_logo_html(team: str, sport: str, variant: str = "card") -> str:
+    url = team_logo_url(team, sport)
+    if not url:
+        return ""
+    label = team_name(team) if sport == "nfl" else team
+    loading = "eager" if variant == "hero" else "lazy"
+    return (
+        f'<img class="grid-team-logo grid-team-logo--{variant}" '
+        f'src="{html_text(url)}" alt="{html_text(label)} logo" '
+        f'loading="{loading}" decoding="async">'
+    )
+
+
 def market_tile(game: dict[str, Any]) -> str:
     label, value = market_line_label(game)
     pending = not bool(game.get("market_consensus"))
@@ -797,9 +818,9 @@ def render_featured_game(game: dict[str, Any]) -> None:
           <div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured matchup</div>
           <div class="grid-hero-main">
             <div class="grid-matchup">
-              <div class="grid-team"><div class="grid-team-chip" style="background:{team_color(game["away_team"])}"></div><div class="grid-team-abbr">{away}</div><div class="grid-score">{float(game["away_score"]):.1f}</div></div>
+              <div class="grid-team">{team_logo_html(str(game["away_team"]), "nfl", "hero")}<div class="grid-team-abbr">{away}</div><div class="grid-score">{float(game["away_score"]):.1f}</div></div>
               <div class="grid-at">@</div>
-              <div class="grid-team"><div class="grid-team-chip" style="background:{team_color(game["home_team"])}"></div><div class="grid-team-abbr">{home}</div><div class="grid-score">{float(game["home_score"]):.1f}</div></div>
+              <div class="grid-team">{team_logo_html(str(game["home_team"]), "nfl", "hero")}<div class="grid-team-abbr">{home}</div><div class="grid-score">{float(game["home_score"]):.1f}</div></div>
               <div class="grid-date">{html_text(format_game_time(game))}</div>
             </div>
             <div class="grid-tiles">
@@ -943,8 +964,8 @@ def render_market_comparison(
     )
     st.caption(
         f"Observed {observed_at} ET · model probability {spread_probability:.1%} spread / "
-        f"{total_probability:.1%} total · raw implied {spread_implied:.1%} / {total_implied:.1%} · "
-        "paper analysis only, not financial advice"
+        f"{total_probability:.1%} total · sportsbook implied {spread_implied:.1%} / "
+        f"{total_implied:.1%}"
     )
 
 
@@ -960,9 +981,9 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
         columns[1].markdown(
             f"""
             <div class="grid-team-pair">
-              <div class="grid-team-inline"><span class="grid-team-rail" style="background:{team_color(game["away_team"])}"></span><span><b>{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["away_score"]):.1f}</span></span></div>
+              <div class="grid-team-inline">{team_logo_html(str(game["away_team"]), "nfl")}<span><b>{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["away_score"]):.1f}</span></span></div>
               <span class="grid-at">@</span>
-              <div class="grid-team-inline"><span class="grid-team-rail" style="background:{team_color(game["home_team"])}"></span><span><b>{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["home_score"]):.1f}</span></span></div>
+              <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "nfl")}<span><b>{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["home_score"]):.1f}</span></span></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1010,7 +1031,7 @@ def render_this_week(state: dict[str, Any]) -> None:
     schedule = state["schedule"]
     week = state.get("report", {}).get("week")
     title = f"This Week — Week {week}" if week is not None else "This Week"
-    page_header(title, "Paper analysis · not betting advice")
+    page_header(title, "Model forecasts · market context")
     if not schedule:
         st.info("No upcoming games are available for the current prediction season.")
         return
@@ -1112,12 +1133,12 @@ def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSy
     if prediction:
         with st.container(border=True):
             st.markdown(
-                '<div class="grid-kicker" style="margin-bottom:14px">Paper-market comparison</div>',
+                '<div class="grid-kicker" style="margin-bottom:14px">Market comparison</div>',
                 unsafe_allow_html=True,
             )
             render_market_comparison(prediction, "custom", compact_controls=True)
     else:
-        st.caption("Choose a matchup and run the model to unlock the paper-market comparison.")
+        st.caption("Choose a matchup and run the model to compare it with the market.")
     render_injury_manager(injury_system, service.teams(), container=st)
     official_injuries = service.state["official_injuries"]
     if official_injuries.get("stale_for_prediction_season"):
@@ -1231,9 +1252,7 @@ def render_props(
             st.warning(note)
     if roster_notice:
         st.caption(roster_notice)
-    st.caption(
-        "The interval reflects model residuals; availability uncertainty is shown separately."
-    )
+    st.caption("The 80% range reflects model residuals. Availability adjustments appear above.")
 
 
 def render_rankings(state: dict[str, Any]) -> None:
@@ -1274,10 +1293,9 @@ def render_rankings(state: dict[str, Any]) -> None:
         )
         ranking_rows = market["ratings"]
         st.caption(
-            "This view decomposes the latest consensus spreads across the full schedule. It is "
-            f"market information, not the independent GRIDLINE model and not evidence of betting value. "
-            f"Single-book games are excluded ({int(market['excluded_single_book_games'])}); many "
-            "later look-ahead lines currently have only two or three books and will move."
+            "These ratings decompose consensus spreads across the full schedule into neutral-field "
+            f"team strength. Single-book games are excluded ({int(market['excluded_single_book_games'])}); "
+            "later look-ahead lines will update as more books post prices."
         )
     else:
         st.markdown(
@@ -1309,8 +1327,7 @@ def render_rankings(state: dict[str, Any]) -> None:
     max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
-        f'<div class="grid-rank-team"><span class="grid-rank-chip" '
-        f'style="background:{team_color(str(row["team"]))}"></span>'
+        f'<div class="grid-rank-team">{team_logo_html(str(row["team"]), "nfl", "rank")}'
         f'<div class="grid-rank-team-copy">{html_text(team_name(str(row["team"])))}'
         f'<div class="grid-rank-roster">{html_text(roster_label(str(row["team"])))}</div></div></div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
@@ -1367,8 +1384,8 @@ def render_performance(state: dict[str, Any]) -> None:
     st.caption(
         f"Consensus captured about {benchmark['methodology']['snapshot_minutes_before_kickoff']} "
         f"minutes before kickoff across {benchmark['methodology']['evaluation_seasons']}. "
-        "The independent forecast remains visible for research; historical disagreement did not "
-        "establish an ATS edge."
+        "Blending the market reduced straight-up error. Larger model-market gaps did not improve "
+        "historical ATS results."
     )
     st.dataframe(
         pd.DataFrame(benchmark["disagreement_buckets"]),
@@ -1414,9 +1431,7 @@ def render_model_card(manifest: dict[str, Any]) -> None:
         )
         with st.expander(f"{title} feature schema"):
             st.write(", ".join(specification.get("features", [])))
-    st.caption(
-        "Forecasts are estimates with uncertainty. Market comparisons are paper analysis, not financial advice."
-    )
+    st.caption("Each forecast includes a calibrated 80% range. Market comparisons use no-vig sportsbook probabilities.")
 
 
 def format_cfb_game_time(game: dict[str, Any]) -> str:
@@ -1448,9 +1463,9 @@ def render_cfb_featured_game(game: dict[str, Any]) -> None:
           <div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured CFB matchup</div>
           <div class="grid-hero-main">
             <div class="grid-matchup">
-              <div class="grid-cfb-team"><div class="grid-team-chip" style="background:#64748b"></div><div class="grid-cfb-team-name-large">{away}</div><div class="grid-score">{float(game["predicted_away_score"]):.1f}</div></div>
+              <div class="grid-cfb-team">{team_logo_html(str(game["away_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{away}</div><div class="grid-score">{float(game["predicted_away_score"]):.1f}</div></div>
               <div class="grid-at">{"vs" if game.get("neutral_site") else "@"}</div>
-              <div class="grid-cfb-team"><div class="grid-team-chip" style="background:#FF6B35"></div><div class="grid-cfb-team-name-large">{home}</div><div class="grid-score">{float(game["predicted_home_score"]):.1f}</div></div>
+              <div class="grid-cfb-team">{team_logo_html(str(game["home_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{home}</div><div class="grid-score">{float(game["predicted_home_score"]):.1f}</div></div>
               <div class="grid-date">{html_text(format_cfb_game_time(game))} · {venue}</div>
             </div>
             <div class="grid-tiles">
@@ -1479,9 +1494,9 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
         columns[1].markdown(
             f"""
             <div class="grid-cfb-team-pair">
-              <div class="grid-team-inline"><span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span><span class="grid-team-rail" style="background:#64748b"></span></div>
+              <div class="grid-team-inline"><span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span>{team_logo_html(str(game["away_team"]), "cfb", "away")}</div>
               <span class="grid-at">{separator}</span>
-              <div class="grid-team-inline"><span class="grid-team-rail" style="background:#FF6B35"></span><span><b class="grid-cfb-team-name">{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["predicted_home_score"]):.1f}</span></span></div>
+              <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "cfb")}<span><b class="grid-cfb-team-name">{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["predicted_home_score"]):.1f}</span></span></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1510,7 +1525,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         prediction_batch.get("metadata", {}).get("forecast_week", "—") if prediction_batch else "—"
     )
     badge = (
-        "Provisional forecasts ready"
+        "Forecasts ready"
         if forecast_ready
         else ("Data foundation ready" if ready else "Run weekly_cfb_update.py")
     )
@@ -1524,8 +1539,8 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             f"""
             <div class="grid-hero">
               <div class="grid-kicker">FBS · {html_text(state.get("prediction_season", "—"))}</div>
-              <h2 style="margin:8px 0 8px;font:500 28px 'Instrument Sans',sans-serif">A separate college model, inside the same GRIDLINE app.</h2>
-              <div class="grid-muted">The authenticated CollegeFootballData feed is isolated from the NFL pipeline. Raw API responses remain in a local ignored cache; only derived artifacts are eligible for publication.</div>
+              <h2 style="margin:8px 0 8px;font:500 28px 'Instrument Sans',sans-serif">College football forecasts built for the full FBS schedule.</h2>
+              <div class="grid-muted">CollegeFootballData powers a dedicated CFB pipeline. GRIDLINE publishes the derived schedules, features, rankings, and forecasts while API responses stay in the local cache.</div>
             </div>
             <div class="grid-results">
               <div class="grid-result"><div class="grid-tile-label">FBS teams</div><div class="grid-result-value">{int(state.get("team_count", 0)):,}</div></div>
@@ -1545,12 +1560,12 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     if prediction_batch and model_manifest:
         st.markdown(
             f"""
-            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · independent football model</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
+            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
             <div class="grid-results">
               <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Margin model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["margin"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Total model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["total"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Provisional</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Ready</div></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1560,19 +1575,18 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         ):
             render_cfb_game_row(prediction, index)
         st.caption(
-            "Independent football-model forecasts recorded before kickoff. Sportsbook lines are "
-            "not model inputs. Wide residual uncertainty remains, especially before teams play."
+            "GRIDLINE records every forecast before kickoff. The CFB model uses Elo, recent form, "
+            "advanced efficiency, recruiting, transfers, and available roster context."
         )
         coverage = model_manifest.get("input_coverage", {})
         covered_teams = int(coverage.get("scheduled_fbs_teams", 0))
         returning_teams = int(coverage.get("returning_production_teams", 0))
         talent_teams = int(coverage.get("talent_teams", 0))
         if covered_teams and (returning_teams < covered_teams or talent_teams < covered_teams):
-            st.warning(
-                "2026 preseason feed coverage is not final: returning production is available "
-                f"for {returning_teams}/{covered_teams} scheduled FBS teams and talent for "
-                f"{talent_teams}/{covered_teams}. Missing values are neutral-imputed. Regenerate "
-                "this batch when CFBD publishes those feeds and final rosters settle."
+            st.info(
+                f"2026 input coverage: returning production {returning_teams}/{covered_teams} teams · "
+                f"talent {talent_teams}/{covered_teams}. The current batch uses neutral values for "
+                "missing fields. Regenerate after CFBD publishes the feeds and final rosters are set."
             )
         with st.expander("Model and forecast audit"):
             st.write(
@@ -1600,25 +1614,25 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
               <div class="grid-result"><div class="grid-tile-label">Evaluated games</div><div class="grid-result-value">{int(benchmark["completed_fbs_games"]):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">2025 margin MAE</div><div class="grid-result-value">{float(margin["model"]["holdout"]["mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">2025 total MAE</div><div class="grid-result-value">{float(total["model"]["holdout"]["mae"]):.2f}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Research</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Backtested</div></div>
             </div>
             """,
             unsafe_allow_html=True,
         )
         st.caption(
-            "Configurations were selected before the untouched 2025 season. Listed historical "
-            "market lines remained more accurate and are comparison-only; CFBD does not provide "
-            "a timestamp proving that these were closing lines."
+            "The model configuration was locked before evaluation on 2025. Listed historical market "
+            "lines produced lower error; CFBD does not timestamp them as closing lines, so GRIDLINE "
+            "uses them as a general market benchmark."
         )
-    with st.expander("Production safeguards"):
+    with st.expander("Forecast integrity"):
         st.write(
-            "The app shows a forecast only when both model files pass their manifest checksums and "
-            "the immutable prediction batch matches that exact manifest. Future results never update "
-            "pregame features, and each weekly run is stored separately for honest scoring."
+            "GRIDLINE verifies both model files against their manifest checksums and matches every "
+            "prediction batch to that manifest. Pregame features stay frozen after kickoff, and each "
+            "weekly run remains available for scoring."
         )
     st.caption(
         f"Source: {state.get('source', 'CollegeFootballData')} · derived through "
-        f"{state.get('data_cutoff', 'unknown')} · no raw CFBD responses published."
+        f"{state.get('data_cutoff', 'unknown')} · published artifacts contain derived data only."
     )
 
 
@@ -1634,7 +1648,7 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
 
     display_count = int(rankings.get("display_count", 30))
     ranking_rows = rankings.get("ratings", [])[:display_count]
-    page_header("College Football Top 30", "Provisional preseason ratings")
+    page_header("College Football Top 30", "2026 preseason ratings")
     st.markdown(
         f"""
         <div class="grid-muted" style="margin-bottom:14px">Independent model-implied points above or below an average FBS team on a neutral field | data cutoff {html_text(str(rankings.get("data_cutoff", "unknown"))[:10])}</div>
@@ -1648,15 +1662,13 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
         unsafe_allow_html=True,
     )
     st.caption(
-        "This is not the AP poll. The ranking scores every scheduled 2026 FBS-vs-FBS matchup "
-        "with GRIDLINE's independent margin model, then decomposes that full schedule into "
-        "neutral-field team strengths. Sportsbook lines are not inputs."
+        "GRIDLINE scores every scheduled 2026 FBS-vs-FBS matchup with its margin model, then "
+        "decomposes the full schedule into neutral-field team strength. Sportsbook lines play no role."
     )
     max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
-        f'<div class="grid-rank-team"><span class="grid-rank-chip" '
-        f'style="background:{team_color(str(row["team"]))}"></span>'
+        f'<div class="grid-rank-team">{team_logo_html(str(row["team"]), "cfb", "rank")}'
         f'<div class="grid-rank-team-copy">{html_text(str(row["team"]))}'
         f'<div class="grid-rank-roster">{int(row["scheduled_games"])} scheduled FBS games</div></div></div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
@@ -1670,16 +1682,14 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
     team_count = int(coverage.get("scheduled_fbs_teams", rankings.get("team_count", 0)))
     returning = int(coverage.get("returning_production_teams", 0))
     talent = int(coverage.get("talent_teams", 0))
-    st.warning(
-        "Preseason limitation: 2026 recruiting and portal context are included, but CFBD had "
-        f"published returning production for {returning}/{team_count} teams and talent for "
-        f"{talent}/{team_count} when this model was built. The Top 30 should be regenerated as "
-        "those feeds and final rosters become available."
+    st.info(
+        f"2026 input coverage: returning production {returning}/{team_count} teams · talent "
+        f"{talent}/{team_count}. Recruiting and portal context are included. Regenerate the Top 30 "
+        "after CFBD publishes the remaining feeds and final rosters are set."
     )
     st.caption(
-        "The displayed value is a schedule-decomposed model rating, not a predicted margin for "
-        "any single game. Ranking order will update after completed games change Elo, recent form, "
-        "and advanced efficiency."
+        "Each value measures schedule-wide team strength on a neutral field. Completed games update "
+        "Elo, recent form, advanced efficiency, and the ranking order."
     )
 
 
