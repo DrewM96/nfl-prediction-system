@@ -82,6 +82,7 @@ st.markdown(
       font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
       color: var(--grid-ink);
     }
+    *, *::before, *::after { box-sizing: border-box; }
     .stApp { background: #ffffff; }
     [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stSidebarCollapsedControl"] {
       display: none !important;
@@ -99,7 +100,8 @@ st.markdown(
       position: sticky;
       top: 0;
       z-index: 50;
-      width: 100vw;
+      width: 100dvw;
+      max-width: 100dvw;
       margin: -16px 0 0 calc(50% - 50vw);
       padding: 18px 32px;
       background: rgba(255,255,255,.97);
@@ -281,6 +283,7 @@ st.markdown(
     .grid-ghost-chart { opacity: .35; pointer-events: none; padding-top: 14px; }
     .grid-ghost-row { display: grid; grid-template-columns: 54px 1fr; align-items: center; gap: 12px; margin: 12px 0; color: var(--grid-muted); font-size: 11px; }
     .grid-ghost-bar { height: 14px; border-radius: 7px; background: #cbd5e1; }
+    .grid-mobile-hint { display: none; }
     .grid-topbar, .grid-page-head, .grid-hero, .grid-card, .grid-results,
     .grid-model-summary, .grid-model-card, .grid-market-grid, .grid-prop-panel {
       line-height: normal;
@@ -365,7 +368,7 @@ st.markdown(
       color: white;
     }
     div[data-testid="stRadio"] label > div:first-child { display: none; }
-    .st-key-active_screen {
+    .st-key-active_screen, .st-key-cfb_active_screen {
       position: fixed;
       z-index: 1000;
       left: 0;
@@ -379,9 +382,15 @@ st.markdown(
       background: rgba(255,255,255,.98);
       border-top: 1px solid var(--grid-border);
     }
-    .st-key-active_screen > div { width: 100% !important; }
-    .st-key-active_screen [role="radiogroup"] { display: grid; grid-template-columns: repeat(6,1fr); width: 100%; gap: 0 !important; }
-    .st-key-active_screen label {
+    .st-key-active_screen > div, .st-key-cfb_active_screen > div { width: 100% !important; }
+    .st-key-active_screen [role="radiogroup"], .st-key-cfb_active_screen [role="radiogroup"] {
+      display: grid;
+      width: 100%;
+      gap: 0 !important;
+    }
+    .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(6,1fr); }
+    .st-key-cfb_active_screen [role="radiogroup"] { grid-template-columns: repeat(2,1fr); }
+    .st-key-active_screen label, .st-key-cfb_active_screen label {
       min-height: 46px;
       padding: 5px 4px !important;
       justify-content: center;
@@ -393,16 +402,16 @@ st.markdown(
       color: var(--grid-faint) !important;
       font-size: 11px;
     }
-    .st-key-active_screen label::before {
+    .st-key-active_screen label::before, .st-key-cfb_active_screen label::before {
       content: '';
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: #cbd5e1;
     }
-    .st-key-active_screen label:has(input:checked) { color: var(--grid-ink) !important; }
-    .st-key-active_screen label:has(input:checked)::before { background: var(--grid-orange); }
-    .st-key-active_screen label p {
+    .st-key-active_screen label:has(input:checked), .st-key-cfb_active_screen label:has(input:checked) { color: var(--grid-ink) !important; }
+    .st-key-active_screen label:has(input:checked)::before, .st-key-cfb_active_screen label:has(input:checked)::before { background: var(--grid-orange); }
+    .st-key-active_screen label p, .st-key-cfb_active_screen label p {
       margin: 0 !important;
       color: inherit !important;
       font-size: 11px !important;
@@ -412,7 +421,13 @@ st.markdown(
     .grid-muted { color: var(--grid-faint); font-size: 12px; }
     .grid-positive { color: #16a34a; }
     @media (max-width: 760px) {
-      [data-testid="stMainBlockContainer"], .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
+      [data-testid="stMainBlockContainer"], .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        padding-bottom: 8.5rem !important;
+      }
+      [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
+      .block-container:has(.st-key-cfb_active_screen) { padding-bottom: 5.5rem !important; }
       .grid-topbar { padding: 14px 16px; }
       .grid-topbar-inner { align-items: flex-start; }
       .grid-eyebrow, .grid-meta { display: none; }
@@ -422,9 +437,50 @@ st.markdown(
       .grid-tiles, .grid-results, .grid-model-summary { grid-template-columns: repeat(2,1fr); }
       .grid-market-grid, .grid-prop-panel { grid-template-columns: 1fr; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
-      .grid-rank-row { grid-template-columns: 26px 190px 1fr 44px; gap: 8px; }
-      .st-key-active_screen label { padding: 6px 2px !important; font-size: 9px; }
-      .st-key-active_screen label p { font-size: 9px !important; white-space: nowrap; }
+      .grid-rank-row { grid-template-columns: 26px minmax(0,1fr) 46px; gap: 6px 8px; padding: 12px 0; }
+      .grid-rank-track { grid-column: 2 / 4; }
+      .grid-rank-roster { white-space: normal; overflow-wrap: anywhere; }
+      .grid-rank-value { grid-column: 3; grid-row: 1; }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] {
+        display: grid !important;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 8px 6px !important;
+      }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div {
+        width: auto !important;
+        min-width: 0 !important;
+      }
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1),
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2),
+      [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 1 / -1; }
+      [class*="st-key-toggle_game_"] button { min-height: 40px !important; height: 40px !important; }
+      .grid-team-pair { justify-content: center; }
+      .st-key-active_screen label, .st-key-cfb_active_screen label { min-height: 52px; padding: 6px 2px !important; font-size: 10px; }
+      .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: 10px !important; white-space: nowrap; }
+      div[data-testid="stButton"] button, div[data-testid="stFormSubmitButton"] button { min-height: 44px; }
+      [data-testid="stDataFrame"] { max-width: 100%; overflow: hidden; }
+      .grid-mobile-hint { display: block; margin: 4px 0 8px; color: var(--grid-muted); font-size: 12px; }
+    }
+    @media (max-width: 520px) {
+      .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(3,1fr); }
+      .grid-page-head { gap: 10px; }
+      .grid-badge { max-width: 145px; }
+      .grid-hero-main { display: block; }
+      .grid-matchup { justify-content: center; }
+      .grid-hero-main .grid-tiles { margin-top: 18px; }
+      .grid-date { display: block; margin: 8px 0 0; text-align: center; }
+      .grid-card { padding: 18px 16px; }
+      .st-key-custom_game_shell [data-testid="stVerticalBlockBorderWrapper"],
+      .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] { padding: 18px !important; }
+    }
+    @media (max-width: 380px) {
+      [data-testid="stMainBlockContainer"], .block-container { padding-left: .75rem !important; padding-right: .75rem !important; }
+      .grid-topbar { padding-left: 12px; padding-right: 12px; }
+      .grid-page-head { flex-direction: column; align-items: stretch; }
+      .grid-badge { max-width: none; text-align: left; }
+      .grid-results, .grid-model-summary { grid-template-columns: 1fr; }
+      .grid-hero { padding: 16px; }
+      .grid-team-abbr { font-size: 20px; }
     }
     </style>
     """,
@@ -1355,6 +1411,10 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
               <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Provisional</div></div>
             </div>
             """,
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            '<div class="grid-mobile-hint">Swipe sideways to see every forecast column.</div>',
             unsafe_allow_html=True,
         )
         st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
