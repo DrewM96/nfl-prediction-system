@@ -25,6 +25,9 @@ def test_phone_rankings_and_forecast_table_avoid_page_overflow() -> None:
     assert "render_cfb_featured_game(featured)" in APP_SOURCE
     assert ".grid-team-logo--hero" in APP_SOURCE
     assert ".grid-team-logo--rank" in APP_SOURCE
+    assert ".grid-team-inline {" in APP_SOURCE
+    assert "flex-direction: column;" in APP_SOURCE
+    assert "grid-team-logo--away" not in APP_SOURCE
 
 
 def test_application_copy_uses_direct_forecast_language() -> None:
