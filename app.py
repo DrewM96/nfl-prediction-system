@@ -1438,7 +1438,9 @@ def render_model_card(manifest: dict[str, Any]) -> None:
         )
         with st.expander(f"{title} feature schema"):
             st.write(", ".join(specification.get("features", [])))
-    st.caption("Each forecast includes a calibrated 80% range. Market comparisons use no-vig sportsbook probabilities.")
+    st.caption(
+        "Each forecast includes a calibrated 80% range. Market comparisons use no-vig sportsbook probabilities."
+    )
 
 
 def format_cfb_game_time(game: dict[str, Any]) -> str:

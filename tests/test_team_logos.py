@@ -9,9 +9,7 @@ from team_logos import team_logo_url
 
 def test_logo_registry_covers_current_nfl_and_fbs_teams() -> None:
     registry = json.loads(Path("data/team_logos.json").read_text(encoding="utf-8"))
-    rankings = json.loads(
-        Path("data/cfb/power_rankings.json").read_text(encoding="utf-8")
-    )
+    rankings = json.loads(Path("data/cfb/power_rankings.json").read_text(encoding="utf-8"))
 
     assert set(registry["nfl"]) == set(TEAM_NAMES)
     assert len(registry["cfb"]) == 138
