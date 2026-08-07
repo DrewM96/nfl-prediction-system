@@ -276,6 +276,7 @@ st.markdown(
       background: #fff;
     }
     .grid-results { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .grid-cfb-forecast-summary { margin-bottom: 18px; }
     .grid-result {
       padding: 12px;
       text-align: center;
@@ -508,7 +509,8 @@ st.markdown(
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] {
         display: grid !important;
         grid-template-columns: repeat(3,minmax(0,1fr));
-        gap: 8px 6px !important;
+        column-gap: 6px !important;
+        row-gap: 14px !important;
       }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div {
         width: auto !important;
@@ -523,6 +525,9 @@ st.markdown(
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1),
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) {
+        padding: 4px 0 6px;
+      }
       [class*="st-key-toggle_game_"] button { min-height: 40px !important; height: 40px !important; }
       .grid-team-pair { justify-content: center; }
       .grid-game-detail { grid-template-columns: 1fr; gap: 20px; margin-top: 12px; padding-top: 18px; }
@@ -1570,7 +1575,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         st.markdown(
             f"""
             <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
-            <div class="grid-results">
+            <div class="grid-results grid-cfb-forecast-summary">
               <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Margin model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["margin"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Total model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["total"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
