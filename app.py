@@ -189,7 +189,6 @@ st.markdown(
     .grid-team-logo { display: block; width: 30px; height: 30px; object-fit: contain; flex: 0 0 auto; }
     .grid-team-logo--hero { width: 48px; height: 48px; margin: 0 auto 5px; }
     .grid-team-logo--rank { width: 26px; height: 26px; }
-    .grid-team-logo--away { order: 2; }
     .grid-team-abbr { font: 500 22px 'Instrument Sans', sans-serif; }
     .grid-score { color: var(--grid-muted); font-size: 13px; }
     .grid-at { color: var(--grid-faint); font-weight: 600; }
@@ -217,7 +216,15 @@ st.markdown(
     .grid-prob-track { display: flex; height: 8px; overflow: hidden; border-radius: 4px; background: var(--grid-border); }
     .grid-prob-away { height: 100%; background: #94a3b8; }
     .grid-prob-home { height: 100%; background: var(--grid-orange); }
-    .grid-team-inline { display: flex; align-items: center; gap: 9px; }
+    .grid-team-inline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3px;
+      min-width: 48px;
+      text-align: center;
+    }
     .grid-team-rail { width: 6px; height: 34px; border-radius: 2px; flex: 0 0 auto; }
     .grid-team-pair { display: flex; align-items: center; gap: 8px; }
     .grid-cfb-team-pair {
@@ -227,7 +234,7 @@ st.markdown(
       gap: 10px;
     }
     .grid-cfb-team-pair .grid-team-inline { min-width: 0; }
-    .grid-cfb-team-pair .grid-team-inline:first-child { justify-content: flex-end; text-align: right; }
+    .grid-cfb-team-pair .grid-team-inline:first-child { text-align: center; }
     .grid-cfb-team-name { line-height: 1.2; overflow-wrap: anywhere; }
     .grid-cfb-team { width: min(150px, 38vw); text-align: center; }
     .grid-cfb-team-name-large { font: 500 18px/1.15 'Instrument Sans', sans-serif; overflow-wrap: anywhere; }
@@ -1494,7 +1501,7 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
         columns[1].markdown(
             f"""
             <div class="grid-cfb-team-pair">
-              <div class="grid-team-inline"><span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span>{team_logo_html(str(game["away_team"]), "cfb", "away")}</div>
+              <div class="grid-team-inline">{team_logo_html(str(game["away_team"]), "cfb")}<span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span></div>
               <span class="grid-at">{separator}</span>
               <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "cfb")}<span><b class="grid-cfb-team-name">{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["predicted_home_score"]):.1f}</span></span></div>
             </div>
