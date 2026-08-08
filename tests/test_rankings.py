@@ -47,3 +47,31 @@ def test_published_market_snapshot_produces_full_league_ranking() -> None:
     assert result["median_book_count"] >= 2
     assert result["line_fit_mae"] < 1.0
     assert min(row["games"] for row in result["ratings"]) >= 15
+
+
+def test_market_ratings_remove_home_field_for_known_neutral_matchup() -> None:
+    strengths = {"A": 4.0, "B": 1.0, "C": -1.0, "D": -4.0}
+    games = []
+    for first, second in itertools.combinations(strengths, 2):
+        for home, away in ((first, second), (second, first)):
+            home_field = 0.0 if (away, home) == ("B", "A") else 2.0
+            games.append(
+                {
+                    "home_team": home,
+                    "away_team": away,
+                    "spread": {
+                        "market_home_margin": strengths[home] - strengths[away] + home_field,
+                        "book_count": 10,
+                    },
+                }
+            )
+
+    result = build_market_power_ratings(
+        {"games": games},
+        neutral_matchups={("B", "A")},
+    )
+
+    assert result is not None
+    assert result["home_field_points"] == pytest.approx(2.0)
+    ratings = {row["team"]: row["rating"] for row in result["ratings"]}
+    assert ratings == pytest.approx(strengths)

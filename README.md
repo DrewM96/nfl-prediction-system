@@ -10,7 +10,9 @@ The current application is configured for the 2026 season. It loads the upcoming
 - Book-level responses stay in ignored `data/market_private/` storage. The public `market_consensus.json` contains only median lines, prices, book counts, and dispersion.
 - Sportsbook team names map to nflverse team codes, and home spreads are converted exactly once (`-6` becomes an expected home margin of `+6`).
 - Snapshots after kickoff, snapshots from the future relative to a replay, and snapshots more than eight days before kickoff are rejected.
-- Weekly predictions retain the independent model output and add a separately labeled market-consensus benchmark. No unvalidated blend is presented as a model improvement.
+- Weeks 1-4 use a decaying preseason calibration derived from consensus-implied neutral-field
+  team strength. The independent football forecast remains attached to every game for comparison
+  and separate scoring; roster continuity remains limited to totals, where it improved validation.
 - Power Rankings provide two explicit views: a latest market-implied neutral-field rating inferred
   from the full consensus schedule, and a football-only recent-form score frozen at the latest
   completed-game cutoff. The market ranking is not presented as an independent model.
@@ -127,7 +129,7 @@ python historical_market_benchmark.py \
 
 The guarded pilot is 14 snapshots and 280 credits for 32 games. The full matching 2023–2025 OOF period is 334 snapshots and 6,680 credits for 723 eligible games. Exact team/game records and all provider responses remain under ignored `data/market_private/`; only an aggregate report containing errors, learned weights, season splits, coverage, and disagreement buckets may be published.
 
-The completed 723-game benchmark selected a 100% market weight for future margin and total forecasts. Margin MAE was 10.383 for the independent model, 9.618 for consensus, and 9.648 for the prequential blend. Total MAE was 10.536, 10.172, and 10.199 respectively. The result supports consensus as the tighter market-informed forecast while retaining the independent model as a research signal; it does not support claiming that disagreement is a betting edge.
+The completed 723-game benchmark selected a 100% market weight for future margin and total forecasts. Margin MAE was 10.383 for the independent model, 9.618 for consensus, and 9.648 for the prequential blend. Total MAE was 10.536, 10.172, and 10.199 respectively. The result supports consensus as the tighter market-informed forecast while retaining the independent model as a research signal; it does not support claiming that disagreement is a betting edge. The production Week 1 margin uses the schedule-wide market-strength decomposition rather than copying a single game's line, then tapers that prior to 75%, 50%, 25%, and 0% in Weeks 2-5.
 
 ## Evaluation policy
 

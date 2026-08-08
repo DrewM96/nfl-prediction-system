@@ -365,8 +365,8 @@ def attach_market_consensus(
         if (
             market is None
             or snapshot_at > knowledge_time
+            or knowledge_time - snapshot_at > max_age
             or (kickoff is not None and snapshot_at >= kickoff)
-            or (kickoff is not None and kickoff - snapshot_at > max_age)
         ):
             prediction["market_consensus"] = None
             prediction["market_informed"] = None

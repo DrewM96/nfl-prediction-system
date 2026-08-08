@@ -32,6 +32,7 @@ from nfl_prediction.market import (
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus
+from nfl_prediction.preseason import apply_preseason_calibration
 from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
@@ -39,6 +40,7 @@ from nfl_prediction.ui import (
     format_american,
     format_game_time,
     format_probability,
+    game_matchup_separator,
     game_reasoning,
     html_text,
     market_line_label,
@@ -600,6 +602,7 @@ def load_models() -> tuple[dict[str, FittedEnsemble], dict[str, Any]]:
 def load_state() -> dict[str, Any]:
     market = read_json(PROJECT_ROOT / "market_consensus.json")
     schedule = attach_market_consensus(read_json(PROJECT_ROOT / "weekly_schedule.json", []), market)
+    schedule = apply_preseason_calibration(schedule, market)
     return {
         "teams": read_json(PROJECT_ROOT / "team_data.json", {}),
         "qb": read_json(PROJECT_ROOT / "qb_data.json", {}),
@@ -754,8 +757,12 @@ class PredictionService:
             "total_p10": round(max(total["p10"], 0.0), 1),
             "total_p90": round(max(total["p90"], 0.0), 1),
             "method": "schema-v3 walk-forward ensemble",
+            "week": int(week),
+            "neutral_site": bool(neutral_site),
+            "features": {key: float(value) for key, value in features.iloc[0].items()},
         }
-        return attach_market_consensus([prediction], self.state.get("market"))[0]
+        enriched = attach_market_consensus([prediction], self.state.get("market"))
+        return apply_preseason_calibration(enriched, self.state.get("market"))[0]
 
     def predict_player(self, model_name: str, player: dict[str, Any]) -> dict[str, float]:
         distribution = self.models[model_name].distribution(pd.DataFrame([player]))[0]
@@ -831,7 +838,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
           <div class="grid-hero-main">
             <div class="grid-matchup">
               <div class="grid-team">{team_logo_html(str(game["away_team"]), "nfl", "hero")}<div class="grid-team-abbr">{away}</div><div class="grid-score">{float(game["away_score"]):.1f}</div></div>
-              <div class="grid-at">@</div>
+              <div class="grid-at">{game_matchup_separator(game)}</div>
               <div class="grid-team">{team_logo_html(str(game["home_team"]), "nfl", "hero")}<div class="grid-team-abbr">{home}</div><div class="grid-score">{float(game["home_score"]):.1f}</div></div>
               <div class="grid-date">{html_text(format_game_time(game))}</div>
             </div>
@@ -939,7 +946,8 @@ def render_market_comparison(
         st.error("American odds cannot be zero. Enter a positive or negative price.")
         return
 
-    predicted_margin = float(game["predicted_home_margin"])
+    football = game.get("football_only") or {}
+    predicted_margin = float(football.get("home_margin", game["predicted_home_margin"]))
     margin_std = max(float(game["margin_std"]), 0.01)
     home_cover = home_cover_probability(predicted_margin, float(home_line), margin_std)
     if home_cover >= 0.5:
@@ -954,7 +962,8 @@ def render_market_comparison(
         _, spread_fair = no_vig_probabilities(home_spread_price, away_spread_price)
 
     total_std = max(float(game["total_std"]), 0.01)
-    over = over_probability(float(game["total"]), market_total, total_std)
+    football_total = float(football.get("total", game["total"]))
+    over = over_probability(football_total, market_total, total_std)
     total_side = "Over" if over >= 0.5 else "Under"
     total_probability = max(over, 1.0 - over)
     if over >= 0.5:
@@ -968,8 +977,8 @@ def render_market_comparison(
     st.markdown(
         f"""
         <div class="grid-market-grid">
-          <div class="grid-market-card"><div><div class="grid-muted">Model spread side</div><div class="grid-market-value">{html_text(spread_side)}</div></div><div class="grid-edge-spread">{spread_probability - spread_fair:+.1%} vs no-vig</div></div>
-          <div class="grid-market-card"><div><div class="grid-muted">Model total side</div><div class="grid-market-value">{html_text(total_side)} {float(market_total):.1f}</div></div><div class="grid-edge-total">{total_probability - total_fair:+.1%} vs no-vig</div></div>
+          <div class="grid-market-card"><div><div class="grid-muted">Independent spread side</div><div class="grid-market-value">{html_text(spread_side)}</div></div><div class="grid-edge-spread">{spread_probability - spread_fair:+.1%} vs no-vig</div></div>
+          <div class="grid-market-card"><div><div class="grid-muted">Independent total side</div><div class="grid-market-value">{html_text(total_side)} {float(market_total):.1f}</div></div><div class="grid-edge-total">{total_probability - total_fair:+.1%} vs no-vig</div></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -994,7 +1003,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
             f"""
             <div class="grid-team-pair">
               <div class="grid-team-inline">{team_logo_html(str(game["away_team"]), "nfl")}<span><b>{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["away_score"]):.1f}</span></span></div>
-              <span class="grid-at">@</span>
+              <span class="grid-at">{game_matchup_separator(game)}</span>
               <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "nfl")}<span><b>{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["home_score"]):.1f}</span></span></div>
             </div>
             """,
@@ -1024,6 +1033,20 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
                 f'<div class="grid-reason"><span>›</span><div>{html_text(reason)}</div></div>'
                 for reason in game_reasoning(game)
             )
+            football = game.get("football_only") or {}
+            basis = ""
+            if football:
+                football_game = {
+                    **game,
+                    "predicted_home_margin": football["home_margin"],
+                }
+                calibration = game.get("preseason_calibration") or {}
+                basis = (
+                    '<div class="grid-detail-range">Forecast basis: '
+                    f"<b>{html_text(spread_label(game))}</b> calibrated · "
+                    f"{html_text(spread_label(football_game))} football-only · "
+                    f"{float(calibration.get('weight', 0.0)):.0%} preseason weight</div>"
+                )
             detail_html = (
                 '<div class="grid-game-detail"><section>'
                 '<div class="grid-kicker">Why the model leans this way</div>'
@@ -1031,6 +1054,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
                 '<div class="grid-kicker">Win probability</div>'
                 f"{probability_bar(game).strip()}"
                 f'<div class="grid-detail-range">80% total range: <b>{float(game["total_p10"]):.1f}–{float(game["total_p90"]):.1f}</b></div>'
+                f"{basis}"
                 f"{market_tile(game).replace('grid-tile', 'grid-placeholder', 1).strip()}"
                 "</section></div>"
             )
@@ -1043,7 +1067,7 @@ def render_this_week(state: dict[str, Any]) -> None:
     schedule = state["schedule"]
     week = state.get("report", {}).get("week")
     title = f"This Week — Week {week}" if week is not None else "This Week"
-    page_header(title, "Model forecasts · market context")
+    page_header(title, "Calibrated forecast · independent comparison")
     if not schedule:
         st.info("No upcoming games are available for the current prediction season.")
         return
@@ -1269,7 +1293,16 @@ def render_props(
 
 def render_rankings(state: dict[str, Any]) -> None:
     page_header("Power Rankings")
-    market = build_market_power_ratings(state.get("market"))
+    neutral_matchups = {
+        (str(game.get("away_team", "")), str(game.get("home_team", "")))
+        for game in state.get("schedule", [])
+        if game.get("neutral_site")
+        or not float((game.get("features") or {}).get("home_field", 1.0))
+    }
+    market = build_market_power_ratings(
+        state.get("market"),
+        neutral_matchups=neutral_matchups,
+    )
     football = build_football_form_ratings(state["teams"])
     choices = (
         ["Latest market consensus", "2025 football form"] if market else ["2025 football form"]

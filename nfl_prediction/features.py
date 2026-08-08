@@ -408,6 +408,8 @@ def build_point_in_time_game_features(
                 "gametime": str(game.get("gametime", "")),
                 "home_team": home,
                 "away_team": away,
+                "neutral_site": neutral,
+                "stadium": str(game.get("stadium", "")),
                 "home_rest_days": float(home_rest),
                 "away_rest_days": float(away_rest),
                 "rest_advantage": float(home_rest - away_rest),

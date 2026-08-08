@@ -134,7 +134,21 @@ def format_game_time(game: dict[str, Any]) -> str:
         )
     except ValueError:
         time_text = raw_time
-    return f"{date_text} {time_text}".strip()
+    result = f"{date_text} {time_text}".strip()
+    neutral = game.get("neutral_site") or not float(
+        (game.get("features") or {}).get("home_field", 1.0)
+    )
+    if neutral:
+        stadium = str(game.get("stadium") or "").strip()
+        return f"{result} · {stadium or 'neutral site'}"
+    return result
+
+
+def game_matchup_separator(game: dict[str, Any]) -> str:
+    neutral = game.get("neutral_site") or not float(
+        (game.get("features") or {}).get("home_field", 1.0)
+    )
+    return "vs" if neutral else "@"
 
 
 def game_reasoning(game: dict[str, Any]) -> list[str]:
@@ -142,6 +156,15 @@ def game_reasoning(game: dict[str, Any]) -> list[str]:
     home = str(game.get("home_team", "Home"))
     away = str(game.get("away_team", "Away"))
     lines: list[str] = []
+
+    calibration = game.get("preseason_calibration") or {}
+    if float(calibration.get("weight", 0.0)):
+        prior_margin = float(calibration["prior_home_margin"])
+        leader = home if prior_margin >= 0 else away
+        lines.append(
+            f"Preseason consensus strength rates {leader} {abs(prior_margin):.1f} points better "
+            "for this venue."
+        )
 
     home_net_epa = float(features.get("home_off_epa_l4", 0.0)) - float(
         features.get("home_def_epa_l4", 0.0)

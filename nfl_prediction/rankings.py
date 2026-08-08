@@ -5,7 +5,11 @@ from typing import Any
 import numpy as np
 
 
-def build_market_power_ratings(snapshot: dict[str, Any] | None) -> dict[str, Any] | None:
+def build_market_power_ratings(
+    snapshot: dict[str, Any] | None,
+    *,
+    neutral_matchups: set[tuple[str, str]] | None = None,
+) -> dict[str, Any] | None:
     """Infer zero-sum neutral-field team ratings from consensus spreads.
 
     The final coefficient estimates the shared home-field edge. Team coefficients
@@ -15,6 +19,7 @@ def build_market_power_ratings(snapshot: dict[str, Any] | None) -> dict[str, Any
     if not snapshot:
         return None
     games: list[dict[str, Any]] = []
+    neutral_matchups = neutral_matchups or set()
     single_book_games = 0
     for game in snapshot.get("games", []):
         spread = game.get("spread") or {}
@@ -37,6 +42,9 @@ def build_market_power_ratings(snapshot: dict[str, Any] | None) -> dict[str, Any
                 "margin": margin,
                 "book_count": book_count,
                 "line_iqr": float(spread.get("line_iqr") or 0.0),
+                "home_field": float(
+                    not (game.get("neutral_site") or (away, home) in neutral_matchups)
+                ),
             }
         )
     teams = sorted({game["home"] for game in games} | {game["away"] for game in games})
@@ -50,7 +58,7 @@ def build_market_power_ratings(snapshot: dict[str, Any] | None) -> dict[str, Any
     for row, game in enumerate(games):
         design[row, team_index[game["home"]]] = 1.0
         design[row, team_index[game["away"]]] = -1.0
-        design[row, -1] = 1.0
+        design[row, -1] = game["home_field"]
     weighted_design = design * weights[:, None]
     if np.linalg.matrix_rank(weighted_design) < len(teams):
         return None

@@ -26,6 +26,7 @@ from .io import atomic_write_json, sha256_file
 from .ledger import PredictionLedger
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import attach_market_consensus, load_market_consensus
+from .preseason import apply_preseason_calibration
 
 
 @dataclass
@@ -469,6 +470,8 @@ def _predict_upcoming_games(
                 "gametime": str(game.get("gametime", "TBD")),
                 "home_team": str(game["home_team"]),
                 "away_team": str(game["away_team"]),
+                "neutral_site": bool(game.get("neutral_site", not bool(game["home_field"]))),
+                "stadium": str(game.get("stadium", "")),
                 "home_score": round(max(predicted_home, 0.0), 1),
                 "away_score": round(max(predicted_away, 0.0), 1),
                 "predicted_home_margin": round(margin["mean"], 2),
@@ -516,6 +519,18 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
                     == (actual_margin > 0),
                     **(
                         {
+                            "football_margin_absolute_error": abs(
+                                float(prediction["football_only"]["home_margin"]) - actual_margin
+                            ),
+                            "football_total_absolute_error": abs(
+                                float(prediction["football_only"]["total"]) - actual_total
+                            ),
+                        }
+                        if prediction.get("football_only")
+                        else {}
+                    ),
+                    **(
+                        {
                             "market_margin_absolute_error": abs(
                                 prediction["market_informed"]["home_margin"] - actual_margin
                             ),
@@ -534,6 +549,7 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
             ledger.score_batch(payload["run_id"], scored)
         if scored:
             market_rows = [row for row in scored if "market_margin_absolute_error" in row]
+            football_rows = [row for row in scored if "football_margin_absolute_error" in row]
             summaries.append(
                 {
                     "run_id": payload["run_id"],
@@ -541,6 +557,22 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
                     "margin_mae": float(np.mean([row["margin_absolute_error"] for row in scored])),
                     "total_mae": float(np.mean([row["total_absolute_error"] for row in scored])),
                     "winner_accuracy": float(np.mean([row["winner_correct"] for row in scored])),
+                    "football_margin_mae": (
+                        float(
+                            np.mean(
+                                [row["football_margin_absolute_error"] for row in football_rows]
+                            )
+                        )
+                        if football_rows
+                        else None
+                    ),
+                    "football_total_mae": (
+                        float(
+                            np.mean([row["football_total_absolute_error"] for row in football_rows])
+                        )
+                        if football_rows
+                        else None
+                    ),
                     "market_games": len(market_rows),
                     "market_margin_mae": (
                         float(np.mean([row["market_margin_absolute_error"] for row in market_rows]))
@@ -665,7 +697,19 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         next_week = int(current_season["week"].min())
         upcoming = current_season[current_season["week"].eq(next_week)]
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
-    predictions = attach_market_consensus(predictions, load_market_consensus(), as_of=now)
+    market_snapshot = load_market_consensus()
+    predictions = attach_market_consensus(predictions, market_snapshot, as_of=now)
+    current_schedule = data.schedules[data.schedules["season"].eq(context.prediction_season)]
+    neutral_matchups = {
+        (str(game["away_team"]), str(game["home_team"]))
+        for _, game in current_schedule.iterrows()
+        if str(game.get("location", "Home")).lower() == "neutral"
+    }
+    predictions = apply_preseason_calibration(
+        predictions,
+        market_snapshot,
+        neutral_matchups=neutral_matchups,
+    )
 
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
