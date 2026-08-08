@@ -113,6 +113,18 @@ def test_attach_market_rejects_stale_or_post_kickoff_snapshots() -> None:
     assert after_kickoff["market_consensus"] is None
 
 
+def test_attach_market_accepts_fresh_lookahead_lines_more_than_eight_days_out() -> None:
+    consensus = build_consensus(_fetch(), regions="us", markets=("spreads", "totals"))
+    prediction = [{"away_team": "NYJ", "home_team": "BUF"}]
+    attached = attach_market_consensus(
+        prediction,
+        consensus,
+        as_of=datetime(2026, 9, 11, 16, tzinfo=UTC),
+    )[0]
+
+    assert attached["market_line"] == -3.75
+
+
 def test_private_store_is_immutable_and_consensus_is_sanitized(tmp_path) -> None:
     fetch = _fetch()
     consensus = build_consensus(fetch, regions="us", markets=("spreads", "totals"))

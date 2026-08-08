@@ -51,7 +51,7 @@ For model benchmarking, use `historical_market_benchmark.py` or the `Historical 
 
 The application stops when the schema-v3 manifest is missing, malformed, or fails a model checksum. It never substitutes a generic score. The header displays model creation date and training cutoff. Official injuries are labeled stale and are not applied when their available season differs from the prediction season.
 
-Market data fails open: an unavailable, future, stale, or post-kickoff snapshot is omitted while the independent forecast remains available. The app displays the provider timestamp and dispersion whenever consensus is used.
+Market data fails open: an unavailable, future, older-than-eight-days, or post-kickoff snapshot is omitted while the independent forecast remains available. Fresh look-ahead lines can be attached before the final eight days; freshness is measured from capture time, not distance to kickoff. The app displays the provider timestamp and dispersion whenever consensus is used.
 
 ## Incident response
 

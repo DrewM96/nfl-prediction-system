@@ -31,7 +31,12 @@ The feature builder also derives point-in-time success rate, early-down EPA, exp
 
 Prediction intervals use the standard deviation of chronological residuals. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
 
-The football model is independent of sportsbook lines. When a fresh market snapshot is available, the application also shows the consensus spread and total as a separate benchmark. It does not blend that line into the model until a chronological historical test demonstrates that a learned blend improves genuinely unseen games.
+The football model remains independent of sportsbook lines and is stored on every prediction.
+During Weeks 1-4, the primary margin forecast also uses a preseason calibration: current
+consensus spreads across the full schedule are decomposed into neutral-field team ratings and a
+shared home-field value, known neutral games receive no home boost, and that prior decays from
+100% to 25% before reaching zero in Week 5. The game-specific consensus spread and total remain
+separate benchmarks, so the independent model can still be compared and scored without circularity.
 
 Historical comparison uses a nested chronology. Candidate football models train on earlier games; their weekly component weights use only earlier out-of-fold residuals; the model/market weight then uses only earlier matched market weeks. A line captured after kickoff is rejected. This prevents a closing-line benchmark or blend weight from leaking information backward into its own evaluation.
 
@@ -56,7 +61,9 @@ Required release checks:
 
 - The game model does not yet consume timestamped weather, travel distance, confirmed current-week quarterback announcements, or coaching continuity. Its roster signal observes whether the prior primary quarterback remains on the opening roster, not whether that player is guaranteed to start.
 - The added quarterback continuity statistic observes only prior primary passers. It does not assume that a retrospective starter field or an un-timestamped depth chart was known before kickoff.
-- Live market history is collected separately but is not yet a trained input. A useful market residual/blend model requires multiple seasons of paid historical snapshots and walk-forward proof.
+- The 723-game market benchmark uses lines captured near kickoff. It supports market calibration
+  generally, but it is not a dedicated multi-season test of months-ahead schedule-wide ratings.
+  Calibrated and football-only errors must therefore remain separately monitored.
 - Current preseason player membership uses nflverse's seasonal roster until the new weekly roster feed becomes available. Offseason rosters remain fluid until final cuts, so the updater must be rerun before Week 1.
 - Snap counts do not measure routes or pass-block/run-block assignments; they are participation signals.
 - Residual distributions are simplified and can understate correlated injury or quarterback uncertainty.

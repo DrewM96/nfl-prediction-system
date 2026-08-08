@@ -44,5 +44,5 @@ def test_application_copy_uses_direct_forecast_language() -> None:
     )
 
     assert all(phrase.lower() not in APP_SOURCE.lower() for phrase in defensive_phrases)
-    assert "Model forecasts · market context" in APP_SOURCE
+    assert "Calibrated forecast · independent comparison" in APP_SOURCE
     assert "Forecasts ready" in APP_SOURCE
