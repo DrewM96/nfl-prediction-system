@@ -226,8 +226,10 @@ python cfb_historical_benchmark.py \
 alternatives, and development/holdout results without raw games.
 
 The first production bundle fits those fixed schemas on all completed 2018-2025 FBS-vs-FBS
-games and records 51 Week 1 forecasts from an August 1, 2026 cutoff. Generate the earliest
-upcoming week, or intentionally select another week, with:
+games and records 51 Week 1 forecasts from an August 1, 2026 cutoff. The August 30 refresh keeps
+that immutable batch, updates the latest pointer to the 43 remaining Week 1 games, and adds the
+published preseason feeds. Generate the earliest upcoming week, or intentionally select another
+week, with:
 
 ```bash
 python cfb_production_update.py --season 2026
@@ -242,9 +244,9 @@ or below an average FBS team on a neutral field. It is an independent model rati
 AP-style poll, and sportsbook lines are not ranking inputs. The independent forecast model
 does not consume sportsbook lines. Forecasts remain labeled provisional because the margin
 residual standard deviation is roughly 16 points and early-season roster inputs retain the
-timing limitations described in the model documentation. As of the first August 1 run, CFBD's
-2026 returning-production and team-talent feeds were empty; those features are visibly reported
-as neutral-imputed until a later refresh supplies them.
+timing limitations described in the model documentation. The August 30 run covers all 138 teams
+for talent and 136 for returning production; North Dakota State and Sacramento State retain
+neutral returning-production values.
 
 See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and production safeguards.
 

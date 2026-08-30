@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Callable
+from datetime import timedelta
 from typing import Any
 
 import pandas as pd
@@ -33,9 +34,10 @@ def _optional_season(
     normalizer: Callable[[Any], pd.DataFrame],
     *,
     refresh: bool,
+    max_age: timedelta,
 ) -> pd.DataFrame:
     try:
-        return normalizer(client.get(endpoint, params=params, refresh=refresh))
+        return normalizer(client.get(endpoint, params=params, refresh=refresh, max_age=max_age))
     except CFBDApiError as exc:
         LOGGER.warning("Optional CFBD endpoint %s failed for %s: %s", endpoint, params, exc)
         return pd.DataFrame()
@@ -46,6 +48,7 @@ def load_historical_data(
     seasons: list[int],
     *,
     refresh: bool = False,
+    max_age: timedelta = timedelta(hours=6),
 ) -> CFBHistoricalData:
     """Load cached season-level data with games and advanced stats required."""
     games: list[pd.DataFrame] = []
@@ -60,12 +63,22 @@ def load_historical_data(
         common = {"year": season, "seasonType": "regular"}
         games.append(
             normalize_games(
-                client.get("/games", params={**common, "classification": "fbs"}, refresh=refresh)
+                client.get(
+                    "/games",
+                    params={**common, "classification": "fbs"},
+                    refresh=refresh,
+                    max_age=max_age,
+                )
             )
         )
         advanced.append(
             normalize_advanced_game_stats(
-                client.get("/stats/game/advanced", params=common, refresh=refresh)
+                client.get(
+                    "/stats/game/advanced",
+                    params=common,
+                    refresh=refresh,
+                    max_age=max_age,
+                )
             )
         )
         returning.append(
@@ -75,6 +88,7 @@ def load_historical_data(
                 {"year": season},
                 normalize_returning_production,
                 refresh=refresh,
+                max_age=max_age,
             )
         )
         portal.append(
@@ -84,6 +98,7 @@ def load_historical_data(
                 {"year": season},
                 normalize_portal,
                 refresh=refresh,
+                max_age=max_age,
             )
         )
         talent.append(
@@ -93,6 +108,7 @@ def load_historical_data(
                 {"year": season},
                 normalize_talent,
                 refresh=refresh,
+                max_age=max_age,
             )
         )
         recruiting.append(
@@ -102,6 +118,7 @@ def load_historical_data(
                 {"year": season},
                 normalize_recruiting,
                 refresh=refresh,
+                max_age=max_age,
             )
         )
         lines.append(
@@ -111,6 +128,7 @@ def load_historical_data(
                 common,
                 normalize_lines,
                 refresh=refresh,
+                max_age=max_age,
             )
         )
 

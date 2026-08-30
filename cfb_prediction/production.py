@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -134,12 +134,21 @@ def run_cfb_production_update(
     )
     if not completed_seasons:
         raise ValueError("At least one completed historical season is required")
-    parts = [load_historical_data(active_client, completed_seasons, refresh=False)]
+    parts = [
+        load_historical_data(
+            active_client,
+            completed_seasons,
+            refresh=False,
+            max_age=timedelta(days=3650),
+        )
+    ]
     parts.append(load_historical_data(active_client, [prediction_season], refresh=refresh_current))
     data = _cut_off_results(_combine(parts), timestamp)
     features = build_point_in_time_features(data, include_scheduled=True)
     training = features[
-        features["completed"].fillna(False) & features["start_date"].le(pd.Timestamp(timestamp))
+        features["season"].lt(prediction_season)
+        & features["completed"].fillna(False)
+        & features["start_date"].le(pd.Timestamp(timestamp))
     ].copy()
     all_scheduled = features[
         features["season"].eq(prediction_season)

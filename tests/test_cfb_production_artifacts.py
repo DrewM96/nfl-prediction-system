@@ -21,9 +21,9 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
     assert batch["metadata"]["market_data_used"] is False
     assert batch["metadata"]["provisional"] is True
     assert batch["metadata"]["input_coverage"] == manifest["input_coverage"]
-    assert manifest["input_coverage"]["returning_production_teams"] == 0
-    assert manifest["input_coverage"]["talent_teams"] == 0
-    assert len(batch["predictions"]) == 51
+    assert manifest["input_coverage"]["returning_production_teams"] == 136
+    assert manifest["input_coverage"]["talent_teams"] == 138
+    assert len(batch["predictions"]) == 43
     cutoff = datetime.fromisoformat(batch["data_cutoff"])
     assert all(datetime.fromisoformat(row["start_date"]) > cutoff for row in batch["predictions"])
 

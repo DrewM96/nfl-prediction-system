@@ -50,8 +50,9 @@ derived outputs and declare whether raw provider data is published.
 
 The first schema-v1 production bundle was fitted from the fixed selected configurations on all
 completed 2018-2025 FBS-vs-FBS games. Its August 1, 2026 immutable Week 1 batch contains 51
-games. The app displays it only after verifying both estimator checksums and the batch's exact
-manifest hash.
+games. The August 30 refresh preserves that batch and publishes 43 forecasts for the remaining
+Week 1 schedule. The app displays the latest batch only after verifying both estimator checksums
+and the batch's exact manifest hash.
 
 The production path:
 
@@ -69,9 +70,10 @@ more accurate. These are probabilistic estimates, not betting recommendations or
 edge.
 
 At the August 1 cutoff, CFBD had not populated 2026 returning-production or team-talent records.
-The first batch therefore neutral-imputes those inputs while retaining available recruiting and
-portal context. This coverage is recorded in both the model manifest and prediction metadata and
-shown as a warning in the app. Refresh the batch after those feeds and final rosters are available.
+The August 30 refresh supplies talent for all 138 teams and returning production for 136 while
+retaining available recruiting and portal context. North Dakota State and Sacramento State are
+the only neutral-imputed returning-production records. Coverage is recorded in both the model
+manifest and prediction metadata and shown in the app.
 
 The next stage is weekly result scoring, in-season refresh automation, coaching-change and
 garbage-time ablations, and a rankings/performance view built from immutable runs.
