@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "sport": "college_football",
-  "created_at": "2026-08-01T22:29:48.101609+00:00",
+  "created_at": "2026-08-30T17:55:02.611540+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2018,
@@ -13,18 +13,18 @@
     2024,
     2025
   ],
-  "data_cutoff": "2026-08-01T22:29:40.572006+00:00",
+  "data_cutoff": "2026-08-30T17:54:56.415164+00:00",
   "selected_configurations": {
     "margin": "elo_form_advanced_preseason",
     "total": "elo_form_advanced"
   },
   "input_coverage": {
     "scheduled_fbs_teams": 138,
-    "returning_production_teams": 0,
-    "talent_teams": 0,
+    "returning_production_teams": 136,
+    "talent_teams": 138,
     "recruiting_teams": 138,
-    "portal_records": 4434,
-    "completed_games": 0
+    "portal_records": 4470,
+    "completed_games": 8
   },
   "benchmark_sha256": "5763b54e5921d7558a771436fa2835aa1483a3d8c2f43f1166953b98f1999883",
   "git_commit": null,

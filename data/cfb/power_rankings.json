@@ -2,854 +2,854 @@
   "schema_version": 1,
   "sport": "college_football",
   "kind": "independent_model_schedule_decomposition",
-  "created_at": "2026-08-01T22:29:40.572006+00:00",
+  "created_at": "2026-08-30T17:54:56.415164+00:00",
   "prediction_season": 2026,
-  "data_cutoff": "2026-08-01T22:29:40.572006+00:00",
-  "model_hash": "58dd25e9622d482fe0950909f4add6000eda080b0f95eec18e6620cf3a1e68b3",
+  "data_cutoff": "2026-08-30T17:54:56.415164+00:00",
+  "model_hash": "7ff594162ff989e855abe82c7655c9a9538022c752efaeb434fba549044a65bf",
   "display_count": 30,
   "team_count": 138,
-  "game_count": 761,
-  "home_field_points": 3.6394023423852344,
-  "incremental_home_field_points": 1.4881758817463542,
-  "designated_home_bias": 2.1512264606388802,
-  "line_fit_mae": 1.2029638042137702,
-  "line_fit_rmse": 1.4985550202242577,
+  "game_count": 753,
+  "home_field_points": 3.6170801170977067,
+  "incremental_home_field_points": 2.2292378554746204,
+  "designated_home_bias": 1.3878422616230863,
+  "line_fit_mae": 1.132908226781533,
+  "line_fit_rmse": 1.4294077905358606,
   "ridge_strength": 0.25,
   "input_coverage": {
     "scheduled_fbs_teams": 138,
-    "returning_production_teams": 0,
-    "talent_teams": 0,
+    "returning_production_teams": 136,
+    "talent_teams": 138,
     "recruiting_teams": 138,
-    "portal_records": 4434,
-    "completed_games": 0
+    "portal_records": 4470,
+    "completed_games": 8
   },
   "ratings": [
     {
       "rank": 1,
       "team": "Ohio State",
-      "rating": 17.9579552669476,
+      "rating": 22.750379518954798,
       "scheduled_games": 12
     },
     {
       "rank": 2,
       "team": "Oregon",
-      "rating": 16.88950127382146,
+      "rating": 22.372413087897623,
       "scheduled_games": 11
     },
     {
       "rank": 3,
-      "team": "Notre Dame",
-      "rating": 16.770798698664738,
-      "scheduled_games": 12
-    },
-    {
-      "rank": 4,
       "team": "Georgia",
-      "rating": 16.284945155476517,
+      "rating": 20.93289628217008,
       "scheduled_games": 11
     },
     {
+      "rank": 4,
+      "team": "Notre Dame",
+      "rating": 20.60475310499193,
+      "scheduled_games": 12
+    },
+    {
       "rank": 5,
-      "team": "Indiana",
-      "rating": 15.250700730501093,
+      "team": "Texas Tech",
+      "rating": 16.7402749194283,
       "scheduled_games": 11
     },
     {
       "rank": 6,
-      "team": "Texas Tech",
-      "rating": 14.949977591794637,
+      "team": "Texas A&M",
+      "rating": 16.704467798952532,
       "scheduled_games": 11
     },
     {
       "rank": 7,
-      "team": "Miami",
-      "rating": 12.934227413510973,
+      "team": "USC",
+      "rating": 16.31052260871937,
       "scheduled_games": 11
     },
     {
       "rank": 8,
-      "team": "Texas A&M",
-      "rating": 12.318365948234792,
-      "scheduled_games": 11
+      "team": "Texas",
+      "rating": 16.177319646698134,
+      "scheduled_games": 12
     },
     {
       "rank": 9,
-      "team": "Alabama",
-      "rating": 11.63210013112759,
+      "team": "Miami",
+      "rating": 15.836110336681037,
       "scheduled_games": 11
     },
     {
       "rank": 10,
-      "team": "Texas",
-      "rating": 11.394243704712352,
-      "scheduled_games": 12
+      "team": "Indiana",
+      "rating": 15.120947163032126,
+      "scheduled_games": 11
     },
     {
       "rank": 11,
-      "team": "USC",
-      "rating": 10.826460430831014,
-      "scheduled_games": 12
+      "team": "Alabama",
+      "rating": 14.95443307464809,
+      "scheduled_games": 11
     },
     {
       "rank": 12,
-      "team": "Vanderbilt",
-      "rating": 10.318993564734633,
+      "team": "Ole Miss",
+      "rating": 12.02417234284372,
       "scheduled_games": 11
     },
     {
       "rank": 13,
-      "team": "Ole Miss",
-      "rating": 9.71336116822178,
-      "scheduled_games": 11
+      "team": "Michigan",
+      "rating": 12.005683372449285,
+      "scheduled_games": 12
     },
     {
       "rank": 14,
       "team": "Washington",
-      "rating": 9.541691406700636,
+      "rating": 11.540829916151457,
       "scheduled_games": 11
     },
     {
       "rank": 15,
-      "team": "James Madison",
-      "rating": 9.292080234705557,
-      "scheduled_games": 11
+      "team": "Oklahoma",
+      "rating": 11.28894573787334,
+      "scheduled_games": 12
     },
     {
       "rank": 16,
-      "team": "BYU",
-      "rating": 9.007384449863622,
+      "team": "Tennessee",
+      "rating": 10.564949689343104,
       "scheduled_games": 11
     },
     {
       "rank": 17,
-      "team": "Utah",
-      "rating": 8.977768104827001,
+      "team": "Vanderbilt",
+      "rating": 10.39646103812294,
       "scheduled_games": 11
     },
     {
       "rank": 18,
-      "team": "Iowa",
-      "rating": 8.777409911242353,
+      "team": "BYU",
+      "rating": 10.111329795794859,
       "scheduled_games": 11
     },
     {
       "rank": 19,
-      "team": "Oklahoma",
-      "rating": 8.639280887999151,
-      "scheduled_games": 12
+      "team": "Utah",
+      "rating": 9.96253531873414,
+      "scheduled_games": 11
     },
     {
       "rank": 20,
-      "team": "Tennessee",
-      "rating": 8.273248049024629,
+      "team": "SMU",
+      "rating": 9.457897124176583,
       "scheduled_games": 11
     },
     {
       "rank": 21,
-      "team": "Michigan",
-      "rating": 8.270950770707666,
-      "scheduled_games": 12
+      "team": "Clemson",
+      "rating": 9.37325563912893,
+      "scheduled_games": 11
     },
     {
       "rank": 22,
-      "team": "SMU",
-      "rating": 7.800931488052446,
+      "team": "Iowa",
+      "rating": 9.278256435780902,
       "scheduled_games": 11
     },
     {
       "rank": 23,
-      "team": "Arizona",
-      "rating": 6.838668382200774,
+      "team": "South Carolina",
+      "rating": 8.672010742233716,
       "scheduled_games": 11
     },
     {
       "rank": 24,
-      "team": "Louisville",
-      "rating": 6.731150792953759,
+      "team": "LSU",
+      "rating": 8.524948918196722,
       "scheduled_games": 11
     },
     {
       "rank": 25,
-      "team": "Clemson",
-      "rating": 6.713308967620884,
+      "team": "Arizona",
+      "rating": 7.97868504596474,
       "scheduled_games": 11
     },
     {
       "rank": 26,
-      "team": "Penn State",
-      "rating": 6.583904255748127,
-      "scheduled_games": 12
+      "team": "Louisville",
+      "rating": 7.256035893912053,
+      "scheduled_games": 11
     },
     {
       "rank": 27,
-      "team": "LSU",
-      "rating": 6.1330356721567085,
+      "team": "James Madison",
+      "rating": 7.060272904646054,
       "scheduled_games": 11
     },
     {
       "rank": 28,
-      "team": "South Carolina",
-      "rating": 5.633986937948705,
-      "scheduled_games": 11
+      "team": "Penn State",
+      "rating": 6.849639275435237,
+      "scheduled_games": 12
     },
     {
       "rank": 29,
       "team": "Missouri",
-      "rating": 5.297608879011788,
+      "rating": 6.566239933468935,
       "scheduled_games": 11
     },
     {
       "rank": 30,
-      "team": "South Florida",
-      "rating": 4.930281973430781,
-      "scheduled_games": 11
+      "team": "Virginia",
+      "rating": 5.90189304061756,
+      "scheduled_games": 10
     },
     {
       "rank": 31,
-      "team": "TCU",
-      "rating": 4.84377980597202,
+      "team": "Florida",
+      "rating": 5.785030270059073,
       "scheduled_games": 11
     },
     {
       "rank": 32,
-      "team": "Illinois",
-      "rating": 4.531957569250734,
+      "team": "Kansas State",
+      "rating": 5.217277634741703,
       "scheduled_games": 11
     },
     {
       "rank": 33,
-      "team": "Georgia Tech",
-      "rating": 4.291343893761025,
+      "team": "South Florida",
+      "rating": 4.696701936473897,
       "scheduled_games": 11
     },
     {
       "rank": 34,
-      "team": "UNLV",
-      "rating": 4.132778319219674,
-      "scheduled_games": 12
+      "team": "Illinois",
+      "rating": 4.390246596273347,
+      "scheduled_games": 11
     },
     {
       "rank": 35,
-      "team": "Arizona State",
-      "rating": 3.851337504180454,
+      "team": "Georgia Tech",
+      "rating": 4.279234405522789,
       "scheduled_games": 11
     },
     {
       "rank": 36,
-      "team": "Iowa State",
-      "rating": 3.8447020156617495,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 37,
-      "team": "Tulane",
-      "rating": 3.734634779009678,
-      "scheduled_games": 12
-    },
-    {
-      "rank": 38,
-      "team": "Kansas State",
-      "rating": 3.4988640711084265,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 39,
       "team": "Boise State",
-      "rating": 3.3139293144553315,
+      "rating": 3.8578576579285904,
       "scheduled_games": 10
     },
     {
-      "rank": 40,
-      "team": "Duke",
-      "rating": 2.763246941242578,
+      "rank": 37,
+      "team": "Arizona State",
+      "rating": 3.8131551281746217,
       "scheduled_games": 11
     },
     {
+      "rank": 38,
+      "team": "Memphis",
+      "rating": 3.4441825242529087,
+      "scheduled_games": 10
+    },
+    {
+      "rank": 39,
+      "team": "Houston",
+      "rating": 3.4212628828653204,
+      "scheduled_games": 11
+    },
+    {
+      "rank": 40,
+      "team": "North Carolina",
+      "rating": 3.283800266040355,
+      "scheduled_games": 10
+    },
+    {
       "rank": 41,
-      "team": "Toledo",
-      "rating": 2.6313192160266303,
+      "team": "Auburn",
+      "rating": 3.2210322427463463,
       "scheduled_games": 11
     },
     {
       "rank": 42,
-      "team": "Pittsburgh",
-      "rating": 2.5309696452049657,
-      "scheduled_games": 11
+      "team": "Tulane",
+      "rating": 3.2143613254032704,
+      "scheduled_games": 12
     },
     {
       "rank": 43,
-      "team": "Old Dominion",
-      "rating": 2.4778616832144524,
+      "team": "Minnesota",
+      "rating": 2.6888490446004334,
       "scheduled_games": 11
     },
     {
       "rank": 44,
-      "team": "Auburn",
-      "rating": 2.202973250800204,
+      "team": "Iowa State",
+      "rating": 2.5684833709317614,
       "scheduled_games": 11
     },
     {
       "rank": 45,
-      "team": "Florida",
-      "rating": 2.1424247572936697,
+      "team": "Northwestern",
+      "rating": 2.4325519268005142,
       "scheduled_games": 11
     },
     {
       "rank": 46,
-      "team": "North Texas",
-      "rating": 2.0892825658950063,
-      "scheduled_games": 11
+      "team": "Florida State",
+      "rating": 2.4003357323134185,
+      "scheduled_games": 10
     },
     {
       "rank": 47,
-      "team": "Houston",
-      "rating": 2.0453607692946436,
+      "team": "Pittsburgh",
+      "rating": 2.3110278965672455,
       "scheduled_games": 11
     },
     {
       "rank": 48,
-      "team": "Minnesota",
-      "rating": 2.026296233074062,
+      "team": "Rutgers",
+      "rating": 2.225342097863711,
       "scheduled_games": 11
     },
     {
       "rank": 49,
-      "team": "Wake Forest",
-      "rating": 1.9616215649613091,
+      "team": "Toledo",
+      "rating": 2.2099683019931127,
       "scheduled_games": 11
     },
     {
       "rank": 50,
-      "team": "Rutgers",
-      "rating": 1.7338373963944416,
+      "team": "Nebraska",
+      "rating": 2.174199165213871,
       "scheduled_games": 11
     },
     {
       "rank": 51,
-      "team": "NC State",
-      "rating": 1.6567264566665298,
+      "team": "Duke",
+      "rating": 1.9178640368849245,
       "scheduled_games": 11
     },
     {
       "rank": 52,
-      "team": "Virginia",
-      "rating": 1.3215128499884914,
-      "scheduled_games": 11
+      "team": "Texas State",
+      "rating": 1.8734393818513222,
+      "scheduled_games": 10
     },
     {
       "rank": 53,
-      "team": "Cincinnati",
-      "rating": 1.2054983094354381,
+      "team": "Wisconsin",
+      "rating": 1.6505466757700213,
       "scheduled_games": 11
     },
     {
       "rank": 54,
-      "team": "UConn",
-      "rating": 1.0930870539889637,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 55,
-      "team": "Texas State",
-      "rating": 0.9123896520220689,
+      "team": "TCU",
+      "rating": 1.5644042639964104,
       "scheduled_games": 10
     },
     {
+      "rank": 55,
+      "team": "UTSA",
+      "rating": 1.5035518208857945,
+      "scheduled_games": 11
+    },
+    {
       "rank": 56,
-      "team": "New Mexico",
-      "rating": 0.8875701558400365,
+      "team": "UNLV",
+      "rating": 1.4663698480522316,
       "scheduled_games": 11
     },
     {
       "rank": 57,
-      "team": "Kansas",
-      "rating": 0.6758792091389706,
-      "scheduled_games": 11
+      "team": "San Diego State",
+      "rating": 1.380924662504807,
+      "scheduled_games": 10
     },
     {
       "rank": 58,
-      "team": "Wisconsin",
-      "rating": 0.6166952622002525,
+      "team": "Wake Forest",
+      "rating": 1.2396886028212781,
       "scheduled_games": 11
     },
     {
       "rank": 59,
       "team": "Western Michigan",
-      "rating": 0.5671586855511065,
+      "rating": 1.1003321713754683,
       "scheduled_games": 11
     },
     {
       "rank": 60,
-      "team": "Northwestern",
-      "rating": 0.5429501925351852,
-      "scheduled_games": 11
+      "team": "Washington State",
+      "rating": 0.8996222142792393,
+      "scheduled_games": 10
     },
     {
       "rank": 61,
-      "team": "UTSA",
-      "rating": 0.5252008811072385,
+      "team": "Baylor",
+      "rating": 0.8964967635080694,
       "scheduled_games": 11
     },
     {
       "rank": 62,
-      "team": "Navy",
-      "rating": 0.5198070473590878,
+      "team": "California",
+      "rating": 0.7495155609711036,
       "scheduled_games": 11
     },
     {
       "rank": 63,
-      "team": "Nebraska",
-      "rating": 0.20738799186480705,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 64,
-      "team": "Memphis",
-      "rating": 0.05446963102375724,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 65,
-      "team": "San Diego State",
-      "rating": 0.004475987170220798,
+      "team": "Stanford",
+      "rating": 0.48343899477754854,
       "scheduled_games": 10
     },
     {
+      "rank": 64,
+      "team": "North Dakota State",
+      "rating": 0.4565664796845785,
+      "scheduled_games": 10
+    },
+    {
+      "rank": 65,
+      "team": "Kansas",
+      "rating": 0.2785557120771382,
+      "scheduled_games": 11
+    },
+    {
       "rank": 66,
-      "team": "Ohio",
-      "rating": -0.0109157469339044,
+      "team": "Mississippi State",
+      "rating": 0.07122248772371237,
       "scheduled_games": 11
     },
     {
       "rank": 67,
-      "team": "East Carolina",
-      "rating": -0.09306485512744234,
+      "team": "New Mexico",
+      "rating": 0.01859104955153839,
       "scheduled_games": 11
     },
     {
       "rank": 68,
-      "team": "Washington State",
-      "rating": -0.26463813034000705,
-      "scheduled_games": 10
+      "team": "North Texas",
+      "rating": -0.2715895117383503,
+      "scheduled_games": 11
     },
     {
       "rank": 69,
-      "team": "Utah State",
-      "rating": -0.345018284137658,
-      "scheduled_games": 10
+      "team": "Old Dominion",
+      "rating": -0.3095599165336545,
+      "scheduled_games": 11
     },
     {
       "rank": 70,
-      "team": "Baylor",
-      "rating": -0.35308611268529344,
+      "team": "Cincinnati",
+      "rating": -0.3909022058840909,
       "scheduled_games": 11
     },
     {
       "rank": 71,
-      "team": "Arkansas",
-      "rating": -0.6234365944079109,
+      "team": "UConn",
+      "rating": -0.6389463277732975,
       "scheduled_games": 11
     },
     {
       "rank": 72,
-      "team": "Kennesaw State",
-      "rating": -0.7797615608817768,
+      "team": "Kentucky",
+      "rating": -0.644835976757211,
       "scheduled_games": 11
     },
     {
       "rank": 73,
-      "team": "Florida State",
-      "rating": -0.8406538273888341,
+      "team": "Virginia Tech",
+      "rating": -0.850254367261097,
       "scheduled_games": 11
     },
     {
       "rank": 74,
-      "team": "Jacksonville State",
-      "rating": -0.8934953452915059,
+      "team": "Western Kentucky",
+      "rating": -0.8981159914789906,
       "scheduled_games": 11
     },
     {
       "rank": 75,
-      "team": "California",
-      "rating": -0.9024626337904312,
-      "scheduled_games": 11
+      "team": "NC State",
+      "rating": -1.0803067788971694,
+      "scheduled_games": 10
     },
     {
       "rank": 76,
-      "team": "Mississippi State",
-      "rating": -1.0341658188648162,
+      "team": "Arkansas",
+      "rating": -1.1978165569485226,
       "scheduled_games": 11
     },
     {
       "rank": 77,
-      "team": "Michigan State",
-      "rating": -1.1347954226748496,
-      "scheduled_games": 12
+      "team": "Utah State",
+      "rating": -1.2713738182838537,
+      "scheduled_games": 10
     },
     {
       "rank": 78,
-      "team": "Fresno State",
-      "rating": -1.2362005459352463,
-      "scheduled_games": 11
+      "team": "UCLA",
+      "rating": -1.3998612041526635,
+      "scheduled_games": 12
     },
     {
       "rank": 79,
-      "team": "Kentucky",
-      "rating": -1.2499934581159144,
-      "scheduled_games": 11
+      "team": "Michigan State",
+      "rating": -1.5367091831838355,
+      "scheduled_games": 12
     },
     {
       "rank": 80,
-      "team": "North Carolina",
-      "rating": -1.4763719614862607,
+      "team": "East Carolina",
+      "rating": -1.5771738101913304,
       "scheduled_games": 11
     },
     {
       "rank": 81,
-      "team": "Western Kentucky",
-      "rating": -1.559446709215305,
+      "team": "Ohio",
+      "rating": -1.7932944010135705,
       "scheduled_games": 11
     },
     {
       "rank": 82,
       "team": "West Virginia",
-      "rating": -1.5639969558048197,
+      "rating": -1.826643230612385,
       "scheduled_games": 11
     },
     {
       "rank": 83,
-      "team": "Hawai'i",
-      "rating": -1.6008781058259527,
-      "scheduled_games": 12
+      "team": "Marshall",
+      "rating": -1.8302845315886567,
+      "scheduled_games": 11
     },
     {
       "rank": 84,
-      "team": "Stanford",
-      "rating": -1.6960005565284126,
+      "team": "Fresno State",
+      "rating": -1.8506912614978437,
       "scheduled_games": 11
     },
     {
       "rank": 85,
-      "team": "Boston College",
-      "rating": -1.8697251694430133,
-      "scheduled_games": 11
+      "team": "Eastern Michigan",
+      "rating": -2.036882216421573,
+      "scheduled_games": 10
     },
     {
       "rank": 86,
-      "team": "Virginia Tech",
-      "rating": -2.28468139542083,
+      "team": "Boston College",
+      "rating": -2.8490795011351344,
       "scheduled_games": 11
     },
     {
       "rank": 87,
-      "team": "Louisiana Tech",
-      "rating": -2.288549114350127,
+      "team": "Florida International",
+      "rating": -3.1481882522034277,
       "scheduled_games": 11
     },
     {
       "rank": 88,
-      "team": "Miami (OH)",
-      "rating": -2.3965257859771465,
+      "team": "Louisiana Tech",
+      "rating": -3.1844034785130786,
       "scheduled_games": 11
     },
     {
       "rank": 89,
-      "team": "Florida International",
-      "rating": -2.4306351102012416,
+      "team": "UCF",
+      "rating": -3.436098873673151,
       "scheduled_games": 11
     },
     {
       "rank": 90,
-      "team": "Troy",
-      "rating": -2.5489930599592143,
+      "team": "Louisiana",
+      "rating": -3.5164985609151933,
       "scheduled_games": 11
     },
     {
       "rank": 91,
-      "team": "Marshall",
-      "rating": -2.642217788822681,
+      "team": "Arkansas State",
+      "rating": -3.737306533888552,
       "scheduled_games": 11
     },
     {
       "rank": 92,
-      "team": "Sacramento State",
-      "rating": -2.670511640569735,
+      "team": "Troy",
+      "rating": -3.855758344994698,
       "scheduled_games": 11
     },
     {
       "rank": 93,
-      "team": "Georgia Southern",
-      "rating": -2.954984318058544,
+      "team": "Miami (OH)",
+      "rating": -4.0922808537078765,
       "scheduled_games": 11
     },
     {
       "rank": 94,
-      "team": "Arkansas State",
-      "rating": -3.002506622524064,
+      "team": "Maryland",
+      "rating": -4.249225186819523,
       "scheduled_games": 11
     },
     {
       "rank": 95,
-      "team": "North Dakota State",
-      "rating": -3.0049291358630055,
+      "team": "Kennesaw State",
+      "rating": -4.325868278028173,
       "scheduled_games": 11
     },
     {
       "rank": 96,
-      "team": "UCF",
-      "rating": -3.044790467297409,
+      "team": "Georgia Southern",
+      "rating": -4.395801857555509,
       "scheduled_games": 11
     },
     {
       "rank": 97,
-      "team": "UCLA",
-      "rating": -3.150449615405955,
-      "scheduled_games": 12
+      "team": "Liberty",
+      "rating": -4.628630795613345,
+      "scheduled_games": 11
     },
     {
       "rank": 98,
-      "team": "Liberty",
-      "rating": -3.9344860752258595,
+      "team": "Purdue",
+      "rating": -4.751713522397677,
       "scheduled_games": 11
     },
     {
       "rank": 99,
-      "team": "Central Michigan",
-      "rating": -4.143165301404366,
+      "team": "Colorado",
+      "rating": -5.010921066208163,
       "scheduled_games": 11
     },
     {
       "rank": 100,
-      "team": "Louisiana",
-      "rating": -4.221537791709799,
+      "team": "App State",
+      "rating": -5.124156948243165,
       "scheduled_games": 11
     },
     {
       "rank": 101,
-      "team": "Eastern Michigan",
-      "rating": -4.397388833276635,
+      "team": "Southern Miss",
+      "rating": -5.13526029067514,
       "scheduled_games": 11
     },
     {
       "rank": 102,
-      "team": "App State",
-      "rating": -4.598841768480455,
+      "team": "Syracuse",
+      "rating": -5.4293368113856,
       "scheduled_games": 11
     },
     {
       "rank": 103,
-      "team": "Purdue",
-      "rating": -4.841849375830598,
+      "team": "Temple",
+      "rating": -5.497471590437822,
       "scheduled_games": 11
     },
     {
       "rank": 104,
-      "team": "Maryland",
-      "rating": -4.9259546923846385,
-      "scheduled_games": 11
+      "team": "Jacksonville State",
+      "rating": -5.547883190139163,
+      "scheduled_games": 10
     },
     {
       "rank": 105,
-      "team": "Missouri State",
-      "rating": -5.133589122489317,
+      "team": "Central Michigan",
+      "rating": -5.6264554013898325,
       "scheduled_games": 11
     },
     {
       "rank": 106,
-      "team": "Temple",
-      "rating": -5.139912502460643,
+      "team": "Hawai'i",
+      "rating": -5.939885481539848,
       "scheduled_games": 11
     },
     {
       "rank": 107,
-      "team": "Colorado",
-      "rating": -5.148814436142983,
+      "team": "South Alabama",
+      "rating": -6.113868785795919,
       "scheduled_games": 11
     },
     {
       "rank": 108,
-      "team": "Southern Miss",
-      "rating": -5.804980753297655,
+      "team": "Missouri State",
+      "rating": -6.737143060996434,
       "scheduled_games": 11
     },
     {
       "rank": 109,
-      "team": "Syracuse",
-      "rating": -5.9036666996708895,
+      "team": "Navy",
+      "rating": -7.606999130232313,
       "scheduled_games": 11
     },
     {
       "rank": 110,
       "team": "Nevada",
-      "rating": -6.056404645109496,
+      "rating": -7.765572012716955,
       "scheduled_games": 11
     },
     {
       "rank": 111,
-      "team": "South Alabama",
-      "rating": -6.063074648324581,
+      "team": "Delaware",
+      "rating": -8.007247582470841,
       "scheduled_games": 11
     },
     {
       "rank": 112,
-      "team": "Buffalo",
-      "rating": -6.081537975533262,
+      "team": "Sacramento State",
+      "rating": -8.036477190640563,
       "scheduled_games": 10
     },
     {
       "rank": 113,
-      "team": "Air Force",
-      "rating": -6.349586948150483,
-      "scheduled_games": 11
+      "team": "Colorado State",
+      "rating": -8.262523280762816,
+      "scheduled_games": 10
     },
     {
       "rank": 114,
-      "team": "Delaware",
-      "rating": -6.571458858712442,
+      "team": "Tulsa",
+      "rating": -8.414319976158527,
       "scheduled_games": 11
     },
     {
       "rank": 115,
       "team": "Oklahoma State",
-      "rating": -7.1702058626786,
+      "rating": -8.603382649768427,
       "scheduled_games": 11
     },
     {
       "rank": 116,
-      "team": "Army",
-      "rating": -7.422902439339172,
+      "team": "Florida Atlantic",
+      "rating": -8.81646459832694,
       "scheduled_games": 11
     },
     {
       "rank": 117,
-      "team": "Tulsa",
-      "rating": -7.850926012253538,
+      "team": "UAB",
+      "rating": -9.116955531052014,
       "scheduled_games": 11
     },
     {
       "rank": 118,
-      "team": "Coastal Carolina",
-      "rating": -8.00626113409432,
-      "scheduled_games": 11
-    },
-    {
-      "rank": 119,
-      "team": "Colorado State",
-      "rating": -8.036740475416456,
+      "team": "Buffalo",
+      "rating": -9.150245962283398,
       "scheduled_games": 10
     },
     {
-      "rank": 120,
+      "rank": 119,
       "team": "Middle Tennessee",
-      "rating": -8.13323311792759,
+      "rating": -9.466278273385273,
+      "scheduled_games": 11
+    },
+    {
+      "rank": 120,
+      "team": "Georgia State",
+      "rating": -9.86785803956442,
       "scheduled_games": 11
     },
     {
       "rank": 121,
-      "team": "Wyoming",
-      "rating": -8.186731953596704,
+      "team": "Akron",
+      "rating": -10.111354507833765,
       "scheduled_games": 11
     },
     {
       "rank": 122,
-      "team": "Georgia State",
-      "rating": -8.555139815736572,
+      "team": "Coastal Carolina",
+      "rating": -10.217267786942722,
       "scheduled_games": 11
     },
     {
       "rank": 123,
-      "team": "Florida Atlantic",
-      "rating": -8.616638794533225,
-      "scheduled_games": 11
+      "team": "Oregon State",
+      "rating": -10.388535313670598,
+      "scheduled_games": 10
     },
     {
       "rank": 124,
-      "team": "Bowling Green",
-      "rating": -8.825729113633422,
+      "team": "Rice",
+      "rating": -10.6406649563114,
       "scheduled_games": 11
     },
     {
       "rank": 125,
-      "team": "San Jos\u00e9 State",
-      "rating": -9.25602805410939,
-      "scheduled_games": 12
+      "team": "Wyoming",
+      "rating": -10.778858303487093,
+      "scheduled_games": 11
     },
     {
       "rank": 126,
-      "team": "Akron",
-      "rating": -9.665549291261126,
+      "team": "Army",
+      "rating": -11.115517305417663,
       "scheduled_games": 11
     },
     {
       "rank": 127,
-      "team": "UL Monroe",
-      "rating": -9.706478870872584,
+      "team": "Northern Illinois",
+      "rating": -11.388187967133454,
       "scheduled_games": 11
     },
     {
       "rank": 128,
-      "team": "Rice",
-      "rating": -9.716144418424243,
+      "team": "Kent State",
+      "rating": -11.678463379787905,
       "scheduled_games": 11
     },
     {
       "rank": 129,
-      "team": "UAB",
-      "rating": -9.71837597815685,
+      "team": "San Jos\u00e9 State",
+      "rating": -11.689250117046754,
       "scheduled_games": 11
     },
     {
       "rank": 130,
-      "team": "Northern Illinois",
-      "rating": -9.745648188046246,
+      "team": "Bowling Green",
+      "rating": -11.74546962328184,
       "scheduled_games": 11
     },
     {
       "rank": 131,
-      "team": "Kent State",
-      "rating": -10.016214752354097,
+      "team": "Air Force",
+      "rating": -11.841197500414768,
       "scheduled_games": 11
     },
     {
       "rank": 132,
-      "team": "Oregon State",
-      "rating": -10.419996137440494,
-      "scheduled_games": 10
+      "team": "UL Monroe",
+      "rating": -12.130016923756441,
+      "scheduled_games": 11
     },
     {
       "rank": 133,
-      "team": "UTEP",
-      "rating": -10.87576791964272,
+      "team": "Charlotte",
+      "rating": -13.32625375213962,
       "scheduled_games": 11
     },
     {
       "rank": 134,
-      "team": "Ball State",
-      "rating": -11.49961841962263,
+      "team": "UTEP",
+      "rating": -13.44301573498277,
       "scheduled_games": 11
     },
     {
       "rank": 135,
-      "team": "New Mexico State",
-      "rating": -11.581417107091722,
+      "team": "Sam Houston",
+      "rating": -13.58642498154466,
       "scheduled_games": 11
     },
     {
       "rank": 136,
-      "team": "Charlotte",
-      "rating": -12.104275812387277,
+      "team": "Ball State",
+      "rating": -14.155756757206523,
       "scheduled_games": 11
     },
     {
       "rank": 137,
-      "team": "Sam Houston",
-      "rating": -12.930819596994999,
-      "scheduled_games": 11
+      "team": "New Mexico State",
+      "rating": -16.9508052566863,
+      "scheduled_games": 10
     },
     {
       "rank": 138,
       "team": "Massachusetts",
-      "rating": -16.818677361539606,
+      "rating": -22.464748489048507,
       "scheduled_games": 10
     }
   ]

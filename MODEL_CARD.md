@@ -16,8 +16,9 @@ The College Football Top 30 is also descriptive. It predicts every remaining sch
 FBS-vs-FBS matchup with the selected CFB margin model and decomposes those margins into
 regularized, zero-centered neutral-field team ratings. The calculation separates the standard
 home edge from team strength and publishes schedule coverage plus reconstruction error. It is not
-the AP poll and does not use sportsbook lines. Before final preseason feeds arrive, missing
-returning-production and team-talent values are neutral-imputed and the ranking is provisional.
+the AP poll and does not use sportsbook lines. The August 30 refresh includes team talent for all
+138 scheduled teams and returning production for 136; the two missing FCS records are
+neutral-imputed and the ranking remains provisional.
 
 ## Model design
 

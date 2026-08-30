@@ -18,6 +18,9 @@
 4. Confirm `raw_data_published` remains `false` and neither `.env` nor `data/cfb/cache/` appears in staged changes.
 5. Use the manual `CFB foundation validation` workflow to verify the repository secret without publishing raw responses.
 6. Generate the next immutable forecast with `python cfb_production_update.py --season 2026`.
+   Completed-season inputs use the local long-lived cache; only current-season feeds expire on
+   the normal six-hour schedule. Use `--refresh-current` only when every current-season endpoint
+   must be fetched again.
 7. Review `data/cfb/models/manifest.json`: both checksums, selected schemas, 4,470 OOF rows,
    and 2025 holdout MAE must match the fixed benchmark.
 8. Review `data/cfb/latest_prediction.json` and its batch under `data/cfb/predictions/`. Every
