@@ -259,4 +259,4 @@ def _weekly_chart(rows: pd.DataFrame, *, target: str) -> None:
                 tooltip=["source:N", "week:O", alt.Tooltip("mae:Q", format=".2f"), "games:Q"],
             )
         )
-        tab.altair_chart(chart, width="stretch")
+        tab.altair_chart(chart, use_container_width=True)
