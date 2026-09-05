@@ -8,6 +8,7 @@ import pytest
 
 from nfl_prediction.ledger import PredictionLedger
 from nfl_prediction.results import forecast_rows, select_forecasts, settle_schedule, summarize
+from nfl_prediction.results_ui import _weekly_chart
 
 
 def _prediction(game_id: str, margin: float, *, market: float | None = None) -> dict:
@@ -104,3 +105,27 @@ def test_repeated_forecast_runs_count_each_game_once(tmp_path: Path) -> None:
     assert len(rows) == 2
     assert select_forecasts(rows).published_margin.tolist() == [3]
     assert select_forecasts(rows, policy="horizon").published_margin.tolist() == [7]
+
+
+def test_scored_results_chart_uses_the_pinned_streamlit_api() -> None:
+    rows = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 1,
+                "status": "final",
+                "published_margin": 3.0,
+                "independent_margin": 2.0,
+                "market_margin": 1.0,
+                "actual_margin": 4.0,
+                "published_probability": 0.6,
+                "independent_probability": 0.58,
+                "published_margin_p10": -10.0,
+                "published_margin_p90": 16.0,
+                "independent_margin_p10": -11.0,
+                "independent_margin_p90": 15.0,
+            }
+        ]
+    )
+
+    _weekly_chart(rows, target="margin")
