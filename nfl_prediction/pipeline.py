@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import subprocess
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -22,11 +21,12 @@ from .features import (
     build_player_game_logs,
     build_point_in_time_game_features,
 )
-from .io import atomic_write_json, sha256_file
+from .io import atomic_write_json, read_json, sha256_file
 from .ledger import PredictionLedger
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
-from .odds import attach_market_consensus, load_market_consensus
+from .odds import _game_kickoff, attach_market_consensus, load_market_consensus
 from .preseason import apply_preseason_calibration
+from .results import performance_history, settle_schedule
 
 
 @dataclass
@@ -476,6 +476,8 @@ def _predict_upcoming_games(
                 "away_score": round(max(predicted_away, 0.0), 1),
                 "predicted_home_margin": round(margin["mean"], 2),
                 "margin_std": round(margin["std"], 2),
+                "margin_p10": round(margin["p10"], 2),
+                "margin_p90": round(margin["p90"], 2),
                 "home_win_probability": round(margin["probability_above_zero"], 4),
                 "total": round(max(total["mean"], 0.0), 1),
                 "total_std": round(total["std"], 2),
@@ -491,102 +493,8 @@ def _predict_upcoming_games(
 
 
 def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str, Any]:
-    results_by_game = schedules.dropna(subset=["home_score", "away_score"]).set_index("game_id")
-    summaries = []
-    for path in sorted(ledger.root.glob("*.json")):
-        if path.name.endswith(".results.json"):
-            continue
-        result_path = path.with_name(f"{path.stem}.results.json")
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        scored = []
-        for prediction in payload.get("predictions", []):
-            game_id = prediction["game_id"]
-            if game_id not in results_by_game.index:
-                continue
-            actual = results_by_game.loc[game_id]
-            actual_margin = float(actual["home_score"] - actual["away_score"])
-            actual_total = float(actual["home_score"] + actual["away_score"])
-            scored.append(
-                {
-                    "game_id": game_id,
-                    "actual_home_margin": actual_margin,
-                    "actual_total": actual_total,
-                    "margin_absolute_error": abs(
-                        prediction["predicted_home_margin"] - actual_margin
-                    ),
-                    "total_absolute_error": abs(prediction["total"] - actual_total),
-                    "winner_correct": (prediction["predicted_home_margin"] > 0)
-                    == (actual_margin > 0),
-                    **(
-                        {
-                            "football_margin_absolute_error": abs(
-                                float(prediction["football_only"]["home_margin"]) - actual_margin
-                            ),
-                            "football_total_absolute_error": abs(
-                                float(prediction["football_only"]["total"]) - actual_total
-                            ),
-                        }
-                        if prediction.get("football_only")
-                        else {}
-                    ),
-                    **(
-                        {
-                            "market_margin_absolute_error": abs(
-                                prediction["market_informed"]["home_margin"] - actual_margin
-                            ),
-                            "market_total_absolute_error": abs(
-                                prediction["market_informed"]["total"] - actual_total
-                            ),
-                            "model_market_margin_difference": prediction["predicted_home_margin"]
-                            - prediction["market_informed"]["home_margin"],
-                        }
-                        if prediction.get("market_informed")
-                        else {}
-                    ),
-                }
-            )
-        if scored and not result_path.exists():
-            ledger.score_batch(payload["run_id"], scored)
-        if scored:
-            market_rows = [row for row in scored if "market_margin_absolute_error" in row]
-            football_rows = [row for row in scored if "football_margin_absolute_error" in row]
-            summaries.append(
-                {
-                    "run_id": payload["run_id"],
-                    "games": len(scored),
-                    "margin_mae": float(np.mean([row["margin_absolute_error"] for row in scored])),
-                    "total_mae": float(np.mean([row["total_absolute_error"] for row in scored])),
-                    "winner_accuracy": float(np.mean([row["winner_correct"] for row in scored])),
-                    "football_margin_mae": (
-                        float(
-                            np.mean(
-                                [row["football_margin_absolute_error"] for row in football_rows]
-                            )
-                        )
-                        if football_rows
-                        else None
-                    ),
-                    "football_total_mae": (
-                        float(
-                            np.mean([row["football_total_absolute_error"] for row in football_rows])
-                        )
-                        if football_rows
-                        else None
-                    ),
-                    "market_games": len(market_rows),
-                    "market_margin_mae": (
-                        float(np.mean([row["market_margin_absolute_error"] for row in market_rows]))
-                        if market_rows
-                        else None
-                    ),
-                    "market_total_mae": (
-                        float(np.mean([row["market_total_absolute_error"] for row in market_rows]))
-                        if market_rows
-                        else None
-                    ),
-                }
-            )
-    return {"runs": summaries, "updated_at": datetime.now(UTC).isoformat()}
+    settle_schedule(ledger.root, schedules)
+    return performance_history(ledger.root)
 
 
 def _official_injury_payload(
@@ -697,6 +605,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         next_week = int(current_season["week"].min())
         upcoming = current_season[current_season["week"].eq(next_week)]
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
+    predictions = [p for p in predictions if _game_kickoff(p) and _game_kickoff(p) > now]
     market_snapshot = load_market_consensus()
     predictions = attach_market_consensus(predictions, market_snapshot, as_of=now)
     current_schedule = data.schedules[data.schedules["season"].eq(context.prediction_season)]
@@ -709,6 +618,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         predictions,
         market_snapshot,
         neutral_matchups=neutral_matchups,
+        as_of=now,
     )
 
     ledger = PredictionLedger()
@@ -754,6 +664,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
             "prediction_season": context.prediction_season,
             "week": int(upcoming["week"].min()) if not upcoming.empty else None,
             "generated_at": now.isoformat(),
+            "run_id": ledger_path.stem,
             "data_cutoff": cutoff_text,
             "model_hash": sha256_file(MODEL_MANIFEST_PATH),
             "raw_data_hash": raw_data_hash,
@@ -777,6 +688,29 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
             "raw_data_hash": raw_data_hash,
             "ledger_run": ledger_path.stem,
             "metrics": {name: model.metrics for name, model in ensembles.items()},
+        },
+    )
+    # Publish one complete read snapshot last. Readers keep using the previous
+    # immutable manifest and state if any earlier write/training step fails.
+    release_hash = sha256_file(MODEL_MANIFEST_PATH)
+    frozen_manifest = MODEL_MANIFEST_PATH.with_name(f"manifest-{release_hash}.json")
+    atomic_write_json(
+        PROJECT_ROOT / "data" / "nfl_release.json",
+        {
+            "schema_version": 1,
+            "manifest_path": str(frozen_manifest.relative_to(PROJECT_ROOT)),
+            "model_hash": release_hash,
+            "state": {
+                "teams": team_payload,
+                "qb": player_snapshots["qb"],
+                "wr": player_snapshots["wr"],
+                "rb": player_snapshots["rb"],
+                "schedule": predictions,
+                "prediction_batch": read_json(ledger_path),
+                "report": read_json(PROJECT_ROOT / "weekly_report.json"),
+                "official_injuries": read_json(PROJECT_ROOT / "official_injuries.json"),
+                "update": read_json(PROJECT_ROOT / "update_log.json"),
+            },
         },
     )
     return UpdateResult(

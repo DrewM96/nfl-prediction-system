@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 import joblib
 import numpy as np
@@ -19,7 +20,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from .config import MODEL_MANIFEST_PATH, MODELS_DIR
-from .io import atomic_write_json, read_json, sha256_file
+from .io import archive_manifest, atomic_write_json, read_json, sha256_file
+from .validation import paired_week_block_interval, prequential_predictions, uncertainty_metrics
 
 GAME_RIDGE_ALPHA = 50.0
 
@@ -224,25 +226,25 @@ def fit_ensemble(
         ensemble_oof = blend_weight * ensemble_oof + (1.0 - blend_weight) * baseline_values
         weights = [weight * float(blend_weight) for weight in weights]
         baseline_weight = 1.0 - float(blend_weight)
+    # The globally learned weights above are for future production only.
+    # Evaluate each week using weights selected before that week.
+    validation_frame = clean.loc[validation_indices]
+    ensemble_oof = prequential_predictions(
+        validation_frame,
+        actual,
+        first,
+        second,
+        baseline_values if baseline_feature is not None else None,
+    )
     residuals = actual - ensemble_oof
     residual_std = max(float(np.std(residuals, ddof=1)), 1e-6)
-    interval_low = ensemble_oof - 1.2816 * residual_std
-    interval_high = ensemble_oof + 1.2816 * residual_std
     metrics = {
         "ridge_alpha": float(ridge_alpha),
         "oof_rows": float(len(actual)),
         "mae": float(mean_absolute_error(actual, ensemble_oof)),
         "rmse": float(mean_squared_error(actual, ensemble_oof) ** 0.5),
         "bias": float(np.mean(ensemble_oof - actual)),
-        "interval_80_coverage": float(
-            np.mean((actual >= interval_low) & (actual <= interval_high))
-        ),
-        "pinball_p10": float(
-            np.mean(np.maximum(0.10 * (actual - interval_low), -0.90 * (actual - interval_low)))
-        ),
-        "pinball_p90": float(
-            np.mean(np.maximum(0.90 * (actual - interval_high), -0.10 * (actual - interval_high)))
-        ),
+        "prequential_evaluation": 1.0,
     }
     validation_frame = clean.loc[validation_indices]
     latest_season = int(validation_frame["season"].max())
@@ -256,24 +258,18 @@ def fit_ensemble(
             ),
         }
     )
-    if name == "game_margin":
-        probabilities = np.asarray(
-            [_normal_cdf(float(value) / residual_std) for value in ensemble_oof]
-        )
-        outcomes = (actual > 0).astype(float)
-        clipped = np.clip(probabilities, 1e-6, 1.0 - 1e-6)
-        metrics.update(
-            {
-                "winner_brier": float(np.mean((probabilities - outcomes) ** 2)),
-                "winner_log_loss": float(
-                    -np.mean(outcomes * np.log(clipped) + (1.0 - outcomes) * np.log(1.0 - clipped))
-                ),
-                "winner_calibration_error": _expected_calibration_error(probabilities, outcomes),
-            }
-        )
+    metrics.update(
+        uncertainty_metrics(validation_frame, actual, ensemble_oof, winner=name == "game_margin")
+    )
     if baseline_values is not None:
         metrics["baseline_mae"] = float(mean_absolute_error(actual, baseline_values))
         metrics["mae_improvement_vs_baseline"] = metrics["baseline_mae"] - metrics["mae"]
+        interval = paired_week_block_interval(
+            validation_frame, actual, ensemble_oof, baseline_values
+        )
+        if interval is not None:
+            metrics["mae_difference_vs_baseline_95_low"] = interval[0]
+            metrics["mae_difference_vs_baseline_95_high"] = interval[1]
         metrics["latest_holdout_baseline_mae"] = float(
             mean_absolute_error(actual[latest_mask], baseline_values[latest_mask])
         )
@@ -309,6 +305,7 @@ def save_model_bundle(
 ) -> dict[str, Any]:
     root = Path(output_dir)
     root.mkdir(parents=True, exist_ok=True)
+    release_id = uuid4().hex
     manifest: dict[str, Any] = {
         "schema_version": 3,
         "created_at": datetime.now(UTC).isoformat(),
@@ -325,7 +322,7 @@ def save_model_bundle(
         for index, (model, weight) in enumerate(
             zip(ensemble.models, ensemble.weights, strict=False)
         ):
-            filename = f"v3_{ensemble_name}_{index}.joblib"
+            filename = f"v3_{ensemble_name}_{index}_{release_id}.joblib"
             target = root / filename
             descriptor, temporary_name = tempfile.mkstemp(prefix=f".{filename}.", dir=root)
             os.close(descriptor)
@@ -345,6 +342,7 @@ def save_model_bundle(
             "files": files,
         }
     atomic_write_json(root / "manifest.json", manifest)
+    archive_manifest(root / "manifest.json")
     return manifest
 
 

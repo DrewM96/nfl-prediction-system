@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 
 from nfl_prediction.io import atomic_write_json, read_json, sha256_file
+from nfl_prediction.results import performance_history, settle_schedule
 
 from .client import CFBDClient
 from .config import (
@@ -16,6 +17,7 @@ from .config import (
     CFB_LATEST_PREDICTION_PATH,
     CFB_MODELS_DIR,
     CFB_PREDICTIONS_DIR,
+    PROJECT_ROOT,
 )
 from .data import CFBHistoricalData
 from .features import CFB_FEATURE_CONFIGURATIONS, build_point_in_time_features
@@ -144,20 +146,38 @@ def run_cfb_production_update(
     ]
     parts.append(load_historical_data(active_client, [prediction_season], refresh=refresh_current))
     data = _cut_off_results(_combine(parts), timestamp)
+    settle_schedule(predictions_dir, data.games, sport="CFB")
+    atomic_write_json(
+        Path(latest_path).parent / "performance_history.json", performance_history(predictions_dir)
+    )
     features = build_point_in_time_features(data, include_scheduled=True)
-    training = features[
-        features["season"].lt(prediction_season)
-        & features["completed"].fillna(False)
-        & features["start_date"].le(pd.Timestamp(timestamp))
-    ].copy()
     all_scheduled = features[
         features["season"].eq(prediction_season)
         & ~features["completed"].fillna(False)
         & features["start_date"].gt(pd.Timestamp(timestamp))
     ].copy()
     if all_scheduled.empty:
-        raise ValueError(f"No upcoming FBS-vs-FBS games are available for {prediction_season}")
+        return {
+            "model_hash": None,
+            "forecast_week": None,
+            "prediction_count": 0,
+            "prediction_path": None,
+            "rankings_path": None,
+            "ranking_count": 0,
+            "predictions": [],
+            "status": "settled_no_upcoming_games",
+        }
     forecast_week = int(week if week is not None else all_scheduled["week"].min())
+    # Match the expanding-week validation policy: no current-week outcomes
+    # train a model predicting another game in that same week.
+    training = features[
+        (
+            (features["season"] < prediction_season)
+            | (features["season"].eq(prediction_season) & features["week"].lt(forecast_week))
+        )
+        & features["completed"].fillna(False)
+        & features["start_date"].lt(pd.Timestamp(timestamp))
+    ].copy()
     scheduled = all_scheduled[all_scheduled["week"].eq(forecast_week)].sort_values("start_date")
     if scheduled.empty:
         raise ValueError(f"No upcoming FBS-vs-FBS games are available for Week {forecast_week}")
@@ -210,6 +230,8 @@ def run_cfb_production_update(
         else Path(latest_path).parent / "power_rankings.json"
     )
     atomic_write_json(ranking_target, ranking_payload)
+    frozen_rankings = ranking_target.with_name(f"power_rankings-{model_hash}.json")
+    atomic_write_json(frozen_rankings, ranking_payload)
     margin_distributions = models["margin"].distribution(scheduled)
     total_distributions = models["total"].distribution(scheduled)
     predictions: list[dict[str, Any]] = []
@@ -254,6 +276,10 @@ def run_cfb_production_update(
         },
         root=predictions_dir,
         latest_path=latest_path,
+        manifest_path=str(
+            manifest_path.with_name(f"manifest-{model_hash}.json").relative_to(PROJECT_ROOT)
+        ),
+        rankings_path=str(frozen_rankings.relative_to(PROJECT_ROOT)),
     )
     return {
         "manifest_path": str(manifest_path),

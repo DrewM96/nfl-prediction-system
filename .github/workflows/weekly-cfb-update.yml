@@ -1,0 +1,68 @@
+name: Weekly CFB model update
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: College football season
+        required: true
+        default: "2026"
+        type: string
+  schedule:
+    - cron: "0 12 * * 3"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-cfb-model-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      SEASON: ${{ inputs.season || '2026' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Restore CollegeFootballData cache
+        uses: actions/cache@v4
+        with:
+          path: data/cfb/cache
+          key: cfb-data-${{ env.SEASON }}-${{ github.run_id }}
+          restore-keys: |
+            cfb-data-${{ env.SEASON }}-
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Refresh and publish CFB forecast
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python cfb_production_update.py --season "$SEASON" --refresh-current
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: python -m pytest -q
+      - name: Publish a reviewable artifact update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="automation/weekly-cfb-model-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add data/cfb
+          if git diff --cached --quiet; then
+            echo "No artifact changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh weekly CFB forecasts"
+          git push --force-with-lease origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
+            gh pr create --draft --base main --head "$branch" --title "chore: refresh weekly CFB forecasts" --body "Automated frozen CFB forecast, settlement, rankings, and model refresh. Review CI and the release pointer before merging."
+          fi

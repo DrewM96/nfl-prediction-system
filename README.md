@@ -4,7 +4,15 @@ A point-in-time football forecasting application. The NFL side produces game mar
 
 The current application is configured for the 2026 season. It loads the upcoming schedule independently from the completed seasons used for training, so preseason updates no longer fail when play-by-play for the new season does not yet exist.
 
-## What changed in version 4
+## Forecast integrity and season tracking
+
+- The NFL and CFB Results pages select one frozen pregame forecast per game, settle outcomes with append-only revisions, and report weekly MAE, calibration, interval coverage, and downloadable game-level results.
+- Model-versus-market metrics use the identical set of timestamp-valid games. The dashboard shows the matched sample separately from total forecast coverage and excludes ties from winner metrics.
+- Ensemble weights and residual intervals are evaluated prequentially: every validation week's weight and uncertainty scale use earlier validation weeks only. The final deployment weight may use all historical out-of-fold rows.
+- Readers resolve a complete release pointer containing an immutable model manifest and its matching forecast state. Model files use release-specific names, so a failed update cannot create a mixed bundle.
+- FBS games against FCS opponents now update team rest history without entering CFB training or rating rows. Weekly CFB production settles prior forecasts and may train on completed earlier weeks of the current season.
+
+## Version 4 market integration
 
 - The Odds API adapter collects NFL spreads, totals, American prices, provider timestamps, and quota headers without logging the API key.
 - Book-level responses stay in ignored `data/market_private/` storage. The public `market_consensus.json` contains only median lines, prices, book counts, and dispersion.
@@ -73,6 +81,7 @@ source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 python weekly_nfl_update.py
 python weekly_cfb_update.py --season 2026
+python cfb_production_update.py --season 2026
 streamlit run app.py
 ```
 
@@ -90,7 +99,9 @@ pytest -q
 
 The updater fetches schedules, play-by-play, weekly rosters, injury reports, and snap counts through `nflreadpy`. Raw downloads are not committed. Generated read artifacts remain small enough for Streamlit deployment.
 
-`models/manifest.json` is the source of truth for model versions and results. `data/predictions/` stores each pregame run once; completed outcomes are written to a separate `.results.json` record. JSON writes and model replacement are atomic, so the app does not read half-written releases.
+`data/nfl_release.json` is the NFL read pointer; `data/cfb/latest_prediction.json` serves the same purpose for CFB. Each points to an immutable checksummed manifest and a matching frozen forecast. The stable `manifest.json` files remain convenient outputs for update tooling but are not the app's release boundary.
+
+`data/predictions/` and `data/cfb/predictions/` store each pregame run once. Outcomes and later corrections are append-only documents under each ledger's `settlements/<run-id>/` directory. Missing results remain missing rather than becoming losses or zero scores. JSON writes and the final release-pointer swap are atomic, so readers continue to see the previous complete release if an update fails.
 
 Never load model bundles from an untrusted source. Checksums detect corruption, but Python model serialization is still a trusted-artifact boundary.
 
@@ -133,7 +144,7 @@ The completed 723-game benchmark selected a 100% market weight for future margin
 
 ## Evaluation policy
 
-Model selection uses expanding weekly splits. Production models are then fitted on every eligible row through the recorded cutoff. The manifest reports MAE, RMSE, bias, 80% interval coverage, pinball loss, latest-season holdout results, and rolling-baseline improvement. Game-margin models also report winner Brier score, log loss, and calibration error.
+Model selection uses expanding weekly splits. Component and baseline weights used for reported metrics are learned only from validation weeks earlier than the row being scored. Residual scales used to evaluate intervals and win probabilities follow the same rule. Production models and their deployment weights are then fitted on every eligible historical row through the recorded cutoff. The manifest reports MAE, RMSE, bias, 80% interval coverage, pinball loss, latest-season holdout results, and rolling-baseline improvement. Game-margin models also report winner Brier score, log loss, and calibration error.
 
 The app intentionally labels market analysis as paper analysis. A displayed difference is not evidence of a profitable edge. Agreement with the market usually means the independent forecast adds little actionable information; disagreement is a hypothesis to track, not a bet. Market claims require timestamped prices, no-vig probabilities, closing-line comparisons, adequate sample size, and uncertainty-aware evaluation.
 
@@ -236,9 +247,11 @@ python cfb_production_update.py --season 2026
 python cfb_production_update.py --season 2026 --week 2
 ```
 
-Each run writes checksummed estimators to `data/cfb/models/`, an immutable batch under
-`data/cfb/predictions/`, a model-matched `data/cfb/power_rankings.json`, and a small latest-run
-pointer used by the app. The Top 30 scores every remaining scheduled FBS-vs-FBS matchup with the
+The scheduled `Weekly CFB model update` workflow restores the private API response cache, refreshes current-season data, settles completed frozen forecasts, runs validation, and opens a draft artifact pull request. A run-specific cache key allows refreshed current-season responses to seed the next run while avoiding repeated historical API requests.
+
+Each run writes release-specific checksummed estimators and an immutable manifest to
+`data/cfb/models/`, an immutable batch under `data/cfb/predictions/`, an archived model-matched
+power ranking, and a small latest-run pointer used by the app. The Top 30 scores every remaining scheduled FBS-vs-FBS matchup with the
 margin model, then uses a regularized schedule decomposition to express each team in points above
 or below an average FBS team on a neutral field. It is an independent model rating rather than an
 AP-style poll, and sportsbook lines are not ranking inputs. The independent forecast model
