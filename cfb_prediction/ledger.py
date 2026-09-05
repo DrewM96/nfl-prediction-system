@@ -19,6 +19,8 @@ def record_cfb_prediction_batch(
     metadata: dict[str, Any],
     root: str | Path = CFB_PREDICTIONS_DIR,
     latest_path: str | Path = CFB_LATEST_PREDICTION_PATH,
+    manifest_path: str | None = None,
+    rankings_path: str | None = None,
 ) -> Path:
     ledger = PredictionLedger(root)
     target = ledger.record_batch(
@@ -35,6 +37,8 @@ def record_cfb_prediction_batch(
             "run_id": target.stem,
             "path": target.name,
             "model_hash": model_hash,
+            "manifest_path": manifest_path,
+            "rankings_path": rankings_path,
         },
     )
     return target

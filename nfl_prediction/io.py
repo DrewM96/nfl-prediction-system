@@ -41,3 +41,12 @@ def sha256_file(path: str | Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def archive_manifest(path: str | Path) -> Path:
+    """Keep an immutable, same-directory manifest so relative model paths survive."""
+    source = Path(path)
+    target = source.with_name(f"manifest-{sha256_file(source)}.json")
+    if not target.exists():
+        atomic_write_json(target, read_json(source))
+    return target

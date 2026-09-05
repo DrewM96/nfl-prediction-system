@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pandas as pd
 
 from cfb_prediction.data import CFBHistoricalData
@@ -123,6 +125,28 @@ def _historical(first_home_points: int = 40) -> CFBHistoricalData:
             ]
         ),
     )
+
+
+def test_fcs_game_counts_for_rest_without_becoming_training_row() -> None:
+    data = _historical()
+    fcs = data.games.iloc[0].copy()
+    fcs.update(
+        {
+            "game_id": 99,
+            "week": 2,
+            "start_date": pd.Timestamp("2025-09-06T16:00:00Z"),
+            "away_id": 30,
+            "away_team": "FCS",
+            "away_classification": "fcs",
+            "fbs_vs_fbs": False,
+        }
+    )
+    third = data.games.iloc[1].copy()
+    third.update({"game_id": 100, "week": 3, "start_date": pd.Timestamp("2025-09-13T16:00:00Z")})
+    data = replace(data, games=pd.DataFrame([data.games.iloc[0], fcs, third]))
+    result = build_point_in_time_features(data)
+    assert result.game_id.tolist() == [1, 100]
+    assert result.loc[result.game_id.eq(100), "home_rest_days"].item() == 7
 
 
 def test_features_are_created_before_each_result_updates_state() -> None:

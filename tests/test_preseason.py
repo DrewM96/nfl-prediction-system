@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import itertools
+from datetime import UTC, datetime
 
 import pytest
 
@@ -21,6 +22,7 @@ def _snapshot() -> dict:
                         "market_home_margin": strengths[home] - strengths[away] + home_field,
                         "book_count": 10,
                     },
+                    "commence_time": "2026-08-10T12:00:00+00:00",
                 }
             )
     return {"snapshot_at": "2026-08-01T12:00:00+00:00", "games": games}
@@ -42,8 +44,11 @@ def _prediction(week: int) -> dict:
     }
 
 
+AS_OF = datetime(2026, 8, 2, tzinfo=UTC)
+
+
 def test_week_one_uses_neutral_field_preseason_strength_and_preserves_football_model() -> None:
-    result = apply_preseason_calibration([_prediction(1)], _snapshot())[0]
+    result = apply_preseason_calibration([_prediction(1)], _snapshot(), as_of=AS_OF)[0]
 
     assert result["predicted_home_margin"] == pytest.approx(3.0)
     assert result["home_score"] == pytest.approx(23.5)
@@ -57,6 +62,7 @@ def test_preseason_strength_tapers_through_week_four() -> None:
     results = apply_preseason_calibration(
         [_prediction(week) for week in (1, 2, 3, 4, 5)],
         _snapshot(),
+        as_of=AS_OF,
     )
 
     assert [game["predicted_home_margin"] for game in results] == [3.0, 2.5, 2.0, 1.5, 1.0]
@@ -70,7 +76,20 @@ def test_preseason_strength_tapers_through_week_four() -> None:
 
 
 def test_calibration_is_idempotent_for_the_same_market_snapshot() -> None:
-    first = apply_preseason_calibration([_prediction(1)], _snapshot())
-    second = apply_preseason_calibration(first, _snapshot())
+    first = apply_preseason_calibration([_prediction(1)], _snapshot(), as_of=AS_OF)
+    second = apply_preseason_calibration(first, _snapshot(), as_of=AS_OF)
 
     assert second == first
+
+
+@pytest.mark.parametrize(
+    "as_of",
+    [
+        datetime(2026, 8, 20, tzinfo=UTC),
+        datetime(2026, 7, 20, tzinfo=UTC),
+    ],
+)
+def test_stale_or_future_market_cannot_calibrate_forecast(as_of: datetime) -> None:
+    result = apply_preseason_calibration([_prediction(1)], _snapshot(), as_of=as_of)[0]
+    assert result["predicted_home_margin"] == 1.0
+    assert "preseason_calibration" not in result

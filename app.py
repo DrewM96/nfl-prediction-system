@@ -11,8 +11,7 @@ import streamlit as st
 from cfb_prediction.config import (
     CFB_FOUNDATION_PATH,
     CFB_HISTORICAL_BENCHMARK_PATH,
-    CFB_MODEL_MANIFEST_PATH,
-    CFB_POWER_RANKINGS_PATH,
+    CFB_PREDICTIONS_DIR,
 )
 from cfb_prediction.ledger import load_latest_cfb_prediction_batch
 from cfb_prediction.modeling import load_cfb_model_bundle
@@ -22,7 +21,12 @@ from injury_system import (
     integrate_injuries_into_player_prediction,
     render_injury_manager,
 )
-from nfl_prediction.config import MODEL_MANIFEST_PATH, PROJECT_ROOT, is_division_game
+from nfl_prediction.artifacts import frozen_nfl_batch, release_manifest
+from nfl_prediction.config import (
+    PREDICTIONS_DIR,
+    PROJECT_ROOT,
+    is_division_game,
+)
 from nfl_prediction.io import read_json, sha256_file
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
@@ -31,9 +35,10 @@ from nfl_prediction.market import (
     over_probability,
 )
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
-from nfl_prediction.odds import attach_market_consensus
+from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.preseason import apply_preseason_calibration
 from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings
+from nfl_prediction.results_ui import render_results
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
     american_moneyline,
@@ -57,11 +62,11 @@ PAGE_LABELS = [
     "Builder",
     "Props",
     "Rankings",
-    "Performance",
+    "Results",
     "Model",
 ]
 SPORT_LABELS = ["NFL", "College Football"]
-CFB_PAGE_LABELS = ["This Week", "Top 30"]
+CFB_PAGE_LABELS = ["This Week", "Top 30", "Results"]
 
 st.set_page_config(
     page_title="GRIDLINE — Model-Based Forecasts",
@@ -594,21 +599,36 @@ st.markdown(
 
 
 @st.cache_resource
-def load_models() -> tuple[dict[str, FittedEnsemble], dict[str, Any]]:
-    return load_model_bundle(MODEL_MANIFEST_PATH)
+def load_models(
+    manifest_path: str, checksum: str
+) -> tuple[dict[str, FittedEnsemble], dict[str, Any]]:
+    del checksum
+    return load_model_bundle(manifest_path)
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_state() -> dict[str, Any]:
+    release = read_json(PROJECT_ROOT / "data" / "nfl_release.json")
+    if release and release.get("state"):
+        active_manifest = release_manifest(PROJECT_ROOT)
+        if release.get("model_hash") != sha256_file(active_manifest):
+            raise ValueError("The NFL release state does not match its model bundle")
+        return {
+            **release["state"],
+            "performance": read_json(PROJECT_ROOT / "performance_history.json", {"runs": []}),
+            "market": read_json(PROJECT_ROOT / "market_consensus.json"),
+            "market_benchmark": read_json(PROJECT_ROOT / "market_benchmark.json"),
+        }
     market = read_json(PROJECT_ROOT / "market_consensus.json")
-    schedule = attach_market_consensus(read_json(PROJECT_ROOT / "weekly_schedule.json", []), market)
-    schedule = apply_preseason_calibration(schedule, market)
+    batch = frozen_nfl_batch(PROJECT_ROOT, manifest_path=release_manifest(PROJECT_ROOT))
+    schedule = batch["predictions"]
     return {
         "teams": read_json(PROJECT_ROOT / "team_data.json", {}),
         "qb": read_json(PROJECT_ROOT / "qb_data.json", {}),
         "wr": read_json(PROJECT_ROOT / "wr_data.json", {}),
         "rb": read_json(PROJECT_ROOT / "rb_data.json", {}),
         "schedule": schedule,
+        "prediction_batch": batch,
         "report": read_json(PROJECT_ROOT / "weekly_report.json", {}),
         "performance": read_json(PROJECT_ROOT / "performance_history.json", {"runs": []}),
         "official_injuries": read_json(PROJECT_ROOT / "official_injuries.json", {}),
@@ -618,7 +638,7 @@ def load_state() -> dict[str, Any]:
     }
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_cfb_state() -> dict[str, Any]:
     state = read_json(
         CFB_FOUNDATION_PATH,
@@ -638,14 +658,20 @@ def load_cfb_state() -> dict[str, Any]:
     )
     state["historical_benchmark"] = read_json(CFB_HISTORICAL_BENCHMARK_PATH)
     try:
-        _, model_manifest = load_cfb_model_bundle()
+        cfb_manifest_path = release_manifest(PROJECT_ROOT, sport="CFB")
+        _, model_manifest = load_cfb_model_bundle(cfb_manifest_path)
         prediction_batch = load_latest_cfb_prediction_batch()
         if prediction_batch is None:
             raise ValueError("No immutable CFB prediction batch is available")
-        model_hash = sha256_file(CFB_MODEL_MANIFEST_PATH)
+        model_hash = sha256_file(cfb_manifest_path)
         if prediction_batch.get("model_hash") != model_hash:
             raise ValueError("The CFB prediction batch does not match the active model bundle")
-        rankings = read_json(CFB_POWER_RANKINGS_PATH)
+        pointer = read_json(PROJECT_ROOT / "data" / "cfb" / "latest_prediction.json", {})
+        ranking_relative = pointer.get("rankings_path") or "data/cfb/power_rankings.json"
+        rankings_path = (PROJECT_ROOT / ranking_relative).resolve()
+        if not rankings_path.is_relative_to(PROJECT_ROOT.resolve()):
+            raise ValueError("CFB rankings path leaves the project")
+        rankings = read_json(rankings_path)
         if not rankings or rankings.get("model_hash") != model_hash:
             raise ValueError("The CFB power rankings do not match the active model bundle")
         state["model_manifest"] = model_manifest
@@ -844,7 +870,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
             </div>
             <div class="grid-tiles">
               <div class="grid-tile"><div class="grid-tile-label">Spread</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Moneyline</div><div class="grid-tile-value">{format_american(american_moneyline(game["home_win_probability"]))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Model fair ML · {html_text(game["home_team"])}</div><div class="grid-tile-value">{format_american(american_moneyline(game["home_win_probability"]))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["total"]):.1f}</div></div>
               {market_tile(game)}
             </div>
@@ -1014,7 +1040,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
             unsafe_allow_html=True,
         )
         columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">ML</div>{format_american(american_moneyline(game["home_win_probability"]))}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">Fair ML · {html_text(game["home_team"])}</div>{format_american(american_moneyline(game["home_win_probability"]))}</div>',
             unsafe_allow_html=True,
         )
         columns[4].markdown(
@@ -1067,7 +1093,13 @@ def render_this_week(state: dict[str, Any]) -> None:
     schedule = state["schedule"]
     week = state.get("report", {}).get("week")
     title = f"This Week — Week {week}" if week is not None else "This Week"
-    page_header(title, "Calibrated forecast · independent comparison")
+    calibrated = any(game.get("preseason_calibration") for game in schedule)
+    badge = (
+        "Frozen experimental preseason forecast · independent comparison"
+        if calibrated
+        else "Frozen independent pregame forecast"
+    )
+    page_header(title, badge)
     if not schedule:
         st.info("No upcoming games are available for the current prediction season.")
         return
@@ -1104,6 +1136,11 @@ def render_prediction_results(prediction: dict[str, Any] | None) -> None:
         """,
         unsafe_allow_html=True,
     )
+    if prediction is not None:
+        method = prediction.get("forecast_method", prediction.get("method", "model scenario"))
+        st.caption(
+            f"Session-only scenario · {method}. Custom builder outputs are excluded from season results."
+        )
 
 
 def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSystem) -> None:
@@ -1300,13 +1337,15 @@ def render_rankings(state: dict[str, Any]) -> None:
         or not float((game.get("features") or {}).get("home_field", 1.0))
     }
     market = build_market_power_ratings(
-        state.get("market"),
+        eligible_market_snapshot(state.get("market")),
         neutral_matchups=neutral_matchups,
     )
     football = build_football_form_ratings(state["teams"])
-    choices = (
-        ["Latest market consensus", "2025 football form"] if market else ["2025 football form"]
+    form_cutoff = str(football.get("data_cutoff") or "")
+    form_label = (
+        f"{form_cutoff[:4]} football form" if form_cutoff[:4].isdigit() else "Football form"
     )
+    choices = ["Latest market consensus", form_label] if market else [form_label]
     source = st.radio(
         "Ranking source",
         choices,
@@ -1349,8 +1388,8 @@ def render_rankings(state: dict[str, Any]) -> None:
         )
         ranking_rows = football["ratings"]
         st.caption(
-            "No new NFL games have been played since this cutoff. This descriptive view updates "
-            "after completed games; roster features remain excluded because they worsened margin validation."
+            "This descriptive view updates after completed games; roster features remain excluded "
+            "because they worsened margin validation."
         )
     roster_context = state["teams"]
 
@@ -1391,25 +1430,8 @@ def render_rankings(state: dict[str, Any]) -> None:
 
 
 def render_performance(state: dict[str, Any]) -> None:
-    page_header("Immutable Prediction Performance")
-    runs = state["performance"].get("runs", [])
-    if runs:
-        st.dataframe(pd.DataFrame(runs), hide_index=True, width="stretch")
-    else:
-        st.info("No completed immutable prediction batches have been scored yet.")
-        st.markdown(
-            """
-            <div class="grid-card grid-ghost-chart">
-              <div class="grid-kicker">Illustrative — MAE by week, populates after scoring</div>
-              <div class="grid-ghost-row"><span>Week 1</span><div class="grid-ghost-bar" style="width:76%"></div></div>
-              <div class="grid-ghost-row"><span>Week 2</span><div class="grid-ghost-bar" style="width:62%"></div></div>
-              <div class="grid-ghost-row"><span>Week 3</span><div class="grid-ghost-bar" style="width:69%"></div></div>
-              <div class="grid-ghost-row"><span>Week 4</span><div class="grid-ghost-bar" style="width:54%"></div></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
+    render_results(PREDICTIONS_DIR, league="NFL")
+    st.divider()
     benchmark = state.get("market_benchmark")
     if not benchmark:
         return
@@ -1456,13 +1478,18 @@ def render_model_card(manifest: dict[str, Any]) -> None:
     )
     for name, specification in manifest["models"].items():
         metrics = specification["metrics"]
+        evaluation = (
+            "prequential rows"
+            if metrics.get("prequential_evaluation")
+            else "legacy chronological OOF rows"
+        )
         improvement = relative_mae_improvement(metrics)
         improvement_text = "—" if improvement is None else f"{improvement:+.1%}"
         title = name.replace("_", " ").title()
         st.markdown(
             f"""
             <div class="grid-model-card">
-              <div class="grid-model-head"><div style="font:500 15px 'Instrument Sans',sans-serif">{html_text(title)}</div><div class="grid-muted">{int(metrics.get("oof_rows", 0)):,} out-of-fold rows · {len(specification.get("features", []))} features</div></div>
+              <div class="grid-model-head"><div style="font:500 15px 'Instrument Sans',sans-serif">{html_text(title)}</div><div class="grid-muted">{int(metrics.get("oof_rows", 0)):,} {evaluation} · {len(specification.get("features", []))} features</div></div>
               <div class="grid-model-metrics">
                 <div class="grid-model-metric"><div class="grid-mini-label">MAE</div><div class="grid-model-value">{float(metrics.get("mae", 0)):.2f}</div></div>
                 <div class="grid-model-metric"><div class="grid-mini-label">RMSE</div><div class="grid-model-value">{float(metrics.get("rmse", 0)):.2f}</div></div>
@@ -1571,6 +1598,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     forecast_week = (
         prediction_batch.get("metadata", {}).get("forecast_week", "—") if prediction_batch else "—"
     )
+    prediction_season = int(state.get("prediction_season", datetime.now().year))
     badge = (
         "Forecasts ready"
         if forecast_ready
@@ -1601,17 +1629,21 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     if not ready:
         st.warning(
             "The College Football artifact has not been built in this environment. "
-            "Run `python weekly_cfb_update.py --season 2026`."
+            f"Run `python weekly_cfb_update.py --season {prediction_season}`."
         )
         return
     if prediction_batch and model_manifest:
+        margin_metrics = model_manifest["models"]["margin"]["metrics"]
+        total_metrics = model_manifest["models"]["total"]["metrics"]
+        margin_holdout = int(margin_metrics["latest_holdout_season"])
+        total_holdout = int(total_metrics["latest_holdout_season"])
         st.markdown(
             f"""
-            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size:22px">2026 Week {html_text(forecast_week)} Forecasts</h2></div></div>
+            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size:22px">{prediction_season} Week {html_text(forecast_week)} Forecasts</h2></div></div>
             <div class="grid-results grid-cfb-forecast-summary">
               <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Margin model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["margin"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Total model · 2025 MAE</div><div class="grid-result-value">{float(model_manifest["models"]["total"]["metrics"]["latest_holdout_mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Margin model · {margin_holdout} MAE</div><div class="grid-result-value">{float(margin_metrics["latest_holdout_mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Total model · {total_holdout} MAE</div><div class="grid-result-value">{float(total_metrics["latest_holdout_mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Ready</div></div>
             </div>
             """,
@@ -1631,7 +1663,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         talent_teams = int(coverage.get("talent_teams", 0))
         if covered_teams and (returning_teams < covered_teams or talent_teams < covered_teams):
             st.info(
-                f"2026 input coverage: returning production {returning_teams}/{covered_teams} teams · "
+                f"{prediction_season} input coverage: returning production {returning_teams}/{covered_teams} teams · "
                 f"talent {talent_teams}/{covered_teams}. The current batch uses neutral values for "
                 "missing fields. Regenerate after CFBD publishes the feeds and final rosters are set."
             )
@@ -1758,6 +1790,8 @@ if active_sport == "College Football":
         st.session_state.cfb_active_screen = CFB_PAGE_LABELS[0]
     if st.session_state.cfb_active_screen == "Top 30":
         render_cfb_rankings(cfb_state)
+    elif st.session_state.cfb_active_screen == "Results":
+        render_results(CFB_PREDICTIONS_DIR, league="CFB")
     else:
         render_cfb_foundation(cfb_state)
     st.radio(
@@ -1770,7 +1804,8 @@ if active_sport == "College Football":
     st.stop()
 
 try:
-    models, manifest = load_models()
+    active_manifest = release_manifest(PROJECT_ROOT)
+    models, manifest = load_models(str(active_manifest), sha256_file(active_manifest))
 except Exception as exc:
     LOGGER.exception("Model bundle failed to load")
     st.error(f"Model bundle unavailable: {exc}")
@@ -1801,7 +1836,7 @@ elif page == "Props":
     render_props(state, service, injury_system)
 elif page == "Rankings":
     render_rankings(state)
-elif page == "Performance":
+elif page == "Results":
     render_performance(state)
 else:
     render_model_card(manifest)

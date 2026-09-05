@@ -30,7 +30,7 @@ During Weeks 1-4, the total model also uses league-centered continuity for the p
 
 The feature builder also derives point-in-time success rate, early-down EPA, explosive-play rate, sack rate, neutral pass tendency, quarterback continuity, and performance volatility for research. A 723-game expanding-window ablation found that every predeclared combination worsened both game targets, so these candidates are published in the team snapshot for continued monitoring but are not production model inputs. Stronger game-model Ridge shrinkage produced a smaller, consistent gain: prequential margin MAE moved from 10.383 to 10.362 and total MAE from 10.536 to 10.527.
 
-Prediction intervals use the standard deviation of chronological residuals. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
+Production prediction intervals use the standard deviation of chronological residuals available at the release cutoff. Reported interval coverage, pinball loss, and winner calibration use only residuals from validation weeks earlier than the row being scored. They describe historical model error, not every source of real-world uncertainty. Injury availability remains a separate scenario until a timestamped report history supports safe training.
 
 The football model remains independent of sportsbook lines and is stored on every prediction.
 During Weeks 1-4, the primary margin forecast also uses a preseason calibration: current
@@ -45,7 +45,7 @@ The completed 2023–2025 benchmark matched all 723 eligible games with zero tim
 
 ## Evaluation
 
-All model evaluation is expanding walk-forward. A week's validation rows are predicted only by models trained on earlier seasons or earlier weeks. The manifest is authoritative for the exact metrics of the checked-in bundle.
+All model evaluation is expanding walk-forward. A week's validation rows are predicted only by models trained on earlier seasons or earlier weeks. Ensemble and baseline weights, along with uncertainty scales, are also selected from earlier validation weeks. Manifests created before this policy include chronological component predictions but do not carry the `prequential_evaluation` marker; regenerate them before treating their ensemble and interval metrics as nested estimates. The manifest is authoritative for the exact metrics of its bundle.
 
 Required release checks:
 
@@ -73,4 +73,4 @@ Required release checks:
 
 ## Monitoring and retraining
 
-The scheduled Tuesday workflow refreshes data and models, freezes the next available week, scores previous immutable batches, runs tests, and opens a draft pull request. Human review of freshness, metrics, injuries, and model hash is required before merge and deployment.
+The scheduled Tuesday NFL workflow and Wednesday CFB workflow refresh data and models, freeze the next available week, append official settlements and corrections, run tests, and open draft pull requests. The Results pages choose one pregame version per game and keep all-game coverage separate from the timestamp-valid market-matched comparison. Human review of freshness, metrics, injuries, and model hash is required before merge and deployment.

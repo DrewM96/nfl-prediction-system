@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 import joblib
 import numpy as np
@@ -17,7 +18,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from nfl_prediction.io import atomic_write_json, read_json, sha256_file
+from nfl_prediction.io import archive_manifest, atomic_write_json, read_json, sha256_file
+from nfl_prediction.validation import uncertainty_metrics
 
 from .config import CFB_MODEL_MANIFEST_PATH, CFB_MODELS_DIR
 
@@ -125,16 +127,12 @@ def fit_cfb_model(
         "rmse": float(mean_squared_error(actual, predicted) ** 0.5),
         "bias": float(np.mean(predicted - actual)),
         "residual_std": residual_std,
-        "interval_80_coverage": float(
-            np.mean(
-                (actual >= predicted - 1.2816 * residual_std)
-                & (actual <= predicted + 1.2816 * residual_std)
-            )
-        ),
+        "prequential_evaluation": 1.0,
         "latest_holdout_season": float(latest_season),
         "latest_holdout_rows": float(latest.sum()),
         "latest_holdout_mae": float(mean_absolute_error(actual[latest], predicted[latest])),
     }
+    metrics.update(uncertainty_metrics(validation, actual, predicted, winner=name == "margin"))
     estimator = make_ridge(alpha)
     estimator.fit(clean[feature_names].astype(float), clean[target_name].astype(float))
     return CFBFittedModel(
@@ -161,6 +159,7 @@ def save_cfb_model_bundle(
 ) -> dict[str, Any]:
     root = Path(output_dir)
     root.mkdir(parents=True, exist_ok=True)
+    release_id = uuid4().hex
     manifest: dict[str, Any] = {
         "schema_version": 1,
         "sport": "college_football",
@@ -176,7 +175,7 @@ def save_cfb_model_bundle(
         "models": {},
     }
     for name, model in models.items():
-        filename = f"v1_{name}.joblib"
+        filename = f"v1_{name}_{release_id}.joblib"
         target = root / filename
         descriptor, temporary_name = tempfile.mkstemp(prefix=f".{filename}.", dir=root)
         os.close(descriptor)
@@ -195,6 +194,7 @@ def save_cfb_model_bundle(
             "file": {"path": filename, "sha256": sha256_file(target)},
         }
     atomic_write_json(root / "manifest.json", manifest)
+    archive_manifest(root / "manifest.json")
     return manifest
 
 

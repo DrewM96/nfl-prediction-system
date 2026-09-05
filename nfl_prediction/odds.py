@@ -327,7 +327,7 @@ class MarketSnapshotStore:
 
 
 def _game_kickoff(game: dict[str, Any]) -> datetime | None:
-    commence = game.get("commence_time")
+    commence = game.get("commence_time") or game.get("start_date")
     if commence:
         return parse_timestamp(commence)
     gameday = game.get("gameday")
@@ -343,6 +343,33 @@ def _game_kickoff(game: dict[str, Any]) -> datetime | None:
     return local.astimezone(UTC)
 
 
+def eligible_market_snapshot(
+    consensus: dict[str, Any] | None,
+    *,
+    as_of: datetime | None = None,
+    max_age: timedelta = timedelta(days=8),
+) -> dict[str, Any] | None:
+    """One time gate for comparisons and market-derived forecasts."""
+    if not consensus or not consensus.get("snapshot_at"):
+        return None
+    try:
+        captured = parse_timestamp(consensus["snapshot_at"])
+    except (ValueError, TypeError):
+        return None
+    now = (as_of or datetime.now(UTC)).astimezone(UTC)
+    if captured > now or now - captured > max_age:
+        return None
+    games = []
+    for game in consensus.get("games", []):
+        try:
+            kickoff = _game_kickoff(game)
+        except (ValueError, TypeError):
+            continue
+        if kickoff is not None and captured < kickoff and now < kickoff:
+            games.append(game)
+    return {**consensus, "games": games} if games else None
+
+
 def attach_market_consensus(
     predictions: list[dict[str, Any]],
     consensus: dict[str, Any] | None,
@@ -350,26 +377,22 @@ def attach_market_consensus(
     max_age: timedelta = timedelta(days=8),
     as_of: datetime | None = None,
 ) -> list[dict[str, Any]]:
-    if not consensus or not consensus.get("snapshot_at"):
-        return predictions
-    snapshot_at = parse_timestamp(consensus["snapshot_at"])
     knowledge_time = (as_of or datetime.now(UTC)).astimezone(UTC)
+    consensus = eligible_market_snapshot(consensus, as_of=knowledge_time, max_age=max_age)
     lookup = {
-        (game.get("away_team"), game.get("home_team")): game for game in consensus.get("games", [])
+        (game.get("away_team"), game.get("home_team")): game
+        for game in (consensus or {}).get("games", [])
     }
     enriched: list[dict[str, Any]] = []
     for source in predictions:
         prediction = dict(source)
         market = lookup.get((prediction.get("away_team"), prediction.get("home_team")))
-        kickoff = _game_kickoff(market or prediction)
-        if (
-            market is None
-            or snapshot_at > knowledge_time
-            or knowledge_time - snapshot_at > max_age
-            or (kickoff is not None and snapshot_at >= kickoff)
-        ):
+        kickoff = _game_kickoff(prediction)
+        market_kickoff = _game_kickoff(market) if market else None
+        if market is None or (kickoff is not None and kickoff != market_kickoff):
             prediction["market_consensus"] = None
             prediction["market_informed"] = None
+            prediction["market_line"] = None
             enriched.append(prediction)
             continue
         spread = market.get("spread")

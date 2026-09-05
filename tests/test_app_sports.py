@@ -33,22 +33,33 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("Ohio State logo" in markdown.value for markdown in app.markdown)
 
 
-def test_power_rankings_default_to_latest_market_consensus() -> None:
+def test_power_rankings_offer_a_football_form_view() -> None:
     app = AppTest.from_file("app.py").run(timeout=30)
     navigation = next(radio for radio in app.radio if radio.label == "Navigate")
     navigation.set_value("Rankings").run(timeout=30)
 
     source = next(radio for radio in app.radio if radio.label == "Ranking source")
-    assert source.value == "Latest market consensus"
+    form_view = next(option for option in source.options if option.endswith("football form"))
+    source.set_value(form_view).run(timeout=30)
     assert not app.error
     assert not app.exception
-    assert any("Market-implied points" in markdown.value for markdown in app.markdown)
+    assert any("Completed-game form" in markdown.value for markdown in app.markdown)
     assert any("Los Angeles Rams" in markdown.value for markdown in app.markdown)
     assert any("Los Angeles Rams logo" in markdown.value for markdown in app.markdown)
     assert any("QB returns" in markdown.value for markdown in app.markdown)
     assert any("Weeks 1-4 totals model" in caption.value for caption in app.caption)
 
-    source.set_value("2025 football form").run(timeout=30)
-    assert not app.error
-    assert not app.exception
-    assert any("Completed-game form" in markdown.value for markdown in app.markdown)
+
+def test_results_are_available_for_both_sports() -> None:
+    app = AppTest.from_file("app.py").run(timeout=30)
+    navigation = next(radio for radio in app.radio if radio.label == "Navigate")
+    navigation.set_value("Results").run(timeout=30)
+    assert any("Season Results" in heading.value for heading in app.header)
+    assert not app.error and not app.exception
+
+    sport = next(radio for radio in app.radio if radio.label == "Sport")
+    sport.set_value("College Football").run(timeout=30)
+    navigation = next(radio for radio in app.radio if radio.label == "Navigate")
+    navigation.set_value("Results").run(timeout=30)
+    assert any("Season Results" in heading.value for heading in app.header)
+    assert not app.error and not app.exception
