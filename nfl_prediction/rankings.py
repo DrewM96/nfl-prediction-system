@@ -66,7 +66,7 @@ def build_market_power_ratings(
     ratings = coefficients[:-1]
     ratings -= ratings.mean()
     home_field = float(coefficients[-1])
-    fitted = design[:, :-1] @ ratings + home_field
+    fitted = design[:, :-1] @ ratings + design[:, -1] * home_field
     residuals = fitted - targets
     appearances = {
         team: sum(team in (game["home"], game["away"]) for game in games) for team in teams

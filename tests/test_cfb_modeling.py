@@ -63,7 +63,7 @@ def test_cfb_bundle_round_trips_and_rejects_tampering(tmp_path: Path) -> None:
     assert manifest["prediction_season"] == 2026
     assert loaded["margin"].predict(pd.DataFrame([{"feature": 3.0}])).shape == (1,)
 
-    with (output / "v1_margin.joblib").open("ab") as handle:
+    with (output / manifest["models"]["margin"]["file"]["path"]).open("ab") as handle:
         handle.write(b"tampered")
     with pytest.raises(ValueError, match="Checksum mismatch"):
         load_cfb_model_bundle(output / "manifest.json")

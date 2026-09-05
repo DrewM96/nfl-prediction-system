@@ -25,7 +25,7 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: python -m pip install --upgrade pip
-      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install -r requirements-dev.txt
       - run: python weekly_nfl_update.py
       - run: python -m pytest -q
       - name: Publish a reviewable artifact update

@@ -5,9 +5,9 @@
 1. Run `python weekly_nfl_update.py` after the prior week's final game is official.
 2. Confirm the command exits successfully and produces the expected next-week game count.
 3. Review `update_log.json` for prediction season, training seasons, data cutoff, bundle hash, and every model's metrics.
-4. Confirm `models/manifest.json` checksums and `data/predictions/<run-id>.json` exist.
+4. Confirm `data/nfl_release.json` points to an immutable manifest whose checksum equals `model_hash`, and that its `state.prediction_batch.run_id` exists under `data/predictions/`.
 5. Run `ruff check .`, `ruff format --check .`, and `pytest -q`.
-6. Start Streamlit and verify This Week, Custom Game, all four prop paths, Performance, and Model Card.
+6. Start Streamlit and verify This Week, Custom Game, all four prop paths, Results, and Model Card. On Results, confirm one version per game, explicit pending/final counts, and the smaller matched-market sample where applicable.
 7. Merge/deploy only after the automated artifact pull request is reviewed.
 
 ## College Football foundation refresh
@@ -21,13 +21,15 @@
    Completed-season inputs use the local long-lived cache; only current-season feeds expire on
    the normal six-hour schedule. Use `--refresh-current` only when every current-season endpoint
    must be fetched again.
-7. Review `data/cfb/models/manifest.json`: both checksums, selected schemas, 4,470 OOF rows,
-   and 2025 holdout MAE must match the fixed benchmark.
+7. Review the immutable manifest named by `data/cfb/latest_prediction.json`: both checksums,
+   selected schemas, prequential evaluation marker, and latest-season holdout metrics must be present.
 8. Review `data/cfb/latest_prediction.json` and its batch under `data/cfb/predictions/`. Every
    kickoff must be later than `data_cutoff`, `market_data_used` must be false, and the game count
    must match the intended week.
-9. Run the full test suite and inspect the College Football tab before merging. Never overwrite
-   an old batch; postgame outcomes belong in a separate results record.
+9. Run the full test suite and inspect the College Football Results page before merging. Never overwrite
+   an old batch or settlement; new and corrected outcomes belong in append-only settlement revisions.
+
+The scheduled Wednesday production workflow caches `data/cfb/cache/` between runs, refreshes only current-season endpoints, and opens a draft pull request. Its first uncached run may consume the full historical request set; review CFBD quota before enabling it.
 
 The manual `CFB historical benchmark` workflow makes 56 season-level requests when its ephemeral
 runner has no cache: seven endpoints for each season from 2018 through 2025. Run it intentionally,

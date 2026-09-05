@@ -43,6 +43,7 @@ def test_cfbd_records_are_normalized_to_stable_ids() -> None:
                 "awayClassification": "fbs",
                 "neutralSite": False,
                 "conferenceGame": True,
+                "status": "scheduled",
                 "completed": False,
                 "homePoints": None,
                 "awayPoints": None,
@@ -65,6 +66,7 @@ def test_cfbd_records_are_normalized_to_stable_ids() -> None:
     assert teams.iloc[0]["logo"].endswith("alpha.png")
     assert games.iloc[0]["game_id"] == 99
     assert bool(games.iloc[0]["fbs_vs_fbs"]) is True
+    assert games.iloc[0]["status"] == "scheduled"
     assert calendar.iloc[0]["week"] == 1
 
 

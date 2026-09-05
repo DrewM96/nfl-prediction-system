@@ -239,13 +239,13 @@ def build_point_in_time_features(
     """Build features using only results available before each game's kickoff.
 
     Historical benchmarking keeps the default completed-game behavior. Production
-    calls may include scheduled games; those rows receive pregame features but
-    never update Elo, form, advanced metrics, or last-played state.
+    calls may include scheduled games; those rows receive pregame features and
+    advance the known schedule's rest clock, but never update Elo, form, or
+    advanced performance state.
     """
     games = data.games.copy()
     eligible = (
-        games["fbs_vs_fbs"].fillna(False)
-        & games["home_id"].notna()
+        games["home_id"].notna()
         & games["away_id"].notna()
         & games["week"].notna()
         & games["start_date"].notna()
@@ -256,7 +256,7 @@ def build_point_in_time_features(
         & games["away_points"].notna()
     )
     games = games[eligible & (True if include_scheduled else completed)].copy()
-    games = games.sort_values(["season", "week", "start_date", "game_id"], ignore_index=True)
+    games = games.sort_values(["start_date", "game_id"], ignore_index=True)
     if games.empty:
         return pd.DataFrame()
 
@@ -282,6 +282,12 @@ def build_point_in_time_features(
         home_team = str(game["home_team"])
         away_team = str(game["away_team"])
         kickoff = pd.Timestamp(game["start_date"])
+        # An FCS opponent still occupies a real schedule date. Keep it in the
+        # rest spine without treating its result as an FBS rating observation.
+        if not bool(game["fbs_vs_fbs"]):
+            last_played[home_id] = kickoff
+            last_played[away_id] = kickoff
+            continue
         is_completed = (
             bool(game["completed"])
             and pd.notna(game["home_points"])
