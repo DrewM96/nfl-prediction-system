@@ -1,0 +1,32 @@
+{
+  "runs": [
+    {
+      "run_id": "20260801T222948Z-cb7b190a",
+      "games": 17,
+      "margin_mae": 15.234055441196446,
+      "total_mae": 9.043806976253093,
+      "winner_accuracy": 0.7058823529411765,
+      "market_games": 0,
+      "matched_model_margin_mae": null,
+      "market_margin_mae": null,
+      "market_total_games": 0,
+      "matched_model_total_mae": null,
+      "market_total_mae": null
+    },
+    {
+      "run_id": "20260830T175502Z-86bfba5a",
+      "games": 9,
+      "margin_mae": 17.577864069358426,
+      "total_mae": 7.712738073860619,
+      "winner_accuracy": 0.6666666666666666,
+      "market_games": 0,
+      "matched_model_margin_mae": null,
+      "market_margin_mae": null,
+      "market_total_games": 0,
+      "matched_model_total_mae": null,
+      "market_total_mae": null
+    }
+  ],
+  "updated_at": "2026-09-05T16:49:48.968981+00:00",
+  "schema_version": 2
+}

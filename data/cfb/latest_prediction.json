@@ -1,6 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20260830T175502Z-86bfba5a",
-  "path": "20260830T175502Z-86bfba5a.json",
-  "model_hash": "7ff594162ff989e855abe82c7655c9a9538022c752efaeb434fba549044a65bf"
+  "run_id": "20260905T164957Z-81034aa2",
+  "path": "20260905T164957Z-81034aa2.json",
+  "model_hash": "c943e7302c4902344d7464a855396c3100346395d644bb251eb4b8154aebfe60",
+  "manifest_path": "data/cfb/models/manifest-c943e7302c4902344d7464a855396c3100346395d644bb251eb4b8154aebfe60.json",
+  "rankings_path": "data/cfb/power_rankings-c943e7302c4902344d7464a855396c3100346395d644bb251eb4b8154aebfe60.json"
 }
