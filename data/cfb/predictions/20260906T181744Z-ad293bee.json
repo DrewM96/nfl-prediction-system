@@ -1,0 +1,103 @@
+{
+  "run_id": "20260906T181744Z-ad293bee",
+  "created_at": "2026-09-06T18:17:44.938016+00:00",
+  "prediction_season": 2026,
+  "data_cutoff": "2026-09-06T18:14:04.520876+00:00",
+  "model_hash": "f6d15c976d15f9d60b2f099676cab3cb7c2a7a5017ae9203ecac27adad01d6bf",
+  "metadata": {
+    "forecast_week": 1,
+    "selected_configurations": {
+      "margin": "elo_form_advanced_preseason",
+      "total": "elo_form_advanced"
+    },
+    "benchmark_sha256": "5763b54e5921d7558a771436fa2835aa1483a3d8c2f43f1166953b98f1999883",
+    "input_coverage": {
+      "scheduled_fbs_teams": 138,
+      "returning_production_teams": 136,
+      "talent_teams": 138,
+      "recruiting_teams": 138,
+      "portal_records": 4470,
+      "completed_games": 95
+    },
+    "market_data_used": false,
+    "provisional": true
+  },
+  "predictions": [
+    {
+      "game_id": 401858437,
+      "season": 2026,
+      "week": 1,
+      "start_date": "2026-09-06T20:00:00+00:00",
+      "home_team": "Washington",
+      "away_team": "Washington State",
+      "neutral_site": false,
+      "predicted_home_margin": 16.510341621068203,
+      "predicted_total": 47.26351626396386,
+      "predicted_home_score": 31.88692894251603,
+      "predicted_away_score": 15.376587321447827,
+      "home_win_probability": 0.8432437019979875,
+      "margin_p10": -4.483900393647531,
+      "margin_p90": 37.50458363578394,
+      "total_p10": 26.148017145952974,
+      "total_p90": 68.37901538197474,
+      "forecast_type": "independent_football_model"
+    },
+    {
+      "game_id": 401856661,
+      "season": 2026,
+      "week": 1,
+      "start_date": "2026-09-06T23:30:00+00:00",
+      "home_team": "Ole Miss",
+      "away_team": "Louisville",
+      "neutral_site": true,
+      "predicted_home_margin": 8.059978317317437,
+      "predicted_total": 47.896704895294945,
+      "predicted_home_score": 27.97834160630619,
+      "predicted_away_score": 19.918363288988754,
+      "home_win_probability": 0.6886487655208972,
+      "margin_p10": -12.934263697398297,
+      "margin_p90": 29.05422033203317,
+      "total_p10": 26.78120577728406,
+      "total_p90": 69.01220401330583,
+      "forecast_type": "independent_football_model"
+    },
+    {
+      "game_id": 401858438,
+      "season": 2026,
+      "week": 1,
+      "start_date": "2026-09-06T23:30:00+00:00",
+      "home_team": "Notre Dame",
+      "away_team": "Wisconsin",
+      "neutral_site": true,
+      "predicted_home_margin": 22.653895286034412,
+      "predicted_total": 46.46944565546632,
+      "predicted_home_score": 34.56167047075037,
+      "predicted_away_score": 11.907775184715955,
+      "home_win_probability": 0.9166543887565746,
+      "margin_p10": 1.6596532713186782,
+      "margin_p90": 43.64813730075015,
+      "total_p10": 25.35394653745544,
+      "total_p90": 67.5849447734772,
+      "forecast_type": "independent_football_model"
+    },
+    {
+      "game_id": 401858212,
+      "season": 2026,
+      "week": 1,
+      "start_date": "2026-09-07T23:30:00+00:00",
+      "home_team": "Florida State",
+      "away_team": "SMU",
+      "neutral_site": false,
+      "predicted_home_margin": -4.0830926460493675,
+      "predicted_total": 52.593589981085486,
+      "predicted_home_score": 24.25524866751806,
+      "predicted_away_score": 28.338341313567426,
+      "home_win_probability": 0.4015822894166934,
+      "margin_p10": -25.077334660765104,
+      "margin_p90": 16.911149368666365,
+      "total_p10": 31.478090863074602,
+      "total_p90": 73.70908909909637,
+      "forecast_type": "independent_football_model"
+    }
+  ]
+}
