@@ -19,7 +19,7 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
     assert set(models) == {"margin", "total"}
     assert batch is not None
     assert batch["model_hash"] == sha256_file(manifest_path)
-    assert batch["prediction_season"] == 2026
+    assert batch["prediction_season"] == manifest["prediction_season"]
     assert batch["metadata"]["market_data_used"] is False
     assert batch["metadata"]["provisional"] is True
     assert batch["metadata"]["input_coverage"] == manifest["input_coverage"]

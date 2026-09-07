@@ -247,7 +247,7 @@ python cfb_production_update.py --season 2026
 python cfb_production_update.py --season 2026 --week 2
 ```
 
-The scheduled `Weekly CFB model update` workflow restores the private API response cache, refreshes current-season data, settles completed frozen forecasts, runs validation, and opens a draft artifact pull request. A run-specific cache key allows refreshed current-season responses to seed the next run while avoiding repeated historical API requests.
+The scheduled `Weekly CFB model update` workflow detects the active CFB season, restores the private API response cache, refreshes current-season data, settles completed frozen forecasts, and runs validation. After lint and the full test suite pass, it opens or updates an artifact pull request and merges the exact validated commit into `main`, which publishes the refreshed app data. A conflict or validation failure stops publication. Manual runs can still override the season. A run-specific cache key allows refreshed current-season responses to seed the next run while avoiding repeated historical API requests.
 
 Each run writes release-specific checksummed estimators and an immutable manifest to
 `data/cfb/models/`, an immutable batch under `data/cfb/predictions/`, an archived model-matched

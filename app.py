@@ -1679,7 +1679,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     else:
         st.info(
             "The historical benchmark passed, but no checksummed production forecast is installed. "
-            "Run `python cfb_production_update.py --season 2026`."
+            f"Run `python cfb_production_update.py --season {prediction_season}`."
         )
     benchmark = state.get("historical_benchmark")
     if benchmark:
@@ -1717,17 +1717,22 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
 
 def render_cfb_rankings(state: dict[str, Any]) -> None:
     rankings = state.get("power_rankings")
+    prediction_season = int(
+        (rankings or {}).get(
+            "prediction_season", state.get("prediction_season", datetime.now().year)
+        )
+    )
     if not rankings:
         page_header("College Football Top 30")
         st.warning(
             "The model-matched CFB ranking artifact is unavailable. Run "
-            "`python cfb_production_update.py --season 2026`."
+            f"`python cfb_production_update.py --season {prediction_season}`."
         )
         return
 
     display_count = int(rankings.get("display_count", 30))
     ranking_rows = rankings.get("ratings", [])[:display_count]
-    page_header("College Football Top 30", "2026 preseason ratings")
+    page_header("College Football Top 30", f"{prediction_season} model ratings")
     st.markdown(
         f"""
         <div class="grid-muted" style="margin-bottom:14px">Independent model-implied points above or below an average FBS team on a neutral field | data cutoff {html_text(str(rankings.get("data_cutoff", "unknown"))[:10])}</div>
@@ -1741,8 +1746,9 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
         unsafe_allow_html=True,
     )
     st.caption(
-        "GRIDLINE scores every scheduled 2026 FBS-vs-FBS matchup with its margin model, then "
-        "decomposes the full schedule into neutral-field team strength. Sportsbook lines play no role."
+        f"GRIDLINE scores every scheduled {prediction_season} FBS-vs-FBS matchup with its margin "
+        "model, then decomposes the full schedule into neutral-field team strength. Sportsbook "
+        "lines play no role."
     )
     max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
@@ -1762,7 +1768,7 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
     returning = int(coverage.get("returning_production_teams", 0))
     talent = int(coverage.get("talent_teams", 0))
     st.info(
-        f"2026 input coverage: returning production {returning}/{team_count} teams · talent "
+        f"{prediction_season} input coverage: returning production {returning}/{team_count} teams · talent "
         f"{talent}/{team_count}. Recruiting and portal context are included. Regenerate the Top 30 "
         "after CFBD publishes the remaining feeds and final rosters are set."
     )
