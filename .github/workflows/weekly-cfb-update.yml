@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       season:
-        description: College football season
-        required: true
-        default: "2026"
+        description: College football season (leave blank to detect automatically)
+        required: false
         type: string
   schedule:
     - cron: "0 12 * * 3"
@@ -22,8 +21,6 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      SEASON: ${{ inputs.season || '2026' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,6 +29,17 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      - name: Resolve CFB season
+        env:
+          REQUESTED_SEASON: ${{ inputs.season }}
+        run: |
+          if [ -n "$REQUESTED_SEASON" ]; then
+            season="$REQUESTED_SEASON"
+          else
+            season="$(python -c 'from cfb_prediction.season import current_cfb_season; print(current_cfb_season())')"
+          fi
+          echo "SEASON=$season" >> "$GITHUB_ENV"
+          echo "Using CFB season $season"
       - name: Restore CollegeFootballData cache
         uses: actions/cache@v4
         with:
@@ -48,7 +56,7 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: python -m pytest -q
-      - name: Publish a reviewable artifact update
+      - name: Publish validated CFB artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -63,6 +71,11 @@ jobs:
           fi
           git commit -m "chore: refresh weekly CFB forecasts"
           git push --force-with-lease origin "$branch"
-          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
-            gh pr create --draft --base main --head "$branch" --title "chore: refresh weekly CFB forecasts" --body "Automated frozen CFB forecast, settlement, rankings, and model refresh. Review CI and the release pointer before merging."
+          pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')"
+          if [ -z "$pr_number" ]; then
+            pr_url="$(gh pr create --base main --head "$branch" --title "chore: refresh weekly CFB forecasts" --body "Automated frozen CFB forecast, settlement, rankings, and model refresh. The publishing workflow passed lint and the full test suite before opening this pull request.")"
+            pr_number="${pr_url##*/}"
+          elif [ "$(gh pr view "$pr_number" --json isDraft --jq '.isDraft')" = "true" ]; then
+            gh pr ready "$pr_number"
           fi
+          gh pr merge "$pr_number" --squash --match-head-commit "$(git rev-parse HEAD)"

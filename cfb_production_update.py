@@ -10,11 +10,16 @@ import sys
 from datetime import datetime
 
 from cfb_prediction.production import run_cfb_production_update
+from cfb_prediction.season import current_cfb_season
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--season", type=int, default=datetime.now().year)
+    parser.add_argument(
+        "--season",
+        type=int,
+        help="CFB season year; defaults to the active fall/bowl season",
+    )
     parser.add_argument("--first-training-season", type=int, default=2018)
     parser.add_argument("--week", type=int)
     parser.add_argument("--as-of", type=datetime.fromisoformat)
@@ -25,14 +30,15 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    prediction_season = args.season or current_cfb_season(args.as_of)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
     try:
         result = run_cfb_production_update(
-            prediction_season=args.season,
-            historical_seasons=list(range(args.first_training_season, args.season)),
+            prediction_season=prediction_season,
+            historical_seasons=list(range(args.first_training_season, prediction_season)),
             as_of=args.as_of,
             week=args.week,
             refresh_current=args.refresh_current,
