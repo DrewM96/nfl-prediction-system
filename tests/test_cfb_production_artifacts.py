@@ -21,6 +21,7 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
     assert batch["model_hash"] == sha256_file(manifest_path)
     assert batch["prediction_season"] == manifest["prediction_season"]
     assert batch["metadata"]["market_data_used"] is False
+    assert batch["metadata"].get("market_data_used_as_model_input", False) is False
     assert batch["metadata"]["provisional"] is True
     assert batch["metadata"]["input_coverage"] == manifest["input_coverage"]
     coverage = manifest["input_coverage"]
@@ -33,6 +34,12 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
     forbidden = {"market_home_margin", "market_total", "home_points", "away_points"}
     for prediction in batch["predictions"]:
         assert not forbidden.intersection(prediction)
+        market = prediction.get("market_consensus")
+        if market:
+            assert datetime.fromisoformat(market["snapshot_at"]) < datetime.fromisoformat(
+                prediction["start_date"]
+            )
+            assert market.get("spread") or market.get("total")
         assert 0.0 <= prediction["home_win_probability"] <= 1.0
         assert prediction["predicted_home_score"] + prediction[
             "predicted_away_score"
@@ -42,6 +49,7 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
         ] == pytest.approx(prediction["predicted_home_margin"])
 
     for specification in manifest["models"].values():
+        assert all(not feature.startswith("market_") for feature in specification["feature_names"])
         metrics = specification["metrics"]
         assert metrics["oof_rows"] > 0
         assert metrics["latest_holdout_rows"] > 0
