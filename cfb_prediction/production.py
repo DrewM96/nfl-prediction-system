@@ -114,6 +114,32 @@ def _current_input_coverage(data: CFBHistoricalData, season: int) -> dict[str, i
     }
 
 
+def _market_consensus_for_game(
+    game: pd.Series,
+    *,
+    snapshot_at: datetime | None,
+) -> dict[str, Any] | None:
+    """Return evaluation-only market metadata captured during a refreshed production run."""
+    if snapshot_at is None:
+        return None
+    kickoff = pd.Timestamp(game.get("start_date"))
+    if pd.isna(kickoff) or pd.Timestamp(snapshot_at) >= kickoff:
+        return None
+    margin = game.get("market_home_margin")
+    total = game.get("market_total")
+    if pd.isna(margin) and pd.isna(total):
+        return None
+    provider_count = game.get("market_provider_count", 0)
+    provider_count = 0 if pd.isna(provider_count) else int(provider_count)
+    return {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": snapshot_at.isoformat(),
+        "provider_count": provider_count,
+        "spread": {"market_home_margin": float(margin)} if pd.notna(margin) else None,
+        "total": {"total": float(total)} if pd.notna(total) else None,
+    }
+
+
 def run_cfb_production_update(
     *,
     prediction_season: int,
@@ -145,6 +171,9 @@ def run_cfb_production_update(
         )
     ]
     parts.append(load_historical_data(active_client, [prediction_season], refresh=refresh_current))
+    # Only a forced current-season refresh establishes a trustworthy capture time.
+    # Cached lines remain available to historical features but are not stamped as current.
+    market_snapshot_at = datetime.now(UTC) if refresh_current else None
     data = _cut_off_results(_combine(parts), timestamp)
     settle_schedule(predictions_dir, data.games, sport="CFB")
     atomic_write_json(
@@ -183,12 +212,27 @@ def run_cfb_production_update(
         raise ValueError(f"No upcoming FBS-vs-FBS games are available for Week {forecast_week}")
 
     benchmark, selected = _load_selected_benchmark(benchmark_path)
+    selected_features = {
+        target: CFB_FEATURE_CONFIGURATIONS[configuration]
+        for target, configuration in selected.items()
+    }
+    leaked_market_features = sorted(
+        feature
+        for feature_names in selected_features.values()
+        for feature in feature_names
+        if feature.startswith("market_")
+    )
+    if leaked_market_features:
+        raise ValueError(
+            "CFB production model feature schema must remain market-independent: "
+            + ", ".join(leaked_market_features)
+        )
     input_coverage = _current_input_coverage(data, prediction_season)
     models = {
         "margin": fit_cfb_model(
             training,
             name="margin",
-            feature_names=CFB_FEATURE_CONFIGURATIONS[selected["margin"]],
+            feature_names=selected_features["margin"],
             target_name="home_margin",
             min_train_rows=int(benchmark["min_train_rows"]),
             alpha=float(benchmark["ridge_alpha"]),
@@ -196,7 +240,7 @@ def run_cfb_production_update(
         "total": fit_cfb_model(
             training,
             name="total",
-            feature_names=CFB_FEATURE_CONFIGURATIONS[selected["total"]],
+            feature_names=selected_features["total"],
             target_name="total_points",
             min_train_rows=int(benchmark["min_train_rows"]),
             alpha=float(benchmark["ridge_alpha"]),
@@ -240,27 +284,30 @@ def run_cfb_production_update(
     ):
         predicted_home_score = (total["mean"] + margin["mean"]) / 2.0
         predicted_away_score = (total["mean"] - margin["mean"]) / 2.0
-        predictions.append(
-            {
-                "game_id": int(game["game_id"]),
-                "season": int(game["season"]),
-                "week": int(game["week"]),
-                "start_date": pd.Timestamp(game["start_date"]).isoformat(),
-                "home_team": str(game["home_team"]),
-                "away_team": str(game["away_team"]),
-                "neutral_site": not bool(game["home_field"]),
-                "predicted_home_margin": float(margin["mean"]),
-                "predicted_total": float(total["mean"]),
-                "predicted_home_score": float(predicted_home_score),
-                "predicted_away_score": float(predicted_away_score),
-                "home_win_probability": float(margin["probability_above_zero"]),
-                "margin_p10": float(margin["p10"]),
-                "margin_p90": float(margin["p90"]),
-                "total_p10": float(total["p10"]),
-                "total_p90": float(total["p90"]),
-                "forecast_type": "independent_football_model",
-            }
-        )
+        prediction = {
+            "game_id": int(game["game_id"]),
+            "season": int(game["season"]),
+            "week": int(game["week"]),
+            "start_date": pd.Timestamp(game["start_date"]).isoformat(),
+            "home_team": str(game["home_team"]),
+            "away_team": str(game["away_team"]),
+            "neutral_site": not bool(game["home_field"]),
+            "predicted_home_margin": float(margin["mean"]),
+            "predicted_total": float(total["mean"]),
+            "predicted_home_score": float(predicted_home_score),
+            "predicted_away_score": float(predicted_away_score),
+            "home_win_probability": float(margin["probability_above_zero"]),
+            "margin_p10": float(margin["p10"]),
+            "margin_p90": float(margin["p90"]),
+            "total_p10": float(total["p10"]),
+            "total_p90": float(total["p90"]),
+            "forecast_type": "independent_football_model",
+        }
+        market_consensus = _market_consensus_for_game(game, snapshot_at=market_snapshot_at)
+        if market_consensus is not None:
+            prediction["market_consensus"] = market_consensus
+        predictions.append(prediction)
+    market_games = sum("market_consensus" in prediction for prediction in predictions)
     target = record_cfb_prediction_batch(
         predictions,
         model_hash=model_hash,
@@ -271,7 +318,15 @@ def run_cfb_production_update(
             "selected_configurations": selected,
             "benchmark_sha256": manifest["benchmark_sha256"],
             "input_coverage": input_coverage,
+            # Backward-compatible field retained while making the distinction explicit.
             "market_data_used": False,
+            "market_data_used_as_model_input": False,
+            "market_data_captured_for_evaluation": market_games > 0,
+            "market_snapshot_at": market_snapshot_at.isoformat() if market_games else None,
+            "market_coverage": {
+                "games_with_market": market_games,
+                "forecast_games": len(predictions),
+            },
             "provisional": True,
         },
         root=predictions_dir,

@@ -7,7 +7,13 @@ import pandas as pd
 import pytest
 
 from nfl_prediction.ledger import PredictionLedger
-from nfl_prediction.results import forecast_rows, select_forecasts, settle_schedule, summarize
+from nfl_prediction.results import (
+    disagreement_analysis,
+    forecast_rows,
+    select_forecasts,
+    settle_schedule,
+    summarize,
+)
 from nfl_prediction.results_ui import _weekly_chart
 
 
@@ -87,6 +93,40 @@ def test_comparison_metrics_use_the_identical_market_subset(tmp_path: Path) -> N
     assert result["matched_model_mae"] == pytest.approx(0)
     assert result["market_mae"] == pytest.approx(1)
     assert result["winner_games"] == 0  # ties have an explicit exclusion policy
+
+
+def test_disagreement_analysis_tracks_ats_side_and_pushes() -> None:
+    rows = pd.DataFrame(
+        [
+            {
+                "status": "final",
+                "published_margin": 5.0,
+                "market_margin": 1.0,
+                "actual_margin": 4.0,
+            },
+            {
+                "status": "final",
+                "published_margin": -6.0,
+                "market_margin": 1.0,
+                "actual_margin": 3.0,
+            },
+            {
+                "status": "final",
+                "published_margin": 10.0,
+                "market_margin": 1.0,
+                "actual_margin": 1.0,
+            },
+        ]
+    )
+
+    buckets = {row["bucket"]: row for row in disagreement_analysis(rows)}
+    assert buckets["4-6"]["games"] == 1
+    assert buckets["4-6"]["wins"] == 1
+    assert buckets["6-8"]["games"] == 1
+    assert buckets["6-8"]["losses"] == 1
+    assert buckets["8+"]["games"] == 1
+    assert buckets["8+"]["pushes"] == 1
+    assert buckets["8+"]["ats_rate"] is None
 
 
 def test_repeated_forecast_runs_count_each_game_once(tmp_path: Path) -> None:

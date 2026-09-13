@@ -93,8 +93,6 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
             calibrated = bool((prediction.get("preseason_calibration") or {}).get("weight"))
             market = prediction.get("market_consensus") or {}
             captured = market.get("snapshot_at")
-            # Old batches may contain market records: verify that they were
-            # actually available at publication before including comparisons.
             try:
                 market_at = parse_timestamp(captured) if captured else None
             except (TypeError, ValueError):
@@ -178,6 +176,64 @@ def select_forecasts(rows: pd.DataFrame, *, policy="first", horizon_minutes=60) 
     return selected.drop_duplicates(
         ["season", "game_id"], keep="first" if policy == "first" else "last"
     )
+
+
+def disagreement_analysis(rows: pd.DataFrame, *, source="published") -> list[dict[str, Any]]:
+    """Summarize ATS performance by absolute model-market margin disagreement."""
+    if source not in {"published", "independent"} or rows.empty:
+        return []
+    predicted = f"{source}_margin"
+    matched = rows[rows.status.eq("final")].dropna(
+        subset=[predicted, "market_margin", "actual_margin"]
+    )
+    if matched.empty:
+        return []
+    matched = matched.copy()
+    matched["disagreement"] = (matched[predicted] - matched["market_margin"]).abs()
+    bins = [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0), (8.0, np.inf)]
+    result: list[dict[str, Any]] = []
+    for low, high in bins:
+        if np.isinf(high):
+            subset = matched[matched["disagreement"].ge(low)]
+            label = f"{int(low)}+"
+        else:
+            subset = matched[matched["disagreement"].ge(low) & matched["disagreement"].lt(high)]
+            label = f"{int(low)}-{int(high)}"
+        if subset.empty:
+            result.append(
+                {
+                    "bucket": label,
+                    "games": 0,
+                    "wins": 0,
+                    "losses": 0,
+                    "pushes": 0,
+                    "ats_rate": None,
+                    "model_mae": None,
+                    "market_mae": None,
+                }
+            )
+            continue
+        model_edge = subset[predicted] - subset["market_margin"]
+        ats_margin = np.sign(model_edge) * (subset["actual_margin"] - subset["market_margin"])
+        wins = int(ats_margin.gt(0).sum())
+        losses = int(ats_margin.lt(0).sum())
+        pushes = int(ats_margin.eq(0).sum())
+        decisions = wins + losses
+        result.append(
+            {
+                "bucket": label,
+                "games": int(len(subset)),
+                "wins": wins,
+                "losses": losses,
+                "pushes": pushes,
+                "ats_rate": float(wins / decisions) if decisions else None,
+                "model_mae": float((subset[predicted] - subset["actual_margin"]).abs().mean()),
+                "market_mae": float(
+                    (subset["market_margin"] - subset["actual_margin"]).abs().mean()
+                ),
+            }
+        )
+    return result
 
 
 def summarize(rows: pd.DataFrame, *, source="published", target="margin") -> dict[str, Any]:
@@ -284,6 +340,7 @@ def performance_history(root: str | Path) -> dict[str, Any]:
                         market_total_games=total["matched_games"],
                         matched_model_total_mae=total["matched_model_mae"],
                         market_total_mae=total["market_mae"],
+                        margin_disagreement_buckets=disagreement_analysis(group),
                     )
                 )
-    return {"runs": runs, "updated_at": datetime.now(UTC).isoformat(), "schema_version": 2}
+    return {"runs": runs, "updated_at": datetime.now(UTC).isoformat(), "schema_version": 3}
