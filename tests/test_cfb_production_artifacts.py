@@ -49,7 +49,7 @@ def test_published_cfb_forecast_is_pre_game_and_matches_checked_bundle() -> None
         ] == pytest.approx(prediction["predicted_home_margin"])
 
     for specification in manifest["models"].values():
-        assert all(not feature.startswith("market_") for feature in specification["feature_names"])
+        assert all(not feature.startswith("market_") for feature in specification["features"])
         metrics = specification["metrics"]
         assert metrics["oof_rows"] > 0
         assert metrics["latest_holdout_rows"] > 0
