@@ -303,9 +303,7 @@ def run_cfb_production_update(
             "total_p90": float(total["p90"]),
             "forecast_type": "independent_football_model",
         }
-        market_consensus = _market_consensus_for_game(
-            game, snapshot_at=market_snapshot_at
-        )
+        market_consensus = _market_consensus_for_game(game, snapshot_at=market_snapshot_at)
         if market_consensus is not None:
             prediction["market_consensus"] = market_consensus
         predictions.append(prediction)
