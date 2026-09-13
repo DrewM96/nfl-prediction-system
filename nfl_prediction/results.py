@@ -197,9 +197,7 @@ def disagreement_analysis(rows: pd.DataFrame, *, source="published") -> list[dic
             subset = matched[matched["disagreement"].ge(low)]
             label = f"{int(low)}+"
         else:
-            subset = matched[
-                matched["disagreement"].ge(low) & matched["disagreement"].lt(high)
-            ]
+            subset = matched[matched["disagreement"].ge(low) & matched["disagreement"].lt(high)]
             label = f"{int(low)}-{int(high)}"
         if subset.empty:
             result.append(
@@ -216,9 +214,7 @@ def disagreement_analysis(rows: pd.DataFrame, *, source="published") -> list[dic
             )
             continue
         model_edge = subset[predicted] - subset["market_margin"]
-        ats_margin = np.sign(model_edge) * (
-            subset["actual_margin"] - subset["market_margin"]
-        )
+        ats_margin = np.sign(model_edge) * (subset["actual_margin"] - subset["market_margin"])
         wins = int(ats_margin.gt(0).sum())
         losses = int(ats_margin.lt(0).sum())
         pushes = int(ats_margin.eq(0).sum())
@@ -231,9 +227,7 @@ def disagreement_analysis(rows: pd.DataFrame, *, source="published") -> list[dic
                 "losses": losses,
                 "pushes": pushes,
                 "ats_rate": float(wins / decisions) if decisions else None,
-                "model_mae": float(
-                    (subset[predicted] - subset["actual_margin"]).abs().mean()
-                ),
+                "model_mae": float((subset[predicted] - subset["actual_margin"]).abs().mean()),
                 "market_mae": float(
                     (subset["market_margin"] - subset["actual_margin"]).abs().mean()
                 ),
