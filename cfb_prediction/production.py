@@ -213,7 +213,8 @@ def run_cfb_production_update(
 
     benchmark, selected = _load_selected_benchmark(benchmark_path)
     selected_features = {
-        target: CFB_FEATURE_CONFIGURATIONS[configuration] for target, configuration in selected.items()
+        target: CFB_FEATURE_CONFIGURATIONS[configuration]
+        for target, configuration in selected.items()
     }
     leaked_market_features = sorted(
         feature
@@ -302,7 +303,9 @@ def run_cfb_production_update(
             "total_p90": float(total["p90"]),
             "forecast_type": "independent_football_model",
         }
-        market_consensus = _market_consensus_for_game(game, snapshot_at=market_snapshot_at)
+        market_consensus = _market_consensus_for_game(
+            game, snapshot_at=market_snapshot_at
+        )
         if market_consensus is not None:
             prediction["market_consensus"] = market_consensus
         predictions.append(prediction)
