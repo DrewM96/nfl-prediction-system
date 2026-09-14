@@ -1,0 +1,32 @@
+name: Patch CFB market cards
+
+on:
+  push:
+    branches:
+      - feature/cfb-market-lines-on-cards
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/cfb-market-lines-on-cards
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/patch_cfb_market_cards.py
+      - run: python -m pip install ruff==0.12.10
+      - run: ruff format app.py tests/test_app_sports.py
+      - run: ruff check app.py tests/test_app_sports.py
+      - name: Commit patched files
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add app.py tests/test_app_sports.py
+          git commit -m "feat: show Vegas lines on CFB forecast cards"
+          git push
