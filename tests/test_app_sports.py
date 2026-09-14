@@ -10,6 +10,9 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert sport.value == "NFL"
     assert not app.error
     assert not app.exception
+    assert any("GRIDLINE" in markdown.value for markdown in app.markdown)
+    assert any("Vegas" in markdown.value for markdown in app.markdown)
+    assert any("Edge" in markdown.value for markdown in app.markdown)
 
     sport.set_value("College Football").run(timeout=30)
 
