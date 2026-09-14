@@ -1518,12 +1518,24 @@ def format_cfb_game_time(game: dict[str, Any]) -> str:
     return f"{kickoff.strftime('%a')} {kickoff.month}/{kickoff.day} {time_text}"
 
 
-def cfb_spread_label(game: dict[str, Any]) -> str:
-    margin = float(game["predicted_home_margin"])
+def cfb_margin_label(game: dict[str, Any], margin: float) -> str:
     if abs(margin) < 0.05:
         return "Pick"
     favorite = game["home_team"] if margin > 0 else game["away_team"]
     return f"{favorite} -{abs(margin):.1f}"
+
+
+def cfb_spread_label(game: dict[str, Any]) -> str:
+    return cfb_margin_label(game, float(game["predicted_home_margin"]))
+
+
+def cfb_market_spread_label(game: dict[str, Any]) -> str:
+    market = game.get("market_consensus") or {}
+    spread = market.get("spread") or {}
+    margin = spread.get("market_home_margin")
+    if margin is None:
+        return "—"
+    return cfb_margin_label(game, float(margin))
 
 
 def render_cfb_featured_game(game: dict[str, Any]) -> None:
@@ -1542,8 +1554,9 @@ def render_cfb_featured_game(game: dict[str, Any]) -> None:
               <div class="grid-cfb-team">{team_logo_html(str(game["home_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{home}</div><div class="grid-score">{float(game["predicted_home_score"]):.1f}</div></div>
               <div class="grid-date">{html_text(format_cfb_game_time(game))} · {venue}</div>
             </div>
-            <div class="grid-tiles">
-              <div class="grid-tile"><div class="grid-tile-label">Spread</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_spread_label(game))}</div></div>
+            <div class="grid-tiles" style="grid-template-columns:repeat(5,minmax(88px,1fr))">
+              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_market_spread_label(game))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Home win</div><div class="grid-tile-value">{format_probability(game["home_win_probability"])}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["predicted_total"]):.1f}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size:14px">{margin_range}</div></div>
@@ -1560,7 +1573,7 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
     venue = " · neutral" if game.get("neutral_site") else ""
     separator = "vs" if game.get("neutral_site") else "@"
     with st.container(border=True, key=f"cfb_game_card_{index}"):
-        columns = st.columns([1.5, 4.8, 1.0, 1.0, 1.0], vertical_alignment="center")
+        columns = st.columns([1.5, 4.2, 1.0, 1.0, 1.0, 1.0], vertical_alignment="center")
         columns[0].markdown(
             f'<div class="grid-row-date">{html_text(format_cfb_game_time(game))}{venue}</div>',
             unsafe_allow_html=True,
@@ -1576,14 +1589,18 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
             unsafe_allow_html=True,
         )
         columns[2].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Spread</div>{html_text(cfb_spread_label(game))}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">GRIDLINE</div>{html_text(cfb_spread_label(game))}</div>',
             unsafe_allow_html=True,
         )
         columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Home win</div>{format_probability(game["home_win_probability"])}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">Vegas</div>{html_text(cfb_market_spread_label(game))}</div>',
             unsafe_allow_html=True,
         )
         columns[4].markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">Home win</div>{format_probability(game["home_win_probability"])}</div>',
+            unsafe_allow_html=True,
+        )
+        columns[5].markdown(
             f'<div class="grid-row-value"><div class="grid-mini-label">Total</div>{float(game["predicted_total"]):.1f}</div>',
             unsafe_allow_html=True,
         )
