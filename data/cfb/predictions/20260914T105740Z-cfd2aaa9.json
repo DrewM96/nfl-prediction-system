@@ -1,0 +1,1744 @@
+{
+  "run_id": "20260914T105740Z-cfd2aaa9",
+  "created_at": "2026-09-14T10:57:40.388959+00:00",
+  "prediction_season": 2026,
+  "data_cutoff": "2026-09-14T10:57:19.701762+00:00",
+  "model_hash": "ec073cd1383280f27dcd5117bc4eaaa8a301f936bddef3b6ecf2d8b9ebc577d4",
+  "metadata": {
+    "forecast_week": 3,
+    "selected_configurations": {
+      "margin": "elo_form_advanced_preseason",
+      "total": "elo_form_advanced"
+    },
+    "benchmark_sha256": "5763b54e5921d7558a771436fa2835aa1483a3d8c2f43f1166953b98f1999883",
+    "input_coverage": {
+      "scheduled_fbs_teams": 138,
+      "returning_production_teams": 136,
+      "talent_teams": 138,
+      "recruiting_teams": 138,
+      "portal_records": 4471,
+      "completed_games": 185
+    },
+    "market_data_used": false,
+    "market_data_used_as_model_input": false,
+    "market_data_captured_for_evaluation": true,
+    "market_snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+    "market_coverage": {
+      "games_with_market": 57,
+      "forecast_games": 57
+    },
+    "provisional": true
+  },
+  "predictions": [
+    {
+      "game_id": 401858225,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-17T23:30:00+00:00",
+      "home_team": "Pittsburgh",
+      "away_team": "Syracuse",
+      "neutral_site": false,
+      "predicted_home_margin": 16.38975430089663,
+      "predicted_total": 50.613661465148176,
+      "predicted_home_score": 33.501707883022405,
+      "predicted_away_score": 17.11195358212577,
+      "home_win_probability": 0.8410364608217957,
+      "margin_p10": -4.6421336524429755,
+      "margin_p90": 37.42164225423623,
+      "total_p10": 29.546418527705242,
+      "total_p90": 71.68090440259111,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 11.0
+        },
+        "total": {
+          "total": 51.25
+        }
+      }
+    },
+    {
+      "game_id": 401858226,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-18T23:30:00+00:00",
+      "home_team": "Wake Forest",
+      "away_team": "Miami",
+      "neutral_site": false,
+      "predicted_home_margin": -14.935818222340156,
+      "predicted_total": 59.33332184362912,
+      "predicted_home_score": 22.19875181064448,
+      "predicted_away_score": 37.13457003298464,
+      "home_win_probability": 0.1813770721114234,
+      "margin_p10": -35.967706175679766,
+      "margin_p90": 6.096069730999449,
+      "total_p10": 38.26607890618619,
+      "total_p90": 80.40056478107206,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -21.25
+        },
+        "total": {
+          "total": 55.25
+        }
+      }
+    },
+    {
+      "game_id": 401856811,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T00:00:00+00:00",
+      "home_team": "Texas Tech",
+      "away_team": "Houston",
+      "neutral_site": false,
+      "predicted_home_margin": 13.2376359273899,
+      "predicted_total": 55.72771320251733,
+      "predicted_home_score": 34.48267456495361,
+      "predicted_away_score": 21.245038637563717,
+      "home_win_probability": 0.7900656712934182,
+      "margin_p10": -7.794252025949707,
+      "margin_p90": 34.26952388072951,
+      "total_p10": 34.660470265074395,
+      "total_p90": 76.79495613996026,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 7.25
+        },
+        "total": {
+          "total": 53.5
+        }
+      }
+    },
+    {
+      "game_id": 401869940,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T15:30:00+00:00",
+      "home_team": "Delaware",
+      "away_team": "Coastal Carolina",
+      "neutral_site": false,
+      "predicted_home_margin": 8.996165343842641,
+      "predicted_total": 58.15039085182532,
+      "predicted_home_score": 33.57327809783398,
+      "predicted_away_score": 24.57711275399134,
+      "home_win_probability": 0.7082195184461311,
+      "margin_p10": -12.035722609496965,
+      "margin_p90": 30.028053297182247,
+      "total_p10": 37.08314791438239,
+      "total_p90": 79.21763378926826,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 4.75
+        },
+        "total": {
+          "total": 57.5
+        }
+      }
+    },
+    {
+      "game_id": 401856686,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Arkansas",
+      "away_team": "Georgia",
+      "neutral_site": false,
+      "predicted_home_margin": -26.903135104120217,
+      "predicted_total": 56.47985829911416,
+      "predicted_home_score": 14.788361597496973,
+      "predicted_away_score": 41.69149670161719,
+      "home_win_probability": 0.05056805444141799,
+      "margin_p10": -47.93502305745982,
+      "margin_p90": -5.871247150780611,
+      "total_p10": 35.41261536167123,
+      "total_p90": 77.5471012365571,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -24.5
+        },
+        "total": {
+          "total": 54.25
+        }
+      }
+    },
+    {
+      "game_id": 401856792,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Kansas State",
+      "away_team": "Tulane",
+      "neutral_site": false,
+      "predicted_home_margin": 14.592667703303182,
+      "predicted_total": 47.92772928671742,
+      "predicted_home_score": 31.2601984950103,
+      "predicted_away_score": 16.667530791707122,
+      "home_win_probability": 0.8130574125201074,
+      "margin_p10": -6.439220250036424,
+      "margin_p90": 35.624555656642784,
+      "total_p10": 26.86048634927449,
+      "total_p90": 68.99497222416036,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 20.5
+        },
+        "total": {
+          "total": 49.5
+        }
+      }
+    },
+    {
+      "game_id": 401856798,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Iowa State",
+      "away_team": "Bowling Green",
+      "neutral_site": false,
+      "predicted_home_margin": 25.654946927701374,
+      "predicted_total": 47.43190776206633,
+      "predicted_home_score": 36.54342734488385,
+      "predicted_away_score": 10.888480417182478,
+      "home_win_probability": 0.9410102587885407,
+      "margin_p10": 4.6230589743617685,
+      "margin_p90": 46.68683488104098,
+      "total_p10": 26.364664824623397,
+      "total_p90": 68.49915069950927,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 23.75
+        },
+        "total": {
+          "total": 45.75
+        }
+      }
+    },
+    {
+      "game_id": 401856812,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Kansas",
+      "away_team": "Arizona State",
+      "neutral_site": true,
+      "predicted_home_margin": -5.636726783871086,
+      "predicted_total": 49.61815567761897,
+      "predicted_home_score": 21.990714446873945,
+      "predicted_away_score": 27.627441230745028,
+      "home_win_probability": 0.36561876063215704,
+      "margin_p10": -26.668614737210692,
+      "margin_p90": 15.395161169468519,
+      "total_p10": 28.550912740176038,
+      "total_p90": 70.6853986150619,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -5.5
+        },
+        "total": {
+          "total": 52.75
+        }
+      }
+    },
+    {
+      "game_id": 401858229,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Clemson",
+      "away_team": "North Carolina",
+      "neutral_site": false,
+      "predicted_home_margin": 3.319111803206736,
+      "predicted_total": 44.857009592200136,
+      "predicted_home_score": 24.088060697703437,
+      "predicted_away_score": 20.7689488944967,
+      "home_win_probability": 0.58014073854584,
+      "margin_p10": -17.712776150132868,
+      "margin_p90": 24.350999756546344,
+      "total_p10": 23.7897666547572,
+      "total_p90": 65.92425252964307,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.0
+        },
+        "total": {
+          "total": 44.25
+        }
+      }
+    },
+    {
+      "game_id": 401858451,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Minnesota",
+      "away_team": "Akron",
+      "neutral_site": false,
+      "predicted_home_margin": 9.985996855956675,
+      "predicted_total": 53.13104820796675,
+      "predicted_home_score": 31.558522531961714,
+      "predicted_away_score": 21.572525676005036,
+      "home_win_probability": 0.7285744074794458,
+      "margin_p10": -11.045891097382931,
+      "margin_p90": 31.01788480929628,
+      "total_p10": 32.063805270523815,
+      "total_p90": 74.19829114540968,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 24.25
+        },
+        "total": {
+          "total": 48.75
+        }
+      }
+    },
+    {
+      "game_id": 401858454,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Ohio State",
+      "away_team": "Kent State",
+      "neutral_site": false,
+      "predicted_home_margin": 49.89409142747518,
+      "predicted_total": 54.08724323301358,
+      "predicted_home_score": 51.99066733024438,
+      "predicted_away_score": 2.0965759027691995,
+      "home_win_probability": 0.9988184770200521,
+      "margin_p10": 28.862203474135576,
+      "margin_p90": 70.9259793808148,
+      "total_p10": 33.02000029557065,
+      "total_p90": 75.15448617045652,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 1,
+        "spread": {
+          "market_home_margin": 52.5
+        },
+        "total": {
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "game_id": 401858456,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Penn State",
+      "away_team": "Buffalo",
+      "neutral_site": false,
+      "predicted_home_margin": 29.427408285959693,
+      "predicted_total": 51.2907590879103,
+      "predicted_home_score": 40.359083686934994,
+      "predicted_away_score": 10.931675400975305,
+      "home_win_probability": 0.9635287078776138,
+      "margin_p10": 8.395520332620087,
+      "margin_p90": 50.4592962392993,
+      "total_p10": 30.22351615046737,
+      "total_p90": 72.35800202535324,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 38.5
+        },
+        "total": {
+          "total": 47.5
+        }
+      }
+    },
+    {
+      "game_id": 401860889,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:00:00+00:00",
+      "home_team": "Texas State",
+      "away_team": "North Texas",
+      "neutral_site": false,
+      "predicted_home_margin": 0.6228251353686067,
+      "predicted_total": 60.44491427421073,
+      "predicted_home_score": 30.53386970478967,
+      "predicted_away_score": 29.911044569421062,
+      "home_win_probability": 0.5151372222410121,
+      "margin_p10": -20.409062817970998,
+      "margin_p90": 21.654713088708213,
+      "total_p10": 39.3776713367678,
+      "total_p90": 81.51215721165366,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.0
+        },
+        "total": {
+          "total": 63.5
+        }
+      }
+    },
+    {
+      "game_id": 401858460,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:30:00+00:00",
+      "home_team": "Wisconsin",
+      "away_team": "Eastern Michigan",
+      "neutral_site": false,
+      "predicted_home_margin": 12.910936475809962,
+      "predicted_total": 46.99495789759531,
+      "predicted_home_score": 29.952947186702637,
+      "predicted_away_score": 17.042010710892676,
+      "home_win_probability": 0.784283357269335,
+      "margin_p10": -8.120951477529644,
+      "margin_p90": 33.94282442914957,
+      "total_p10": 25.92771496015238,
+      "total_p90": 68.06220083503825,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 24.0
+        },
+        "total": {
+          "total": 45.75
+        }
+      }
+    },
+    {
+      "game_id": 401856695,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T16:45:00+00:00",
+      "home_team": "Vanderbilt",
+      "away_team": "NC State",
+      "neutral_site": false,
+      "predicted_home_margin": 13.56728792977513,
+      "predicted_total": 51.75142613952971,
+      "predicted_home_score": 32.65935703465242,
+      "predicted_away_score": 19.09206910487729,
+      "home_win_probability": 0.7958068770746183,
+      "margin_p10": -7.464600023564476,
+      "margin_p90": 34.59917588311474,
+      "total_p10": 30.68418320208678,
+      "total_p90": 72.81866907697264,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.5
+        },
+        "total": {
+          "total": 52.5
+        }
+      }
+    },
+    {
+      "game_id": 401864508,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T17:00:00+00:00",
+      "home_team": "Central Michigan",
+      "away_team": "Wyoming",
+      "neutral_site": false,
+      "predicted_home_margin": 10.660078519659436,
+      "predicted_total": 45.77449908453967,
+      "predicted_home_score": 28.217288802099553,
+      "predicted_away_score": 17.557210282440117,
+      "home_win_probability": 0.7420191877589014,
+      "margin_p10": -10.37180943368017,
+      "margin_p90": 31.69196647299904,
+      "total_p10": 24.707256147096736,
+      "total_p90": 66.84174202198261,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 1.5
+        },
+        "total": {
+          "total": 39.5
+        }
+      }
+    },
+    {
+      "game_id": 401862774,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:00:00+00:00",
+      "home_team": "Toledo",
+      "away_team": "Temple",
+      "neutral_site": false,
+      "predicted_home_margin": 9.573226661093624,
+      "predicted_total": 47.8734006441229,
+      "predicted_home_score": 28.72331365260826,
+      "predicted_away_score": 19.15008699151464,
+      "home_win_probability": 0.7201726724323765,
+      "margin_p10": -11.458661292245981,
+      "margin_p90": 30.60511461443323,
+      "total_p10": 26.80615770667997,
+      "total_p90": 68.94064358156584,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 5.75
+        },
+        "total": {
+          "total": 51.25
+        }
+      }
+    },
+    {
+      "game_id": 401856685,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Alabama",
+      "away_team": "Florida State",
+      "neutral_site": false,
+      "predicted_home_margin": 26.4738611606533,
+      "predicted_total": 53.99406181758208,
+      "predicted_home_score": 40.23396148911769,
+      "predicted_away_score": 13.76010032846439,
+      "home_win_probability": 0.9466508045969249,
+      "margin_p10": 5.441973207313694,
+      "margin_p90": 47.505749113992906,
+      "total_p10": 32.926818880139145,
+      "total_p90": 75.06130475502502,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 20.5
+        },
+        "total": {
+          "total": 49.25
+        }
+      }
+    },
+    {
+      "game_id": 401856694,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Texas A&M",
+      "away_team": "Kentucky",
+      "neutral_site": false,
+      "predicted_home_margin": 28.73015854769655,
+      "predicted_total": 52.29497107026947,
+      "predicted_home_score": 40.51256480898301,
+      "predicted_away_score": 11.782406261286459,
+      "home_win_probability": 0.9600013844662802,
+      "margin_p10": 7.698270594356945,
+      "margin_p90": 49.76204650103615,
+      "total_p10": 31.227728132826535,
+      "total_p90": 73.3622140077124,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 16.75
+        },
+        "total": {
+          "total": 49.5
+        }
+      }
+    },
+    {
+      "game_id": 401856797,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Cincinnati",
+      "away_team": "Miami (OH)",
+      "neutral_site": false,
+      "predicted_home_margin": 14.785197199807943,
+      "predicted_total": 53.32101062069392,
+      "predicted_home_score": 34.05310391025093,
+      "predicted_away_score": 19.267906710442986,
+      "home_win_probability": 0.81619291768531,
+      "margin_p10": -6.246690753531663,
+      "margin_p90": 35.817085153147545,
+      "total_p10": 32.253767683250985,
+      "total_p90": 74.38825355813685,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 14.5
+        },
+        "total": {
+          "total": 50.75
+        }
+      }
+    },
+    {
+      "game_id": 401856801,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Utah",
+      "away_team": "Utah State",
+      "neutral_site": false,
+      "predicted_home_margin": 19.322245913564164,
+      "predicted_total": 53.79424034578783,
+      "predicted_home_score": 36.55824312967599,
+      "predicted_away_score": 17.235997216111834,
+      "home_win_probability": 0.8804862801524515,
+      "margin_p10": -1.7096420397754422,
+      "margin_p90": 40.354133866903766,
+      "total_p10": 32.72699740834489,
+      "total_p90": 74.86148328323077,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 28.25
+        },
+        "total": {
+          "total": 56.75
+        }
+      }
+    },
+    {
+      "game_id": 401858230,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Louisville",
+      "away_team": "SMU",
+      "neutral_site": false,
+      "predicted_home_margin": -0.006896344839520729,
+      "predicted_total": 57.946297935991566,
+      "predicted_home_score": 28.969700795576024,
+      "predicted_away_score": 28.976597140415542,
+      "home_win_probability": 0.4998323501142316,
+      "margin_p10": -21.038784298179127,
+      "margin_p90": 21.024991608500084,
+      "total_p10": 36.87905499854863,
+      "total_p90": 79.0135408734345,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 1.25
+        },
+        "total": {
+          "total": 59.5
+        }
+      }
+    },
+    {
+      "game_id": 401858450,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Michigan",
+      "away_team": "UTEP",
+      "neutral_site": false,
+      "predicted_home_margin": 36.741812719373,
+      "predicted_total": 45.918420587150834,
+      "predicted_home_score": 41.33011665326192,
+      "predicted_away_score": 4.588303933888916,
+      "home_win_probability": 0.9874188087412743,
+      "margin_p10": 15.709924766033396,
+      "margin_p90": 57.77370067271261,
+      "total_p10": 24.8511776497079,
+      "total_p90": 66.98566352459378,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 35.25
+        },
+        "total": {
+          "total": 48.5
+        }
+      }
+    },
+    {
+      "game_id": 401858457,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T19:30:00+00:00",
+      "home_team": "Rutgers",
+      "away_team": "USC",
+      "neutral_site": false,
+      "predicted_home_margin": -24.41762806820837,
+      "predicted_total": 58.354284272251796,
+      "predicted_home_score": 16.968328102021715,
+      "predicted_away_score": 41.38595617023008,
+      "home_win_probability": 0.06838684021795854,
+      "margin_p10": -45.44951602154798,
+      "margin_p90": -3.3857401148687636,
+      "total_p10": 37.28704133480886,
+      "total_p90": 79.42152720969473,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -24.5
+        },
+        "total": {
+          "total": 59.0
+        }
+      }
+    },
+    {
+      "game_id": 401858231,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T20:00:00+00:00",
+      "home_team": "Duke",
+      "away_team": "Stanford",
+      "neutral_site": false,
+      "predicted_home_margin": 11.616661101481789,
+      "predicted_total": 50.10300516284611,
+      "predicted_home_score": 30.85983313216395,
+      "predicted_away_score": 19.24317203068216,
+      "home_win_probability": 0.7604880429454262,
+      "margin_p10": -9.415226851857817,
+      "margin_p90": 32.648549054821395,
+      "total_p10": 29.035762225403175,
+      "total_p90": 71.17024810028904,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 9.5
+        },
+        "total": {
+          "total": 51.25
+        }
+      }
+    },
+    {
+      "game_id": 401858449,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T20:00:00+00:00",
+      "home_team": "Indiana",
+      "away_team": "Western Kentucky",
+      "neutral_site": false,
+      "predicted_home_margin": 33.61360922966994,
+      "predicted_total": 56.966870936471246,
+      "predicted_home_score": 45.29024008307059,
+      "predicted_away_score": 11.676630853400653,
+      "home_win_probability": 0.9797337285099557,
+      "margin_p10": 12.581721276330335,
+      "margin_p90": 54.645497183009546,
+      "total_p10": 35.89962799902831,
+      "total_p90": 78.03411387391418,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 44.25
+        },
+        "total": {
+          "total": 60.0
+        }
+      }
+    },
+    {
+      "game_id": 401866422,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T20:00:00+00:00",
+      "home_team": "Liberty",
+      "away_team": "Ball State",
+      "neutral_site": false,
+      "predicted_home_margin": 17.967881608328398,
+      "predicted_total": 51.601259170540835,
+      "predicted_home_score": 34.78457038943462,
+      "predicted_away_score": 16.81668878110622,
+      "home_win_probability": 0.863217931239681,
+      "margin_p10": -3.064006345011208,
+      "margin_p90": 38.999769561668,
+      "total_p10": 30.5340162330979,
+      "total_p90": 72.66850210798377,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 14.0
+        },
+        "total": {
+          "total": 49.75
+        }
+      }
+    },
+    {
+      "game_id": 401867804,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T20:00:00+00:00",
+      "home_team": "Baylor",
+      "away_team": "Louisiana Tech",
+      "neutral_site": false,
+      "predicted_home_margin": 13.755193718417658,
+      "predicted_total": 53.31145899122016,
+      "predicted_home_score": 33.53332635481891,
+      "predicted_away_score": 19.77813263640125,
+      "home_win_probability": 0.7990371725112979,
+      "margin_p10": -7.276694234921948,
+      "margin_p90": 34.787081671757264,
+      "total_p10": 32.24421605377722,
+      "total_p90": 74.37870192866309,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 17.25
+        },
+        "total": {
+          "total": 53.75
+        }
+      }
+    },
+    {
+      "game_id": 401856691,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T20:15:00+00:00",
+      "home_team": "South Carolina",
+      "away_team": "Mississippi State",
+      "neutral_site": false,
+      "predicted_home_margin": 8.512761404562374,
+      "predicted_total": 60.63607376094354,
+      "predicted_home_score": 34.57441758275296,
+      "predicted_away_score": 26.06165617819058,
+      "home_win_probability": 0.6980268700003835,
+      "margin_p10": -12.519126548777232,
+      "margin_p90": 29.54464935790198,
+      "total_p10": 39.568830823500605,
+      "total_p90": 81.70331669838647,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.5
+        },
+        "total": {
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "game_id": 401862710,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T22:00:00+00:00",
+      "home_team": "Old Dominion",
+      "away_team": "East Carolina",
+      "neutral_site": false,
+      "predicted_home_margin": 7.121376938249596,
+      "predicted_total": 52.331605043252395,
+      "predicted_home_score": 29.726490990750996,
+      "predicted_away_score": 22.6051140525014,
+      "home_win_probability": 0.6678370882011292,
+      "margin_p10": -13.910511015090009,
+      "margin_p90": 28.153264891589203,
+      "total_p10": 31.26436210580946,
+      "total_p90": 73.39884798069534,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.0
+        },
+        "total": {
+          "total": 49.5
+        }
+      }
+    },
+    {
+      "game_id": 401862771,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T22:00:00+00:00",
+      "home_team": "Florida Atlantic",
+      "away_team": "Florida International",
+      "neutral_site": false,
+      "predicted_home_margin": -3.4973803947042876,
+      "predicted_total": 61.29448187363158,
+      "predicted_home_score": 28.898550739463648,
+      "predicted_away_score": 32.39593113416794,
+      "home_win_probability": 0.41561804079840486,
+      "margin_p10": -24.529268348043892,
+      "margin_p90": 17.53450755863532,
+      "total_p10": 40.22723893618865,
+      "total_p90": 82.36172481107451,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 6.5
+        },
+        "total": {
+          "total": 62.5
+        }
+      }
+    },
+    {
+      "game_id": 401864574,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T22:00:00+00:00",
+      "home_team": "App State",
+      "away_team": "Charlotte",
+      "neutral_site": false,
+      "predicted_home_margin": 15.15842000991471,
+      "predicted_total": 53.90184465596532,
+      "predicted_home_score": 34.53013233294001,
+      "predicted_away_score": 19.371712323025307,
+      "home_win_probability": 0.8221772009441055,
+      "margin_p10": -5.873467943424895,
+      "margin_p90": 36.19030796325431,
+      "total_p10": 32.834601718522386,
+      "total_p90": 74.96908759340826,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 19.5
+        },
+        "total": {
+          "total": 51.5
+        }
+      }
+    },
+    {
+      "game_id": 401871047,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T22:30:00+00:00",
+      "home_team": "Missouri State",
+      "away_team": "Marshall",
+      "neutral_site": false,
+      "predicted_home_margin": -2.0020782448430055,
+      "predicted_total": 49.14003336862142,
+      "predicted_home_score": 23.568977561889206,
+      "predicted_away_score": 25.57105580673221,
+      "home_win_probability": 0.4514500146945219,
+      "margin_p10": -23.03396619818261,
+      "margin_p90": 19.0298097084966,
+      "total_p10": 28.072790431178483,
+      "total_p90": 70.20727630606436,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -3.5
+        },
+        "total": {
+          "total": 51.75
+        }
+      }
+    },
+    {
+      "game_id": 401856687,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Auburn",
+      "away_team": "Florida",
+      "neutral_site": false,
+      "predicted_home_margin": -1.5422898745935436,
+      "predicted_total": 57.75647399343843,
+      "predicted_home_score": 28.107092059422445,
+      "predicted_away_score": 29.649381934015988,
+      "home_win_probability": 0.46256210897231737,
+      "margin_p10": -22.57417782793315,
+      "margin_p90": 19.489598078746063,
+      "total_p10": 36.6892310559955,
+      "total_p90": 78.82371693088137,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -2.5
+        },
+        "total": {
+          "total": 52.75
+        }
+      }
+    },
+    {
+      "game_id": 401856689,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Missouri",
+      "away_team": "Troy",
+      "neutral_site": false,
+      "predicted_home_margin": 19.95009748955388,
+      "predicted_total": 52.279571467566306,
+      "predicted_home_score": 36.11483447856009,
+      "predicted_away_score": 16.164736989006215,
+      "home_win_probability": 0.8879465716223204,
+      "margin_p10": -1.081790463785726,
+      "margin_p90": 40.98198544289349,
+      "total_p10": 31.212328530123372,
+      "total_p90": 73.34681440500924,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 27.25
+        },
+        "total": {
+          "total": 49.5
+        }
+      }
+    },
+    {
+      "game_id": 401856800,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "UCF",
+      "away_team": "Georgia State",
+      "neutral_site": false,
+      "predicted_home_margin": 5.60117418897655,
+      "predicted_total": 48.624292021637345,
+      "predicted_home_score": 27.112733105306948,
+      "predicted_away_score": 21.511558916330397,
+      "home_win_probability": 0.6335661632208388,
+      "margin_p10": -15.430713764363055,
+      "margin_p90": 26.633062142316156,
+      "total_p10": 27.55704908419441,
+      "total_p90": 69.69153495908029,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 20.5
+        },
+        "total": {
+          "total": 52.5
+        }
+      }
+    },
+    {
+      "game_id": 401861963,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Southern Miss",
+      "away_team": "UConn",
+      "neutral_site": false,
+      "predicted_home_margin": 1.942460043557071,
+      "predicted_total": 54.71439938687996,
+      "predicted_home_score": 28.328429715218515,
+      "predicted_away_score": 26.385969671661446,
+      "home_win_probability": 0.5471110988915499,
+      "margin_p10": -19.089427909782536,
+      "margin_p90": 22.974347996896675,
+      "total_p10": 33.64715644943703,
+      "total_p90": 75.78164232432289,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -3.25
+        },
+        "total": {
+          "total": 54.75
+        }
+      }
+    },
+    {
+      "game_id": 401862773,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Rice",
+      "away_team": "Western Michigan",
+      "neutral_site": false,
+      "predicted_home_margin": -10.842007894854444,
+      "predicted_total": 48.62991644844659,
+      "predicted_home_score": 18.893954276796073,
+      "predicted_away_score": 29.73596217165052,
+      "home_win_probability": 0.2544122899153412,
+      "margin_p10": -31.87389584819405,
+      "margin_p90": 10.189880058485162,
+      "total_p10": 27.56267351100366,
+      "total_p90": 69.69715938588953,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -9.75
+        },
+        "total": {
+          "total": 43.5
+        }
+      }
+    },
+    {
+      "game_id": 401864443,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Middle Tennessee",
+      "away_team": "Nevada",
+      "neutral_site": false,
+      "predicted_home_margin": -1.4816011833989622,
+      "predicted_total": 57.663928013649425,
+      "predicted_home_score": 28.09116341512523,
+      "predicted_away_score": 29.572764598524195,
+      "home_win_probability": 0.46403119970889894,
+      "margin_p10": -22.513489136738567,
+      "margin_p90": 19.550286769940644,
+      "total_p10": 36.59668507620649,
+      "total_p90": 78.73117095109237,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -5.5
+        },
+        "total": {
+          "total": 51.25
+        }
+      }
+    },
+    {
+      "game_id": 401866423,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "South Alabama",
+      "away_team": "Ohio",
+      "neutral_site": false,
+      "predicted_home_margin": 7.671283970267963,
+      "predicted_total": 57.00888686281353,
+      "predicted_home_score": 32.340085416540745,
+      "predicted_away_score": 24.668801446272784,
+      "home_win_probability": 0.6799137680924663,
+      "margin_p10": -13.360603983071643,
+      "margin_p90": 28.70317192360757,
+      "total_p10": 35.9416439253706,
+      "total_p90": 78.07612980025647,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 4.25
+        },
+        "total": {
+          "total": 52.5
+        }
+      }
+    },
+    {
+      "game_id": 401869948,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:00:00+00:00",
+      "home_team": "Jacksonville State",
+      "away_team": "Georgia Southern",
+      "neutral_site": false,
+      "predicted_home_margin": 7.506421459249385,
+      "predicted_total": 49.48840135112999,
+      "predicted_home_score": 28.497411405189688,
+      "predicted_away_score": 20.9909899459403,
+      "home_win_probability": 0.6763123897042199,
+      "margin_p10": -13.525466494090221,
+      "margin_p90": 28.53830941258899,
+      "total_p10": 28.421158413687053,
+      "total_p90": 70.55564428857292,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 3.75
+        },
+        "total": {
+          "total": 53.0
+        }
+      }
+    },
+    {
+      "game_id": 401858453,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Notre Dame",
+      "away_team": "Michigan State",
+      "neutral_site": false,
+      "predicted_home_margin": 29.283755389489368,
+      "predicted_total": 55.353932466418364,
+      "predicted_home_score": 42.318843927953864,
+      "predicted_away_score": 13.035088538464498,
+      "home_win_probability": 0.9628235883313917,
+      "margin_p10": 8.251867436149762,
+      "margin_p90": 50.31564334282898,
+      "total_p10": 34.28668952897543,
+      "total_p90": 76.4211754038613,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 29.75
+        },
+        "total": {
+          "total": 52.25
+        }
+      }
+    },
+    {
+      "game_id": 401858232,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Maryland",
+      "away_team": "Virginia Tech",
+      "neutral_site": false,
+      "predicted_home_margin": 3.413222979265456,
+      "predicted_total": 56.51979030584816,
+      "predicted_home_score": 29.96650664255681,
+      "predicted_away_score": 26.553283663291353,
+      "home_win_probability": 0.5823809476325087,
+      "margin_p10": -17.61866497407415,
+      "margin_p90": 24.44511093260506,
+      "total_p10": 35.45254736840523,
+      "total_p90": 77.5870332432911,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -3.0
+        },
+        "total": {
+          "total": 53.5
+        }
+      }
+    },
+    {
+      "game_id": 401856802,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Virginia",
+      "away_team": "West Virginia",
+      "neutral_site": true,
+      "predicted_home_margin": 7.743284738575738,
+      "predicted_total": 48.37150393635273,
+      "predicted_home_score": 28.057394337464235,
+      "predicted_away_score": 20.314109598888496,
+      "home_win_probability": 0.6814813291579098,
+      "margin_p10": -13.288603214763867,
+      "margin_p90": 28.775172691915344,
+      "total_p10": 27.304260998909797,
+      "total_p90": 69.43874687379567,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 10.0
+        },
+        "total": {
+          "total": 53.75
+        }
+      }
+    },
+    {
+      "game_id": 401856690,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Oklahoma",
+      "away_team": "New Mexico",
+      "neutral_site": false,
+      "predicted_home_margin": 15.535698428620435,
+      "predicted_total": 44.89767533573374,
+      "predicted_home_score": 30.216686882177086,
+      "predicted_away_score": 14.680988453556651,
+      "home_win_probability": 0.8281000784621783,
+      "margin_p10": -5.4961895247191705,
+      "margin_p90": 36.56758638196004,
+      "total_p10": 23.830432398290803,
+      "total_p90": 65.96491827317666,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 23.0
+        },
+        "total": {
+          "total": 47.75
+        }
+      }
+    },
+    {
+      "game_id": 401856795,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Colorado State",
+      "away_team": "BYU",
+      "neutral_site": false,
+      "predicted_home_margin": -11.764588238871571,
+      "predicted_total": 52.156795533726296,
+      "predicted_home_score": 20.196103647427364,
+      "predicted_away_score": 31.96069188629893,
+      "home_win_probability": 0.23672177662704919,
+      "margin_p10": -32.79647619221117,
+      "margin_p90": 9.267299714468034,
+      "total_p10": 31.08955259628336,
+      "total_p90": 73.22403847116922,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -17.5
+        },
+        "total": {
+          "total": 52.25
+        }
+      }
+    },
+    {
+      "game_id": 401856688,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Ole Miss",
+      "away_team": "LSU",
+      "neutral_site": false,
+      "predicted_home_margin": -1.8807938464219234,
+      "predicted_total": 56.10073915189552,
+      "predicted_home_score": 27.109972652736797,
+      "predicted_away_score": 28.99076649915872,
+      "home_win_probability": 0.45437786683845793,
+      "margin_p10": -22.91268179976153,
+      "margin_p90": 19.151094106917682,
+      "total_p10": 35.03349621445258,
+      "total_p90": 77.16798208933845,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -3.0
+        },
+        "total": {
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "game_id": 401856796,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:30:00+00:00",
+      "home_team": "Northwestern",
+      "away_team": "Colorado",
+      "neutral_site": false,
+      "predicted_home_margin": 9.644866599503281,
+      "predicted_total": 50.67261826469645,
+      "predicted_home_score": 30.158742432099867,
+      "predicted_away_score": 20.513875832596586,
+      "home_win_probability": 0.7216398730671273,
+      "margin_p10": -11.387021353836325,
+      "margin_p90": 30.676754552842887,
+      "total_p10": 29.60537532725352,
+      "total_p90": 71.7398612021394,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 4.25
+        },
+        "total": {
+          "total": 48.5
+        }
+      }
+    },
+    {
+      "game_id": 401856692,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-19T23:45:00+00:00",
+      "home_team": "Tennessee",
+      "away_team": "Kennesaw State",
+      "neutral_site": false,
+      "predicted_home_margin": 29.046597000614977,
+      "predicted_total": 58.15315551089601,
+      "predicted_home_score": 43.5998762557555,
+      "predicted_away_score": 14.553279255140518,
+      "home_win_probability": 0.9616351505864069,
+      "margin_p10": 8.014709047275371,
+      "margin_p90": 50.078484953954586,
+      "total_p10": 37.08591257345308,
+      "total_p90": 79.22039844833895,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 35.5
+        },
+        "total": {
+          "total": 60.25
+        }
+      }
+    },
+    {
+      "game_id": 401856693,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T00:00:00+00:00",
+      "home_team": "Texas",
+      "away_team": "UTSA",
+      "neutral_site": false,
+      "predicted_home_margin": 26.468210521254328,
+      "predicted_total": 57.67043500842793,
+      "predicted_home_score": 42.06932276484113,
+      "predicted_away_score": 15.601112243586801,
+      "home_win_probability": 0.9466134032862841,
+      "margin_p10": 5.436322567914722,
+      "margin_p90": 47.50009847459393,
+      "total_p10": 36.603192070984996,
+      "total_p90": 78.73767794587087,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 29.75
+        },
+        "total": {
+          "total": 58.25
+        }
+      }
+    },
+    {
+      "game_id": 401856799,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T00:00:00+00:00",
+      "home_team": "TCU",
+      "away_team": "Arkansas State",
+      "neutral_site": false,
+      "predicted_home_margin": 9.718852946846233,
+      "predicted_total": 52.85511244921004,
+      "predicted_home_score": 31.286982698028137,
+      "predicted_away_score": 21.568129751181903,
+      "home_win_probability": 0.7231511821967144,
+      "margin_p10": -11.313035006493372,
+      "margin_p90": 30.75074090018584,
+      "total_p10": 31.787869511767106,
+      "total_p90": 73.92235538665298,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 20.25
+        },
+        "total": {
+          "total": 57.5
+        }
+      }
+    },
+    {
+      "game_id": 401862776,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T00:00:00+00:00",
+      "home_team": "Louisiana",
+      "away_team": "UAB",
+      "neutral_site": false,
+      "predicted_home_margin": 11.178647564043867,
+      "predicted_total": 62.53398541956808,
+      "predicted_home_score": 36.85631649180598,
+      "predicted_away_score": 25.677668927762106,
+      "home_win_probability": 0.7521220006602884,
+      "margin_p10": -9.853240389295738,
+      "margin_p90": 32.21053551738348,
+      "total_p10": 41.46674248212515,
+      "total_p90": 83.60122835701102,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 7.5
+        },
+        "total": {
+          "total": 56.5
+        }
+      }
+    },
+    {
+      "game_id": 401860887,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T02:00:00+00:00",
+      "home_team": "San Diego State",
+      "away_team": "James Madison",
+      "neutral_site": false,
+      "predicted_home_margin": -3.060365377575698,
+      "predicted_total": 43.067152558350394,
+      "predicted_home_score": 20.003393590387347,
+      "predicted_away_score": 23.063758967963047,
+      "home_win_probability": 0.42603161188782934,
+      "margin_p10": -24.092253330915305,
+      "margin_p90": 17.971522575763906,
+      "total_p10": 21.99990962090746,
+      "total_p90": 64.13439549579333,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 2.5
+        },
+        "total": {
+          "total": 46.5
+        }
+      }
+    },
+    {
+      "game_id": 401856793,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T02:30:00+00:00",
+      "home_team": "Arizona",
+      "away_team": "Northern Illinois",
+      "neutral_site": false,
+      "predicted_home_margin": 26.926327265144337,
+      "predicted_total": 49.4226637783567,
+      "predicted_home_score": 38.174495521750515,
+      "predicted_away_score": 11.248168256606181,
+      "home_win_probability": 0.949578848804661,
+      "margin_p10": 5.894439311804732,
+      "margin_p90": 47.95821521848394,
+      "total_p10": 28.355420840913766,
+      "total_p90": 70.48990671579963,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 34.5
+        },
+        "total": {
+          "total": 49.75
+        }
+      }
+    },
+    {
+      "game_id": 401864507,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T02:30:00+00:00",
+      "home_team": "Sacramento State",
+      "away_team": "North Dakota State",
+      "neutral_site": false,
+      "predicted_home_margin": -3.282452080401658,
+      "predicted_total": 54.41205316466771,
+      "predicted_home_score": 25.564800542133028,
+      "predicted_away_score": 28.847252622534683,
+      "home_win_probability": 0.42073261181206545,
+      "margin_p10": -24.314340033741264,
+      "margin_p90": 17.749435872937948,
+      "total_p10": 33.34481022722478,
+      "total_p90": 75.47929610211065,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -27.75
+        },
+        "total": {
+          "total": 53.25
+        }
+      }
+    },
+    {
+      "game_id": 401858458,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T03:00:00+00:00",
+      "home_team": "UCLA",
+      "away_team": "Purdue",
+      "neutral_site": false,
+      "predicted_home_margin": 14.09623409781533,
+      "predicted_total": 56.966852495044,
+      "predicted_home_score": 35.53154329642967,
+      "predicted_away_score": 21.435309198614334,
+      "home_win_probability": 0.8048211097884623,
+      "margin_p10": -6.935653855524276,
+      "margin_p90": 35.12812205115493,
+      "total_p10": 35.89960955760107,
+      "total_p90": 78.03409543248694,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": 14.5
+        },
+        "total": {
+          "total": 52.75
+        }
+      }
+    },
+    {
+      "game_id": 401860888,
+      "season": 2026,
+      "week": 3,
+      "start_date": "2026-09-20T03:00:00+00:00",
+      "home_team": "San Jos\u00e9 State",
+      "away_team": "Fresno State",
+      "neutral_site": false,
+      "predicted_home_margin": -4.699740808277746,
+      "predicted_total": 51.16780231073949,
+      "predicted_home_score": 23.234030751230872,
+      "predicted_away_score": 27.933771559508617,
+      "home_win_probability": 0.387292166514966,
+      "margin_p10": -25.73162876161735,
+      "margin_p90": 16.33214714506186,
+      "total_p10": 30.100559373296555,
+      "total_p90": 72.23504524818242,
+      "forecast_type": "independent_football_model",
+      "market_consensus": {
+        "provider": "CollegeFootballData consensus",
+        "snapshot_at": "2026-09-14T10:57:29.136008+00:00",
+        "provider_count": 2,
+        "spread": {
+          "market_home_margin": -6.5
+        },
+        "total": {
+          "total": 50.5
+        }
+      }
+    }
+  ]
+}
