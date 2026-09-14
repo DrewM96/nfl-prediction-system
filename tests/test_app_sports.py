@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from streamlit.testing.v1 import AppTest
 
 
@@ -67,3 +69,11 @@ def test_results_are_available_for_both_sports() -> None:
     navigation.set_value("Results").run(timeout=30)
     assert any("Season Results" in heading.value for heading in app.header)
     assert not app.error and not app.exception
+
+
+def test_cfb_builder_is_available() -> None:
+    source = Path("app.py").read_text()
+    assert 'CFB_PAGE_LABELS = ["This Week", "Builder", "Top 30", "Results"]' in source
+    assert "def render_cfb_builder" in source
+    assert 'cfb_active_screen == "Builder"' in source
+    assert "Schedule-decomposed model scenario" in source
