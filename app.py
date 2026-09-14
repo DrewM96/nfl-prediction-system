@@ -41,8 +41,6 @@ from nfl_prediction.rankings import build_football_form_ratings, build_market_po
 from nfl_prediction.results_ui import render_results
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
-    american_moneyline,
-    format_american,
     format_game_time,
     format_probability,
     game_matchup_separator,
@@ -854,6 +852,40 @@ def market_tile(game: dict[str, Any]) -> str:
     return f'<div class="{classes}"><div class="grid-tile-label">{html_text(label)}</div><div class="{value_class}">{html_text(value)}</div></div>'
 
 
+def nfl_market_spread_label(game: dict[str, Any]) -> str:
+    spread = (game.get("market_consensus") or {}).get("spread") or {}
+    home_spread = spread.get("home_spread")
+    if home_spread is None:
+        return "—"
+    home_spread = float(home_spread)
+    if abs(home_spread) < 0.05:
+        return "Pick"
+    favorite = game["home_team"] if home_spread < 0 else game["away_team"]
+    return f"{favorite} -{abs(home_spread):.1f}"
+
+
+def nfl_market_edge_label(game: dict[str, Any]) -> str:
+    spread = (game.get("market_consensus") or {}).get("spread") or {}
+    home_spread = spread.get("home_spread")
+    if home_spread is None:
+        return "—"
+    market_home_margin = -float(home_spread)
+    model_home_margin = float(game.get("predicted_home_margin", game.get("spread", 0.0)))
+    edge = model_home_margin - market_home_margin
+    if abs(edge) < 0.05:
+        return "Even"
+    side = game["home_team"] if edge > 0 else game["away_team"]
+    return f"{side} +{abs(edge):.1f}"
+
+
+def nfl_total_label(game: dict[str, Any]) -> str:
+    model_total = float(game["total"])
+    market_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
+    if market_total is None:
+        return f"{model_total:.1f} · V —"
+    return f"{model_total:.1f} · V {float(market_total):.1f}"
+
+
 def render_featured_game(game: dict[str, Any]) -> None:
     away = html_text(game["away_team"])
     home = html_text(game["home_team"])
@@ -869,10 +901,10 @@ def render_featured_game(game: dict[str, Any]) -> None:
               <div class="grid-date">{html_text(format_game_time(game))}</div>
             </div>
             <div class="grid-tiles">
-              <div class="grid-tile"><div class="grid-tile-label">Spread</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Model fair ML · {html_text(game["home_team"])}</div><div class="grid-tile-value">{format_american(american_moneyline(game["home_win_probability"]))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["total"]):.1f}</div></div>
-              {market_tile(game)}
+              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value">{html_text(nfl_market_spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Edge</div><div class="grid-tile-value">{html_text(nfl_market_edge_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Total · model / Vegas</div><div class="grid-tile-value" style="font-size:16px">{html_text(nfl_total_label(game))}</div></div>
             </div>
           </div>
           {probability_bar(game)}
@@ -1020,7 +1052,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
     game_id = str(game.get("game_id", index))
     expanded = st.session_state.get("expanded_game_id") == game_id
     with st.container(border=True, key=f"game_card_{index}"):
-        columns = st.columns([1.5, 4.8, 0.9, 0.9, 1.0, 0.9], vertical_alignment="center")
+        columns = st.columns([1.5, 4.2, 0.9, 0.9, 0.9, 1.1, 0.8], vertical_alignment="center")
         columns[0].markdown(
             f'<div class="grid-row-date">{html_text(format_game_time(game))}</div>',
             unsafe_allow_html=True,
@@ -1036,18 +1068,22 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
             unsafe_allow_html=True,
         )
         columns[2].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Spread</div>{html_text(spread_label(game))}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">GRIDLINE</div>{html_text(spread_label(game))}</div>',
             unsafe_allow_html=True,
         )
         columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Fair ML · {html_text(game["home_team"])}</div>{format_american(american_moneyline(game["home_win_probability"]))}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">Vegas</div>{html_text(nfl_market_spread_label(game))}</div>',
             unsafe_allow_html=True,
         )
         columns[4].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Total</div>{float(game["total"]):.1f}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">Edge</div>{html_text(nfl_market_edge_label(game))}</div>',
             unsafe_allow_html=True,
         )
-        if columns[5].button(
+        columns[5].markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">Total · M / V</div>{html_text(nfl_total_label(game))}</div>',
+            unsafe_allow_html=True,
+        )
+        if columns[6].button(
             "Hide ▲" if expanded else "Why? ▼",
             key=f"toggle_game_{index}",
             width="stretch",
