@@ -33,7 +33,7 @@ jobs:
       - name: Generate weekly NFL forecasts with market context
         run: python weekly_nfl_update.py
       - run: python -m pytest -q
-      - name: Publish a reviewable artifact update
+      - name: Publish validated NFL artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -48,6 +48,11 @@ jobs:
           fi
           git commit -m "chore: refresh weekly NFL forecasts"
           git push --force-with-lease origin "$branch"
-          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
-            gh pr create --draft --base main --head "$branch" --title "chore: refresh weekly NFL forecasts" --body "Automated point-in-time data, model, market consensus, forecast, and performance refresh. Review CI and the model manifest before merging."
+          pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')"
+          if [ -z "$pr_number" ]; then
+            pr_url="$(gh pr create --base main --head "$branch" --title "chore: refresh weekly NFL forecasts" --body "Automated point-in-time data, model, market consensus, forecast, and performance refresh. The publishing workflow passed the full test suite before opening this pull request.")"
+            pr_number="${pr_url##*/}"
+          elif [ "$(gh pr view "$pr_number" --json isDraft --jq '.isDraft')" = "true" ]; then
+            gh pr ready "$pr_number"
           fi
+          gh pr merge "$pr_number" --squash --match-head-commit "$(git rev-parse HEAD)"
