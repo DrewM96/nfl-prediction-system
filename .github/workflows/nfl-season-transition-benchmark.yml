@@ -1,0 +1,35 @@
+name: NFL season transition weighting benchmark
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "nfl_season_transition_benchmark.py"
+      - ".github/workflows/nfl-season-transition-benchmark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Run season-transition ablation
+        run: >-
+          python nfl_season_transition_benchmark.py
+          --seasons 2020 2021 2022 2023 2024 2025
+          --evaluation-seasons 2022 2023 2024 2025
+          --min-train-rows 350
+      - name: Upload benchmark report
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-season-transition-benchmark
+          path: reports/season_transition/
