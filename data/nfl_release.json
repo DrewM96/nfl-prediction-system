@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "manifest_path": "models/manifest-db669d6e14f19e1299014972565ee63a8d10b355af9743283d9f3ef0557ceb15.json",
-  "model_hash": "db669d6e14f19e1299014972565ee63a8d10b355af9743283d9f3ef0557ceb15",
+  "manifest_path": "models/manifest-ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9.json",
+  "model_hash": "ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9",
   "state": {
     "teams": {
       "LA": {
@@ -18385,29 +18385,29 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-18T00:15:00Z",
           "spread": {
             "book_count": 11,
-            "line_min": -4.5,
-            "line_max": -4.0,
-            "line_iqr": 0.0,
+            "line_min": -5.0,
+            "line_max": -4.5,
+            "line_iqr": 0.25,
             "home_price": -110.0,
-            "away_price": -109.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "away_price": -108.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -4.5,
             "market_home_margin": 4.5
           },
           "total": {
             "book_count": 11,
-            "line_min": 53.5,
-            "line_max": 53.5,
-            "line_iqr": 0.0,
+            "line_min": 53.0,
+            "line_max": 54.0,
+            "line_iqr": 0.5,
             "over_price": -110.0,
-            "under_price": -109.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "under_price": -110.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 53.5
           }
         },
@@ -18473,41 +18473,41 @@
           "away_roster_ol_continuity_delta": 0.01097978854427814,
           "away_roster_skill_continuity_delta": 0.09673866377694232
         },
-        "market_line": 1.0,
+        "market_line": 2.5,
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
-            "line_min": 0.0,
-            "line_max": 1.5,
-            "line_iqr": 0.5,
-            "home_price": -108.0,
+            "line_min": 1.0,
+            "line_max": 2.5,
+            "line_iqr": 0.0,
+            "home_price": -110.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "home_spread": 1.0,
-            "market_home_margin": -1.0
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "home_spread": 2.5,
+            "market_home_margin": -2.5
           },
           "total": {
             "book_count": 11,
-            "line_min": 43.5,
-            "line_max": 44.5,
-            "line_iqr": 0.25,
-            "over_price": -110.0,
-            "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "total": 44.0
+            "line_min": 43.0,
+            "line_max": 43.5,
+            "line_iqr": 0.0,
+            "over_price": -107.0,
+            "under_price": -112.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "total": 43.5
           }
         },
         "market_informed": {
-          "home_margin": -1.0,
-          "total": 44.0,
-          "home_score": 21.5,
-          "away_score": 22.5,
+          "home_margin": -2.5,
+          "total": 43.5,
+          "home_score": 20.5,
+          "away_score": 23.0,
           "method": "market consensus benchmark (not a claimed betting edge)"
         }
       },
@@ -18569,7 +18569,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -18578,8 +18578,8 @@
             "line_iqr": 0.25,
             "home_price": -108.0,
             "away_price": -112.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -8.5,
             "market_home_margin": 8.5
           },
@@ -18590,8 +18590,8 @@
             "line_iqr": 0.0,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 47.0
           }
         },
@@ -18661,7 +18661,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -18670,28 +18670,28 @@
             "line_iqr": 0.0,
             "home_price": -110.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -5.5,
             "market_home_margin": 5.5
           },
           "total": {
             "book_count": 11,
-            "line_min": 49.0,
-            "line_max": 49.5,
-            "line_iqr": 0.5,
+            "line_min": 48.0,
+            "line_max": 48.5,
+            "line_iqr": 0.25,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "total": 49.5
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "total": 48.5
           }
         },
         "market_informed": {
           "home_margin": 5.5,
-          "total": 49.5,
-          "home_score": 27.5,
-          "away_score": 22.0,
+          "total": 48.5,
+          "home_score": 27.0,
+          "away_score": 21.5,
           "method": "market consensus benchmark (not a claimed betting edge)"
         }
       },
@@ -18749,23 +18749,23 @@
           "away_roster_ol_continuity_delta": 0.08882315582968384,
           "away_roster_skill_continuity_delta": 0.12021335349875376
         },
-        "market_line": -3.0,
+        "market_line": -2.5,
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
             "line_min": -3.0,
-            "line_max": -2.5,
-            "line_iqr": 0.0,
-            "home_price": -105.0,
-            "away_price": -114.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "home_spread": -3.0,
-            "market_home_margin": 3.0
+            "line_max": -2.0,
+            "line_iqr": 0.25,
+            "home_price": -116.0,
+            "away_price": -102.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "home_spread": -2.5,
+            "market_home_margin": 2.5
           },
           "total": {
             "book_count": 11,
@@ -18774,16 +18774,16 @@
             "line_iqr": 0.0,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 46.5
           }
         },
         "market_informed": {
-          "home_margin": 3.0,
+          "home_margin": 2.5,
           "total": 46.5,
-          "home_score": 24.8,
-          "away_score": 21.8,
+          "home_score": 24.5,
+          "away_score": 22.0,
           "method": "market consensus benchmark (not a claimed betting edge)"
         }
       },
@@ -18845,7 +18845,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -18854,8 +18854,8 @@
             "line_iqr": 0.0,
             "home_price": -110.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -5.5,
             "market_home_margin": 5.5
           },
@@ -18863,19 +18863,19 @@
             "book_count": 11,
             "line_min": 41.5,
             "line_max": 42.5,
-            "line_iqr": 0.5,
+            "line_iqr": 0.0,
             "over_price": -110.0,
-            "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "total": 42.0
+            "under_price": -108.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "total": 41.5
           }
         },
         "market_informed": {
           "home_margin": 5.5,
-          "total": 42.0,
-          "home_score": 23.8,
-          "away_score": 18.2,
+          "total": 41.5,
+          "home_score": 23.5,
+          "away_score": 18.0,
           "method": "market consensus benchmark (not a claimed betting edge)"
         }
       },
@@ -18937,7 +18937,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -18946,20 +18946,20 @@
             "line_iqr": 0.0,
             "home_price": -110.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": 3.5,
             "market_home_margin": -3.5
           },
           "total": {
-            "book_count": 10,
+            "book_count": 11,
             "line_min": 44.5,
             "line_max": 45.0,
             "line_iqr": 0.5,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 44.5
           }
         },
@@ -19029,7 +19029,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -19038,8 +19038,8 @@
             "line_iqr": 0.25,
             "home_price": -109.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -8.5,
             "market_home_margin": 8.5
           },
@@ -19047,11 +19047,11 @@
             "book_count": 11,
             "line_min": 40.5,
             "line_max": 41.5,
-            "line_iqr": 0.75,
+            "line_iqr": 0.5,
             "over_price": -110.0,
             "under_price": -108.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 41.0
           }
         },
@@ -19121,7 +19121,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T17:00:00Z",
           "spread": {
             "book_count": 11,
@@ -19130,20 +19130,20 @@
             "line_iqr": 0.0,
             "home_price": -108.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": 7.0,
             "market_home_margin": -7.0
           },
           "total": {
             "book_count": 11,
-            "line_min": 39.0,
-            "line_max": 39.5,
-            "line_iqr": 0.25,
+            "line_min": 39.5,
+            "line_max": 40.0,
+            "line_iqr": 0.5,
             "over_price": -110.0,
-            "under_price": -108.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "under_price": -110.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 39.5
           }
         },
@@ -19213,29 +19213,29 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T20:05:00Z",
           "spread": {
-            "book_count": 10,
-            "line_min": -2.5,
+            "book_count": 11,
+            "line_min": -3.0,
             "line_max": -2.5,
             "line_iqr": 0.0,
-            "home_price": -110.0,
-            "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "home_price": -114.0,
+            "away_price": -105.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -2.5,
             "market_home_margin": 2.5
           },
           "total": {
-            "book_count": 10,
+            "book_count": 11,
             "line_min": 43.5,
             "line_max": 44.5,
             "line_iqr": 0.0,
-            "over_price": -109.5,
+            "over_price": -109.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 44.5
           }
         },
@@ -19305,7 +19305,7 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T20:05:00Z",
           "spread": {
             "book_count": 11,
@@ -19313,9 +19313,9 @@
             "line_max": -6.5,
             "line_iqr": 0.0,
             "home_price": -105.0,
-            "away_price": -115.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "away_price": -112.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -7.0,
             "market_home_margin": 7.0
           },
@@ -19326,8 +19326,8 @@
             "line_iqr": 0.0,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 43.5
           }
         },
@@ -19393,23 +19393,23 @@
           "away_roster_ol_continuity_delta": 0.20736319450660387,
           "away_roster_skill_continuity_delta": 0.13823166886646748
         },
-        "market_line": 4.0,
+        "market_line": 4.5,
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T20:25:00Z",
           "spread": {
             "book_count": 11,
             "line_min": 4.0,
             "line_max": 4.5,
             "line_iqr": 0.5,
-            "home_price": -109.0,
-            "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
-            "home_spread": 4.0,
-            "market_home_margin": -4.0
+            "home_price": -110.0,
+            "away_price": -108.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
+            "home_spread": 4.5,
+            "market_home_margin": -4.5
           },
           "total": {
             "book_count": 11,
@@ -19418,16 +19418,16 @@
             "line_iqr": 0.25,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 41.5
           }
         },
         "market_informed": {
-          "home_margin": -4.0,
+          "home_margin": -4.5,
           "total": 41.5,
-          "home_score": 18.8,
-          "away_score": 22.8,
+          "home_score": 18.5,
+          "away_score": 23.0,
           "method": "market consensus benchmark (not a claimed betting edge)"
         }
       },
@@ -19489,29 +19489,29 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T20:25:00Z",
           "spread": {
             "book_count": 11,
             "line_min": -4.0,
             "line_max": -3.5,
             "line_iqr": 0.25,
-            "home_price": -111.0,
-            "away_price": -109.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "home_price": -110.0,
+            "away_price": -108.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -3.5,
             "market_home_margin": 3.5
           },
           "total": {
-            "book_count": 10,
+            "book_count": 11,
             "line_min": 50.0,
             "line_max": 50.5,
-            "line_iqr": 0.375,
-            "over_price": -109.0,
+            "line_iqr": 0.0,
+            "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 50.5
           }
         },
@@ -19581,17 +19581,17 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-20T20:25:00Z",
           "spread": {
             "book_count": 11,
             "line_min": -13.5,
-            "line_max": -13.0,
+            "line_max": -12.5,
             "line_iqr": 0.5,
-            "home_price": -105.0,
+            "home_price": -108.0,
             "away_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:48+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -13.5,
             "market_home_margin": 13.5
           },
@@ -19602,8 +19602,8 @@
             "line_iqr": 0.0,
             "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:48+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 45.5
           }
         },
@@ -19673,29 +19673,29 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-21T00:20:00Z",
           "spread": {
-            "book_count": 9,
+            "book_count": 10,
             "line_min": -6.5,
             "line_max": -6.5,
             "line_iqr": 0.0,
-            "home_price": -117.0,
-            "away_price": 100.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "home_price": -115.0,
+            "away_price": -105.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -6.5,
             "market_home_margin": 6.5
           },
           "total": {
-            "book_count": 10,
-            "line_min": 47.5,
+            "book_count": 11,
+            "line_min": 47.0,
             "line_max": 47.5,
-            "line_iqr": 0.0,
-            "over_price": -109.5,
+            "line_iqr": 0.25,
+            "over_price": -110.0,
             "under_price": -110.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:47+00:00",
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 47.5
           }
         },
@@ -19765,17 +19765,17 @@
         "injury_adjustments": [],
         "market_consensus": {
           "provider": "The Odds API",
-          "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+          "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
           "commence_time": "2026-09-22T00:15:00Z",
           "spread": {
             "book_count": 10,
             "line_min": -7.5,
             "line_max": -7.0,
             "line_iqr": 0.0,
-            "home_price": -114.5,
-            "away_price": -105.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:48+00:00",
+            "home_price": -114.0,
+            "away_price": -105.5,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "home_spread": -7.0,
             "market_home_margin": 7.0
           },
@@ -19784,10 +19784,10 @@
             "line_min": 48.0,
             "line_max": 48.5,
             "line_iqr": 0.0,
-            "over_price": -108.5,
-            "under_price": -111.0,
-            "oldest_book_update": "2026-09-15T12:58:29+00:00",
-            "latest_book_update": "2026-09-15T13:00:48+00:00",
+            "over_price": -108.0,
+            "under_price": -112.0,
+            "oldest_book_update": "2026-09-15T16:41:32+00:00",
+            "latest_book_update": "2026-09-15T16:43:44+00:00",
             "total": 48.5
           }
         },
@@ -19801,15 +19801,15 @@
       }
     ],
     "prediction_batch": {
-      "run_id": "20260915T131112Z-33d0f923",
-      "created_at": "2026-09-15T13:11:12.638928+00:00",
+      "run_id": "20260915T165625Z-4eb6fdea",
+      "created_at": "2026-09-15T16:56:25.576336+00:00",
       "prediction_season": 2026,
       "data_cutoff": "2026-09-14",
-      "model_hash": "db669d6e14f19e1299014972565ee63a8d10b355af9743283d9f3ef0557ceb15",
+      "model_hash": "ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9",
       "metadata": {
-        "git_commit": "6576035a97a9f10c1deebd9ac6b4ba73b67cf4be",
+        "git_commit": "8c32eae336eeb81269b5a29e4962c55d155ee3a4",
         "week": 2,
-        "market_snapshot_at": "2026-09-15T13:01:01.721487+00:00"
+        "market_snapshot_at": "2026-09-15T16:44:00.895373+00:00"
       },
       "predictions": [
         {
@@ -19870,29 +19870,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-18T00:15:00Z",
             "spread": {
               "book_count": 11,
-              "line_min": -4.5,
-              "line_max": -4.0,
-              "line_iqr": 0.0,
+              "line_min": -5.0,
+              "line_max": -4.5,
+              "line_iqr": 0.25,
               "home_price": -110.0,
-              "away_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -4.5,
               "market_home_margin": 4.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 53.5,
-              "line_max": 53.5,
-              "line_iqr": 0.0,
+              "line_min": 53.0,
+              "line_max": 54.0,
+              "line_iqr": 0.5,
               "over_price": -110.0,
-              "under_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "under_price": -110.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 53.5
             }
           },
@@ -19958,41 +19958,41 @@
             "away_roster_ol_continuity_delta": 0.01097978854427814,
             "away_roster_skill_continuity_delta": 0.09673866377694232
           },
-          "market_line": 1.0,
+          "market_line": 2.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
-              "line_min": 0.0,
-              "line_max": 1.5,
-              "line_iqr": 0.5,
-              "home_price": -108.0,
+              "line_min": 1.0,
+              "line_max": 2.5,
+              "line_iqr": 0.0,
+              "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": 1.0,
-              "market_home_margin": -1.0
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": 2.5,
+              "market_home_margin": -2.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 43.5,
-              "line_max": 44.5,
-              "line_iqr": 0.25,
-              "over_price": -110.0,
-              "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 44.0
+              "line_min": 43.0,
+              "line_max": 43.5,
+              "line_iqr": 0.0,
+              "over_price": -107.0,
+              "under_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 43.5
             }
           },
           "market_informed": {
-            "home_margin": -1.0,
-            "total": 44.0,
-            "home_score": 21.5,
-            "away_score": 22.5,
+            "home_margin": -2.5,
+            "total": 43.5,
+            "home_score": 20.5,
+            "away_score": 23.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -20054,7 +20054,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20063,8 +20063,8 @@
               "line_iqr": 0.25,
               "home_price": -108.0,
               "away_price": -112.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -8.5,
               "market_home_margin": 8.5
             },
@@ -20075,8 +20075,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 47.0
             }
           },
@@ -20146,7 +20146,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20155,28 +20155,28 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -5.5,
               "market_home_margin": 5.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 49.0,
-              "line_max": 49.5,
-              "line_iqr": 0.5,
+              "line_min": 48.0,
+              "line_max": 48.5,
+              "line_iqr": 0.25,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 49.5
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 48.5
             }
           },
           "market_informed": {
             "home_margin": 5.5,
-            "total": 49.5,
-            "home_score": 27.5,
-            "away_score": 22.0,
+            "total": 48.5,
+            "home_score": 27.0,
+            "away_score": 21.5,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -20234,23 +20234,23 @@
             "away_roster_ol_continuity_delta": 0.08882315582968384,
             "away_roster_skill_continuity_delta": 0.12021335349875376
           },
-          "market_line": -3.0,
+          "market_line": -2.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -3.0,
-              "line_max": -2.5,
-              "line_iqr": 0.0,
-              "home_price": -105.0,
-              "away_price": -114.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": -3.0,
-              "market_home_margin": 3.0
+              "line_max": -2.0,
+              "line_iqr": 0.25,
+              "home_price": -116.0,
+              "away_price": -102.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": -2.5,
+              "market_home_margin": 2.5
             },
             "total": {
               "book_count": 11,
@@ -20259,16 +20259,16 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 46.5
             }
           },
           "market_informed": {
-            "home_margin": 3.0,
+            "home_margin": 2.5,
             "total": 46.5,
-            "home_score": 24.8,
-            "away_score": 21.8,
+            "home_score": 24.5,
+            "away_score": 22.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -20330,7 +20330,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20339,8 +20339,8 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -5.5,
               "market_home_margin": 5.5
             },
@@ -20348,19 +20348,19 @@
               "book_count": 11,
               "line_min": 41.5,
               "line_max": 42.5,
-              "line_iqr": 0.5,
+              "line_iqr": 0.0,
               "over_price": -110.0,
-              "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 42.0
+              "under_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 41.5
             }
           },
           "market_informed": {
             "home_margin": 5.5,
-            "total": 42.0,
-            "home_score": 23.8,
-            "away_score": 18.2,
+            "total": 41.5,
+            "home_score": 23.5,
+            "away_score": 18.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -20422,7 +20422,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20431,20 +20431,20 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": 3.5,
               "market_home_margin": -3.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 44.5,
               "line_max": 45.0,
               "line_iqr": 0.5,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 44.5
             }
           },
@@ -20514,7 +20514,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20523,8 +20523,8 @@
               "line_iqr": 0.25,
               "home_price": -109.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -8.5,
               "market_home_margin": 8.5
             },
@@ -20532,11 +20532,11 @@
               "book_count": 11,
               "line_min": 40.5,
               "line_max": 41.5,
-              "line_iqr": 0.75,
+              "line_iqr": 0.5,
               "over_price": -110.0,
               "under_price": -108.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 41.0
             }
           },
@@ -20606,7 +20606,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -20615,20 +20615,20 @@
               "line_iqr": 0.0,
               "home_price": -108.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": 7.0,
               "market_home_margin": -7.0
             },
             "total": {
               "book_count": 11,
-              "line_min": 39.0,
-              "line_max": 39.5,
-              "line_iqr": 0.25,
+              "line_min": 39.5,
+              "line_max": 40.0,
+              "line_iqr": 0.5,
               "over_price": -110.0,
-              "under_price": -108.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "under_price": -110.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 39.5
             }
           },
@@ -20698,29 +20698,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:05:00Z",
             "spread": {
-              "book_count": 10,
-              "line_min": -2.5,
+              "book_count": 11,
+              "line_min": -3.0,
               "line_max": -2.5,
               "line_iqr": 0.0,
-              "home_price": -110.0,
-              "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -114.0,
+              "away_price": -105.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -2.5,
               "market_home_margin": 2.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 43.5,
               "line_max": 44.5,
               "line_iqr": 0.0,
-              "over_price": -109.5,
+              "over_price": -109.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 44.5
             }
           },
@@ -20790,7 +20790,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:05:00Z",
             "spread": {
               "book_count": 11,
@@ -20798,9 +20798,9 @@
               "line_max": -6.5,
               "line_iqr": 0.0,
               "home_price": -105.0,
-              "away_price": -115.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "away_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -7.0,
               "market_home_margin": 7.0
             },
@@ -20811,8 +20811,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 43.5
             }
           },
@@ -20878,23 +20878,23 @@
             "away_roster_ol_continuity_delta": 0.20736319450660387,
             "away_roster_skill_continuity_delta": 0.13823166886646748
           },
-          "market_line": 4.0,
+          "market_line": 4.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": 4.0,
               "line_max": 4.5,
               "line_iqr": 0.5,
-              "home_price": -109.0,
-              "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": 4.0,
-              "market_home_margin": -4.0
+              "home_price": -110.0,
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": 4.5,
+              "market_home_margin": -4.5
             },
             "total": {
               "book_count": 11,
@@ -20903,16 +20903,16 @@
               "line_iqr": 0.25,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 41.5
             }
           },
           "market_informed": {
-            "home_margin": -4.0,
+            "home_margin": -4.5,
             "total": 41.5,
-            "home_score": 18.8,
-            "away_score": 22.8,
+            "home_score": 18.5,
+            "away_score": 23.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -20974,29 +20974,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -4.0,
               "line_max": -3.5,
               "line_iqr": 0.25,
-              "home_price": -111.0,
-              "away_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -110.0,
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -3.5,
               "market_home_margin": 3.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 50.0,
               "line_max": 50.5,
-              "line_iqr": 0.375,
-              "over_price": -109.0,
+              "line_iqr": 0.0,
+              "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 50.5
             }
           },
@@ -21066,17 +21066,17 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -13.5,
-              "line_max": -13.0,
+              "line_max": -12.5,
               "line_iqr": 0.5,
-              "home_price": -105.0,
+              "home_price": -108.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -13.5,
               "market_home_margin": 13.5
             },
@@ -21087,8 +21087,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 45.5
             }
           },
@@ -21158,29 +21158,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-21T00:20:00Z",
             "spread": {
-              "book_count": 9,
+              "book_count": 10,
               "line_min": -6.5,
               "line_max": -6.5,
               "line_iqr": 0.0,
-              "home_price": -117.0,
-              "away_price": 100.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -115.0,
+              "away_price": -105.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -6.5,
               "market_home_margin": 6.5
             },
             "total": {
-              "book_count": 10,
-              "line_min": 47.5,
+              "book_count": 11,
+              "line_min": 47.0,
               "line_max": 47.5,
-              "line_iqr": 0.0,
-              "over_price": -109.5,
+              "line_iqr": 0.25,
+              "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 47.5
             }
           },
@@ -21250,17 +21250,17 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-22T00:15:00Z",
             "spread": {
               "book_count": 10,
               "line_min": -7.5,
               "line_max": -7.0,
               "line_iqr": 0.0,
-              "home_price": -114.5,
-              "away_price": -105.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "home_price": -114.0,
+              "away_price": -105.5,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -7.0,
               "market_home_margin": 7.0
             },
@@ -21269,10 +21269,10 @@
               "line_min": 48.0,
               "line_max": 48.5,
               "line_iqr": 0.0,
-              "over_price": -108.5,
-              "under_price": -111.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "over_price": -108.0,
+              "under_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 48.5
             }
           },
@@ -21289,11 +21289,11 @@
     "report": {
       "prediction_season": 2026,
       "week": 2,
-      "generated_at": "2026-09-15T13:01:03.028933+00:00",
-      "run_id": "20260915T131112Z-33d0f923",
+      "generated_at": "2026-09-15T16:44:02.373661+00:00",
+      "run_id": "20260915T165625Z-4eb6fdea",
       "data_cutoff": "2026-09-14",
-      "model_hash": "db669d6e14f19e1299014972565ee63a8d10b355af9743283d9f3ef0557ceb15",
-      "raw_data_hash": "c806b131664eed974ee846823868bd5c59c1134d458a8130d3fbf2beb5d97b91",
+      "model_hash": "ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9",
+      "raw_data_hash": "b1e5a42b2314b0b81ce02cf1942ba46cdd4ba04119b161b2a11fb0fb9bb95715",
       "predictions": [
         {
           "game_id": "2026_02_DET_BUF",
@@ -21353,29 +21353,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-18T00:15:00Z",
             "spread": {
               "book_count": 11,
-              "line_min": -4.5,
-              "line_max": -4.0,
-              "line_iqr": 0.0,
+              "line_min": -5.0,
+              "line_max": -4.5,
+              "line_iqr": 0.25,
               "home_price": -110.0,
-              "away_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -4.5,
               "market_home_margin": 4.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 53.5,
-              "line_max": 53.5,
-              "line_iqr": 0.0,
+              "line_min": 53.0,
+              "line_max": 54.0,
+              "line_iqr": 0.5,
               "over_price": -110.0,
-              "under_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "under_price": -110.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 53.5
             }
           },
@@ -21441,41 +21441,41 @@
             "away_roster_ol_continuity_delta": 0.01097978854427814,
             "away_roster_skill_continuity_delta": 0.09673866377694232
           },
-          "market_line": 1.0,
+          "market_line": 2.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
-              "line_min": 0.0,
-              "line_max": 1.5,
-              "line_iqr": 0.5,
-              "home_price": -108.0,
+              "line_min": 1.0,
+              "line_max": 2.5,
+              "line_iqr": 0.0,
+              "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": 1.0,
-              "market_home_margin": -1.0
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": 2.5,
+              "market_home_margin": -2.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 43.5,
-              "line_max": 44.5,
-              "line_iqr": 0.25,
-              "over_price": -110.0,
-              "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 44.0
+              "line_min": 43.0,
+              "line_max": 43.5,
+              "line_iqr": 0.0,
+              "over_price": -107.0,
+              "under_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 43.5
             }
           },
           "market_informed": {
-            "home_margin": -1.0,
-            "total": 44.0,
-            "home_score": 21.5,
-            "away_score": 22.5,
+            "home_margin": -2.5,
+            "total": 43.5,
+            "home_score": 20.5,
+            "away_score": 23.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -21537,7 +21537,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -21546,8 +21546,8 @@
               "line_iqr": 0.25,
               "home_price": -108.0,
               "away_price": -112.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -8.5,
               "market_home_margin": 8.5
             },
@@ -21558,8 +21558,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 47.0
             }
           },
@@ -21629,7 +21629,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -21638,28 +21638,28 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -5.5,
               "market_home_margin": 5.5
             },
             "total": {
               "book_count": 11,
-              "line_min": 49.0,
-              "line_max": 49.5,
-              "line_iqr": 0.5,
+              "line_min": 48.0,
+              "line_max": 48.5,
+              "line_iqr": 0.25,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 49.5
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 48.5
             }
           },
           "market_informed": {
             "home_margin": 5.5,
-            "total": 49.5,
-            "home_score": 27.5,
-            "away_score": 22.0,
+            "total": 48.5,
+            "home_score": 27.0,
+            "away_score": 21.5,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -21717,23 +21717,23 @@
             "away_roster_ol_continuity_delta": 0.08882315582968384,
             "away_roster_skill_continuity_delta": 0.12021335349875376
           },
-          "market_line": -3.0,
+          "market_line": -2.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -3.0,
-              "line_max": -2.5,
-              "line_iqr": 0.0,
-              "home_price": -105.0,
-              "away_price": -114.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": -3.0,
-              "market_home_margin": 3.0
+              "line_max": -2.0,
+              "line_iqr": 0.25,
+              "home_price": -116.0,
+              "away_price": -102.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": -2.5,
+              "market_home_margin": 2.5
             },
             "total": {
               "book_count": 11,
@@ -21742,16 +21742,16 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 46.5
             }
           },
           "market_informed": {
-            "home_margin": 3.0,
+            "home_margin": 2.5,
             "total": 46.5,
-            "home_score": 24.8,
-            "away_score": 21.8,
+            "home_score": 24.5,
+            "away_score": 22.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -21813,7 +21813,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -21822,8 +21822,8 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -5.5,
               "market_home_margin": 5.5
             },
@@ -21831,19 +21831,19 @@
               "book_count": 11,
               "line_min": 41.5,
               "line_max": 42.5,
-              "line_iqr": 0.5,
+              "line_iqr": 0.0,
               "over_price": -110.0,
-              "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "total": 42.0
+              "under_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "total": 41.5
             }
           },
           "market_informed": {
             "home_margin": 5.5,
-            "total": 42.0,
-            "home_score": 23.8,
-            "away_score": 18.2,
+            "total": 41.5,
+            "home_score": 23.5,
+            "away_score": 18.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -21905,7 +21905,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -21914,20 +21914,20 @@
               "line_iqr": 0.0,
               "home_price": -110.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": 3.5,
               "market_home_margin": -3.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 44.5,
               "line_max": 45.0,
               "line_iqr": 0.5,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 44.5
             }
           },
@@ -21997,7 +21997,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -22006,8 +22006,8 @@
               "line_iqr": 0.25,
               "home_price": -109.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -8.5,
               "market_home_margin": 8.5
             },
@@ -22015,11 +22015,11 @@
               "book_count": 11,
               "line_min": 40.5,
               "line_max": 41.5,
-              "line_iqr": 0.75,
+              "line_iqr": 0.5,
               "over_price": -110.0,
               "under_price": -108.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 41.0
             }
           },
@@ -22089,7 +22089,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T17:00:00Z",
             "spread": {
               "book_count": 11,
@@ -22098,20 +22098,20 @@
               "line_iqr": 0.0,
               "home_price": -108.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": 7.0,
               "market_home_margin": -7.0
             },
             "total": {
               "book_count": 11,
-              "line_min": 39.0,
-              "line_max": 39.5,
-              "line_iqr": 0.25,
+              "line_min": 39.5,
+              "line_max": 40.0,
+              "line_iqr": 0.5,
               "over_price": -110.0,
-              "under_price": -108.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "under_price": -110.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 39.5
             }
           },
@@ -22181,29 +22181,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:05:00Z",
             "spread": {
-              "book_count": 10,
-              "line_min": -2.5,
+              "book_count": 11,
+              "line_min": -3.0,
               "line_max": -2.5,
               "line_iqr": 0.0,
-              "home_price": -110.0,
-              "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -114.0,
+              "away_price": -105.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -2.5,
               "market_home_margin": 2.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 43.5,
               "line_max": 44.5,
               "line_iqr": 0.0,
-              "over_price": -109.5,
+              "over_price": -109.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 44.5
             }
           },
@@ -22273,7 +22273,7 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:05:00Z",
             "spread": {
               "book_count": 11,
@@ -22281,9 +22281,9 @@
               "line_max": -6.5,
               "line_iqr": 0.0,
               "home_price": -105.0,
-              "away_price": -115.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "away_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -7.0,
               "market_home_margin": 7.0
             },
@@ -22294,8 +22294,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 43.5
             }
           },
@@ -22361,23 +22361,23 @@
             "away_roster_ol_continuity_delta": 0.20736319450660387,
             "away_roster_skill_continuity_delta": 0.13823166886646748
           },
-          "market_line": 4.0,
+          "market_line": 4.5,
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": 4.0,
               "line_max": 4.5,
               "line_iqr": 0.5,
-              "home_price": -109.0,
-              "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
-              "home_spread": 4.0,
-              "market_home_margin": -4.0
+              "home_price": -110.0,
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
+              "home_spread": 4.5,
+              "market_home_margin": -4.5
             },
             "total": {
               "book_count": 11,
@@ -22386,16 +22386,16 @@
               "line_iqr": 0.25,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 41.5
             }
           },
           "market_informed": {
-            "home_margin": -4.0,
+            "home_margin": -4.5,
             "total": 41.5,
-            "home_score": 18.8,
-            "away_score": 22.8,
+            "home_score": 18.5,
+            "away_score": 23.0,
             "method": "market consensus benchmark (not a claimed betting edge)"
           }
         },
@@ -22457,29 +22457,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -4.0,
               "line_max": -3.5,
               "line_iqr": 0.25,
-              "home_price": -111.0,
-              "away_price": -109.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -110.0,
+              "away_price": -108.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -3.5,
               "market_home_margin": 3.5
             },
             "total": {
-              "book_count": 10,
+              "book_count": 11,
               "line_min": 50.0,
               "line_max": 50.5,
-              "line_iqr": 0.375,
-              "over_price": -109.0,
+              "line_iqr": 0.0,
+              "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 50.5
             }
           },
@@ -22549,17 +22549,17 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-20T20:25:00Z",
             "spread": {
               "book_count": 11,
               "line_min": -13.5,
-              "line_max": -13.0,
+              "line_max": -12.5,
               "line_iqr": 0.5,
-              "home_price": -105.0,
+              "home_price": -108.0,
               "away_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -13.5,
               "market_home_margin": 13.5
             },
@@ -22570,8 +22570,8 @@
               "line_iqr": 0.0,
               "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 45.5
             }
           },
@@ -22641,29 +22641,29 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-21T00:20:00Z",
             "spread": {
-              "book_count": 9,
+              "book_count": 10,
               "line_min": -6.5,
               "line_max": -6.5,
               "line_iqr": 0.0,
-              "home_price": -117.0,
-              "away_price": 100.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "home_price": -115.0,
+              "away_price": -105.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -6.5,
               "market_home_margin": 6.5
             },
             "total": {
-              "book_count": 10,
-              "line_min": 47.5,
+              "book_count": 11,
+              "line_min": 47.0,
               "line_max": 47.5,
-              "line_iqr": 0.0,
-              "over_price": -109.5,
+              "line_iqr": 0.25,
+              "over_price": -110.0,
               "under_price": -110.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:47+00:00",
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 47.5
             }
           },
@@ -22733,17 +22733,17 @@
           "injury_adjustments": [],
           "market_consensus": {
             "provider": "The Odds API",
-            "snapshot_at": "2026-09-15T13:01:01.721487+00:00",
+            "snapshot_at": "2026-09-15T16:44:00.895373+00:00",
             "commence_time": "2026-09-22T00:15:00Z",
             "spread": {
               "book_count": 10,
               "line_min": -7.5,
               "line_max": -7.0,
               "line_iqr": 0.0,
-              "home_price": -114.5,
-              "away_price": -105.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "home_price": -114.0,
+              "away_price": -105.5,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "home_spread": -7.0,
               "market_home_margin": 7.0
             },
@@ -22752,10 +22752,10 @@
               "line_min": 48.0,
               "line_max": 48.5,
               "line_iqr": 0.0,
-              "over_price": -108.5,
-              "under_price": -111.0,
-              "oldest_book_update": "2026-09-15T12:58:29+00:00",
-              "latest_book_update": "2026-09-15T13:00:48+00:00",
+              "over_price": -108.0,
+              "under_price": -112.0,
+              "oldest_book_update": "2026-09-15T16:41:32+00:00",
+              "latest_book_update": "2026-09-15T16:43:44+00:00",
               "total": 48.5
             }
           },
@@ -22771,7 +22771,7 @@
     },
     "official_injuries": {
       "source": "nflverse injury reports",
-      "generated_at": "2026-09-15T13:01:03.028933+00:00",
+      "generated_at": "2026-09-15T16:44:02.373661+00:00",
       "prediction_season": 2026,
       "available_season": 2026,
       "available_week": 1,
@@ -24964,7 +24964,7 @@
       ]
     },
     "update": {
-      "last_updated": "2026-09-15T13:01:03.028933+00:00",
+      "last_updated": "2026-09-15T16:44:02.373661+00:00",
       "prediction_season": 2026,
       "training_seasons": [
         2022,
@@ -24975,9 +24975,9 @@
       ],
       "data_cutoff": "2026-09-14",
       "model_manifest": "models/manifest.json",
-      "model_hash": "db669d6e14f19e1299014972565ee63a8d10b355af9743283d9f3ef0557ceb15",
-      "raw_data_hash": "c806b131664eed974ee846823868bd5c59c1134d458a8130d3fbf2beb5d97b91",
-      "ledger_run": "20260915T131112Z-33d0f923",
+      "model_hash": "ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9",
+      "raw_data_hash": "b1e5a42b2314b0b81ce02cf1942ba46cdd4ba04119b161b2a11fb0fb9bb95715",
+      "ledger_run": "20260915T165625Z-4eb6fdea",
       "metrics": {
         "game_margin": {
           "ridge_alpha": 50.0,
