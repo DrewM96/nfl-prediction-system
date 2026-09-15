@@ -155,8 +155,12 @@ def build_weighted_game_features(
             season = int(game["season"])
             home = str(game["home_team"])
             away = str(game["away_team"])
-            home_state = _team_state(histories[home], priors, current_season=season, variant=variant)
-            away_state = _team_state(histories[away], priors, current_season=season, variant=variant)
+            home_state = _team_state(
+                histories[home], priors, current_season=season, variant=variant
+            )
+            away_state = _team_state(
+                histories[away], priors, current_season=season, variant=variant
+            )
             home_last = histories[home][-1]["gameday"] if histories[home] else None
             away_last = histories[away][-1]["gameday"] if histories[away] else None
             home_rest = min((game_day - home_last).days, 21) if home_last else 7
@@ -201,7 +205,9 @@ def build_weighted_game_features(
                             "gameday": game_day,
                             "points_for": home_score,
                             "points_against": away_score,
-                            "win": 1.0 if home_score > away_score else (0.5 if home_score == away_score else 0.0),
+                            "win": 1.0
+                            if home_score > away_score
+                            else (0.5 if home_score == away_score else 0.0),
                             **{
                                 key: home_summary.get(key, priors[key])
                                 for key in priors
@@ -216,7 +222,9 @@ def build_weighted_game_features(
                             "gameday": game_day,
                             "points_for": away_score,
                             "points_against": home_score,
-                            "win": 1.0 if away_score > home_score else (0.5 if home_score == away_score else 0.0),
+                            "win": 1.0
+                            if away_score > home_score
+                            else (0.5 if home_score == away_score else 0.0),
                             **{
                                 key: away_summary.get(key, priors[key])
                                 for key in priors
@@ -346,7 +354,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     ]
     for variant in VARIANTS:
         metrics = report["variants"][variant]["margin"]
-        values = [metrics[key]["mae"] for key in ("weeks_1_4", "weeks_5_8", "weeks_9_18", "full_season")]
+        values = [
+            metrics[key]["mae"] for key in ("weeks_1_4", "weeks_5_8", "weeks_9_18", "full_season")
+        ]
         acc = metrics["full_season"]["winner_accuracy"]
         lines.append(
             f"| {variant} | "
@@ -364,7 +374,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     )
     for variant in VARIANTS:
         metrics = report["variants"][variant]["total"]
-        values = [metrics[key]["mae"] for key in ("weeks_1_4", "weeks_5_8", "weeks_9_18", "full_season")]
+        values = [
+            metrics[key]["mae"] for key in ("weeks_1_4", "weeks_5_8", "weeks_9_18", "full_season")
+        ]
         lines.append(
             f"| {variant} | "
             + " | ".join("—" if value is None else f"{value:.3f}" for value in values)
@@ -384,8 +396,12 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seasons", nargs="+", type=int, default=[2020, 2021, 2022, 2023, 2024, 2025])
-    parser.add_argument("--evaluation-seasons", nargs="+", type=int, default=[2022, 2023, 2024, 2025])
+    parser.add_argument(
+        "--seasons", nargs="+", type=int, default=[2020, 2021, 2022, 2023, 2024, 2025]
+    )
+    parser.add_argument(
+        "--evaluation-seasons", nargs="+", type=int, default=[2022, 2023, 2024, 2025]
+    )
     parser.add_argument("--min-train-rows", type=int, default=350)
     parser.add_argument("--output-dir", default="reports/season_transition")
     args = parser.parse_args()
