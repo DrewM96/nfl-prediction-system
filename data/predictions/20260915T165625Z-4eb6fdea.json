@@ -1,11 +1,14 @@
 {
-  "prediction_season": 2026,
-  "week": 2,
-  "generated_at": "2026-09-15T16:44:02.373661+00:00",
   "run_id": "20260915T165625Z-4eb6fdea",
+  "created_at": "2026-09-15T16:56:25.576336+00:00",
+  "prediction_season": 2026,
   "data_cutoff": "2026-09-14",
   "model_hash": "ce497a7944976a3d52e580485340a0eda481c3bb702fb43dc5db659d3ef284f9",
-  "raw_data_hash": "b1e5a42b2314b0b81ce02cf1942ba46cdd4ba04119b161b2a11fb0fb9bb95715",
+  "metadata": {
+    "git_commit": "8c32eae336eeb81269b5a29e4962c55d155ee3a4",
+    "week": 2,
+    "market_snapshot_at": "2026-09-15T16:44:00.895373+00:00"
+  },
   "predictions": [
     {
       "game_id": "2026_02_DET_BUF",
