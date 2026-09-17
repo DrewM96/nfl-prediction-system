@@ -38,7 +38,11 @@ from nfl_prediction.market import (
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.preseason import apply_preseason_calibration
-from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings
+from nfl_prediction.rankings import (
+    build_football_form_ratings,
+    build_market_power_ratings,
+    build_model_power_ratings,
+)
 from nfl_prediction.results_ui import render_results
 from nfl_prediction.roster import decay_roster_feature
 from nfl_prediction.ui import (
@@ -1365,8 +1369,36 @@ def render_props(
     st.caption("The 80% range reflects model residuals. Availability adjustments appear above.")
 
 
-def render_rankings(state: dict[str, Any]) -> None:
+def render_rankings(service: PredictionService, state: dict[str, Any]) -> None:
     page_header("Power Rankings")
+    report = state.get("report") or {}
+    prediction_week = int(report.get("week") or 1)
+
+    def standardized_margin(away_team: str, home_team: str, neutral_site: bool) -> float:
+        features = service._game_features(
+            away_team,
+            home_team,
+            away_rest_days=7,
+            home_rest_days=7,
+            neutral_site=neutral_site,
+            week=prediction_week,
+        )
+        # Team strength should not inherit schedule-specific context.
+        for column, value in (
+            ("division_game", 0.0),
+            ("home_rest_days", 7.0),
+            ("away_rest_days", 7.0),
+            ("rest_advantage", 0.0),
+        ):
+            if column in features:
+                features.loc[:, column] = value
+        return float(service.models["game_margin"].predict(features)[0])
+
+    model_power = build_model_power_ratings(
+        service.teams(),
+        predict_margin=standardized_margin,
+        prediction_week=prediction_week,
+    )
     neutral_matchups = {
         (str(game.get("away_team", "")), str(game.get("home_team", "")))
         for game in state.get("schedule", [])
@@ -1378,18 +1410,38 @@ def render_rankings(state: dict[str, Any]) -> None:
         neutral_matchups=neutral_matchups,
     )
     football = build_football_form_ratings(state["teams"])
-    form_cutoff = str(football.get("data_cutoff") or "")
-    form_label = (
-        f"{form_cutoff[:4]} football form" if form_cutoff[:4].isdigit() else "Football form"
-    )
-    choices = ["Latest market consensus", form_label] if market else [form_label]
+    choices = ["GRIDLINE model"]
+    if market:
+        choices.append("Latest market consensus")
+    choices.append("Recent form index")
     source = st.radio(
         "Ranking source",
         choices,
         horizontal=True,
         key="power_ranking_source",
     )
-    if source == "Latest market consensus" and market:
+
+    if source == "GRIDLINE model" and model_power:
+        st.markdown(
+            f"""
+            <div class="grid-muted" style="margin-bottom:14px">Model-implied points above or below an average NFL team on a neutral field · Week {prediction_week} team state · football model only</div>
+            <div class="grid-results">
+              <div class="grid-result"><div class="grid-tile-label">Neutral matchups</div><div class="grid-result-value">{int(model_power["matchup_count"])}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Model home field</div><div class="grid-result-value">{float(model_power["home_field_points"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Rating reconstruction MAE</div><div class="grid-result-value">{float(model_power["reconstruction_mae"]):.2f}</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Directional asymmetry</div><div class="grid-result-value">{float(model_power["directional_asymmetry_mae"]):.2f}</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        ranking_rows = model_power["ratings"]
+        st.caption(
+            "Each rating is fitted from every pairwise neutral-field projection using the active "
+            "football-only margin model, equal rest, and no divisional, injury, or sportsbook context. "
+            "Rating A minus Rating B is the model's baseline neutral-field spread; the weekly game "
+            "forecast can differ because it restores matchup and situational context."
+        )
+    elif source == "Latest market consensus" and market:
         raw_snapshot = str(market.get("snapshot_at") or "")
         try:
             snapshot = datetime.fromisoformat(raw_snapshot.replace("Z", "+00:00")).astimezone(
@@ -1420,14 +1472,15 @@ def render_rankings(state: dict[str, Any]) -> None:
         )
     else:
         st.markdown(
-            f'<div class="grid-muted" style="margin-bottom:18px">Completed-game form using points, EPA, and pressure · data through {html_text(football.get("data_cutoff") or "unknown")} · no offseason market input</div>',
+            f'<div class="grid-muted" style="margin-bottom:18px">Recent-form index using points, EPA, and pressure · data through {html_text(football.get("data_cutoff") or "unknown")} · descriptive, not point-spread calibrated</div>',
             unsafe_allow_html=True,
         )
         ranking_rows = football["ratings"]
         st.caption(
-            "This descriptive view updates after completed games; roster features remain excluded "
-            "because they worsened margin validation."
+            "This legacy descriptive view updates after completed games. Its score is useful for "
+            "ordering recent form but should not be interpreted as points above or below average."
         )
+
     roster_context = state["teams"]
 
     def roster_label(team: str) -> str:
@@ -1459,12 +1512,10 @@ def render_rankings(state: dict[str, Any]) -> None:
     )
     st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
     st.caption(
-        "Roster context compares the current 2026 roster with each team's 2025 snap distribution. "
-        "It informs the Weeks 1-4 totals model, with a weekly decay, but does not change the market "
-        "ranking order. QB status means the prior season's primary quarterback remains on the roster; "
-        "it is not a confirmed Week 1 starter designation."
+        "Roster continuity is shown as context beside every ranking. The model-derived point rating "
+        "uses only features present in the active margin model; the Recent Form Index intentionally "
+        "remains a separate descriptive view."
     )
-
 
 def render_performance(state: dict[str, Any]) -> None:
     render_results(PREDICTIONS_DIR, league="NFL")
@@ -1984,7 +2035,7 @@ elif page == "Builder":
 elif page == "Props":
     render_props(state, service, injury_system)
 elif page == "Rankings":
-    render_rankings(state)
+    render_rankings(service, state)
 elif page == "Results":
     render_performance(state)
 else:
