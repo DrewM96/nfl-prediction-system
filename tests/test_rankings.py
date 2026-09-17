@@ -35,8 +35,10 @@ def test_model_power_ratings_antisymmetrize_directional_noise() -> None:
     strengths = {"A": 3.0, "B": 0.0, "C": -3.0}
 
     def predict_margin(away: str, home: str, neutral_site: bool) -> float:
-        ordering_noise = 0.4 if home < away else -0.4
-        return strengths[home] - strengths[away] + ordering_noise + (0.0 if neutral_site else 2.0)
+        directional_bias = 0.4
+        return strengths[home] - strengths[away] + directional_bias + (
+            0.0 if neutral_site else 2.0
+        )
 
     result = build_model_power_ratings(list(strengths), predict_margin=predict_margin)
 
