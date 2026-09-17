@@ -1517,6 +1517,7 @@ def render_rankings(service: PredictionService, state: dict[str, Any]) -> None:
         "remains a separate descriptive view."
     )
 
+
 def render_performance(state: dict[str, Any]) -> None:
     render_results(PREDICTIONS_DIR, league="NFL")
     st.divider()
