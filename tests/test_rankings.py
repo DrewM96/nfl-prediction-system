@@ -6,7 +6,44 @@ from pathlib import Path
 
 import pytest
 
-from nfl_prediction.rankings import build_market_power_ratings
+from nfl_prediction.rankings import build_market_power_ratings, build_model_power_ratings
+
+
+def test_model_power_ratings_recover_additive_strength_and_home_field() -> None:
+    strengths = {"A": 4.0, "B": 1.0, "C": -1.0, "D": -4.0}
+
+    def predict_margin(away: str, home: str, neutral_site: bool) -> float:
+        return strengths[home] - strengths[away] + (0.0 if neutral_site else 2.25)
+
+    result = build_model_power_ratings(
+        list(strengths),
+        predict_margin=predict_margin,
+        prediction_week=7,
+    )
+
+    assert result is not None
+    assert result["prediction_week"] == 7
+    assert result["matchup_count"] == 6
+    assert result["home_field_points"] == pytest.approx(2.25)
+    assert result["reconstruction_mae"] == pytest.approx(0.0, abs=1e-10)
+    assert result["directional_asymmetry_mae"] == pytest.approx(0.0, abs=1e-10)
+    ratings = {row["team"]: row["rating"] for row in result["ratings"]}
+    assert ratings == pytest.approx(strengths)
+
+
+def test_model_power_ratings_antisymmetrize_directional_noise() -> None:
+    strengths = {"A": 3.0, "B": 0.0, "C": -3.0}
+
+    def predict_margin(away: str, home: str, neutral_site: bool) -> float:
+        ordering_noise = 0.4 if home < away else -0.4
+        return strengths[home] - strengths[away] + ordering_noise + (0.0 if neutral_site else 2.0)
+
+    result = build_model_power_ratings(list(strengths), predict_margin=predict_margin)
+
+    assert result is not None
+    ratings = {row["team"]: row["rating"] for row in result["ratings"]}
+    assert ratings == pytest.approx(strengths)
+    assert result["directional_asymmetry_mae"] == pytest.approx(0.4)
 
 
 def test_market_ratings_recover_neutral_strength_and_home_field() -> None:
