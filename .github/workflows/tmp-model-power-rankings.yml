@@ -1,0 +1,202 @@
+name: Temporary model power rankings UI patch
+
+on:
+  push:
+    branches:
+      - feature/model-power-rankings
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/model-power-rankings
+          fetch-depth: 0
+      - name: Patch Rankings UI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("app.py")
+          text = path.read_text(encoding="utf-8")
+          old_import = "from nfl_prediction.rankings import build_football_form_ratings, build_market_power_ratings"
+          new_import = """from nfl_prediction.rankings import (\n    build_football_form_ratings,\n    build_market_power_ratings,\n    build_model_power_ratings,\n)"""
+          if old_import not in text:
+              raise SystemExit("rankings import anchor not found")
+          text = text.replace(old_import, new_import, 1)
+
+          start = text.index("def render_rankings(state: dict[str, Any]) -> None:")
+          end = text.index("\ndef render_performance(state: dict[str, Any]) -> None:", start)
+          replacement = '''def render_rankings(service: PredictionService, state: dict[str, Any]) -> None:
+              page_header("Power Rankings")
+              report = state.get("report") or {}
+              prediction_week = int(report.get("week") or 1)
+
+              def standardized_margin(away_team: str, home_team: str, neutral_site: bool) -> float:
+                  features = service._game_features(
+                      away_team,
+                      home_team,
+                      away_rest_days=7,
+                      home_rest_days=7,
+                      neutral_site=neutral_site,
+                      week=prediction_week,
+                  )
+                  # Team strength should not inherit schedule-specific context.
+                  for column, value in (
+                      ("division_game", 0.0),
+                      ("home_rest_days", 7.0),
+                      ("away_rest_days", 7.0),
+                      ("rest_advantage", 0.0),
+                  ):
+                      if column in features:
+                          features.loc[:, column] = value
+                  return float(service.models["game_margin"].predict(features)[0])
+
+              model_power = build_model_power_ratings(
+                  service.teams(),
+                  predict_margin=standardized_margin,
+                  prediction_week=prediction_week,
+              )
+              neutral_matchups = {
+                  (str(game.get("away_team", "")), str(game.get("home_team", "")))
+                  for game in state.get("schedule", [])
+                  if game.get("neutral_site")
+                  or not float((game.get("features") or {}).get("home_field", 1.0))
+              }
+              market = build_market_power_ratings(
+                  eligible_market_snapshot(state.get("market")),
+                  neutral_matchups=neutral_matchups,
+              )
+              football = build_football_form_ratings(state["teams"])
+              choices = ["GRIDLINE model"]
+              if market:
+                  choices.append("Latest market consensus")
+              choices.append("Recent form index")
+              source = st.radio(
+                  "Ranking source",
+                  choices,
+                  horizontal=True,
+                  key="power_ranking_source",
+              )
+
+              if source == "GRIDLINE model" and model_power:
+                  st.markdown(
+                      f"""
+                      <div class="grid-muted" style="margin-bottom:14px">Model-implied points above or below an average NFL team on a neutral field · Week {prediction_week} team state · football model only</div>
+                      <div class="grid-results">
+                        <div class="grid-result"><div class="grid-tile-label">Neutral matchups</div><div class="grid-result-value">{int(model_power["matchup_count"])}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Model home field</div><div class="grid-result-value">{float(model_power["home_field_points"]):.2f}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Rating reconstruction MAE</div><div class="grid-result-value">{float(model_power["reconstruction_mae"]):.2f}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Directional asymmetry</div><div class="grid-result-value">{float(model_power["directional_asymmetry_mae"]):.2f}</div></div>
+                      </div>
+                      """,
+                      unsafe_allow_html=True,
+                  )
+                  ranking_rows = model_power["ratings"]
+                  st.caption(
+                      "Each rating is fitted from every pairwise neutral-field projection using the active "
+                      "football-only margin model, equal rest, and no divisional, injury, or sportsbook context. "
+                      "Rating A minus Rating B is the model's baseline neutral-field spread; the weekly game "
+                      "forecast can differ because it restores matchup and situational context."
+                  )
+              elif source == "Latest market consensus" and market:
+                  raw_snapshot = str(market.get("snapshot_at") or "")
+                  try:
+                      snapshot = datetime.fromisoformat(raw_snapshot.replace("Z", "+00:00")).astimezone(
+                          ZoneInfo("America/New_York")
+                      )
+                      snapshot_text = (
+                          f"{snapshot.strftime('%b %d, %Y')} · {snapshot.strftime('%I:%M%p').lstrip('0')} ET"
+                      )
+                  except (TypeError, ValueError):
+                      snapshot_text = raw_snapshot or "unknown"
+                  st.markdown(
+                      f"""
+                      <div class="grid-muted" style="margin-bottom:14px">Market-implied points above or below an average NFL team on a neutral field · snapshot {html_text(snapshot_text)}</div>
+                      <div class="grid-results">
+                        <div class="grid-result"><div class="grid-tile-label">Schedule lines</div><div class="grid-result-value">{int(market["game_count"])}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Median books</div><div class="grid-result-value">{float(market["median_book_count"]):.0f}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Implied home field</div><div class="grid-result-value">{float(market["home_field_points"]):.2f}</div></div>
+                        <div class="grid-result"><div class="grid-tile-label">Line reconstruction MAE</div><div class="grid-result-value">{float(market["line_fit_mae"]):.2f}</div></div>
+                      </div>
+                      """,
+                      unsafe_allow_html=True,
+                  )
+                  ranking_rows = market["ratings"]
+                  st.caption(
+                      "These ratings decompose consensus spreads across the full schedule into neutral-field "
+                      f"team strength. Single-book games are excluded ({int(market['excluded_single_book_games'])}); "
+                      "later look-ahead lines will update as more books post prices."
+                  )
+              else:
+                  st.markdown(
+                      f'<div class="grid-muted" style="margin-bottom:18px">Recent-form index using points, EPA, and pressure · data through {html_text(football.get("data_cutoff") or "unknown")} · descriptive, not point-spread calibrated</div>',
+                      unsafe_allow_html=True,
+                  )
+                  ranking_rows = football["ratings"]
+                  st.caption(
+                      "This legacy descriptive view updates after completed games. Its score is useful for "
+                      "ordering recent form but should not be interpreted as points above or below average."
+                  )
+
+              roster_context = state["teams"]
+
+              def roster_label(team: str) -> str:
+                  values = roster_context.get(team, {})
+                  required = (
+                      "roster_qb_returning",
+                      "roster_ol_continuity",
+                      "roster_skill_continuity",
+                  )
+                  if not all(key in values for key in required):
+                      return "Roster context unavailable"
+                  qb = "QB returns" if float(values["roster_qb_returning"]) >= 0.5 else "New QB room"
+                  return (
+                      f"{qb} | OL {float(values['roster_ol_continuity']):.0%} | "
+                      f"Skill {float(values['roster_skill_continuity']):.0%}"
+                  )
+
+              max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
+              row_html = "".join(
+                  f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
+                  f'<div class="grid-rank-team">{team_logo_html(str(row["team"]), "nfl", "rank")}'
+                  f'<div class="grid-rank-team-copy">{html_text(team_name(str(row["team"])))}'
+                  f'<div class="grid-rank-roster">{html_text(roster_label(str(row["team"])))}</div></div></div>'
+                  f'<div class="grid-rank-track"><div class="grid-rank-fill" '
+                  f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
+                  f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
+                  f'<div class="grid-rank-value">{float(row["rating"]):+.1f}</div></div>'
+                  for rank, row in enumerate(ranking_rows, start=1)
+              )
+              st.markdown(f'<div class="grid-card">{row_html}</div>', unsafe_allow_html=True)
+              st.caption(
+                  "Roster continuity is shown as context beside every ranking. The model-derived point rating "
+                  "uses only features present in the active margin model; the Recent Form Index intentionally "
+                  "remains a separate descriptive view."
+              )
+          '''
+          # Dedent the replacement while keeping its internal indentation intact.
+          import textwrap
+          replacement = textwrap.dedent(replacement).rstrip() + "\n\n"
+          text = text[:start] + replacement + text[end + 1:]
+
+          old_call = 'elif page == "Rankings":\n    render_rankings(state)'
+          new_call = 'elif page == "Rankings":\n    render_rankings(service, state)'
+          if old_call not in text:
+              raise SystemExit("render_rankings call anchor not found")
+          text = text.replace(old_call, new_call, 1)
+          path.write_text(text, encoding="utf-8")
+          PY
+      - name: Remove temporary workflow and commit patch
+        run: |
+          git rm .github/workflows/tmp-model-power-rankings.yml
+          git add app.py
+          git config user.name "DrewM96"
+          git config user.email "andrewmarch1996@gmail.com"
+          git commit -m "feat: show model-implied point power rankings"
+          git push origin HEAD:feature/model-power-rankings
