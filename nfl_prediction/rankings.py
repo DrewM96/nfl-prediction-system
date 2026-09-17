@@ -1,8 +1,108 @@
 from __future__ import annotations
 
+import itertools
+import math
+from collections.abc import Callable
 from typing import Any
 
 import numpy as np
+
+ModelMarginPredictor = Callable[[str, str, bool], float]
+
+
+def build_model_power_ratings(
+    teams: list[str],
+    *,
+    predict_margin: ModelMarginPredictor,
+    prediction_week: int | None = None,
+) -> dict[str, Any] | None:
+    """Decompose the football-only margin model into neutral-field point ratings.
+
+    ``predict_margin`` receives ``(away_team, home_team, neutral_site)`` and must
+    return the model's expected home margin. Every unordered team pair is scored
+    in both orientations on a neutral field. The two directional predictions are
+    antisymmetrized before solving a zero-sum least-squares team-strength system.
+
+    Home-field value is estimated separately as the average model response when
+    the same standardized matchup changes from neutral to a normal home venue.
+    The reconstruction diagnostics quantify how much information is lost when the
+    richer matchup model is summarized by one additive rating per team.
+    """
+    team_list = sorted({str(team).strip() for team in teams if str(team).strip()})
+    if len(team_list) < 2:
+        return None
+
+    team_index = {team: index for index, team in enumerate(team_list)}
+    pair_rows: list[dict[str, Any]] = []
+    home_field_effects: list[float] = []
+    directional_asymmetry: list[float] = []
+
+    for first, second in itertools.combinations(team_list, 2):
+        # first @ second: positive means second is better.
+        neutral_second = float(predict_margin(first, second, True))
+        neutral_first = float(predict_margin(second, first, True))
+        if not (np.isfinite(neutral_second) and np.isfinite(neutral_first)):
+            continue
+
+        # Average both orientations so arbitrary home/away ordering cannot leak
+        # into a neutral-field team-strength rating.
+        second_over_first = 0.5 * (neutral_second - neutral_first)
+        directional_asymmetry.append(abs(neutral_second + neutral_first) / 2.0)
+        pair_rows.append(
+            {
+                "first": first,
+                "second": second,
+                "margin": second_over_first,
+            }
+        )
+
+        home_second = float(predict_margin(first, second, False))
+        home_first = float(predict_margin(second, first, False))
+        if np.isfinite(home_second):
+            home_field_effects.append(home_second - neutral_second)
+        if np.isfinite(home_first):
+            home_field_effects.append(home_first - neutral_first)
+
+    if len(pair_rows) < len(team_list) - 1:
+        return None
+
+    design = np.zeros((len(pair_rows), len(team_list)), dtype=float)
+    targets = np.asarray([row["margin"] for row in pair_rows], dtype=float)
+    for row_index, row in enumerate(pair_rows):
+        design[row_index, team_index[row["second"]]] = 1.0
+        design[row_index, team_index[row["first"]]] = -1.0
+
+    if np.linalg.matrix_rank(design) < len(team_list) - 1:
+        return None
+
+    ratings = np.linalg.lstsq(design, targets, rcond=None)[0]
+    ratings -= ratings.mean()
+    fitted = design @ ratings
+    residuals = fitted - targets
+    order = np.argsort(ratings)[::-1]
+
+    rows = [
+        {
+            "rank": rank,
+            "team": team_list[index],
+            "rating": float(ratings[index]),
+            "matchups": len(team_list) - 1,
+        }
+        for rank, index in enumerate(order, start=1)
+    ]
+    return {
+        "kind": "model_power",
+        "prediction_week": prediction_week,
+        "team_count": len(team_list),
+        "matchup_count": len(pair_rows),
+        "home_field_points": float(np.mean(home_field_effects)) if home_field_effects else 0.0,
+        "reconstruction_mae": float(np.mean(np.abs(residuals))),
+        "reconstruction_rmse": float(math.sqrt(np.mean(residuals**2))),
+        "directional_asymmetry_mae": (
+            float(np.mean(directional_asymmetry)) if directional_asymmetry else 0.0
+        ),
+        "ratings": rows,
+    }
 
 
 def build_market_power_ratings(

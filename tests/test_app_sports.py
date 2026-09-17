@@ -39,21 +39,26 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("logo" in markdown.value for markdown in app.markdown)
 
 
-def test_power_rankings_offer_a_football_form_view() -> None:
-    app = AppTest.from_file("app.py").run(timeout=30)
+def test_power_rankings_default_to_point_calibrated_model_view() -> None:
+    app = AppTest.from_file("app.py").run(timeout=45)
     navigation = next(radio for radio in app.radio if radio.label == "Navigate")
-    navigation.set_value("Rankings").run(timeout=30)
+    navigation.set_value("Rankings").run(timeout=45)
 
     source = next(radio for radio in app.radio if radio.label == "Ranking source")
-    form_view = next(option for option in source.options if option.endswith("football form"))
-    source.set_value(form_view).run(timeout=30)
+    assert source.value == "GRIDLINE model"
+    assert "Recent form index" in source.options
     assert not app.error
     assert not app.exception
-    assert any("Completed-game form" in markdown.value for markdown in app.markdown)
+    assert any("Model-implied points above or below" in markdown.value for markdown in app.markdown)
+    assert any("Rating reconstruction MAE" in markdown.value for markdown in app.markdown)
     assert any("Los Angeles Rams" in markdown.value for markdown in app.markdown)
-    assert any("Los Angeles Rams logo" in markdown.value for markdown in app.markdown)
     assert any("QB returns" in markdown.value for markdown in app.markdown)
-    assert any("Weeks 1-4 totals model" in caption.value for caption in app.caption)
+
+    source.set_value("Recent form index").run(timeout=45)
+    assert not app.error
+    assert not app.exception
+    assert any("Recent-form index" in markdown.value for markdown in app.markdown)
+    assert any("not point-spread calibrated" in markdown.value for markdown in app.markdown)
 
 
 def test_results_are_available_for_both_sports() -> None:
