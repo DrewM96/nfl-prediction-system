@@ -1,0 +1,35 @@
+name: Temporary format model power rankings
+
+on:
+  push:
+    branches:
+      - feature/model-power-rankings
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/model-power-rankings
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Format changed Python files
+        run: ruff format app.py nfl_prediction/rankings.py tests/test_rankings.py tests/test_app_sports.py
+      - name: Remove temporary workflow and commit
+        run: |
+          git rm .github/workflows/tmp-format-model-power.yml
+          git add app.py nfl_prediction/rankings.py tests/test_rankings.py tests/test_app_sports.py
+          git config user.name "DrewM96"
+          git config user.email "andrewmarch1996@gmail.com"
+          git diff --cached --quiet && exit 0
+          git commit -m "style: format model power rankings"
+          git push origin HEAD:feature/model-power-rankings
