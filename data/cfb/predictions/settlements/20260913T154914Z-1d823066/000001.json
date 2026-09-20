@@ -1,0 +1,355 @@
+{
+  "run_id": "20260913T154914Z-1d823066",
+  "revision": 1,
+  "scored_at": "2026-09-20T23:10:12.377574+00:00",
+  "source": {
+    "game_id": "401860888",
+    "status": "final",
+    "actual_home_margin": -16.0,
+    "actual_total": 36.0
+  },
+  "results": [
+    {
+      "game_id": "401858225",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 40.0
+    },
+    {
+      "game_id": "401858226",
+      "status": "final",
+      "actual_home_margin": -13.0,
+      "actual_total": 53.0
+    },
+    {
+      "game_id": "401856811",
+      "status": "final",
+      "actual_home_margin": 2.0,
+      "actual_total": 54.0
+    },
+    {
+      "game_id": "401869940",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 36.0
+    },
+    {
+      "game_id": "401856686",
+      "status": "final",
+      "actual_home_margin": -28.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "401856792",
+      "status": "final",
+      "actual_home_margin": 11.0,
+      "actual_total": 51.0
+    },
+    {
+      "game_id": "401856798",
+      "status": "final",
+      "actual_home_margin": 48.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "401856812",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "401858229",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 48.0
+    },
+    {
+      "game_id": "401858451",
+      "status": "final",
+      "actual_home_margin": 34.0,
+      "actual_total": 48.0
+    },
+    {
+      "game_id": "401858454",
+      "status": "final",
+      "actual_home_margin": 56.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "401858456",
+      "status": "final",
+      "actual_home_margin": 42.0,
+      "actual_total": 68.0
+    },
+    {
+      "game_id": "401860889",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 84.0
+    },
+    {
+      "game_id": "401858460",
+      "status": "final",
+      "actual_home_margin": 44.0,
+      "actual_total": 64.0
+    },
+    {
+      "game_id": "401856695",
+      "status": "final",
+      "actual_home_margin": 4.0,
+      "actual_total": 66.0
+    },
+    {
+      "game_id": "401864508",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 34.0
+    },
+    {
+      "game_id": "401862774",
+      "status": "final",
+      "actual_home_margin": 1.0,
+      "actual_total": 97.0
+    },
+    {
+      "game_id": "401856685",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 86.0
+    },
+    {
+      "game_id": "401856694",
+      "status": "final",
+      "actual_home_margin": -10.0,
+      "actual_total": 52.0
+    },
+    {
+      "game_id": "401856797",
+      "status": "final",
+      "actual_home_margin": 4.0,
+      "actual_total": 66.0
+    },
+    {
+      "game_id": "401856801",
+      "status": "final",
+      "actual_home_margin": 33.0,
+      "actual_total": 33.0
+    },
+    {
+      "game_id": "401858230",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 72.0
+    },
+    {
+      "game_id": "401858450",
+      "status": "final",
+      "actual_home_margin": 35.0,
+      "actual_total": 69.0
+    },
+    {
+      "game_id": "401858457",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 77.0
+    },
+    {
+      "game_id": "401858231",
+      "status": "final",
+      "actual_home_margin": 28.0,
+      "actual_total": 42.0
+    },
+    {
+      "game_id": "401858449",
+      "status": "final",
+      "actual_home_margin": 38.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "401866422",
+      "status": "final",
+      "actual_home_margin": 36.0,
+      "actual_total": 66.0
+    },
+    {
+      "game_id": "401867804",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 55.0
+    },
+    {
+      "game_id": "401856691",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 75.0
+    },
+    {
+      "game_id": "401862710",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "401862771",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 26.0
+    },
+    {
+      "game_id": "401864574",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 47.0
+    },
+    {
+      "game_id": "401871047",
+      "status": "final",
+      "actual_home_margin": -6.0,
+      "actual_total": 54.0
+    },
+    {
+      "game_id": "401856687",
+      "status": "final",
+      "actual_home_margin": -5.0,
+      "actual_total": 83.0
+    },
+    {
+      "game_id": "401856689",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 44.0
+    },
+    {
+      "game_id": "401856800",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 74.0
+    },
+    {
+      "game_id": "401861963",
+      "status": "final",
+      "actual_home_margin": -28.0,
+      "actual_total": 68.0
+    },
+    {
+      "game_id": "401862773",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 49.0
+    },
+    {
+      "game_id": "401864443",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 47.0
+    },
+    {
+      "game_id": "401866423",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 77.0
+    },
+    {
+      "game_id": "401869948",
+      "status": "final",
+      "actual_home_margin": 4.0,
+      "actual_total": 58.0
+    },
+    {
+      "game_id": "401858453",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "401858232",
+      "status": "final",
+      "actual_home_margin": -9.0,
+      "actual_total": 61.0
+    },
+    {
+      "game_id": "401856802",
+      "status": "final",
+      "actual_home_margin": -11.0,
+      "actual_total": 65.0
+    },
+    {
+      "game_id": "401856690",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 20.0
+    },
+    {
+      "game_id": "401856795",
+      "status": "final",
+      "actual_home_margin": -18.0,
+      "actual_total": 64.0
+    },
+    {
+      "game_id": "401856688",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 56.0
+    },
+    {
+      "game_id": "401856796",
+      "status": "final",
+      "actual_home_margin": 34.0,
+      "actual_total": 48.0
+    },
+    {
+      "game_id": "401856692",
+      "status": "final",
+      "actual_home_margin": 33.0,
+      "actual_total": 51.0
+    },
+    {
+      "game_id": "401856693",
+      "status": "final",
+      "actual_home_margin": 24.0,
+      "actual_total": 36.0
+    },
+    {
+      "game_id": "401856799",
+      "status": "final",
+      "actual_home_margin": 24.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "401862776",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 35.0
+    },
+    {
+      "game_id": "401860887",
+      "status": "final",
+      "actual_home_margin": -13.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "401856793",
+      "status": "final",
+      "actual_home_margin": 25.0,
+      "actual_total": 59.0
+    },
+    {
+      "game_id": "401864507",
+      "status": "final",
+      "actual_home_margin": -21.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "401858458",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 90.0
+    },
+    {
+      "game_id": "401860888",
+      "status": "final",
+      "actual_home_margin": -16.0,
+      "actual_total": 36.0
+    }
+  ]
+}
