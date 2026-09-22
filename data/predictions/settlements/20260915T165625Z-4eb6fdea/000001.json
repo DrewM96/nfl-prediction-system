@@ -1,0 +1,109 @@
+{
+  "run_id": "20260915T165625Z-4eb6fdea",
+  "revision": 1,
+  "scored_at": "2026-09-22T12:10:55.783786+00:00",
+  "source": {
+    "game_id": "2026_02_NYG_LA",
+    "status": "final",
+    "actual_home_margin": 22.0,
+    "actual_total": 34.0
+  },
+  "results": [
+    {
+      "game_id": "2026_02_DET_BUF",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 72.0
+    },
+    {
+      "game_id": "2026_02_CAR_ATL",
+      "status": "final",
+      "actual_home_margin": -31.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "2026_02_NO_BAL",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "2026_02_MIN_CHI",
+      "status": "final",
+      "actual_home_margin": -6.0,
+      "actual_total": 12.0
+    },
+    {
+      "game_id": "2026_02_CIN_HOU",
+      "status": "final",
+      "actual_home_margin": -14.0,
+      "actual_total": 26.0
+    },
+    {
+      "game_id": "2026_02_PIT_NE",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 23.0
+    },
+    {
+      "game_id": "2026_02_GB_NYJ",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "2026_02_CLE_TB",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 42.0
+    },
+    {
+      "game_id": "2026_02_PHI_TEN",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 44.0
+    },
+    {
+      "game_id": "2026_02_JAX_DEN",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 33.0
+    },
+    {
+      "game_id": "2026_02_LV_LAC",
+      "status": "final",
+      "actual_home_margin": -12.0,
+      "actual_total": 40.0
+    },
+    {
+      "game_id": "2026_02_SEA_ARI",
+      "status": "final",
+      "actual_home_margin": -24.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "2026_02_WAS_DAL",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 57.0
+    },
+    {
+      "game_id": "2026_02_MIA_SF",
+      "status": "final",
+      "actual_home_margin": 22.0,
+      "actual_total": 48.0
+    },
+    {
+      "game_id": "2026_02_IND_KC",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 63.0
+    },
+    {
+      "game_id": "2026_02_NYG_LA",
+      "status": "final",
+      "actual_home_margin": 22.0,
+      "actual_total": 34.0
+    }
+  ]
+}

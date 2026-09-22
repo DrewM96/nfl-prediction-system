@@ -1,11 +1,14 @@
 {
-  "prediction_season": 2026,
-  "week": 3,
-  "generated_at": "2026-09-22T11:58:08.228139+00:00",
   "run_id": "20260922T121055Z-2115fcfb",
+  "created_at": "2026-09-22T12:10:55.701499+00:00",
+  "prediction_season": 2026,
   "data_cutoff": "2026-09-21",
   "model_hash": "9d4d3865d3a0ccc60e358ca21a628d075948c492fb32ef1f0b09c41e1c7039a4",
-  "raw_data_hash": "7ce184f762a42fb0c593accd85b4ef64a3d2b301d12f3dd1b9a56412b9d1b3e7",
+  "metadata": {
+    "git_commit": "b8fc65709087f000d5ca5e00af8d17e7731e173a",
+    "week": 3,
+    "market_snapshot_at": "2026-09-22T11:58:06.530340+00:00"
+  },
   "predictions": [
     {
       "game_id": "2026_03_ATL_GB",
