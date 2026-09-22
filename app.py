@@ -891,6 +891,57 @@ def nfl_total_label(game: dict[str, Any]) -> str:
     return f"{model_total:.1f} · V {float(market_total):.1f}"
 
 
+def _injury_entry_text(entry: dict[str, Any]) -> str:
+    name = str(entry.get("full_name") or "Unknown player")
+    position = str(entry.get("position") or "")
+    status = str(entry.get("report_status") or entry.get("practice_status") or "Reported")
+    injury = str(
+        entry.get("report_primary_injury") or entry.get("practice_primary_injury") or "unspecified"
+    )
+    position_text = f" · {position}" if position else ""
+    return f"{name}{position_text} — {status} ({injury})"
+
+
+def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
+    snapshot = game.get("injury_snapshot") or {}
+    if not snapshot:
+        return
+    away_entries = snapshot.get("away") or []
+    home_entries = snapshot.get("home") or []
+    available_week = snapshot.get("available_week")
+    forecast_week = snapshot.get("forecast_week")
+    stale = bool(snapshot.get("stale_for_prediction_week", True))
+    if available_week is None:
+        freshness = "no current official report available"
+    elif stale:
+        freshness = f"latest available Week {available_week}; forecast Week {forecast_week}"
+    else:
+        freshness = f"Week {available_week} report"
+    st.caption(
+        f"Official injuries · {game['away_team']} {len(away_entries)} reported · "
+        f"{game['home_team']} {len(home_entries)} reported · {freshness} · "
+        "context only, not applied to the model"
+    )
+    if not detailed:
+        return
+    with st.expander("Official injury report snapshot"):
+        st.caption(
+            f"Frozen {snapshot.get('captured_at', 'unknown time')} · "
+            "informational only; these statuses do not change this forecast."
+        )
+        columns = st.columns(2)
+        for column, team, entries in (
+            (columns[0], str(game["away_team"]), away_entries),
+            (columns[1], str(game["home_team"]), home_entries),
+        ):
+            column.markdown(f"**{team}**")
+            if not entries:
+                column.caption("No reported players in the frozen feed.")
+                continue
+            for entry in entries:
+                column.markdown(f"- {html_text(_injury_entry_text(entry))}")
+
+
 def render_featured_game(game: dict[str, Any]) -> None:
     away = html_text(game["away_team"])
     home = html_text(game["home_team"])
@@ -917,6 +968,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
         """,
         unsafe_allow_html=True,
     )
+    render_official_injury_snapshot(game)
 
 
 def market_inputs(
@@ -1126,6 +1178,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
                 "</section></div>"
             )
             st.markdown(detail_html, unsafe_allow_html=True)
+            render_official_injury_snapshot(game, detailed=True)
             with st.expander("Compare a sportsbook line"):
                 render_market_comparison(game, game_id)
 

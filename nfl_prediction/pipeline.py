@@ -498,15 +498,21 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
 
 
 def _official_injury_payload(
-    injuries: pd.DataFrame, prediction_season: int, generated_at: datetime
+    injuries: pd.DataFrame,
+    prediction_season: int,
+    generated_at: datetime,
+    *,
+    forecast_week: int | None = None,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "source": "nflverse injury reports",
         "generated_at": generated_at.isoformat(),
         "prediction_season": prediction_season,
+        "forecast_week": forecast_week,
         "available_season": None,
         "available_week": None,
         "stale_for_prediction_season": True,
+        "stale_for_prediction_week": True,
         "entries": [],
     }
     if injuries.empty or not {"season", "week"}.issubset(injuries):
@@ -537,10 +543,51 @@ def _official_injury_payload(
             "available_season": season,
             "available_week": week,
             "stale_for_prediction_season": season != prediction_season,
+            "stale_for_prediction_week": (
+                season != prediction_season or forecast_week is None or week != forecast_week
+            ),
             "entries": current[fields].where(pd.notna(current[fields]), None).to_dict("records"),
         }
     )
     return payload
+
+
+def _attach_official_injury_context(
+    predictions: list[dict[str, Any]], injury_payload: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Freeze matchup-relevant injury reports into each forecast without changing the model."""
+    entries = injury_payload.get("entries") or []
+    by_team: dict[str, list[dict[str, Any]]] = {}
+    for entry in entries:
+        team = str(entry.get("team") or "")
+        if team:
+            by_team.setdefault(team, []).append(entry)
+
+    snapshot_base = {
+        "source": injury_payload.get("source"),
+        "captured_at": injury_payload.get("generated_at"),
+        "prediction_season": injury_payload.get("prediction_season"),
+        "forecast_week": injury_payload.get("forecast_week"),
+        "available_season": injury_payload.get("available_season"),
+        "available_week": injury_payload.get("available_week"),
+        "stale_for_prediction_season": injury_payload.get("stale_for_prediction_season", True),
+        "stale_for_prediction_week": injury_payload.get("stale_for_prediction_week", True),
+        "applied_to_model": False,
+    }
+    output: list[dict[str, Any]] = []
+    for prediction in predictions:
+        frozen = dict(prediction)
+        home_team = str(prediction["home_team"])
+        away_team = str(prediction["away_team"])
+        frozen["injury_snapshot"] = {
+            **snapshot_base,
+            "home_team": home_team,
+            "away_team": away_team,
+            "home": [dict(entry) for entry in by_team.get(home_team, [])],
+            "away": [dict(entry) for entry in by_team.get(away_team, [])],
+        }
+        output.append(frozen)
+    return output
 
 
 def run_update(as_of: datetime | None = None) -> UpdateResult:
@@ -604,6 +651,13 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
     else:
         next_week = int(current_season["week"].min())
         upcoming = current_season[current_season["week"].eq(next_week)]
+    forecast_week = int(upcoming["week"].min()) if not upcoming.empty else None
+    official_injuries = _official_injury_payload(
+        data.injuries,
+        context.prediction_season,
+        now,
+        forecast_week=forecast_week,
+    )
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
     predictions = [p for p in predictions if _game_kickoff(p) and _game_kickoff(p) > now]
     market_snapshot = load_market_consensus()
@@ -620,6 +674,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         neutral_matchups=neutral_matchups,
         as_of=now,
     )
+    predictions = _attach_official_injury_context(predictions, official_injuries)
 
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
@@ -629,7 +684,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         prediction_season=context.prediction_season,
         metadata={
             "git_commit": _git_commit(),
-            "week": int(upcoming["week"].min()) if not upcoming.empty else None,
+            "week": forecast_week,
             "market_snapshot_at": next(
                 (
                     prediction["market_consensus"]["snapshot_at"]
@@ -638,6 +693,12 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
                 ),
                 None,
             ),
+            "injury_snapshot_at": official_injuries.get("generated_at"),
+            "injury_available_week": official_injuries.get("available_week"),
+            "injury_stale_for_prediction_week": official_injuries.get(
+                "stale_for_prediction_week", True
+            ),
+            "injury_data_used_as_model_input": False,
         },
     )
     performance = _score_ledger(ledger, data.schedules)
@@ -662,7 +723,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         PROJECT_ROOT / "weekly_report.json",
         {
             "prediction_season": context.prediction_season,
-            "week": int(upcoming["week"].min()) if not upcoming.empty else None,
+            "week": forecast_week,
             "generated_at": now.isoformat(),
             "run_id": ledger_path.stem,
             "data_cutoff": cutoff_text,
@@ -672,10 +733,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         },
     )
     atomic_write_json(PROJECT_ROOT / "performance_history.json", performance)
-    atomic_write_json(
-        PROJECT_ROOT / "official_injuries.json",
-        _official_injury_payload(data.injuries, context.prediction_season, now),
-    )
+    atomic_write_json(PROJECT_ROOT / "official_injuries.json", official_injuries)
     atomic_write_json(
         PROJECT_ROOT / "update_log.json",
         {

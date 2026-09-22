@@ -7,6 +7,7 @@ import pandas as pd
 
 from nfl_prediction.pipeline import (
     _add_participation_spines,
+    _attach_official_injury_context,
     _current_player_snapshots,
     _official_injury_payload,
     _raw_data_fingerprint,
@@ -87,6 +88,67 @@ def test_old_injury_feed_is_marked_stale() -> None:
     payload = _official_injury_payload(injuries, 2026, datetime(2026, 8, 1, tzinfo=UTC))
     assert payload["stale_for_prediction_season"] is True
     assert payload["available_season"] == 2025
+
+
+def test_current_week_injury_feed_is_marked_fresh() -> None:
+    injuries = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "A",
+                "full_name": "A Player",
+                "report_status": "Questionable",
+            }
+        ]
+    )
+    payload = _official_injury_payload(
+        injuries,
+        2026,
+        datetime(2026, 9, 22, tzinfo=UTC),
+        forecast_week=3,
+    )
+    assert payload["stale_for_prediction_season"] is False
+    assert payload["stale_for_prediction_week"] is False
+    assert payload["forecast_week"] == 3
+
+
+def test_official_injuries_are_frozen_without_changing_prediction() -> None:
+    prediction = {
+        "game_id": "G",
+        "home_team": "HOME",
+        "away_team": "AWAY",
+        "home_score": 27.0,
+        "away_score": 20.0,
+        "predicted_home_margin": 7.0,
+        "total": 47.0,
+    }
+    payload = {
+        "source": "nflverse injury reports",
+        "generated_at": "2026-09-22T12:00:00+00:00",
+        "prediction_season": 2026,
+        "forecast_week": 3,
+        "available_season": 2026,
+        "available_week": 3,
+        "stale_for_prediction_season": False,
+        "stale_for_prediction_week": False,
+        "entries": [
+            {"team": "HOME", "full_name": "Home Player", "report_status": "Out"},
+            {"team": "AWAY", "full_name": "Away Player", "report_status": "Questionable"},
+            {"team": "OTHER", "full_name": "Other Player", "report_status": "Out"},
+        ],
+    }
+
+    frozen = _attach_official_injury_context([prediction], payload)[0]
+
+    assert frozen["home_score"] == prediction["home_score"]
+    assert frozen["away_score"] == prediction["away_score"]
+    assert frozen["predicted_home_margin"] == prediction["predicted_home_margin"]
+    assert frozen["total"] == prediction["total"]
+    assert frozen["injury_snapshot"]["applied_to_model"] is False
+    assert [row["full_name"] for row in frozen["injury_snapshot"]["home"]] == ["Home Player"]
+    assert [row["full_name"] for row in frozen["injury_snapshot"]["away"]] == ["Away Player"]
+    assert "injury_snapshot" not in prediction
 
 
 def test_raw_data_fingerprint_changes_with_source_values() -> None:

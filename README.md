@@ -37,7 +37,7 @@ The current application is configured for the 2026 season. It loads the upcoming
 - Receiving targets are counted before completions, and snap-count participation preserves active zero-opportunity games.
 - Current prop menus use stable GSIS player IDs and exclude retired/cut players through the latest roster feed.
 - Sportsbook signs are converted explicitly: a home favorite at `-6` corresponds to a `+6` market home margin.
-- Manual injuries are session-only scenarios with visible availability assumptions; official injury-feed freshness is tracked separately.
+- Official nflverse injury reports are frozen into each NFL forecast as matchup context, with source week and freshness metadata; they are display/evaluation context only and do not change model outputs. Manual injuries remain session-only what-if scenarios.
 - Dependencies are pinned, CI is required, and a scheduled updater opens a reviewable artifact pull request.
 
 ## Architecture
