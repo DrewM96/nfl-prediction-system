@@ -544,9 +544,7 @@ def _official_injury_payload(
             "available_week": week,
             "stale_for_prediction_season": season != prediction_season,
             "stale_for_prediction_week": (
-                season != prediction_season
-                or forecast_week is None
-                or week != forecast_week
+                season != prediction_season or forecast_week is None or week != forecast_week
             ),
             "entries": current[fields].where(pd.notna(current[fields]), None).to_dict("records"),
         }
@@ -572,7 +570,9 @@ def _attach_official_injury_context(
         "forecast_week": injury_payload.get("forecast_week"),
         "available_season": injury_payload.get("available_season"),
         "available_week": injury_payload.get("available_week"),
-        "stale_for_prediction_season": injury_payload.get("stale_for_prediction_season", True),
+        "stale_for_prediction_season": injury_payload.get(
+            "stale_for_prediction_season", True
+        ),
         "stale_for_prediction_week": injury_payload.get("stale_for_prediction_week", True),
         "applied_to_model": False,
     }
