@@ -896,17 +896,13 @@ def _injury_entry_text(entry: dict[str, Any]) -> str:
     position = str(entry.get("position") or "")
     status = str(entry.get("report_status") or entry.get("practice_status") or "Reported")
     injury = str(
-        entry.get("report_primary_injury")
-        or entry.get("practice_primary_injury")
-        or "unspecified"
+        entry.get("report_primary_injury") or entry.get("practice_primary_injury") or "unspecified"
     )
     position_text = f" · {position}" if position else ""
     return f"{name}{position_text} — {status} ({injury})"
 
 
-def render_official_injury_snapshot(
-    game: dict[str, Any], *, detailed: bool = False
-) -> None:
+def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
     snapshot = game.get("injury_snapshot") or {}
     if not snapshot:
         return

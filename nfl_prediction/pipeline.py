@@ -570,9 +570,7 @@ def _attach_official_injury_context(
         "forecast_week": injury_payload.get("forecast_week"),
         "available_season": injury_payload.get("available_season"),
         "available_week": injury_payload.get("available_week"),
-        "stale_for_prediction_season": injury_payload.get(
-            "stale_for_prediction_season", True
-        ),
+        "stale_for_prediction_season": injury_payload.get("stale_for_prediction_season", True),
         "stale_for_prediction_week": injury_payload.get("stale_for_prediction_week", True),
         "applied_to_model": False,
     }
