@@ -904,7 +904,9 @@ def _injury_entry_text(entry: dict[str, Any]) -> str:
     return f"{name}{position_text} — {status} ({injury})"
 
 
-def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
+def render_official_injury_snapshot(
+    game: dict[str, Any], *, detailed: bool = False
+) -> None:
     snapshot = game.get("injury_snapshot") or {}
     if not snapshot:
         return
