@@ -23,7 +23,7 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: ruff format injury_feature_ablation.py nfl_prediction/injuries.py tests/test_injuries.py
       - run: ruff check injury_feature_ablation.py nfl_prediction/injuries.py tests/test_injuries.py
-      - run: pytest -q tests/test_injuries.py
+      - run: python -m pytest -q tests/test_injuries.py
       - name: Run 2022-2025 injury ablation
         run: >
           python injury_feature_ablation.py
