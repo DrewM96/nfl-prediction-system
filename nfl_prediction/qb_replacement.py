@@ -18,9 +18,7 @@ QB_REPLACEMENT_TEAM_FEATURES = [
 ]
 
 QB_REPLACEMENT_GAME_FEATURES = [
-    f"{side}_{feature}"
-    for side in ("home", "away")
-    for feature in QB_REPLACEMENT_TEAM_FEATURES
+    f"{side}_{feature}" for side in ("home", "away") for feature in QB_REPLACEMENT_TEAM_FEATURES
 ]
 
 QB_REPLACEMENT_CANDIDATE_GROUPS = {
@@ -183,11 +181,7 @@ def _roster_qb_groups(
     frame["week"] = pd.to_numeric(
         frame.get("week", pd.Series(1, index=frame.index)), errors="coerce"
     ).fillna(1)
-    frame = frame[
-        frame["season"].notna()
-        & frame["team"].notna()
-        & frame["gsis_id"].notna()
-    ].copy()
+    frame = frame[frame["season"].notna() & frame["team"].notna() & frame["gsis_id"].notna()].copy()
     frame["season"] = frame["season"].astype(int)
     frame["week"] = frame["week"].astype(int)
     frame["team"] = frame["team"].astype(str)
@@ -398,16 +392,14 @@ def build_qb_replacement_table(
     roster_groups = _roster_qb_groups(rosters)
     coverage_keys = [
         (int(season), int(week))
-        for season, week in covered[["season", "week"]].drop_duplicates().itertuples(
-            index=False, name=None
-        )
+        for season, week in covered[["season", "week"]]
+        .drop_duplicates()
+        .itertuples(index=False, name=None)
     ]
     league_priors = _league_epa_priors(dropbacks, coverage_keys)
     report_groups = {
         (int(season), int(week), str(team)): group
-        for (season, week, team), group in reports.groupby(
-            ["season", "week", "team"], sort=False
-        )
+        for (season, week, team), group in reports.groupby(["season", "week", "team"], sort=False)
     }
 
     rows: list[dict[str, Any]] = []
@@ -443,16 +435,11 @@ def build_qb_replacement_table(
             matching = team_reports[team_reports["gsis_id"].eq(starter)]
             if not matching.empty:
                 starter_reported = 1.0
-                severity = max(
-                    injury_unavailability_weight(row)
-                    for _, row in matching.iterrows()
-                )
+                severity = max(injury_unavailability_weight(row) for _, row in matching.iterrows())
 
         value_gap = float(starter_value - backup_value)
         positive_value_gap = max(value_gap, 0.0)
-        expected_points_lost = float(
-            severity * positive_value_gap * expected_dropbacks
-        )
+        expected_points_lost = float(severity * positive_value_gap * expected_dropbacks)
         rows.append(
             {
                 "season": int(season),

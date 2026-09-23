@@ -131,12 +131,8 @@ def _target_report(
 
     result = {
         "all_oof": {
-            "baseline": _split_metrics(
-                actual, baseline, np.ones(len(actual), dtype=bool)
-            ),
-            "adjusted": _split_metrics(
-                actual, adjusted, np.ones(len(actual), dtype=bool)
-            ),
+            "baseline": _split_metrics(actual, baseline, np.ones(len(actual), dtype=bool)),
+            "adjusted": _split_metrics(actual, adjusted, np.ones(len(actual), dtype=bool)),
         },
         "development": {
             "baseline": _split_metrics(actual, baseline, seasons < holdout_season),
@@ -191,13 +187,17 @@ def run_benchmark(
     shrinkage_dropbacks: float,
 ) -> dict[str, Any]:
     data = load_nflverse_data(seasons)
-    games = build_point_in_time_game_features(
-        data.schedules,
-        data.pbp,
-        include_unplayed=False,
-        rosters=data.rosters,
-        snap_counts=data.snap_counts,
-    ).games.dropna(subset=["home_margin", "total_points"]).copy()
+    games = (
+        build_point_in_time_game_features(
+            data.schedules,
+            data.pbp,
+            include_unplayed=False,
+            rosters=data.rosters,
+            snap_counts=data.snap_counts,
+        )
+        .games.dropna(subset=["home_margin", "total_points"])
+        .copy()
+    )
     qb_table = build_qb_replacement_table(
         data.injuries,
         data.pbp,
@@ -218,9 +218,15 @@ def run_benchmark(
         "completed_games_with_injury_feed": int(len(games)),
         "qb_positive_loss_team_weeks": int(len(positive)),
         "qb_loss_summary": {
-            "mean": float(positive["qb_expected_points_lost"].mean()) if not positive.empty else None,
-            "median": float(positive["qb_expected_points_lost"].median()) if not positive.empty else None,
-            "p90": float(positive["qb_expected_points_lost"].quantile(0.9)) if not positive.empty else None,
+            "mean": float(positive["qb_expected_points_lost"].mean())
+            if not positive.empty
+            else None,
+            "median": float(positive["qb_expected_points_lost"].median())
+            if not positive.empty
+            else None,
+            "p90": float(positive["qb_expected_points_lost"].quantile(0.9))
+            if not positive.empty
+            else None,
             "max": float(positive["qb_expected_points_lost"].max()) if not positive.empty else None,
         },
         "methodology": {

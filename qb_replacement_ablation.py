@@ -120,9 +120,7 @@ def _evaluate_target(
             current = result["metrics"][split]["mae"]
             baseline = base[split]["mae"]
             result["metrics"][split]["mae_change_vs_base"] = (
-                current - baseline
-                if current is not None and baseline is not None
-                else None
+                current - baseline if current is not None and baseline is not None else None
             )
     return results
 
@@ -149,9 +147,7 @@ def _qb_event_summary(qb_table: pd.DataFrame) -> dict[str, Any]:
         "p90_expected_points_lost_when_positive": (
             float(losses.quantile(0.90)) if not losses.empty else None
         ),
-        "max_expected_points_lost": (
-            float(losses.max()) if not losses.empty else None
-        ),
+        "max_expected_points_lost": (float(losses.max()) if not losses.empty else None),
     }
 
 
@@ -204,9 +200,7 @@ def run_ablation(
                 "prior team dropback leader across the previous four team games; "
                 "prior-season same-team fallback when the current season has no history"
             ),
-            "qb_value": (
-                "EPA/dropback shrunk toward a league prior with 80 equivalent dropbacks"
-            ),
+            "qb_value": ("EPA/dropback shrunk toward a league prior with 80 equivalent dropbacks"),
             "replacement": (
                 "next-highest prior team dropback quarterback; league prior when no "
                 "backup history exists"
