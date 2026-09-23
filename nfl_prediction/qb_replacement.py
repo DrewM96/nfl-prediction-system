@@ -449,7 +449,10 @@ def build_qb_replacement_table(
                 )
 
         value_gap = float(starter_value - backup_value)
-        expected_points_lost = float(severity * value_gap * expected_dropbacks)
+        positive_value_gap = max(value_gap, 0.0)
+        expected_points_lost = float(
+            severity * positive_value_gap * expected_dropbacks
+        )
         rows.append(
             {
                 "season": int(season),
