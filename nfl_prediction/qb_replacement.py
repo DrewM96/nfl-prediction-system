@@ -504,10 +504,7 @@ def attach_qb_shadow_forecasts(
     The shadow forecast never replaces or mutates the published prediction. It
     is emitted only when the injury feed is fresh for the forecast week.
     """
-    if qb_table.empty:
-        indexed = None
-    else:
-        indexed = qb_table.set_index(["season", "week", "team"])
+    indexed = None if qb_table.empty else qb_table.set_index(["season", "week", "team"])
 
     output: list[dict[str, Any]] = []
     for prediction in predictions:
@@ -521,10 +518,15 @@ def attach_qb_shadow_forecasts(
             football.get("home_margin", prediction["predicted_home_margin"])
         )
 
-        def team_record(team: str) -> dict[str, Any] | None:
+        def team_record(
+            team: str,
+            *,
+            season_key: int = season,
+            week_key: int = week,
+        ) -> dict[str, Any] | None:
             if indexed is None:
                 return None
-            key = (season, week, team)
+            key = (season_key, week_key, team)
             if key not in indexed.index:
                 return None
             row = indexed.loc[key]
