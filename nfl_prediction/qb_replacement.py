@@ -21,6 +21,9 @@ QB_REPLACEMENT_GAME_FEATURES = [
     f"{side}_{feature}" for side in ("home", "away") for feature in QB_REPLACEMENT_TEAM_FEATURES
 ]
 
+QB_SHADOW_LAMBDA = 1.5
+
+
 QB_REPLACEMENT_CANDIDATE_GROUPS = {
     "qb_availability": [
         "home_qb_starter_reported",
@@ -485,3 +488,106 @@ def attach_qb_replacement_features(
             for feature in QB_REPLACEMENT_TEAM_FEATURES:
                 result.at[index, f"{side}_{feature}"] = float(row[feature])
     return result
+
+
+def attach_qb_shadow_forecasts(
+    predictions: list[dict[str, Any]],
+    qb_table: pd.DataFrame,
+    *,
+    injury_snapshot_at: str | None,
+    injury_available_week: int | None,
+    injury_stale_for_prediction_week: bool,
+    shadow_lambda: float = QB_SHADOW_LAMBDA,
+) -> list[dict[str, Any]]:
+    """Freeze a research-only prospective QB adjustment beside each forecast.
+
+    The shadow forecast never replaces or mutates the published prediction. It
+    is emitted only when the injury feed is fresh for the forecast week.
+    """
+    if qb_table.empty:
+        indexed = None
+    else:
+        indexed = qb_table.set_index(["season", "week", "team"])
+
+    output: list[dict[str, Any]] = []
+    for prediction in predictions:
+        frozen = dict(prediction)
+        season = int(prediction["season"])
+        week = int(prediction["week"])
+        home_team = str(prediction["home_team"])
+        away_team = str(prediction["away_team"])
+        football = prediction.get("football_only") or {}
+        base_margin = float(
+            football.get("home_margin", prediction["predicted_home_margin"])
+        )
+
+        def team_record(team: str) -> dict[str, Any] | None:
+            if indexed is None:
+                return None
+            key = (season, week, team)
+            if key not in indexed.index:
+                return None
+            row = indexed.loc[key]
+            if isinstance(row, pd.DataFrame):
+                row = row.iloc[-1]
+            return {
+                "starter_id": row.get("qb_starter_id"),
+                "backup_id": row.get("qb_backup_id"),
+                "starter_reported": bool(row.get("qb_starter_reported", 0.0)),
+                "unavailability_weight": float(
+                    row.get("qb_unavailability_weight", 0.0)
+                ),
+                "starter_epa_per_dropback": float(
+                    row.get("qb_starter_epa_per_dropback", 0.0)
+                ),
+                "backup_epa_per_dropback": float(
+                    row.get("qb_backup_epa_per_dropback", 0.0)
+                ),
+                "value_gap_epa_per_dropback": float(
+                    row.get("qb_value_gap_epa_per_dropback", 0.0)
+                ),
+                "expected_dropbacks": float(row.get("qb_expected_dropbacks", 0.0)),
+                "expected_points_lost": float(
+                    row.get("qb_expected_points_lost", 0.0)
+                ),
+            }
+
+        home = team_record(home_team)
+        away = team_record(away_team)
+        eligible = bool(
+            not injury_stale_for_prediction_week
+            and home is not None
+            and away is not None
+        )
+        raw_adjustment = None
+        shadow_margin = None
+        if eligible:
+            raw_adjustment = float(
+                away["expected_points_lost"] - home["expected_points_lost"]
+            )
+            shadow_margin = float(base_margin + shadow_lambda * raw_adjustment)
+
+        frozen["qb_shadow"] = {
+            "research_only": True,
+            "applied_to_published_forecast": False,
+            "eligible": eligible,
+            "ineligible_reason": (
+                None
+                if eligible
+                else (
+                    "stale_injury_feed"
+                    if injury_stale_for_prediction_week
+                    else "missing_qb_context"
+                )
+            ),
+            "injury_snapshot_at": injury_snapshot_at,
+            "injury_available_week": injury_available_week,
+            "lambda": float(shadow_lambda),
+            "base_independent_margin": base_margin,
+            "raw_margin_adjustment": raw_adjustment,
+            "shadow_independent_margin": shadow_margin,
+            "home": home,
+            "away": away,
+        }
+        output.append(frozen)
+    return output
