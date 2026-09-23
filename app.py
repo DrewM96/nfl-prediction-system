@@ -170,10 +170,11 @@ st.markdown(
     }
     .grid-hero {
       padding: 24px 28px;
-      margin-bottom: 20px;
-      border: 1px solid var(--grid-border);
+      margin-bottom: 14px;
+      border: 1px solid #dfe4ea;
       border-radius: 16px;
-      background: linear-gradient(135deg,#f8f9fb,#ffffff);
+      background: linear-gradient(145deg,#f8fafc 0%,#ffffff 64%);
+      box-shadow: 0 1px 2px rgba(15,20,25,.025);
     }
     .grid-hero-main {
       display: flex;
@@ -281,7 +282,7 @@ st.markdown(
     .grid-card {
       padding: 22px 24px;
       margin-bottom: 16px;
-      border: 1px solid var(--grid-border);
+      border: 1px solid #e3e7ec;
       border-radius: 14px;
       background: #fff;
     }
@@ -436,6 +437,200 @@ st.markdown(
       color: white;
     }
     div[data-testid="stRadio"] label > div:first-child { display: none; }
+
+    /* Top sport switch: a deliberate segmented control rather than two loose pills. */
+    .st-key-active_sport {
+      margin-top: 8px;
+      margin-bottom: 2px;
+    }
+    .st-key-active_sport [role="radiogroup"] {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      padding: 4px !important;
+      width: auto !important;
+      border: 1px solid var(--grid-border);
+      border-radius: 999px;
+      background: #f7f8fa;
+    }
+    .st-key-active_sport label {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      line-height: 1 !important;
+      box-shadow: none !important;
+    }
+    .st-key-active_sport label p {
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.15 !important;
+      white-space: nowrap;
+      color: inherit !important;
+    }
+    .st-key-active_sport label:has(input:checked) {
+      background: var(--grid-orange) !important;
+      color: #fff !important;
+      box-shadow: 0 1px 2px rgba(15,20,25,.08) !important;
+    }
+
+    .grid-injury-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 16px;
+      padding: 10px 12px;
+      border: 1px solid #e6eaf0;
+      border-radius: 10px;
+      background: #fafbfc;
+      color: var(--grid-muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .grid-injury-summary-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+    .grid-injury-summary.is-current .grid-injury-summary-dot { background: #16a34a; }
+    .grid-injury-summary.is-stale .grid-injury-summary-dot { background: #f59e0b; }
+    .grid-injury-summary strong { color: var(--grid-ink); font-weight: 600; }
+
+    .grid-injury-panel {
+      margin: 14px 0 4px;
+      overflow: hidden;
+      border: 1px solid #dde3ea;
+      border-radius: 14px;
+      background: #fff;
+    }
+    .grid-injury-panel > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 54px;
+      padding: 0 16px;
+      cursor: pointer;
+      list-style: none;
+      color: var(--grid-ink);
+      font: 600 14px/1.2 'Instrument Sans', sans-serif;
+      user-select: none;
+    }
+    .grid-injury-panel > summary::-webkit-details-marker { display: none; }
+    .grid-injury-panel > summary::after {
+      content: '+';
+      color: var(--grid-faint);
+      font: 500 20px/1 'Instrument Sans', sans-serif;
+      transition: transform .18s ease;
+    }
+    .grid-injury-panel[open] > summary::after { content: '−'; }
+    .grid-injury-panel[open] > summary {
+      border-bottom: 1px solid #edf0f4;
+      background: #fbfcfd;
+    }
+    .grid-injury-panel-body { padding: 14px 16px 16px; }
+    .grid-injury-meta {
+      margin-bottom: 14px;
+      color: var(--grid-muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .grid-injury-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .grid-injury-team {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #edf0f4;
+      border-radius: 11px;
+      background: #fcfcfd;
+    }
+    .grid-injury-team-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .grid-injury-team-name {
+      font: 600 13px 'Instrument Sans', sans-serif;
+      color: var(--grid-ink);
+    }
+    .grid-injury-team-count {
+      color: var(--grid-faint);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .grid-injury-list { display: grid; gap: 7px; }
+    .grid-injury-row {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid #f0f2f5;
+    }
+    .grid-injury-row:first-child { border-top: 0; padding-top: 2px; }
+    .grid-injury-player { min-width: 0; }
+    .grid-injury-name {
+      color: var(--grid-ink);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .grid-injury-detail {
+      margin-top: 2px;
+      color: var(--grid-muted);
+      font-size: 10.5px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .grid-injury-status {
+      max-width: 112px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: #64748b;
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.15;
+      text-align: center;
+      white-space: normal;
+    }
+    .grid-injury-status.status-out,
+    .grid-injury-status.status-doubtful {
+      background: #fff1f2;
+      color: #be123c;
+    }
+    .grid-injury-status.status-questionable {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .grid-injury-status.status-limited,
+    .grid-injury-status.status-dnp {
+      background: #fffbeb;
+      color: #a16207;
+    }
+    .grid-injury-status.status-full {
+      background: #f0fdf4;
+      color: #15803d;
+    }
+    .grid-injury-empty {
+      color: var(--grid-faint);
+      font-size: 11px;
+      padding: 6px 0 2px;
+    }
+
     .st-key-active_screen, .st-key-cfb_active_screen {
       position: fixed;
       z-index: 1000;
@@ -546,6 +741,15 @@ st.markdown(
       .grid-game-detail .grid-reason { font-size: 14px; line-height: 1.5; }
       .grid-game-detail .grid-probability { margin-bottom: 14px; }
       .grid-detail-range { margin-bottom: 16px; line-height: 1.4; }
+      .st-key-active_sport { margin-top: 10px; margin-bottom: 0; }
+      .st-key-active_sport [role="radiogroup"] { width: auto !important; }
+      .st-key-active_sport label { min-height: 40px !important; padding: 0 15px !important; }
+      .grid-injury-summary { margin-top: 2px; margin-bottom: 14px; padding: 10px 11px; }
+      .grid-injury-columns { grid-template-columns: 1fr; gap: 10px; }
+      .grid-injury-panel > summary { min-height: 52px; padding: 0 14px; }
+      .grid-injury-panel-body { padding: 12px 13px 14px; }
+      .grid-injury-team { padding: 11px; }
+      .grid-injury-status { max-width: 100px; }
       .st-key-active_screen, .st-key-cfb_active_screen {
         padding-top: 0;
         padding-bottom: max(6px, env(safe-area-inset-bottom));
@@ -891,15 +1095,93 @@ def nfl_total_label(game: dict[str, Any]) -> str:
     return f"{model_total:.1f} · V {float(market_total):.1f}"
 
 
-def _injury_entry_text(entry: dict[str, Any]) -> str:
-    name = str(entry.get("full_name") or "Unknown player")
-    position = str(entry.get("position") or "")
-    status = str(entry.get("report_status") or entry.get("practice_status") or "Reported")
-    injury = str(
-        entry.get("report_primary_injury") or entry.get("practice_primary_injury") or "unspecified"
+def _format_injury_snapshot_time(value: Any) -> str:
+    raw = str(value or "")
+    if not raw:
+        return "capture time unavailable"
+    try:
+        stamp = datetime.fromisoformat(raw.replace("Z", "+00:00")).astimezone(
+            ZoneInfo("America/New_York")
+        )
+    except (TypeError, ValueError):
+        return raw
+    return f"{stamp.strftime('%b %d')} · {stamp.strftime('%I:%M %p').lstrip('0')} ET"
+
+
+def _injury_status(entry: dict[str, Any]) -> tuple[str, str]:
+    report = str(entry.get("report_status") or "").strip()
+    practice = str(entry.get("practice_status") or "").strip()
+    status = report or practice or "Reported"
+    normalized = status.casefold()
+    if normalized == "out":
+        css_class = "status-out"
+    elif normalized == "doubtful":
+        css_class = "status-doubtful"
+    elif normalized == "questionable":
+        css_class = "status-questionable"
+    elif "limited" in normalized:
+        css_class = "status-limited"
+    elif "did not participate" in normalized:
+        css_class = "status-dnp"
+    elif "full participation" in normalized:
+        css_class = "status-full"
+    else:
+        css_class = ""
+    return status, css_class
+
+
+def _injury_sort_key(entry: dict[str, Any]) -> tuple[int, str]:
+    status, _ = _injury_status(entry)
+    normalized = status.casefold()
+    priority = 6
+    if normalized == "out":
+        priority = 0
+    elif normalized == "doubtful":
+        priority = 1
+    elif normalized == "questionable":
+        priority = 2
+    elif "did not participate" in normalized:
+        priority = 3
+    elif "limited" in normalized:
+        priority = 4
+    elif "full participation" in normalized:
+        priority = 5
+    return priority, str(entry.get("full_name") or "")
+
+
+def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
+    rows: list[str] = []
+    for entry in sorted(entries, key=_injury_sort_key):
+        name = html_text(str(entry.get("full_name") or "Unknown player"))
+        position = html_text(str(entry.get("position") or ""))
+        injury = html_text(
+            str(
+                entry.get("report_primary_injury")
+                or entry.get("practice_primary_injury")
+                or "No injury detail listed"
+            )
+        )
+        status, css_class = _injury_status(entry)
+        position_text = f" · {position}" if position else ""
+        rows.append(
+            '<div class="grid-injury-row">'
+            '<div class="grid-injury-player">'
+            f'<div class="grid-injury-name">{name}{position_text}</div>'
+            f'<div class="grid-injury-detail">{injury}</div>'
+            "</div>"
+            f'<div class="grid-injury-status {css_class}">{html_text(status)}</div>'
+            "</div>"
+        )
+    body = "".join(rows) if rows else '<div class="grid-injury-empty">No reported players.</div>'
+    return (
+        '<section class="grid-injury-team">'
+        '<div class="grid-injury-team-head">'
+        f'<div class="grid-injury-team-name">{html_text(team)}</div>'
+        f'<div class="grid-injury-team-count">{len(entries)} reported</div>'
+        "</div>"
+        f'<div class="grid-injury-list">{body}</div>'
+        "</section>"
     )
-    position_text = f" · {position}" if position else ""
-    return f"{name}{position_text} — {status} ({injury})"
 
 
 def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
@@ -912,34 +1194,45 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
     forecast_week = snapshot.get("forecast_week")
     stale = bool(snapshot.get("stale_for_prediction_week", True))
     if available_week is None:
-        freshness = "no current official report available"
+        freshness = "No current official report"
     elif stale:
-        freshness = f"latest available Week {available_week}; forecast Week {forecast_week}"
+        freshness = f"Week {available_week} snapshot · forecast Week {forecast_week}"
     else:
-        freshness = f"Week {available_week} report"
-    st.caption(
-        f"Official injuries · {game['away_team']} {len(away_entries)} reported · "
-        f"{game['home_team']} {len(home_entries)} reported · {freshness} · "
-        "context only, not applied to the model"
-    )
+        freshness = f"Current Week {available_week} snapshot"
+    state_class = "is-stale" if stale else "is-current"
+
     if not detailed:
-        return
-    with st.expander("Official injury report snapshot"):
-        st.caption(
-            f"Frozen {snapshot.get('captured_at', 'unknown time')} · "
-            "informational only; these statuses do not change this forecast."
+        st.markdown(
+            (
+                f'<div class="grid-injury-summary {state_class}">'
+                '<span class="grid-injury-summary-dot"></span>'
+                '<span><strong>Injury context</strong> · '
+                f'{html_text(str(game["away_team"]))} {len(away_entries)} · '
+                f'{html_text(str(game["home_team"]))} {len(home_entries)} · '
+                f'{html_text(freshness)} · not applied to forecast</span>'
+                "</div>"
+            ),
+            unsafe_allow_html=True,
         )
-        columns = st.columns(2)
-        for column, team, entries in (
-            (columns[0], str(game["away_team"]), away_entries),
-            (columns[1], str(game["home_team"]), home_entries),
-        ):
-            column.markdown(f"**{team}**")
-            if not entries:
-                column.caption("No reported players in the frozen feed.")
-                continue
-            for entry in entries:
-                column.markdown(f"- {html_text(_injury_entry_text(entry))}")
+        return
+
+    captured = _format_injury_snapshot_time(snapshot.get("captured_at"))
+    teams_html = _injury_team_html(str(game["away_team"]), away_entries) + _injury_team_html(
+        str(game["home_team"]), home_entries
+    )
+    st.markdown(
+        (
+            '<details class="grid-injury-panel">'
+            "<summary>Official injury report snapshot</summary>"
+            '<div class="grid-injury-panel-body">'
+            f'<div class="grid-injury-meta">{html_text(freshness)} · frozen {html_text(captured)} · '
+            "context only; these statuses do not change this forecast.</div>"
+            f'<div class="grid-injury-columns">{teams_html}</div>'
+            "</div>"
+            "</details>"
+        ),
+        unsafe_allow_html=True,
+    )
 
 
 def render_featured_game(game: dict[str, Any]) -> None:
@@ -1183,6 +1476,34 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
                 render_market_comparison(game, game_id)
 
 
+def _featured_game_score(game: dict[str, Any]) -> float:
+    """Rank weekly games by competitiveness plus meaningful model-market disagreement."""
+    model_margin = float(game.get("predicted_home_margin", 0.0))
+    model_competitive = max(0.0, 1.0 - abs(model_margin) / 10.0)
+    home_probability = float(game.get("home_win_probability", 0.5))
+    probability_competitive = max(0.0, 1.0 - abs(home_probability - 0.5) / 0.5)
+
+    spread = (game.get("market_consensus") or {}).get("spread") or {}
+    market_margin = spread.get("market_home_margin")
+    if market_margin is None and spread.get("home_spread") is not None:
+        market_margin = -float(spread["home_spread"])
+
+    if market_margin is None:
+        return 0.75 * model_competitive + 0.25 * probability_competitive
+
+    market_margin = float(market_margin)
+    market_competitive = max(0.0, 1.0 - abs(market_margin) / 10.0)
+    disagreement = min(abs(model_margin - market_margin) / 7.0, 1.0)
+    score = (
+        0.45 * model_competitive
+        + 0.30 * market_competitive
+        + 0.25 * disagreement
+    )
+    if abs(model_margin) >= 10.0 and abs(market_margin) >= 10.0:
+        score -= 0.30
+    return score
+
+
 def render_this_week(state: dict[str, Any]) -> None:
     schedule = state["schedule"]
     week = state.get("report", {}).get("week")
@@ -1197,7 +1518,7 @@ def render_this_week(state: dict[str, Any]) -> None:
     if not schedule:
         st.info("No upcoming games are available for the current prediction season.")
         return
-    featured = max(schedule, key=lambda game: abs(float(game["predicted_home_margin"])))
+    featured = max(schedule, key=_featured_game_score)
     if "expanded_game_id" not in st.session_state:
         st.session_state.expanded_game_id = None
     render_featured_game(featured)
