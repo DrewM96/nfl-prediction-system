@@ -199,6 +199,34 @@ from 10.527 to 10.387. Every roster configuration worsened margin MAE, so the ma
 remains unchanged. `roster_transition_benchmark.json` preserves all accepted and rejected
 configurations.
 
+### NFL injury availability research
+
+Phase 2 adds a research-only injury feature builder that joins nflverse weekly injury reports
+to prior-game snap participation. Each reported player is weighted by offensive or defensive
+snap share from the prior four team games, with a prior-season same-team fallback for Week 1.
+Candidate groups test raw game-status counts, aggregate offense/defense snap loss, and position
+groups for quarterback, offensive line, skill players, defensive front, and secondary.
+
+```bash
+python injury_feature_ablation.py \
+  --seasons 2022 2023 2024 2025 \
+  --holdout-season 2025
+```
+
+The 2022-2025 injury feed covers 1,087 completed games; the chronological evaluation produces
+723 out-of-fold rows after the training minimum. No candidate met the standard for production.
+For margin, simple status counts changed all-OOF MAE from 10.367 to 10.353 and the 2025 holdout
+from 10.062 to 10.008, but they worsened the development window from 10.552 to 10.561.
+Snap-weighted and position-group features improved development more clearly but reversed on the
+2025 holdout. For totals, every injury configuration worsened all-OOF MAE; the smallest holdout
+gain from aggregate snap loss also reversed in development.
+
+The result is intentionally a rejection, not a forced feature launch. `injury_feature_benchmark.json`
+preserves every configuration and split. Historical nflverse injury rows represent a weekly/final
+report proxy rather than a timestamped sequence of what an early-week forecast knew, so injury
+inputs remain excluded from production until a feature shows stable holdout value and can be
+validated against timestamp-compatible snapshots.
+
 ### College Football foundation
 
 College Football lives in the same Streamlit application but uses an independent package,
