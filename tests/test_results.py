@@ -147,6 +147,50 @@ def test_repeated_forecast_runs_count_each_game_once(tmp_path: Path) -> None:
     assert select_forecasts(rows, policy="horizon").published_margin.tolist() == [7]
 
 
+def test_forecast_rows_exposes_frozen_qb_shadow(tmp_path: Path) -> None:
+    ledger = PredictionLedger(tmp_path)
+    prediction = _prediction("qb", 4.0)
+    prediction["football_only"] = {"home_margin": 3.0, "total": 44.0}
+    prediction["qb_shadow"] = {
+        "eligible": True,
+        "lambda": 1.5,
+        "raw_margin_adjustment": -2.0,
+        "shadow_independent_margin": 0.0,
+        "injury_snapshot_at": "2026-09-01T12:30:00+00:00",
+    }
+    batch = ledger.record_batch(
+        [prediction],
+        model_hash="model",
+        data_cutoff="2026-09-01",
+        prediction_season=2026,
+    )
+    payload = __import__("json").loads(batch.read_text())
+    payload["created_at"] = "2026-09-01T13:00:00+00:00"
+    batch.write_text(__import__("json").dumps(payload), encoding="utf-8")
+    ledger.settle(
+        batch.stem,
+        [
+            {
+                "game_id": "qb",
+                "status": "final",
+                "actual_home_margin": 1.0,
+                "actual_total": 44.0,
+            }
+        ],
+    )
+
+    row = forecast_rows(
+        tmp_path,
+        as_of=datetime(2026, 9, 20, tzinfo=UTC),
+    ).iloc[0]
+
+    assert row["independent_margin"] == pytest.approx(3.0)
+    assert row["qb_shadow_margin"] == pytest.approx(0.0)
+    assert row["qb_shadow_raw_adjustment"] == pytest.approx(-2.0)
+    assert row["qb_shadow_lambda"] == pytest.approx(1.5)
+    assert bool(row["qb_shadow_eligible"]) is True
+
+
 def test_scored_results_chart_uses_the_pinned_streamlit_api() -> None:
     rows = pd.DataFrame(
         [

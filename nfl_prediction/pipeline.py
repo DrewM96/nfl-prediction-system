@@ -26,6 +26,7 @@ from .ledger import PredictionLedger
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import _game_kickoff, attach_market_consensus, load_market_consensus
 from .preseason import apply_preseason_calibration
+from .qb_replacement import attach_qb_shadow_forecasts, build_qb_replacement_table
 from .results import performance_history, settle_schedule
 
 
@@ -675,6 +676,20 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         as_of=now,
     )
     predictions = _attach_official_injury_context(predictions, official_injuries)
+    qb_shadow_table = build_qb_replacement_table(
+        data.injuries,
+        data.pbp,
+        data.rosters,
+    )
+    predictions = attach_qb_shadow_forecasts(
+        predictions,
+        qb_shadow_table,
+        injury_snapshot_at=official_injuries.get("generated_at"),
+        injury_available_week=official_injuries.get("available_week"),
+        injury_stale_for_prediction_week=bool(
+            official_injuries.get("stale_for_prediction_week", True)
+        ),
+    )
 
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
@@ -699,6 +714,13 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
                 "stale_for_prediction_week", True
             ),
             "injury_data_used_as_model_input": False,
+            "qb_shadow_validation_enabled": True,
+            "qb_shadow_applied_to_published_forecast": False,
+            "qb_shadow_eligible_games": sum(
+                1
+                for prediction in predictions
+                if (prediction.get("qb_shadow") or {}).get("eligible")
+            ),
         },
     )
     performance = _score_ledger(ledger, data.schedules)
