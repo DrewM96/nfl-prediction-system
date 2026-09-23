@@ -1,0 +1,960 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23T10:43:21.439096+00:00",
+  "data_source": "nflverse injury reports, weekly rosters, and snap counts; no Odds API calls",
+  "seasons_requested": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "holdout_season": 2025,
+  "lookback_weeks": 4,
+  "completed_games_with_injury_feed": 1087,
+  "injury_team_week_rows": 2261,
+  "covered_season_weeks": [
+    {
+      "season": 2022,
+      "week": 1
+    },
+    {
+      "season": 2022,
+      "week": 2
+    },
+    {
+      "season": 2022,
+      "week": 3
+    },
+    {
+      "season": 2022,
+      "week": 4
+    },
+    {
+      "season": 2022,
+      "week": 5
+    },
+    {
+      "season": 2022,
+      "week": 6
+    },
+    {
+      "season": 2022,
+      "week": 7
+    },
+    {
+      "season": 2022,
+      "week": 8
+    },
+    {
+      "season": 2022,
+      "week": 9
+    },
+    {
+      "season": 2022,
+      "week": 10
+    },
+    {
+      "season": 2022,
+      "week": 11
+    },
+    {
+      "season": 2022,
+      "week": 12
+    },
+    {
+      "season": 2022,
+      "week": 13
+    },
+    {
+      "season": 2022,
+      "week": 14
+    },
+    {
+      "season": 2022,
+      "week": 15
+    },
+    {
+      "season": 2022,
+      "week": 16
+    },
+    {
+      "season": 2022,
+      "week": 17
+    },
+    {
+      "season": 2022,
+      "week": 18
+    },
+    {
+      "season": 2023,
+      "week": 1
+    },
+    {
+      "season": 2023,
+      "week": 2
+    },
+    {
+      "season": 2023,
+      "week": 3
+    },
+    {
+      "season": 2023,
+      "week": 4
+    },
+    {
+      "season": 2023,
+      "week": 5
+    },
+    {
+      "season": 2023,
+      "week": 6
+    },
+    {
+      "season": 2023,
+      "week": 7
+    },
+    {
+      "season": 2023,
+      "week": 8
+    },
+    {
+      "season": 2023,
+      "week": 9
+    },
+    {
+      "season": 2023,
+      "week": 10
+    },
+    {
+      "season": 2023,
+      "week": 11
+    },
+    {
+      "season": 2023,
+      "week": 12
+    },
+    {
+      "season": 2023,
+      "week": 13
+    },
+    {
+      "season": 2023,
+      "week": 14
+    },
+    {
+      "season": 2023,
+      "week": 15
+    },
+    {
+      "season": 2023,
+      "week": 16
+    },
+    {
+      "season": 2023,
+      "week": 17
+    },
+    {
+      "season": 2023,
+      "week": 18
+    },
+    {
+      "season": 2024,
+      "week": 1
+    },
+    {
+      "season": 2024,
+      "week": 2
+    },
+    {
+      "season": 2024,
+      "week": 3
+    },
+    {
+      "season": 2024,
+      "week": 4
+    },
+    {
+      "season": 2024,
+      "week": 5
+    },
+    {
+      "season": 2024,
+      "week": 6
+    },
+    {
+      "season": 2024,
+      "week": 7
+    },
+    {
+      "season": 2024,
+      "week": 8
+    },
+    {
+      "season": 2024,
+      "week": 9
+    },
+    {
+      "season": 2024,
+      "week": 10
+    },
+    {
+      "season": 2024,
+      "week": 11
+    },
+    {
+      "season": 2024,
+      "week": 12
+    },
+    {
+      "season": 2024,
+      "week": 13
+    },
+    {
+      "season": 2024,
+      "week": 14
+    },
+    {
+      "season": 2024,
+      "week": 15
+    },
+    {
+      "season": 2024,
+      "week": 16
+    },
+    {
+      "season": 2024,
+      "week": 17
+    },
+    {
+      "season": 2024,
+      "week": 18
+    },
+    {
+      "season": 2025,
+      "week": 1
+    },
+    {
+      "season": 2025,
+      "week": 2
+    },
+    {
+      "season": 2025,
+      "week": 3
+    },
+    {
+      "season": 2025,
+      "week": 4
+    },
+    {
+      "season": 2025,
+      "week": 5
+    },
+    {
+      "season": 2025,
+      "week": 6
+    },
+    {
+      "season": 2025,
+      "week": 7
+    },
+    {
+      "season": 2025,
+      "week": 8
+    },
+    {
+      "season": 2025,
+      "week": 9
+    },
+    {
+      "season": 2025,
+      "week": 10
+    },
+    {
+      "season": 2025,
+      "week": 11
+    },
+    {
+      "season": 2025,
+      "week": 12
+    },
+    {
+      "season": 2025,
+      "week": 13
+    },
+    {
+      "season": 2025,
+      "week": 14
+    },
+    {
+      "season": 2025,
+      "week": 15
+    },
+    {
+      "season": 2025,
+      "week": 16
+    },
+    {
+      "season": 2025,
+      "week": 17
+    },
+    {
+      "season": 2025,
+      "week": 18
+    }
+  ],
+  "methodology": {
+    "validation": "expanding-window chronological out-of-fold by NFL week",
+    "blending": "ridge/gradient-boosting weights learned from earlier OOF weeks only",
+    "base_models": "current production feature sets: margin uses GAME_MARGIN_FEATURES; total uses GAME_TOTAL_FEATURES",
+    "injury_timing": "historical nflverse weekly/final injury report proxy; suitable for late-week research, not evidence of what an earlier Tuesday forecast knew",
+    "player_weight": "prior 4 team games of offensive/defensive snap share; prior-season same-team fallback when current-season history is unavailable",
+    "status_weights": "Out=1.00, Doubtful=0.75, Questionable=0.35; if no game status, DNP practice=0.25, Limited=0.10, Full=0.00",
+    "selection_policy": "candidate groups are research-only; no production promotion without holdout improvement and timestamp-compatible prospective validation"
+  },
+  "feature_groups": {
+    "injury_status": [
+      "home_injury_out_count",
+      "home_injury_doubtful_count",
+      "home_injury_questionable_count",
+      "away_injury_out_count",
+      "away_injury_doubtful_count",
+      "away_injury_questionable_count"
+    ],
+    "injury_snap_loss": [
+      "home_injury_offense_snap_loss",
+      "home_injury_defense_snap_loss",
+      "away_injury_offense_snap_loss",
+      "away_injury_defense_snap_loss"
+    ],
+    "injury_positions": [
+      "home_injury_qb_snap_loss",
+      "home_injury_ol_snap_loss",
+      "home_injury_skill_snap_loss",
+      "home_injury_front_snap_loss",
+      "home_injury_secondary_snap_loss",
+      "away_injury_qb_snap_loss",
+      "away_injury_ol_snap_loss",
+      "away_injury_skill_snap_loss",
+      "away_injury_front_snap_loss",
+      "away_injury_secondary_snap_loss"
+    ]
+  },
+  "margin": {
+    "production_base": {
+      "feature_count": 24,
+      "groups": [],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.367465408109382,
+          "mae_change_vs_base": 0.0
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.551641450536831,
+          "mae_change_vs_base": 0.0
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.062085278937394,
+          "mae_change_vs_base": 0.0
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.375655794548031
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.667455540323584
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.062085278937394
+          }
+        },
+        "mean_ridge_weight": 0.5688520055325035
+      }
+    },
+    "production_base+injury_status": {
+      "feature_count": 30,
+      "groups": [
+        "injury_status"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.353140389441299,
+          "mae_change_vs_base": -0.014325018668083445
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.56123802314866,
+          "mae_change_vs_base": 0.009596572611828336
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.008096151198579,
+          "mae_change_vs_base": -0.0539891277388147
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.323560972667522
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.7176504938697
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.008096151198579
+          }
+        },
+        "mean_ridge_weight": 0.465850622406639
+      }
+    },
+    "production_base+injury_snap_loss": {
+      "feature_count": 28,
+      "groups": [
+        "injury_snap_loss"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.30630337516624,
+          "mae_change_vs_base": -0.06116203294314282
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.444867269679277,
+          "mae_change_vs_base": -0.10677418085755441
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.076552211837638,
+          "mae_change_vs_base": 0.0144669329002447
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.41150835592426
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.466820378363645
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.076552211837638
+          }
+        },
+        "mean_ridge_weight": 0.602448132780083
+      }
+    },
+    "production_base+injury_positions": {
+      "feature_count": 34,
+      "groups": [
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.297447618255674,
+          "mae_change_vs_base": -0.07001778985370777
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.395611927767774,
+          "mae_change_vs_base": -0.15602952276905668
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.134682531527886,
+          "mae_change_vs_base": 0.07259725259049254
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.343588408928142
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.429847993474743
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.134682531527886
+          }
+        },
+        "mean_ridge_weight": 0.4863623789764868
+      }
+    },
+    "production_base+injury_status+injury_snap_loss": {
+      "feature_count": 34,
+      "groups": [
+        "injury_status",
+        "injury_snap_loss"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.323949708260573,
+          "mae_change_vs_base": -0.04351569984880932
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.472560458959649,
+          "mae_change_vs_base": -0.0790809915771824
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.077539970888207,
+          "mae_change_vs_base": 0.01545469195081317
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.354705916036185
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.550119147133547
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.077539970888207
+          }
+        },
+        "mean_ridge_weight": 0.5050760719225449
+      }
+    },
+    "production_base+injury_status+injury_positions": {
+      "feature_count": 40,
+      "groups": [
+        "injury_status",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.340394507386394,
+          "mae_change_vs_base": -0.0270709007229879
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.461275667433682,
+          "mae_change_vs_base": -0.0903657831031488
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.13996287804328,
+          "mae_change_vs_base": 0.07787759910588576
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.39328328216623
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.506020656267776
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.13996287804328
+          }
+        },
+        "mean_ridge_weight": 0.44168741355463353
+      }
+    },
+    "production_base+injury_snap_loss+injury_positions": {
+      "feature_count": 38,
+      "groups": [
+        "injury_snap_loss",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.302905326101735,
+          "mae_change_vs_base": -0.06456008200764707
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.4102088035244,
+          "mae_change_vs_base": -0.1414326470124312
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.124986692581066,
+          "mae_change_vs_base": 0.0629014136436723
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.369328768039352
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.437111473935511
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.124986692581066
+          }
+        },
+        "mean_ridge_weight": 0.49771784232365146
+      }
+    },
+    "production_base+injury_status+injury_snap_loss+injury_positions": {
+      "feature_count": 44,
+      "groups": [
+        "injury_status",
+        "injury_snap_loss",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.334501628153808,
+          "mae_change_vs_base": -0.032963779955574424
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.454460745113987,
+          "mae_change_vs_base": -0.09718070542284352
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.135598827605861,
+          "mae_change_vs_base": 0.07351354866846727
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.421024208451147
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.476464936520784
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.135598827605861
+          }
+        },
+        "mean_ridge_weight": 0.4520470262793915
+      }
+    }
+  },
+  "total": {
+    "production_base": {
+      "feature_count": 30,
+      "groups": [],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.384161769757217,
+          "mae_change_vs_base": 0.0
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.276423748767872,
+          "mae_change_vs_base": 0.0
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.562800914853518,
+          "mae_change_vs_base": 0.0
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.923645415780474
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 9.850494784079434
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.562800914853518
+          }
+        },
+        "mean_ridge_weight": 0.734688796680498
+      }
+    },
+    "production_base+injury_status": {
+      "feature_count": 36,
+      "groups": [
+        "injury_status"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.468113988869822,
+          "mae_change_vs_base": 0.08395221911260542
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.32249964158939,
+          "mae_change_vs_base": 0.04607589282151814
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.709555424985542,
+          "mae_change_vs_base": 0.14675451013202334
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.855282054543778
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 9.971881803652495
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.709555424985542
+          }
+        },
+        "mean_ridge_weight": 0.5262655601659751
+      }
+    },
+    "production_base+injury_snap_loss": {
+      "feature_count": 34,
+      "groups": [
+        "injury_snap_loss"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.425712636376575,
+          "mae_change_vs_base": 0.04155086661935847
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.361899638092616,
+          "mae_change_vs_base": 0.08547588932474426
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.531520218090051,
+          "mae_change_vs_base": -0.03128069676346712
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.888840169562968
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.015126273632351
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.531520218090051
+          }
+        },
+        "mean_ridge_weight": 0.8309405255878285
+      }
+    },
+    "production_base+injury_positions": {
+      "feature_count": 40,
+      "groups": [
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.449617516072056,
+          "mae_change_vs_base": 0.0654557463148393
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.316026343512918,
+          "mae_change_vs_base": 0.03960259474504646
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.67112346763151,
+          "mae_change_vs_base": 0.10832255277799163
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.952711160925531
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 9.897031555583297
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.67112346763151
+          }
+        },
+        "mean_ridge_weight": 0.6301244813278009
+      }
+    },
+    "production_base+injury_status+injury_snap_loss": {
+      "feature_count": 40,
+      "groups": [
+        "injury_status",
+        "injury_snap_loss"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.468348625156837,
+          "mae_change_vs_base": 0.08418685539962034
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.35755073214139,
+          "mae_change_vs_base": 0.08112698337351887
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.65206130806113,
+          "mae_change_vs_base": 0.0892603932076117
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.869494192468904
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.020646763764091
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.65206130806113
+          }
+        },
+        "mean_ridge_weight": 0.6087413554633472
+      }
+    },
+    "production_base+injury_status+injury_positions": {
+      "feature_count": 46,
+      "groups": [
+        "injury_status",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.501845530363505,
+          "mae_change_vs_base": 0.1176837606062886
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.339590412203654,
+          "mae_change_vs_base": 0.0631666634357817
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.770878832900614,
+          "mae_change_vs_base": 0.20807791804709552
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.85186921694958
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 10.002465757609825
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.770878832900614
+          }
+        },
+        "mean_ridge_weight": 0.4178699861687414
+      }
+    },
+    "production_base+injury_snap_loss+injury_positions": {
+      "feature_count": 44,
+      "groups": [
+        "injury_snap_loss",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.445633579063452,
+          "mae_change_vs_base": 0.061471809306235414
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.32432379718378,
+          "mae_change_vs_base": 0.047900048415908
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.646775901224228,
+          "mae_change_vs_base": 0.0839749863707091
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.932107226442442
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 9.924348672781939
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.646775901224228
+          }
+        },
+        "mean_ridge_weight": 0.6931258644536654
+      }
+    },
+    "production_base+injury_status+injury_snap_loss+injury_positions": {
+      "feature_count": 50,
+      "groups": [
+        "injury_status",
+        "injury_snap_loss",
+        "injury_positions"
+      ],
+      "metrics": {
+        "all_oof": {
+          "rows": 723,
+          "mae": 10.502401638711639,
+          "mae_change_vs_base": 0.11823986895442218
+        },
+        "development": {
+          "rows": 451,
+          "mae": 10.355921231192655,
+          "mae_change_vs_base": 0.07949748242478272
+        },
+        "holdout": {
+          "rows": 272,
+          "mae": 10.745279079119953,
+          "mae_change_vs_base": 0.18247816426643482
+        },
+        "by_season": {
+          "2023": {
+            "rows": 179,
+            "mae": 10.921481124093058
+          },
+          "2024": {
+            "rows": 272,
+            "mae": 9.983732919320701
+          },
+          "2025": {
+            "rows": 272,
+            "mae": 10.745279079119953
+          }
+        },
+        "mean_ridge_weight": 0.5097786998616874
+      }
+    }
+  }
+}

@@ -92,10 +92,19 @@ def _snaps() -> pd.DataFrame:
 
 
 def test_injury_status_weights_prefer_game_designation() -> None:
-    assert injury_unavailability_weight({"report_status": "Out", "practice_status": "Full Participation in Practice"}) == 1.0
+    assert (
+        injury_unavailability_weight(
+            {"report_status": "Out", "practice_status": "Full Participation in Practice"}
+        )
+        == 1.0
+    )
     assert injury_unavailability_weight({"report_status": "Questionable"}) == 0.35
-    assert injury_unavailability_weight({"practice_status": "Did Not Participate in Practice"}) == 0.25
-    assert injury_unavailability_weight({"practice_status": "Full Participation in Practice"}) == 0.0
+    assert (
+        injury_unavailability_weight({"practice_status": "Did Not Participate in Practice"}) == 0.25
+    )
+    assert (
+        injury_unavailability_weight({"practice_status": "Full Participation in Practice"}) == 0.0
+    )
 
 
 def test_injury_availability_uses_only_prior_game_snap_share() -> None:

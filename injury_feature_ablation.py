@@ -122,9 +122,7 @@ def _evaluate_target(
             current = result["metrics"][split]["mae"]
             baseline = base[split]["mae"]
             result["metrics"][split]["mae_change_vs_base"] = (
-                current - baseline
-                if current is not None and baseline is not None
-                else None
+                current - baseline if current is not None and baseline is not None else None
             )
     return results
 
@@ -186,9 +184,7 @@ def run_ablation(
         "lookback_weeks": lookback_weeks,
         "completed_games_with_injury_feed": int(len(games)),
         "injury_team_week_rows": int(len(availability)),
-        "covered_season_weeks": [
-            {"season": season, "week": week} for season, week in coverage
-        ],
+        "covered_season_weeks": [{"season": season, "week": week} for season, week in coverage],
         "methodology": {
             "validation": "expanding-window chronological out-of-fold by NFL week",
             "blending": "ridge/gradient-boosting weights learned from earlier OOF weeks only",

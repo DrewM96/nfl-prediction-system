@@ -92,8 +92,7 @@ def _player_crosswalk(rosters: pd.DataFrame) -> dict[tuple[int, str], str]:
         frame["season"].notna() & frame["gsis_id"].ne("") & frame["pfr_id"].ne("")
     ].drop_duplicates(["season", "gsis_id"], keep="last")
     return {
-        (int(row["season"]), str(row["gsis_id"])): str(row["pfr_id"])
-        for _, row in frame.iterrows()
+        (int(row["season"]), str(row["gsis_id"])): str(row["pfr_id"]) for _, row in frame.iterrows()
     }
 
 
@@ -164,9 +163,7 @@ def _prior_snap_share(
     team_week_snaps = current.groupby("week")[snap_column].max().sum()
     if team_week_snaps <= 0:
         return 0.0
-    player_snaps = current.loc[
-        current["pfr_player_id"].eq(pfr_player_id), snap_column
-    ].sum()
+    player_snaps = current.loc[current["pfr_player_id"].eq(pfr_player_id), snap_column].sum()
     return float(np.clip(player_snaps / team_week_snaps, 0.0, 1.0))
 
 
