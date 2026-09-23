@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: phase3-qb-benchmark
+  cancel-in-progress: true
+
 jobs:
   benchmark:
     runs-on: ubuntu-latest
