@@ -1206,10 +1206,10 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
             (
                 f'<div class="grid-injury-summary {state_class}">'
                 '<span class="grid-injury-summary-dot"></span>'
-                '<span><strong>Injury context</strong> · '
-                f'{html_text(str(game["away_team"]))} {len(away_entries)} · '
-                f'{html_text(str(game["home_team"]))} {len(home_entries)} · '
-                f'{html_text(freshness)} · not applied to forecast</span>'
+                "<span><strong>Injury context</strong> · "
+                f"{html_text(str(game['away_team']))} {len(away_entries)} · "
+                f"{html_text(str(game['home_team']))} {len(home_entries)} · "
+                f"{html_text(freshness)} · not applied to forecast</span>"
                 "</div>"
             ),
             unsafe_allow_html=True,
@@ -1494,11 +1494,7 @@ def _featured_game_score(game: dict[str, Any]) -> float:
     market_margin = float(market_margin)
     market_competitive = max(0.0, 1.0 - abs(market_margin) / 10.0)
     disagreement = min(abs(model_margin - market_margin) / 7.0, 1.0)
-    score = (
-        0.45 * model_competitive
-        + 0.30 * market_competitive
-        + 0.25 * disagreement
-    )
+    score = 0.45 * model_competitive + 0.30 * market_competitive + 0.25 * disagreement
     if abs(model_margin) >= 10.0 and abs(market_margin) >= 10.0:
         score -= 0.30
     return score
