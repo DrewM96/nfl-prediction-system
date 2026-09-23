@@ -90,6 +90,7 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
             eligible = kickoff is not None and published < kickoff
             result = settled.get(str(prediction["game_id"]), {})
             football = prediction.get("football_only") or {}
+            qb_shadow = prediction.get("qb_shadow") or {}
             calibrated = bool((prediction.get("preseason_calibration") or {}).get("weight"))
             market = prediction.get("market_consensus") or {}
             captured = market.get("snapshot_at")
@@ -133,6 +134,15 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                 published_total=total,
                 independent_margin=base_margin,
                 independent_total=base_total,
+                qb_shadow_margin=(
+                    qb_shadow.get("shadow_independent_margin")
+                    if qb_shadow.get("eligible")
+                    else None
+                ),
+                qb_shadow_raw_adjustment=qb_shadow.get("raw_margin_adjustment"),
+                qb_shadow_lambda=qb_shadow.get("lambda"),
+                qb_shadow_eligible=bool(qb_shadow.get("eligible", False)),
+                qb_shadow_injury_snapshot_at=qb_shadow.get("injury_snapshot_at"),
                 market_margin=spread.get("market_home_margin") if market_valid else None,
                 market_total=total_market.get("total") if market_valid else None,
                 market_at=captured if market_valid else None,
@@ -341,6 +351,69 @@ def performance_history(root: str | Path) -> dict[str, Any]:
                         matched_model_total_mae=total["matched_model_mae"],
                         market_total_mae=total["market_mae"],
                         margin_disagreement_buckets=disagreement_analysis(group),
+                        qb_shadow_games=int(group["qb_shadow_eligible"].sum())
+                        if "qb_shadow_eligible" in group
+                        else 0,
+                        qb_shadow_margin_mae=(
+                            float(
+                                (
+                                    group.loc[
+                                        group.status.eq("final")
+                                        & group.qb_shadow_eligible
+                                        & group.actual_margin.notna()
+                                        & group.qb_shadow_margin.notna(),
+                                        "qb_shadow_margin",
+                                    ]
+                                    - group.loc[
+                                        group.status.eq("final")
+                                        & group.qb_shadow_eligible
+                                        & group.actual_margin.notna()
+                                        & group.qb_shadow_margin.notna(),
+                                        "actual_margin",
+                                    ]
+                                )
+                                .abs()
+                                .mean()
+                            )
+                            if "qb_shadow_margin" in group
+                            and (
+                                group.status.eq("final")
+                                & group.qb_shadow_eligible
+                                & group.actual_margin.notna()
+                                & group.qb_shadow_margin.notna()
+                            ).any()
+                            else None
+                        ),
+                        qb_shadow_independent_margin_mae=(
+                            float(
+                                (
+                                    group.loc[
+                                        group.status.eq("final")
+                                        & group.qb_shadow_eligible
+                                        & group.actual_margin.notna()
+                                        & group.independent_margin.notna(),
+                                        "independent_margin",
+                                    ]
+                                    - group.loc[
+                                        group.status.eq("final")
+                                        & group.qb_shadow_eligible
+                                        & group.actual_margin.notna()
+                                        & group.independent_margin.notna(),
+                                        "actual_margin",
+                                    ]
+                                )
+                                .abs()
+                                .mean()
+                            )
+                            if "qb_shadow_eligible" in group
+                            and (
+                                group.status.eq("final")
+                                & group.qb_shadow_eligible
+                                & group.actual_margin.notna()
+                                & group.independent_margin.notna()
+                            ).any()
+                            else None
+                        ),
                     )
                 )
     return {"runs": runs, "updated_at": datetime.now(UTC).isoformat(), "schema_version": 3}
