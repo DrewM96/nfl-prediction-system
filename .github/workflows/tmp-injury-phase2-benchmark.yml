@@ -1,0 +1,40 @@
+name: Temporary phase 2 injury benchmark
+
+on:
+  push:
+    branches:
+      - research/nfl-injury-phase2
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/nfl-injury-phase2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff format injury_feature_ablation.py nfl_prediction/injuries.py tests/test_injuries.py
+      - run: ruff check injury_feature_ablation.py nfl_prediction/injuries.py tests/test_injuries.py
+      - run: pytest -q tests/test_injuries.py
+      - name: Run 2022-2025 injury ablation
+        run: >
+          python injury_feature_ablation.py
+          --seasons 2022 2023 2024 2025
+          --holdout-season 2025
+          --output injury_feature_benchmark.json
+      - name: Commit benchmark and formatting
+        run: |
+          rm .github/workflows/tmp-injury-phase2-benchmark.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add injury_feature_ablation.py nfl_prediction/injuries.py tests/test_injuries.py injury_feature_benchmark.json .github/workflows/tmp-injury-phase2-benchmark.yml
+          git commit -m "research: publish NFL injury feature benchmark"
+          git push
