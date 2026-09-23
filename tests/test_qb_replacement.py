@@ -5,6 +5,7 @@ import pytest
 
 from nfl_prediction.qb_replacement import (
     attach_qb_replacement_features,
+    attach_qb_shadow_forecasts,
     build_qb_replacement_table,
 )
 
@@ -271,3 +272,103 @@ def test_qb_features_attach_to_correct_game_side() -> None:
     row = attach_qb_replacement_features(games, table).iloc[0]
     assert row["home_qb_expected_points_lost"] == 7.0
     assert row["away_qb_expected_points_lost"] == 0.0
+
+
+
+def test_qb_shadow_is_frozen_without_mutating_published_margin() -> None:
+    prediction = {
+        "game_id": "G",
+        "season": 2026,
+        "week": 3,
+        "home_team": "H",
+        "away_team": "A",
+        "predicted_home_margin": 4.0,
+        "football_only": {"home_margin": 3.0},
+    }
+    table = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "H",
+                "qb_starter_reported": 1.0,
+                "qb_unavailability_weight": 1.0,
+                "qb_starter_epa_per_dropback": 0.20,
+                "qb_backup_epa_per_dropback": 0.05,
+                "qb_value_gap_epa_per_dropback": 0.15,
+                "qb_expected_dropbacks": 36.0,
+                "qb_expected_points_lost": 3.0,
+                "qb_starter_id": "H1",
+                "qb_backup_id": "H2",
+            },
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "A",
+                "qb_starter_reported": 0.0,
+                "qb_unavailability_weight": 0.0,
+                "qb_starter_epa_per_dropback": 0.10,
+                "qb_backup_epa_per_dropback": 0.00,
+                "qb_value_gap_epa_per_dropback": 0.10,
+                "qb_expected_dropbacks": 35.0,
+                "qb_expected_points_lost": 0.0,
+                "qb_starter_id": "A1",
+                "qb_backup_id": "A2",
+            },
+        ]
+    )
+
+    frozen = attach_qb_shadow_forecasts(
+        [prediction],
+        table,
+        injury_snapshot_at="2026-09-25T12:00:00+00:00",
+        injury_available_week=3,
+        injury_stale_for_prediction_week=False,
+    )[0]
+
+    assert frozen["predicted_home_margin"] == 4.0
+    assert frozen["football_only"]["home_margin"] == 3.0
+    assert frozen["qb_shadow"]["eligible"] is True
+    assert frozen["qb_shadow"]["raw_margin_adjustment"] == pytest.approx(-3.0)
+    assert frozen["qb_shadow"]["shadow_independent_margin"] == pytest.approx(-1.5)
+    assert frozen["qb_shadow"]["applied_to_published_forecast"] is False
+
+
+def test_qb_shadow_refuses_stale_injury_feed() -> None:
+    prediction = {
+        "game_id": "G",
+        "season": 2026,
+        "week": 3,
+        "home_team": "H",
+        "away_team": "A",
+        "predicted_home_margin": 4.0,
+    }
+    table = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": team,
+                "qb_starter_reported": 0.0,
+                "qb_unavailability_weight": 0.0,
+                "qb_starter_epa_per_dropback": 0.0,
+                "qb_backup_epa_per_dropback": 0.0,
+                "qb_value_gap_epa_per_dropback": 0.0,
+                "qb_expected_dropbacks": 35.0,
+                "qb_expected_points_lost": 0.0,
+            }
+            for team in ("H", "A")
+        ]
+    )
+
+    frozen = attach_qb_shadow_forecasts(
+        [prediction],
+        table,
+        injury_snapshot_at="2026-09-20T12:00:00+00:00",
+        injury_available_week=2,
+        injury_stale_for_prediction_week=True,
+    )[0]
+
+    assert frozen["qb_shadow"]["eligible"] is False
+    assert frozen["qb_shadow"]["ineligible_reason"] == "stale_injury_feed"
+    assert frozen["qb_shadow"]["shadow_independent_margin"] is None
