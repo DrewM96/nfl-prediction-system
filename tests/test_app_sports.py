@@ -79,8 +79,19 @@ def test_results_are_available_for_both_sports() -> None:
 def test_nfl_matchup_views_expose_frozen_injury_context() -> None:
     source = Path("app.py").read_text()
     assert "def render_official_injury_snapshot" in source
-    assert "context only, not applied to the model" in source
+    assert "not applied to forecast" in source
     assert "Official injury report snapshot" in source
+    assert "grid-injury-panel" in source
+    assert "_format_injury_snapshot_time" in source
+
+
+def test_featured_nfl_game_prioritizes_intrigue_not_largest_spread() -> None:
+    source = Path("app.py").read_text()
+    assert "def _featured_game_score" in source
+    assert "0.45 * model_competitive" in source
+    assert "0.30 * market_competitive" in source
+    assert "0.25 * disagreement" in source
+    assert "featured = max(schedule, key=_featured_game_score)" in source
 
 
 def test_cfb_builder_is_available() -> None:
