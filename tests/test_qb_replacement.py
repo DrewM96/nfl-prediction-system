@@ -117,10 +117,10 @@ def test_qb_replacement_detects_injured_prior_usage_starter() -> None:
     assert row["qb_backup_id"] == "QB2"
     assert row["qb_starter_reported"] == 1.0
     assert row["qb_unavailability_weight"] == 1.0
-    assert row["qb_starter_epa_per_dropback"] == pytest.approx(0.4)
-    assert row["qb_backup_epa_per_dropback"] == pytest.approx(-0.2)
+    assert row["qb_starter_epa_per_dropback"] == pytest.approx(0.36)
+    assert row["qb_backup_epa_per_dropback"] == pytest.approx(-2.0 / 15.0)
     assert row["qb_expected_dropbacks"] == 35.0
-    assert abs(row["qb_expected_points_lost"] - 21.0) < 1e-9
+    assert row["qb_expected_points_lost"] == pytest.approx((0.36 + 2.0 / 15.0) * 35.0)
 
 
 def test_qb_replacement_ignores_nonstarter_qb_injury() -> None:
