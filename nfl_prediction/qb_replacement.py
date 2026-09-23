@@ -514,9 +514,7 @@ def attach_qb_shadow_forecasts(
         home_team = str(prediction["home_team"])
         away_team = str(prediction["away_team"])
         football = prediction.get("football_only") or {}
-        base_margin = float(
-            football.get("home_margin", prediction["predicted_home_margin"])
-        )
+        base_margin = float(football.get("home_margin", prediction["predicted_home_margin"]))
 
         def team_record(
             team: str,
@@ -536,37 +534,23 @@ def attach_qb_shadow_forecasts(
                 "starter_id": row.get("qb_starter_id"),
                 "backup_id": row.get("qb_backup_id"),
                 "starter_reported": bool(row.get("qb_starter_reported", 0.0)),
-                "unavailability_weight": float(
-                    row.get("qb_unavailability_weight", 0.0)
-                ),
-                "starter_epa_per_dropback": float(
-                    row.get("qb_starter_epa_per_dropback", 0.0)
-                ),
-                "backup_epa_per_dropback": float(
-                    row.get("qb_backup_epa_per_dropback", 0.0)
-                ),
-                "value_gap_epa_per_dropback": float(
-                    row.get("qb_value_gap_epa_per_dropback", 0.0)
-                ),
+                "unavailability_weight": float(row.get("qb_unavailability_weight", 0.0)),
+                "starter_epa_per_dropback": float(row.get("qb_starter_epa_per_dropback", 0.0)),
+                "backup_epa_per_dropback": float(row.get("qb_backup_epa_per_dropback", 0.0)),
+                "value_gap_epa_per_dropback": float(row.get("qb_value_gap_epa_per_dropback", 0.0)),
                 "expected_dropbacks": float(row.get("qb_expected_dropbacks", 0.0)),
-                "expected_points_lost": float(
-                    row.get("qb_expected_points_lost", 0.0)
-                ),
+                "expected_points_lost": float(row.get("qb_expected_points_lost", 0.0)),
             }
 
         home = team_record(home_team)
         away = team_record(away_team)
         eligible = bool(
-            not injury_stale_for_prediction_week
-            and home is not None
-            and away is not None
+            not injury_stale_for_prediction_week and home is not None and away is not None
         )
         raw_adjustment = None
         shadow_margin = None
         if eligible:
-            raw_adjustment = float(
-                away["expected_points_lost"] - home["expected_points_lost"]
-            )
+            raw_adjustment = float(away["expected_points_lost"] - home["expected_points_lost"])
             shadow_margin = float(base_margin + shadow_lambda * raw_adjustment)
 
         frozen["qb_shadow"] = {

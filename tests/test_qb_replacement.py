@@ -274,7 +274,6 @@ def test_qb_features_attach_to_correct_game_side() -> None:
     assert row["away_qb_expected_points_lost"] == 0.0
 
 
-
 def test_qb_shadow_is_frozen_without_mutating_published_margin() -> None:
     prediction = {
         "game_id": "G",
