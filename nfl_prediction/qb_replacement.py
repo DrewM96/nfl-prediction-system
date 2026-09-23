@@ -170,48 +170,184 @@ def _shrunk_epa_per_dropback(
     return float(value), n
 
 
+def _roster_qb_groups(
+    rosters: pd.DataFrame | None,
+) -> dict[tuple[int, str], pd.DataFrame]:
+    if rosters is None or rosters.empty:
+        return {}
+    required = {"season", "team", "position", "gsis_id"}
+    if not required.issubset(rosters):
+        return {}
+    frame = rosters.copy()
+    frame["season"] = pd.to_numeric(frame["season"], errors="coerce")
+    frame["week"] = pd.to_numeric(
+        frame.get("week", pd.Series(1, index=frame.index)), errors="coerce"
+    ).fillna(1)
+    frame = frame[
+        frame["season"].notna()
+        & frame["team"].notna()
+        & frame["gsis_id"].notna()
+    ].copy()
+    frame["season"] = frame["season"].astype(int)
+    frame["week"] = frame["week"].astype(int)
+    frame["team"] = frame["team"].astype(str)
+    frame["position"] = frame["position"].fillna("").astype(str).str.upper()
+    frame["gsis_id"] = frame["gsis_id"].astype(str)
+    frame = frame[frame["position"].eq("QB")]
+    return {
+        (int(season), str(team)): group.copy()
+        for (season, team), group in frame.groupby(["season", "team"], sort=False)
+    }
+
+
+def _current_roster_qbs(
+    groups: dict[tuple[int, str], pd.DataFrame],
+    *,
+    season: int,
+    week: int,
+    team: str,
+) -> list[str]:
+    frame = groups.get((season, team))
+    if frame is None or frame.empty:
+        return []
+    available = frame[frame["week"].le(week)]
+    if available.empty:
+        available = frame[frame["week"].eq(frame["week"].min())]
+    else:
+        available = available[available["week"].eq(available["week"].max())]
+    return sorted(set(available["gsis_id"].astype(str)))
+
+
+def _player_prior_history(
+    dropbacks: pd.DataFrame,
+    *,
+    season: int,
+    week: int,
+    player_id: str,
+    lookback_weeks: int = 8,
+) -> pd.DataFrame:
+    history = dropbacks[
+        dropbacks["player_id"].eq(player_id)
+        & (
+            (dropbacks["season"] < season)
+            | (dropbacks["season"].eq(season) & dropbacks["week"].lt(week))
+        )
+    ].copy()
+    if history.empty:
+        return history
+    history = history[history["season"].ge(season - 1)]
+    keys = (
+        history[["season", "week"]]
+        .drop_duplicates()
+        .sort_values(["season", "week"])
+        .tail(lookback_weeks)
+    )
+    return history.merge(keys, on=["season", "week"], how="inner")
+
+
+def _fallback_roster_order(
+    dropbacks: pd.DataFrame,
+    roster_qbs: list[str],
+    *,
+    season: int,
+    week: int,
+) -> list[str]:
+    scored: list[tuple[float, str]] = []
+    for player_id in roster_qbs:
+        history = _player_prior_history(
+            dropbacks,
+            season=season,
+            week=week,
+            player_id=player_id,
+        )
+        scored.append((float(history["dropbacks"].sum()), player_id))
+    scored.sort(key=lambda item: (-item[0], item[1]))
+    if not scored or scored[0][0] <= 0:
+        return []
+    return [player_id for _, player_id in scored]
+
+
 def _starter_and_backup(
     history: pd.DataFrame,
     *,
+    dropbacks: pd.DataFrame,
+    roster_qbs: list[str],
+    season: int,
+    week: int,
     league_prior: float,
     prior_dropbacks: float,
 ) -> tuple[str | None, str | None, float, float, float]:
-    if history.empty:
-        return None, None, league_prior, league_prior, 35.0
-
     usage = (
         history.groupby("player_id", as_index=False)["dropbacks"]
         .sum()
         .sort_values(["dropbacks", "player_id"], ascending=[False, True])
+        if not history.empty
+        else pd.DataFrame(columns=["player_id", "dropbacks"])
     )
-    starter = str(usage.iloc[0]["player_id"]) if not usage.empty else None
-    backup = str(usage.iloc[1]["player_id"]) if len(usage) > 1 else None
+    ordered = [str(value) for value in usage["player_id"].tolist()]
+    if roster_qbs:
+        roster_set = set(roster_qbs)
+        ordered = [player_id for player_id in ordered if player_id in roster_set]
+    if not ordered:
+        ordered = _fallback_roster_order(
+            dropbacks,
+            roster_qbs,
+            season=season,
+            week=week,
+        )
+
+    starter = ordered[0] if ordered else None
+    backup = ordered[1] if len(ordered) > 1 else None
+    if backup is None and roster_qbs:
+        remaining = [player_id for player_id in roster_qbs if player_id != starter]
+        fallback_order = _fallback_roster_order(
+            dropbacks,
+            remaining,
+            season=season,
+            week=week,
+        )
+        backup = fallback_order[0] if fallback_order else None
+
     starter_value = league_prior
     backup_value = league_prior
-
     if starter:
+        starter_history = _player_prior_history(
+            dropbacks,
+            season=season,
+            week=week,
+            player_id=starter,
+        )
         starter_value, _ = _shrunk_epa_per_dropback(
-            history,
+            starter_history,
             starter,
             league_prior=league_prior,
             prior_dropbacks=prior_dropbacks,
         )
     if backup:
+        backup_history = _player_prior_history(
+            dropbacks,
+            season=season,
+            week=week,
+            player_id=backup,
+        )
         backup_value, _ = _shrunk_epa_per_dropback(
-            history,
+            backup_history,
             backup,
             league_prior=league_prior,
             prior_dropbacks=prior_dropbacks,
         )
 
     team_week_dropbacks = history.groupby("week")["dropbacks"].sum()
-    expected_dropbacks = float(team_week_dropbacks.mean()) if not team_week_dropbacks.empty else 35.0
+    expected_dropbacks = (
+        float(team_week_dropbacks.mean()) if not team_week_dropbacks.empty else 35.0
+    )
     return starter, backup, starter_value, backup_value, expected_dropbacks
 
 
 def build_qb_replacement_table(
     injuries: pd.DataFrame | None,
     pbp: pd.DataFrame | None,
+    rosters: pd.DataFrame | None = None,
     *,
     lookback_weeks: int = 4,
     shrinkage_dropbacks: float = 80.0,
@@ -255,6 +391,7 @@ def build_qb_replacement_table(
     covered["team"] = covered["team"].astype(str)
 
     qb_groups = _qb_groups(dropbacks)
+    roster_groups = _roster_qb_groups(rosters)
     coverage_keys = [
         (int(season), int(week))
         for season, week in covered[["season", "week"]].drop_duplicates().itertuples(
@@ -279,8 +416,18 @@ def build_qb_replacement_table(
             lookback_weeks=lookback_weeks,
         )
         league_prior = league_priors.get((int(season), int(week)), 0.0)
+        roster_qbs = _current_roster_qbs(
+            roster_groups,
+            season=int(season),
+            week=int(week),
+            team=str(team),
+        )
         starter, backup, starter_value, backup_value, expected_dropbacks = _starter_and_backup(
             history,
+            dropbacks=dropbacks,
+            roster_qbs=roster_qbs,
+            season=int(season),
+            week=int(week),
             league_prior=league_prior,
             prior_dropbacks=shrinkage_dropbacks,
         )
