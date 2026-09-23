@@ -337,7 +337,11 @@ def _starter_and_backup(
             prior_dropbacks=prior_dropbacks,
         )
 
-    team_week_dropbacks = history.groupby("week")["dropbacks"].sum()
+    team_week_dropbacks = (
+        history.groupby("week")["dropbacks"].sum()
+        if not history.empty and "week" in history
+        else pd.Series(dtype=float)
+    )
     expected_dropbacks = (
         float(team_week_dropbacks.mean()) if not team_week_dropbacks.empty else 35.0
     )
