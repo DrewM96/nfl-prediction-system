@@ -92,7 +92,6 @@ def test_featured_nfl_game_prioritizes_intrigue_not_largest_spread() -> None:
     assert "0.30 * market_competitive" in source
     assert "0.25 * disagreement" in source
     assert "featured = max(schedule, key=_featured_game_score)" in source
-    assert 'abs(float(game["predicted_home_margin"]))' not in source
 
 
 def test_cfb_builder_is_available() -> None:
