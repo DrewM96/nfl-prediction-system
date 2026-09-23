@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23T11:21:06.373638+00:00",
+  "data_source": "nflverse injury reports, rosters, and play-by-play",
+  "seasons_requested": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "holdout_season": 2025,
+  "completed_games_with_injury_feed": 1087,
+  "qb_positive_loss_team_weeks": 141,
+  "qb_loss_summary": {
+    "mean": 2.9734739547755584,
+    "median": 2.112162044072357,
+    "p90": 7.638271867939184,
+    "max": 12.660460937304487
+  },
+  "methodology": {
+    "architecture": "post-model availability adjustment; core football model is unchanged",
+    "starter_detection": "prior team dropback leader constrained to current-roster QBs; Week 1 can fall back to prior league usage for current-roster veterans",
+    "qb_value": "prior EPA/dropback shrunk toward league average with 80 equivalent dropbacks",
+    "margin_adjustment": "away QB expected points lost minus home QB expected points lost",
+    "total_adjustment": "negative sum of home and away QB expected points lost",
+    "lambda_selection": "0.00-1.50 grid in 0.05 steps; each validation week chooses lambda using earlier OOF rows only; zero until 100 earlier OOF rows exist",
+    "timing_limit": "historical injury reports are a late-week/final-report proxy rather than timestamped early-week snapshots"
+  },
+  "margin": {
+    "all_oof": {
+      "baseline": {
+        "rows": 723,
+        "mae": 10.367465408109382
+      },
+      "adjusted": {
+        "rows": 723,
+        "mae": 10.23935020047019
+      },
+      "mae_change_vs_base": -0.12811520763919226
+    },
+    "development": {
+      "baseline": {
+        "rows": 451,
+        "mae": 10.551641450536831
+      },
+      "adjusted": {
+        "rows": 451,
+        "mae": 10.323483163260606
+      },
+      "mae_change_vs_base": -0.22815828727622467
+    },
+    "holdout": {
+      "baseline": {
+        "rows": 272,
+        "mae": 10.062085278937394
+      },
+      "adjusted": {
+        "rows": 272,
+        "mae": 10.099850324666965
+      },
+      "mae_change_vs_base": 0.03776504572957151
+    },
+    "qb_event_rows": {
+      "rows": 85,
+      "baseline_mae": 11.83610591791693,
+      "adjusted_mae": 10.746373034115337
+    },
+    "mean_lambda": 1.231673582295989,
+    "latest_lambda": 1.5,
+    "nonzero_lambda_rows": 623,
+    "by_season": {
+      "2023": {
+        "baseline": {
+          "rows": 179,
+          "mae": 10.375655794548031
+        },
+        "adjusted": {
+          "rows": 179,
+          "mae": 10.427847092456219
+        },
+        "mae_change_vs_base": 0.05219129790818755
+      },
+      "2024": {
+        "baseline": {
+          "rows": 272,
+          "mae": 10.667455540323584
+        },
+        "adjusted": {
+          "rows": 272,
+          "mae": 10.254802489267902
+        },
+        "mae_change_vs_base": -0.4126530510556812
+      },
+      "2025": {
+        "baseline": {
+          "rows": 272,
+          "mae": 10.062085278937394
+        },
+        "adjusted": {
+          "rows": 272,
+          "mae": 10.099850324666965
+        },
+        "mae_change_vs_base": 0.03776504572957151
+      }
+    }
+  },
+  "total": {
+    "all_oof": {
+      "baseline": {
+        "rows": 723,
+        "mae": 10.384161769757217
+      },
+      "adjusted": {
+        "rows": 723,
+        "mae": 10.406261724831552
+      },
+      "mae_change_vs_base": 0.022099955074335043
+    },
+    "development": {
+      "baseline": {
+        "rows": 451,
+        "mae": 10.276423748767872
+      },
+      "adjusted": {
+        "rows": 451,
+        "mae": 10.291567482892157
+      },
+      "mae_change_vs_base": 0.015143734124285047
+    },
+    "holdout": {
+      "baseline": {
+        "rows": 272,
+        "mae": 10.562800914853518
+      },
+      "adjusted": {
+        "rows": 272,
+        "mae": 10.59643489804724
+      },
+      "mae_change_vs_base": 0.03363398319372202
+    },
+    "qb_event_rows": {
+      "rows": 85,
+      "baseline_mae": 11.21756875255556,
+      "adjusted_mae": 11.405548370423148
+    },
+    "mean_lambda": 0.49073305670816036,
+    "latest_lambda": 0.15000000000000002,
+    "nonzero_lambda_rows": 623,
+    "by_season": {
+      "2023": {
+        "baseline": {
+          "rows": 179,
+          "mae": 10.923645415780474
+        },
+        "adjusted": {
+          "rows": 179,
+          "mae": 10.861095514342239
+        },
+        "mae_change_vs_base": -0.06254990143823491
+      },
+      "2024": {
+        "baseline": {
+          "rows": 272,
+          "mae": 9.850494784079434
+        },
+        "adjusted": {
+          "rows": 272,
+          "mae": 9.916767785724641
+        },
+        "mae_change_vs_base": 0.06627300164520733
+      },
+      "2025": {
+        "baseline": {
+          "rows": 272,
+          "mae": 10.562800914853518
+        },
+        "adjusted": {
+          "rows": 272,
+          "mae": 10.59643489804724
+        },
+        "mae_change_vs_base": 0.03363398319372202
+      }
+    }
+  }
+}
