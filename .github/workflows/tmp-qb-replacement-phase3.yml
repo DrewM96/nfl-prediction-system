@@ -1,0 +1,40 @@
+name: Temporary phase 3 QB benchmark
+
+on:
+  push:
+    branches:
+      - research/nfl-qb-replacement-phase3
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/nfl-qb-replacement-phase3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff format qb_replacement_ablation.py nfl_prediction/qb_replacement.py tests/test_qb_replacement.py
+      - run: ruff check qb_replacement_ablation.py nfl_prediction/qb_replacement.py tests/test_qb_replacement.py
+      - run: python -m pytest -q tests/test_qb_replacement.py
+      - name: Run 2022-2025 QB replacement ablation
+        run: >
+          python qb_replacement_ablation.py
+          --seasons 2022 2023 2024 2025
+          --holdout-season 2025
+          --output qb_replacement_benchmark.json
+      - name: Commit benchmark and formatting
+        run: |
+          rm .github/workflows/tmp-qb-replacement-phase3.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add qb_replacement_ablation.py nfl_prediction/qb_replacement.py tests/test_qb_replacement.py qb_replacement_benchmark.json .github/workflows/tmp-qb-replacement-phase3.yml
+          git commit -m "research: publish QB replacement benchmark"
+          git push
