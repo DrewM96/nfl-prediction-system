@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pandas as pd
+import pytest
 
 from nfl_prediction.qb_replacement import (
     attach_qb_replacement_features,
@@ -116,8 +117,8 @@ def test_qb_replacement_detects_injured_prior_usage_starter() -> None:
     assert row["qb_backup_id"] == "QB2"
     assert row["qb_starter_reported"] == 1.0
     assert row["qb_unavailability_weight"] == 1.0
-    assert row["qb_starter_epa_per_dropback"] == 0.4
-    assert row["qb_backup_epa_per_dropback"] == -0.2
+    assert row["qb_starter_epa_per_dropback"] == pytest.approx(0.4)
+    assert row["qb_backup_epa_per_dropback"] == pytest.approx(-0.2)
     assert row["qb_expected_dropbacks"] == 35.0
     assert abs(row["qb_expected_points_lost"] - 21.0) < 1e-9
 
