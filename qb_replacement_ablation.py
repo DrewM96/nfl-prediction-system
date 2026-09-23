@@ -176,6 +176,7 @@ def run_ablation(
     qb_table = build_qb_replacement_table(
         data.injuries,
         data.pbp,
+        data.rosters,
         lookback_weeks=lookback_weeks,
         shrinkage_dropbacks=shrinkage_dropbacks,
     )
