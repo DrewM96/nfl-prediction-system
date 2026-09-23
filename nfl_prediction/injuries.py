@@ -125,8 +125,17 @@ def _prepare_snap_counts(snap_counts: pd.DataFrame) -> pd.DataFrame:
     return frame
 
 
+def _snap_groups(snaps: pd.DataFrame) -> dict[tuple[int, str], pd.DataFrame]:
+    if snaps.empty:
+        return {}
+    return {
+        (int(season), str(team)): group.copy()
+        for (season, team), group in snaps.groupby(["season", "team"], sort=False)
+    }
+
+
 def _prior_snap_share(
-    snaps: pd.DataFrame,
+    snap_groups: dict[tuple[int, str], pd.DataFrame],
     *,
     season: int,
     week: int,
@@ -136,19 +145,14 @@ def _prior_snap_share(
     lookback_weeks: int,
 ) -> float:
     snap_column = f"{side}_snaps"
-    current = snaps[
-        snaps["season"].eq(season)
-        & snaps["team"].eq(team)
-        & snaps["week"].lt(week)
-    ]
+    current = snap_groups.get((season, team), pd.DataFrame())
+    if not current.empty:
+        current = current[current["week"].lt(week)]
     if not current.empty:
         eligible_weeks = sorted(current["week"].unique())[-lookback_weeks:]
         current = current[current["week"].isin(eligible_weeks)]
     else:
-        current = snaps[
-            snaps["season"].eq(season - 1)
-            & snaps["team"].eq(team)
-        ]
+        current = snap_groups.get((season - 1, team), pd.DataFrame())
         if not current.empty:
             eligible_weeks = sorted(current["week"].unique())[-lookback_weeks:]
             current = current[current["week"].isin(eligible_weeks)]
@@ -191,7 +195,7 @@ def build_injury_availability_table(
     """Build team-week injury proxies using only snaps from prior games.
 
     The nflverse historical injury table contains weekly report/practice status,
-    not a timestamped sequence of every intrawEEK publication. Therefore this is
+    not a timestamped sequence of every intraweek publication. Therefore this is
     a late-week/final-report research proxy and must not be interpreted as what a
     Tuesday forecast knew.
     """
@@ -221,6 +225,7 @@ def build_injury_availability_table(
         return pd.DataFrame(columns=["season", "week", "team", *INJURY_TEAM_FEATURES])
 
     crosswalk = _player_crosswalk(rosters)
+    snap_groups = _snap_groups(snaps)
     rows: list[dict[str, Any]] = []
     for _, injury in frame.iterrows():
         season = int(injury["season"])
@@ -231,7 +236,7 @@ def build_injury_availability_table(
         severity = injury_unavailability_weight(injury)
         offense_share = (
             _prior_snap_share(
-                snaps,
+                snap_groups,
                 season=season,
                 week=week,
                 team=team,
@@ -244,7 +249,7 @@ def build_injury_availability_table(
         )
         defense_share = (
             _prior_snap_share(
-                snaps,
+                snap_groups,
                 season=season,
                 week=week,
                 team=team,
