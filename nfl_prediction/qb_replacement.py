@@ -99,49 +99,56 @@ def _prepare_qb_dropbacks(pbp: pd.DataFrame) -> pd.DataFrame:
     return frame[["season", "week", "team", "player_id", "epa", "success", "dropbacks"]]
 
 
-def _qb_history(
+def _qb_groups(
     dropbacks: pd.DataFrame,
+) -> dict[tuple[int, str], pd.DataFrame]:
+    if dropbacks.empty:
+        return {}
+    return {
+        (int(season), str(team)): group.copy()
+        for (season, team), group in dropbacks.groupby(["season", "team"], sort=False)
+    }
+
+
+def _qb_history(
+    groups: dict[tuple[int, str], pd.DataFrame],
     *,
     season: int,
     week: int,
     team: str,
     lookback_weeks: int,
 ) -> pd.DataFrame:
-    current = dropbacks[
-        dropbacks["season"].eq(season)
-        & dropbacks["team"].eq(team)
-        & dropbacks["week"].lt(week)
-    ].copy()
+    current = groups.get((season, team), pd.DataFrame()).copy()
+    if not current.empty:
+        current = current[current["week"].lt(week)]
     if not current.empty:
         weeks = sorted(current["week"].unique())[-lookback_weeks:]
         return current[current["week"].isin(weeks)]
 
-    prior = dropbacks[
-        dropbacks["season"].eq(season - 1) & dropbacks["team"].eq(team)
-    ].copy()
+    prior = groups.get((season - 1, team), pd.DataFrame()).copy()
     if prior.empty:
         return prior
     weeks = sorted(prior["week"].unique())[-lookback_weeks:]
     return prior[prior["week"].isin(weeks)]
 
 
-def _league_epa_prior(
+def _league_epa_priors(
     dropbacks: pd.DataFrame,
-    *,
-    season: int,
-    week: int,
-) -> float:
-    prior = dropbacks[
-        (dropbacks["season"] < season)
-        | ((dropbacks["season"].eq(season)) & dropbacks["week"].lt(week))
-    ]
-    if prior.empty:
-        return 0.0
-    recent = prior[prior["season"].ge(season - 1)]
-    if not recent.empty:
-        prior = recent
-    value = float(prior["epa"].mean())
-    return value if np.isfinite(value) else 0.0
+    keys: list[tuple[int, int]],
+) -> dict[tuple[int, int], float]:
+    priors: dict[tuple[int, int], float] = {}
+    for season, week in sorted(set(keys)):
+        prior = dropbacks[
+            (dropbacks["season"] < season)
+            | ((dropbacks["season"].eq(season)) & dropbacks["week"].lt(week))
+        ]
+        if not prior.empty:
+            recent = prior[prior["season"].ge(season - 1)]
+            if not recent.empty:
+                prior = recent
+        value = float(prior["epa"].mean()) if not prior.empty else 0.0
+        priors[(season, week)] = value if np.isfinite(value) else 0.0
+    return priors
 
 
 def _shrunk_epa_per_dropback(
@@ -247,6 +254,14 @@ def build_qb_replacement_table(
     covered["week"] = covered["week"].astype(int)
     covered["team"] = covered["team"].astype(str)
 
+    qb_groups = _qb_groups(dropbacks)
+    coverage_keys = [
+        (int(season), int(week))
+        for season, week in covered[["season", "week"]].drop_duplicates().itertuples(
+            index=False, name=None
+        )
+    ]
+    league_priors = _league_epa_priors(dropbacks, coverage_keys)
     report_groups = {
         (int(season), int(week), str(team)): group
         for (season, week, team), group in reports.groupby(
@@ -257,17 +272,13 @@ def build_qb_replacement_table(
     rows: list[dict[str, Any]] = []
     for season, week, team in covered.itertuples(index=False, name=None):
         history = _qb_history(
-            dropbacks,
+            qb_groups,
             season=int(season),
             week=int(week),
             team=str(team),
             lookback_weeks=lookback_weeks,
         )
-        league_prior = _league_epa_prior(
-            dropbacks,
-            season=int(season),
-            week=int(week),
-        )
+        league_prior = league_priors.get((int(season), int(week)), 0.0)
         starter, backup, starter_value, backup_value, expected_dropbacks = _starter_and_backup(
             history,
             league_prior=league_prior,
