@@ -227,6 +227,34 @@ report proxy rather than a timestamped sequence of what an early-week forecast k
 inputs remain excluded from production until a feature shows stable holdout value and can be
 validated against timestamp-compatible snapshots.
 
+### QB replacement-value research
+
+Phase 3 isolates the highest-value injury case: a likely starting quarterback becoming
+unavailable. Starter identity is inferred from prior team dropback usage and constrained to the
+current roster; Week 1 can fall back to prior league usage for current-roster veterans. Starter
+and backup EPA/dropback are shrunk toward league average, then converted into an expected
+points-loss estimate using expected team dropbacks and the official injury designation.
+
+The preferred experiment keeps the core football model unchanged and applies a separate,
+chronologically calibrated availability layer:
+
+```bash
+python qb_adjustment_ablation.py \
+  --seasons 2022 2023 2024 2025 \
+  --holdout-season 2025
+```
+
+Across 723 chronological OOF games, the QB layer reduced margin MAE from 10.367 to 10.239.
+On the 85 games with a nonzero QB adjustment, MAE improved from 11.836 to 10.746. The gain
+was not stable enough for production, however: development improved from 10.552 to 10.323,
+while the untouched 2025 holdout worsened slightly from 10.062 to 10.100. The total adjustment
+was rejected more clearly, worsening all-OOF, development, and 2025 holdout MAE.
+
+This is stronger evidence than the broad injury features but still fails the promotion gate.
+`qb_adjustment_benchmark.json` preserves the result. The production forecast remains unchanged
+until the QB layer improves a separate holdout and then survives timestamp-compatible prospective
+validation using the frozen injury snapshots.
+
 ### College Football foundation
 
 College Football lives in the same Streamlit application but uses an independent package,
