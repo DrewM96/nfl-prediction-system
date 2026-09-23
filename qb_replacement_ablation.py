@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 from datetime import UTC, datetime
-from itertools import combinations
 from pathlib import Path
 from typing import Any
 
@@ -33,16 +32,16 @@ from nfl_prediction.qb_replacement import (
 
 
 def _feature_sets(base_features: list[str]) -> dict[str, list[str]]:
-    groups = list(QB_REPLACEMENT_CANDIDATE_GROUPS)
     configs = {"production_base": list(base_features)}
-    for count in range(1, len(groups) + 1):
-        for selected in combinations(groups, count):
-            name = "production_base+" + "+".join(selected)
-            configs[name] = list(base_features) + [
-                feature
-                for group in selected
-                for feature in QB_REPLACEMENT_CANDIDATE_GROUPS[group]
-            ]
+    for group in ("qb_availability", "qb_value_gap", "qb_expected_points_loss"):
+        configs[f"production_base+{group}"] = (
+            list(base_features) + QB_REPLACEMENT_CANDIDATE_GROUPS[group]
+        )
+    configs["production_base+qb_availability+qb_expected_points_loss"] = (
+        list(base_features)
+        + QB_REPLACEMENT_CANDIDATE_GROUPS["qb_availability"]
+        + QB_REPLACEMENT_CANDIDATE_GROUPS["qb_expected_points_loss"]
+    )
     return configs
 
 
@@ -219,6 +218,10 @@ def run_ablation(
             "timing_limit": (
                 "historical nflverse injury rows are a late-week/final-report proxy, "
                 "not a timestamped reconstruction of Tuesday information"
+            ),
+            "candidate_policy": (
+                "predeclared focused tests: availability, value gap, expected points loss, "
+                "and availability plus expected points loss; redundant combinations are omitted"
             ),
             "promotion_policy": (
                 "no production promotion unless development and separate holdout both improve "
