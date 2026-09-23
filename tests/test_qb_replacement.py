@@ -176,6 +176,70 @@ def test_qb_week_one_uses_prior_season_team_usage() -> None:
     assert abs(row["qb_expected_points_lost"] - 9.0) < 1e-9
 
 
+def test_week_one_can_identify_moved_veteran_from_current_roster() -> None:
+    pbp_rows = []
+    for _ in range(40):
+        pbp_rows.append(
+            {
+                "season": 2024,
+                "week": 18,
+                "season_type": "REG",
+                "posteam": "OLD",
+                "passer_player_id": "NEW1",
+                "epa": 0.25,
+                "qb_dropback": 1,
+                "pass_attempt": 1,
+                "sack": 0,
+                "success": 1,
+            }
+        )
+    for _ in range(8):
+        pbp_rows.append(
+            {
+                "season": 2024,
+                "week": 18,
+                "season_type": "REG",
+                "posteam": "OTHER",
+                "passer_player_id": "NEW2",
+                "epa": 0.0,
+                "qb_dropback": 1,
+                "pass_attempt": 1,
+                "sack": 0,
+                "success": 0,
+            }
+        )
+    injuries = pd.DataFrame(
+        [
+            {
+                "season": 2025,
+                "week": 1,
+                "team": "A",
+                "position": "QB",
+                "gsis_id": "NEW1",
+                "report_status": "Out",
+            }
+        ]
+    )
+    rosters = pd.DataFrame(
+        [
+            {"season": 2025, "week": 1, "team": "A", "position": "QB", "gsis_id": "NEW1"},
+            {"season": 2025, "week": 1, "team": "A", "position": "QB", "gsis_id": "NEW2"},
+        ]
+    )
+
+    row = build_qb_replacement_table(
+        injuries,
+        pd.DataFrame(pbp_rows),
+        rosters,
+        shrinkage_dropbacks=0.0,
+    ).iloc[0]
+
+    assert row["qb_starter_id"] == "NEW1"
+    assert row["qb_backup_id"] == "NEW2"
+    assert row["qb_unavailability_weight"] == 1.0
+    assert row["qb_expected_points_lost"] > 0
+
+
 def test_qb_features_attach_to_correct_game_side() -> None:
     table = pd.DataFrame(
         [
