@@ -1,0 +1,19 @@
+{
+  "run_id": "20260922T121055Z-2115fcfb",
+  "revision": 1,
+  "scored_at": "2026-09-25T21:48:36.566581+00:00",
+  "source": {
+    "game_id": "2026_03_ATL_GB",
+    "status": "final",
+    "actual_home_margin": -21.0,
+    "actual_total": 49.0
+  },
+  "results": [
+    {
+      "game_id": "2026_03_ATL_GB",
+      "status": "final",
+      "actual_home_margin": -21.0,
+      "actual_total": 49.0
+    }
+  ]
+}
