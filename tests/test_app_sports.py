@@ -100,3 +100,15 @@ def test_cfb_builder_is_available() -> None:
     assert "def render_cfb_builder" in source
     assert 'cfb_active_screen == "Builder"' in source
     assert "Schedule-decomposed model scenario" in source
+
+
+def test_gridline_typography_uses_one_tokenized_font_system() -> None:
+    source = Path("app.py").read_text()
+    assert "Albert Sans" not in source
+    assert "--font-ui: 'Instrument Sans'" in source
+    assert "--text-xs: 11px;" in source
+    assert "--text-base: 14px;" in source
+    assert "--text-title: 26px;" in source
+    assert "--radius-pill: 999px;" in source
+    assert '[data-testid="stMetricValue"]' in source
+    assert '[data-testid="stSelectbox"] label p' in source
