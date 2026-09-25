@@ -105,7 +105,11 @@ def load_nflverse_data(seasons: list[int]) -> NFLData:
                 errors="coerce",
             ).max()
         )
-        LOGGER.info("Loaded fresh nflverse injury feed through %s Week %s", latest_season, latest_week)
+        LOGGER.info(
+            "Loaded fresh nflverse injury feed through %s Week %s",
+            latest_season,
+            latest_week,
+        )
 
     return NFLData(
         pbp=pbp,
