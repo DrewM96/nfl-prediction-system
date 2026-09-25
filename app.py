@@ -101,8 +101,8 @@ st.markdown(
       --grid-muted: #64748b;
       --grid-faint: #94a3b8;
       --grid-border: #e5e7eb;
-      --grid-border-strong: var(--grid-border-strong);
-      --grid-subtle: var(--grid-subtle);
+      --grid-border-strong: #cbd5e1;
+      --grid-subtle: #f1f3f5;
       --grid-recessed: #f3f4f6;
     }
     html, body, [class*="css"], .stApp {
@@ -144,7 +144,7 @@ st.markdown(
       width: 100dvw;
       max-width: 100dvw;
       margin: -16px 0 0 calc(50% - 50vw);
-      padding: var(--text-lg) 32px;
+      padding: 18px 32px;
       background: rgba(255,255,255,.97);
       border-bottom: 1px solid var(--grid-border);
     }
@@ -178,7 +178,7 @@ st.markdown(
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      padding: var(--text-title) 0 20px;
+      padding: 28px 0 20px;
     }
     h1.grid-page-title, h2.grid-page-title {
       margin: 0 !important;
@@ -199,7 +199,7 @@ st.markdown(
       white-space: nowrap;
     }
     .grid-hero {
-      padding: var(--text-title) 28px;
+      padding: 24px 28px;
       margin-bottom: 14px;
       border: 1px solid var(--grid-border);
       border-radius: var(--radius-xl);
@@ -278,7 +278,7 @@ st.markdown(
     .grid-cfb-team-pair .grid-team-inline:first-child { text-align: center; }
     .grid-cfb-team-name { line-height: 1.2; overflow-wrap: anywhere; }
     .grid-cfb-team { width: min(150px, 38vw); text-align: center; }
-    .grid-cfb-team-name-large { font: 500 18px/1.15 var(--font-ui); overflow-wrap: anywhere; }
+    .grid-cfb-team-name-large { font: 500 var(--text-lg)/1.15 var(--font-ui); overflow-wrap: anywhere; }
     .grid-row-value { text-align: center; font-size: var(--text-base); font-weight: 600; }
     .grid-row-date { color: var(--grid-muted); font-size: var(--text-sm); }
     .grid-reason { display: flex; gap: 8px; padding: 5px 0; color: var(--grid-body); font-size: var(--text-base); }
@@ -303,14 +303,14 @@ st.markdown(
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      padding: var(--text-xs) 14px;
+      padding: 9px 14px;
       border: 1px dashed var(--grid-border-strong);
       border-radius: var(--radius-sm);
       color: #9ca3af;
       font-size: var(--text-sm);
     }
     .grid-card {
-      padding: var(--text-lg) 24px;
+      padding: 22px 24px;
       margin-bottom: 16px;
       border: 1px solid var(--grid-border);
       border-radius: var(--radius-lg);
@@ -332,7 +332,7 @@ st.markdown(
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      padding: var(--text-base) 18px;
+      padding: 14px 18px;
       background: var(--grid-recessed);
       border: 1px solid var(--grid-border);
       border-radius: var(--radius-md);
@@ -366,7 +366,7 @@ st.markdown(
     .grid-rank-fill { height: 100%; border-radius: 5px; }
     .grid-rank-value { text-align: right; font: 600 var(--text-base) var(--font-ui); }
     .grid-model-summary { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
-    .grid-model-card { padding: var(--text-lg) 20px; margin-bottom: 10px; border: 1px solid var(--grid-border); border-radius: var(--radius-panel); }
+    .grid-model-card { padding: 18px 20px; margin-bottom: 10px; border: 1px solid var(--grid-border); border-radius: var(--radius-panel); }
     .grid-model-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
     .grid-model-metrics { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
     .grid-model-metric { padding: 10px; text-align: center; background: var(--grid-recessed); border: 1px solid var(--grid-border); border-radius: var(--radius-sm); }
@@ -387,10 +387,10 @@ st.markdown(
       box-shadow: none;
     }
     [class*="st-key-game_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
-      padding: 10px var(--text-lg) !important;
+      padding: 10px 18px !important;
     }
     [class*="st-key-cfb_game_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
-      padding: 10px var(--text-lg) !important;
+      padding: 10px 18px !important;
     }
     [class*="st-key-game_card_"] [data-testid="stVerticalBlock"] {
       gap: 0 !important;
@@ -401,8 +401,8 @@ st.markdown(
     [class*="st-key-game_card_"] .stMarkdown p { margin: 0 !important; }
     [class*="st-key-cfb_game_card_"] .stMarkdown p { margin: 0 !important; }
     [class*="st-key-toggle_game_"] button {
-      min-height: var(--text-title) !important;
-      height: var(--text-title) !important;
+      min-height: 24px !important;
+      height: 24px !important;
       padding: 0 !important;
       border: 0 !important;
       background: transparent !important;
@@ -412,8 +412,8 @@ st.markdown(
     }
     .st-key-custom_game_shell [data-testid="stVerticalBlockBorderWrapper"],
     .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] {
-      padding: var(--text-title) !important;
-      border-radius: var(--text-base) !important;
+      padding: 24px !important;
+      border-radius: var(--radius-lg) !important;
     }
     .st-key-custom_game_shell [data-testid="stSelectbox"] label p,
     .st-key-custom_game_shell [data-testid="stNumberInput"] label p,
@@ -513,7 +513,7 @@ st.markdown(
       align-items: center !important;
       justify-content: center !important;
       min-height: 38px !important;
-      padding: 0 var(--text-md) !important;
+      padding: 0 16px !important;
       margin: 0 !important;
       border: 0 !important;
       border-radius: var(--radius-pill) !important;
@@ -559,7 +559,7 @@ st.markdown(
     .grid-injury-summary strong { color: var(--grid-ink); font-weight: 600; }
 
     .grid-injury-panel {
-      margin: var(--text-base) 0 4px;
+      margin: 14px 0 4px;
       overflow: hidden;
       border: 1px solid var(--grid-border);
       border-radius: var(--radius-lg);
@@ -575,22 +575,22 @@ st.markdown(
       cursor: pointer;
       list-style: none;
       color: var(--grid-ink);
-      font: 600 14px/1.2 var(--font-ui);
+      font: 600 var(--text-base)/1.2 var(--font-ui);
       user-select: none;
     }
     .grid-injury-panel > summary::-webkit-details-marker { display: none; }
     .grid-injury-panel > summary::after {
       content: '+';
       color: var(--grid-faint);
-      font: 500 20px/1 var(--font-ui);
+      font: 500 var(--text-lg)/1 var(--font-ui);
       transition: transform .18s ease;
     }
     .grid-injury-panel[open] > summary::after { content: '−'; }
     .grid-injury-panel[open] > summary {
-      border-bottom: 1px solid var(--grid-border);
+      border-bottom: 1px solid #edf0f4;
       background: #fbfcfd;
     }
-    .grid-injury-panel-body { padding: var(--text-base) var(--text-md) 16px; }
+    .grid-injury-panel-body { padding: 14px 16px 16px; }
     .grid-injury-meta {
       margin-bottom: 14px;
       color: var(--grid-muted);
@@ -746,7 +746,7 @@ st.markdown(
       }
       [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
       .block-container:has(.st-key-cfb_active_screen) { padding-bottom: 5.5rem !important; }
-      .grid-topbar { padding: var(--text-base) 16px; }
+      .grid-topbar { padding: 14px 16px; }
       .grid-topbar-inner { align-items: flex-start; }
       .grid-eyebrow, .grid-meta { display: none; }
       .grid-page-head { padding-top: 20px; align-items: flex-start; }
@@ -770,7 +770,7 @@ st.markdown(
         display: grid !important;
         grid-template-columns: repeat(3,minmax(0,1fr));
         column-gap: 6px !important;
-        row-gap: var(--text-base) !important;
+        row-gap: 14px !important;
       }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div {
         width: auto !important;
@@ -788,7 +788,7 @@ st.markdown(
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) {
         padding: 4px 0 6px;
       }
-      [class*="st-key-toggle_game_"] button { min-height: var(--text-display) !important; height: var(--text-display) !important; }
+      [class*="st-key-toggle_game_"] button { min-height: 40px !important; height: 40px !important; }
       .grid-team-pair { justify-content: center; }
       .grid-game-detail { grid-template-columns: 1fr; gap: 20px; margin-top: 12px; padding-top: 18px; }
       .grid-game-detail .grid-kicker { margin-bottom: 12px; }
@@ -798,11 +798,11 @@ st.markdown(
       .grid-detail-range { margin-bottom: 16px; line-height: 1.4; }
       .st-key-active_sport { margin-top: 10px; margin-bottom: 0; }
       .st-key-active_sport [role="radiogroup"] { width: auto !important; }
-      .st-key-active_sport label { min-height: var(--text-display) !important; padding: 0 15px !important; }
+      .st-key-active_sport label { min-height: 40px !important; padding: 0 15px !important; }
       .grid-injury-summary { margin-top: 2px; margin-bottom: 14px; padding: 10px 11px; }
       .grid-injury-columns { grid-template-columns: 1fr; gap: 10px; }
       .grid-injury-panel > summary { min-height: 52px; padding: 0 14px; }
-      .grid-injury-panel-body { padding: 12px var(--text-base) 14px; }
+      .grid-injury-panel-body { padding: 12px 13px 14px; }
       .grid-injury-team { padding: 11px; }
       .grid-injury-status { max-width: 100px; }
       .st-key-active_screen, .st-key-cfb_active_screen {
@@ -837,9 +837,9 @@ st.markdown(
       .grid-matchup { display: grid; grid-template-columns: auto auto auto; justify-content: center; gap: 8px 18px; }
       .grid-date { grid-column: 1 / -1; margin: 0; text-align: center; }
       .grid-hero-main .grid-tiles { margin-top: 18px; }
-      .grid-card { padding: var(--text-lg) 16px; }
+      .grid-card { padding: 18px 16px; }
       .st-key-custom_game_shell [data-testid="stVerticalBlockBorderWrapper"],
-      .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] { padding: var(--text-lg) !important; }
+      .st-key-prop_shell [data-testid="stVerticalBlockBorderWrapper"] { padding: 18px !important; }
     }
     @media (max-width: 380px) {
       [data-testid="stMainBlockContainer"], .block-container { padding-left: .75rem !important; padding-right: .75rem !important; }
@@ -1308,7 +1308,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
               <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value">{html_text(nfl_market_spread_label(game))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Edge</div><div class="grid-tile-value">{html_text(nfl_market_edge_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Total · model / Vegas</div><div class="grid-tile-value" style="font-size:16px">{html_text(nfl_total_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Total · model / Vegas</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(nfl_total_label(game))}</div></div>
             </div>
           </div>
           {probability_bar(game)}
@@ -1952,7 +1952,7 @@ def render_performance(state: dict[str, Any]) -> None:
     variants = benchmark["variants"]
     st.markdown(
         f"""
-        <div class="grid-page-head" style="padding-bottom:12px"><h2 class="grid-page-title" style="font-size:20px">Historical Model vs Market</h2></div>
+        <div class="grid-page-head" style="padding-bottom:12px"><h2 class="grid-page-title" style="font-size: var(--text-lg)">Historical Model vs Market</h2></div>
         <div class="grid-results">
           <div class="grid-result"><div class="grid-tile-label">Matched games</div><div class="grid-result-value">{int(benchmark["games"]):,}</div></div>
           <div class="grid-result"><div class="grid-tile-label">Independent margin MAE</div><div class="grid-result-value">{float(variants["independent_margin"]["mae"]):.2f}</div></div>
@@ -1982,9 +1982,9 @@ def render_model_card(manifest: dict[str, Any]) -> None:
     st.markdown(
         f"""
         <div class="grid-model-summary">
-          <div class="grid-model-card"><div class="grid-tile-label">Prediction season</div><div class="grid-result-value" style="font-size:18px">{html_text(manifest["prediction_season"])}</div></div>
-          <div class="grid-model-card"><div class="grid-tile-label">Training seasons</div><div class="grid-result-value" style="font-size:18px">{html_text(training)}</div></div>
-          <div class="grid-model-card"><div class="grid-tile-label">Data cutoff</div><div class="grid-result-value" style="font-size:18px">{html_text(manifest["data_cutoff"])}</div></div>
+          <div class="grid-model-card"><div class="grid-tile-label">Prediction season</div><div class="grid-result-value" style="font-size: var(--text-lg)">{html_text(manifest["prediction_season"])}</div></div>
+          <div class="grid-model-card"><div class="grid-tile-label">Training seasons</div><div class="grid-result-value" style="font-size: var(--text-lg)">{html_text(training)}</div></div>
+          <div class="grid-model-card"><div class="grid-tile-label">Data cutoff</div><div class="grid-result-value" style="font-size: var(--text-lg)">{html_text(manifest["data_cutoff"])}</div></div>
           <div class="grid-model-card"><div class="grid-tile-label">Git commit</div><div style="margin-top:6px;font:600 var(--text-base) monospace;color:#64748b">{html_text(commit)}</div></div>
         </div>
         """,
@@ -2069,11 +2069,11 @@ def render_cfb_featured_game(game: dict[str, Any]) -> None:
               <div class="grid-date">{html_text(format_cfb_game_time(game))} · {venue}</div>
             </div>
             <div class="grid-tiles" style="grid-template-columns:repeat(5,minmax(88px,1fr))">
-              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value" style="font-size:16px">{html_text(cfb_market_spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(cfb_spread_label(game))}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(cfb_market_spread_label(game))}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Home win</div><div class="grid-tile-value">{format_probability(game["home_win_probability"])}</div></div>
               <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["predicted_total"]):.1f}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size:14px">{margin_range}</div></div>
+              <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size: var(--text-base)">{margin_range}</div></div>
             </div>
           </div>
           {probability_bar(game)}
@@ -2170,12 +2170,12 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         total_holdout = int(total_metrics["latest_holdout_season"])
         st.markdown(
             f"""
-            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size:22px">{prediction_season} Week {html_text(forecast_week)} Forecasts</h2></div></div>
+            <div class="grid-page-head" style="padding-bottom:12px"><div><div class="grid-kicker">All matchups · GRIDLINE CFB model</div><h2 class="grid-page-title" style="font-size: var(--text-lg)">{prediction_season} Week {html_text(forecast_week)} Forecasts</h2></div></div>
             <div class="grid-results grid-cfb-forecast-summary">
               <div class="grid-result"><div class="grid-tile-label">Games</div><div class="grid-result-value">{len(predictions):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Margin model · {margin_holdout} MAE</div><div class="grid-result-value">{float(margin_metrics["latest_holdout_mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">Total model · {total_holdout} MAE</div><div class="grid-result-value">{float(total_metrics["latest_holdout_mae"]):.2f}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Ready</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size: var(--text-lg)">Ready</div></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -2219,12 +2219,12 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         total = benchmark["results"][selected["total"]]["total"]
         st.markdown(
             f"""
-            <div class="grid-page-head" style="padding-bottom:12px"><h2 class="grid-page-title" style="font-size:20px">Historical Football Benchmark</h2></div>
+            <div class="grid-page-head" style="padding-bottom:12px"><h2 class="grid-page-title" style="font-size: var(--text-lg)">Historical Football Benchmark</h2></div>
             <div class="grid-results">
               <div class="grid-result"><div class="grid-tile-label">Evaluated games</div><div class="grid-result-value">{int(benchmark["completed_fbs_games"]):,}</div></div>
               <div class="grid-result"><div class="grid-tile-label">2025 margin MAE</div><div class="grid-result-value">{float(margin["model"]["holdout"]["mae"]):.2f}</div></div>
               <div class="grid-result"><div class="grid-tile-label">2025 total MAE</div><div class="grid-result-value">{float(total["model"]["holdout"]["mae"]):.2f}</div></div>
-              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size:18px">Backtested</div></div>
+              <div class="grid-result"><div class="grid-tile-label">Status</div><div class="grid-result-value" style="font-size: var(--text-lg)">Backtested</div></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -2317,9 +2317,9 @@ def render_cfb_builder(state: dict[str, Any]) -> None:
                     <div class="grid-cfb-team">{team_logo_html(str(prediction["home_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{html_text(prediction["home_team"])}</div></div>
                   </div>
                   <div class="grid-tiles" style="grid-template-columns:repeat(4,minmax(110px,1fr));margin-top:16px">
-                    <div class="grid-tile"><div class="grid-tile-label">GRIDLINE spread</div><div class="grid-tile-value" style="font-size:16px">{html_text(spread)}</div></div>
+                    <div class="grid-tile"><div class="grid-tile-label">GRIDLINE spread</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(spread)}</div></div>
                     <div class="grid-tile"><div class="grid-tile-label">Home win</div><div class="grid-tile-value">{format_probability(prediction["home_win_probability"])}</div></div>
-                    <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size:14px">{range_text}</div></div>
+                    <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size: var(--text-base)">{range_text}</div></div>
                     <div class="grid-tile"><div class="grid-tile-label">Home field</div><div class="grid-tile-value">{float(prediction["home_field"]):+.1f}</div></div>
                   </div>
                 </div>
