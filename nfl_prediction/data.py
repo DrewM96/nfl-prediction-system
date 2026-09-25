@@ -89,10 +89,28 @@ def load_nflverse_data(seasons: list[int]) -> NFLData:
         else:
             rosters = pd.concat([rosters, seasonal_rosters], ignore_index=True)
 
+    clear_cache = getattr(nfl, "clear_cache", None)
+    if clear_cache is not None:
+        try:
+            clear_cache("injuries")
+        except Exception as exc:
+            LOGGER.warning("Could not clear nflreadpy injury cache before refresh: %s", exc)
+
+    injuries = optional("load_injuries")
+    if not injuries.empty and {"season", "week"}.issubset(injuries):
+        latest_season = int(pd.to_numeric(injuries["season"], errors="coerce").max())
+        latest_week = int(
+            pd.to_numeric(
+                injuries.loc[injuries["season"].eq(latest_season), "week"],
+                errors="coerce",
+            ).max()
+        )
+        LOGGER.info("Loaded fresh nflverse injury feed through %s Week %s", latest_season, latest_week)
+
     return NFLData(
         pbp=pbp,
         schedules=schedules,
         rosters=rosters,
-        injuries=optional("load_injuries"),
+        injuries=injuries,
         snap_counts=optional("load_snap_counts"),
     )
