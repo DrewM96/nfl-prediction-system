@@ -113,6 +113,98 @@ def test_current_week_injury_feed_is_marked_fresh() -> None:
     assert payload["forecast_week"] == 3
 
 
+
+def test_reserve_roster_player_is_included_without_weekly_injury_row() -> None:
+    injuries = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "HOME",
+                "gsis_id": "ACTIVE-1",
+                "full_name": "Active Injury",
+                "report_status": "Questionable",
+            }
+        ]
+    )
+    rosters = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "HOME",
+                "gsis_id": "IR-1",
+                "position": "WR",
+                "full_name": "Injured Reserve Player",
+                "status": "IR",
+            },
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "HOME",
+                "gsis_id": "ACTIVE-2",
+                "position": "RB",
+                "full_name": "Healthy Active Player",
+                "status": "ACT",
+            },
+        ]
+    )
+
+    payload = _official_injury_payload(
+        injuries,
+        2026,
+        datetime(2026, 9, 25, tzinfo=UTC),
+        forecast_week=3,
+        rosters=rosters,
+    )
+
+    by_name = {entry["full_name"]: entry for entry in payload["entries"]}
+    assert by_name["Injured Reserve Player"]["availability_status"] == "IR"
+    assert by_name["Injured Reserve Player"]["availability_source"] == "weekly roster"
+    assert "Healthy Active Player" not in by_name
+    assert payload["roster_available_week"] == 3
+
+
+def test_roster_reserve_status_merges_with_existing_injury_row() -> None:
+    injuries = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "HOME",
+                "gsis_id": "P1",
+                "full_name": "Same Player",
+                "report_status": "Out",
+                "report_primary_injury": "Knee",
+            }
+        ]
+    )
+    rosters = pd.DataFrame(
+        [
+            {
+                "season": 2026,
+                "week": 3,
+                "team": "HOME",
+                "gsis_id": "P1",
+                "full_name": "Same Player",
+                "status": "IR",
+            }
+        ]
+    )
+
+    payload = _official_injury_payload(
+        injuries,
+        2026,
+        datetime(2026, 9, 25, tzinfo=UTC),
+        forecast_week=3,
+        rosters=rosters,
+    )
+
+    assert len(payload["entries"]) == 1
+    assert payload["entries"][0]["availability_status"] == "IR"
+    assert payload["entries"][0]["report_primary_injury"] == "Knee"
+    assert payload["entries"][0]["availability_source"] == "injury report + weekly roster"
+
 def test_official_injuries_are_frozen_without_changing_prediction() -> None:
     prediction = {
         "game_id": "G",
