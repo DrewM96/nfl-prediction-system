@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-26T05:41:59.172812+00:00",
+  "last_updated": "2026-09-26T22:04:11.746263+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,9 +10,9 @@
   ],
   "data_cutoff": "2026-09-24",
   "model_manifest": "models/manifest.json",
-  "model_hash": "24e32c3b78d49b2e3745d483a31947c7be69e94ceb9c7d7ccec967a94708e0b8",
-  "raw_data_hash": "4294f8d2d8c49a623f4f2f924effc68486e07ec3ff1c814f4192a476c30f641c",
-  "ledger_run": "20260926T055605Z-9448d17f",
+  "model_hash": "c04fc2d5f9502de9e1cb3b415535b6b4d5bd014ad7f7fc9f4d3ca955d38c9d4f",
+  "raw_data_hash": "0bd2767567cc3681254c0297ad0602e95f146001052851c526ff6bad00b75dca",
+  "ledger_run": "20260926T221816Z-23efcaf3",
   "metrics": {
     "game_margin": {
       "ridge_alpha": 50.0,

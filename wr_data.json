@@ -1234,6 +1234,25 @@
     "targets_l8": 1.9959975530302505,
     "yards_per_reception_l4": 10.840582503333597
   },
+  "00-0035500": {
+    "player_id": "00-0035500",
+    "player_name": "Greg Dortch",
+    "team": "BUF",
+    "opponent": "LAC",
+    "opponent_def_epa": -0.048087471733571086,
+    "prediction_season": 2026,
+    "roster_season": 2026,
+    "catch_rate_l4": 0.8135535704773099,
+    "receiving_yards_l4": 23.682319165994226,
+    "receiving_yards_l8": 19.62203548235019,
+    "receptions_l4": 2.5871005765903483,
+    "receptions_l8": 2.365698448039235,
+    "snap_share_l4": 0.32823904857011305,
+    "target_share_l4": 0.08336288822622887,
+    "targets_l4": 3.180000273457718,
+    "targets_l8": 2.8063350594468184,
+    "yards_per_reception_l4": 9.154000188584156
+  },
   "00-0035535": {
     "player_id": "00-0035535",
     "player_name": "D.Slayton",
