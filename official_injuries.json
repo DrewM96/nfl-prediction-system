@@ -1,10 +1,11 @@
 {
-  "source": "nflverse injury reports",
-  "generated_at": "2026-09-25T21:35:05.151250+00:00",
+  "source": "nflverse injury reports + weekly rosters",
+  "generated_at": "2026-09-26T05:41:59.172812+00:00",
   "prediction_season": 2026,
   "forecast_week": 3,
   "available_season": 2026,
   "available_week": 3,
+  "roster_available_week": 3,
   "stale_for_prediction_season": false,
   "stale_for_prediction_week": false,
   "entries": [
@@ -18,7 +19,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -30,7 +32,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -42,7 +45,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -54,7 +58,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": "Thumb",
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -66,7 +71,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -78,7 +84,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -90,7 +97,8 @@
       "report_status": null,
       "practice_primary_injury": "Achilles",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -102,7 +110,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ARI",
@@ -114,7 +123,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -126,7 +136,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -138,7 +149,8 @@
       "report_status": null,
       "practice_primary_injury": "Rib",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -150,7 +162,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -162,7 +175,8 @@
       "report_status": null,
       "practice_primary_injury": "Oblique",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -174,7 +188,9 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "ATL",
@@ -186,7 +202,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -198,7 +215,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -210,7 +228,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -222,7 +241,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "ATL",
@@ -234,7 +254,8 @@
       "report_status": "Questionable",
       "practice_primary_injury": "Achilles",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -246,7 +267,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -258,7 +280,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -270,7 +293,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -282,7 +306,8 @@
       "report_status": null,
       "practice_primary_injury": "Finger",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -294,7 +319,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -306,7 +332,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -318,7 +345,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -330,7 +358,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -342,7 +371,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BAL",
@@ -354,7 +384,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -366,7 +397,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -378,7 +410,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -390,7 +423,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -402,7 +436,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -414,7 +449,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -426,7 +462,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -438,7 +475,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -450,7 +488,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -462,7 +501,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "BUF",
@@ -474,7 +514,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -486,7 +527,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -498,7 +540,8 @@
       "report_status": null,
       "practice_primary_injury": "Rib",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -510,7 +553,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -522,7 +566,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -534,7 +579,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -546,7 +592,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -558,7 +605,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -570,7 +618,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CAR",
@@ -582,7 +631,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -594,7 +644,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -606,7 +657,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -618,7 +670,9 @@
       "report_status": null,
       "practice_primary_injury": "Achilles",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "CHI",
@@ -630,7 +684,8 @@
       "report_status": null,
       "practice_primary_injury": "Concussion",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -642,7 +697,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -654,7 +710,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -666,7 +723,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CHI",
@@ -678,7 +736,9 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "CIN",
@@ -690,7 +750,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": "Knee",
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CIN",
@@ -702,7 +763,8 @@
       "report_status": null,
       "practice_primary_injury": "Achilles",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CIN",
@@ -714,7 +776,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -726,7 +789,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -738,7 +802,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -750,7 +815,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -762,7 +828,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -774,7 +841,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": "Hip",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -786,7 +854,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -798,7 +867,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DAL",
@@ -810,7 +880,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Forearm",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DAL",
@@ -822,7 +893,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DAL",
@@ -834,7 +906,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DAL",
@@ -846,7 +919,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DAL",
@@ -858,7 +932,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DEN",
@@ -870,7 +945,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DEN",
@@ -882,7 +958,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DEN",
@@ -894,7 +971,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DEN",
@@ -906,7 +984,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -918,7 +997,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -930,7 +1010,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -942,7 +1023,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -954,7 +1036,8 @@
       "report_status": null,
       "practice_primary_injury": "Wrist",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -966,7 +1049,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -978,7 +1062,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -990,7 +1075,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "DET",
@@ -1002,7 +1088,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1014,7 +1101,8 @@
       "report_status": "Questionable",
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Concussion",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1026,7 +1114,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Toe",
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1038,7 +1127,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1050,7 +1140,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1062,7 +1153,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1074,7 +1166,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1086,7 +1179,8 @@
       "report_status": null,
       "practice_primary_injury": "Hand",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1098,7 +1192,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1110,7 +1205,8 @@
       "report_status": "Out",
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1122,7 +1218,8 @@
       "report_status": "Questionable",
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1134,7 +1231,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "GB",
@@ -1146,7 +1244,8 @@
       "report_status": null,
       "practice_primary_injury": "Teeth",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1158,7 +1257,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1170,7 +1270,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Wrist",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1182,7 +1283,9 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "HOU",
@@ -1194,7 +1297,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1206,7 +1310,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1218,7 +1323,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1230,7 +1336,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1242,7 +1349,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1254,7 +1362,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1266,7 +1375,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "HOU",
@@ -1278,7 +1388,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1290,7 +1401,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1302,7 +1414,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1314,7 +1427,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1326,7 +1440,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1338,7 +1453,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1350,7 +1466,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1362,7 +1479,8 @@
       "report_status": null,
       "practice_primary_injury": "Rib",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1374,7 +1492,8 @@
       "report_status": null,
       "practice_primary_injury": "Heel",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "IND",
@@ -1386,7 +1505,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1398,7 +1518,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1410,7 +1531,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1422,7 +1544,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1434,7 +1557,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": "Groin",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1446,7 +1570,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1458,7 +1583,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "JAX",
@@ -1470,7 +1596,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1482,7 +1609,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1494,7 +1622,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1506,7 +1635,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1518,7 +1648,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1530,7 +1661,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1542,7 +1674,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1554,7 +1687,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1566,7 +1700,8 @@
       "report_status": null,
       "practice_primary_injury": "Biceps",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1578,7 +1713,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1590,7 +1726,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1602,7 +1739,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "KC",
@@ -1614,7 +1752,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1626,7 +1765,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1638,7 +1778,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1650,7 +1791,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1662,7 +1804,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1674,7 +1817,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1686,7 +1830,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1698,7 +1843,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LA",
@@ -1710,7 +1856,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1722,7 +1869,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1734,7 +1882,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1746,7 +1895,8 @@
       "report_status": null,
       "practice_primary_injury": "Finger",
       "practice_secondary_injury": "Not injury related - resting player",
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1758,7 +1908,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1770,7 +1921,8 @@
       "report_status": null,
       "practice_primary_injury": "Fibula",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1782,7 +1934,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1794,7 +1947,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1806,7 +1960,8 @@
       "report_status": null,
       "practice_primary_injury": "Abdomen",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1818,7 +1973,8 @@
       "report_status": null,
       "practice_primary_injury": "Forearm",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1830,7 +1986,8 @@
       "report_status": null,
       "practice_primary_injury": "Pectoral",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1842,7 +1999,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1854,7 +2012,8 @@
       "report_status": null,
       "practice_primary_injury": "Rib",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1866,7 +2025,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LAC",
@@ -1878,7 +2038,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1890,7 +2051,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1902,7 +2064,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1914,7 +2077,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1926,7 +2090,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1938,7 +2103,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1950,7 +2116,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1962,7 +2129,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1974,7 +2142,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1986,7 +2155,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "LV",
@@ -1998,7 +2168,8 @@
       "report_status": null,
       "practice_primary_injury": "Concussion",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2010,7 +2181,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2022,7 +2194,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2034,7 +2207,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": "Back",
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2046,7 +2220,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2058,7 +2233,8 @@
       "report_status": null,
       "practice_primary_injury": "Stinger",
       "practice_secondary_injury": "Foot",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2070,7 +2246,8 @@
       "report_status": null,
       "practice_primary_injury": "Concussion",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2082,7 +2259,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2094,7 +2272,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2106,7 +2285,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIA",
@@ -2118,7 +2298,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2130,7 +2311,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2142,7 +2324,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2154,7 +2337,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2166,7 +2350,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2178,7 +2363,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2190,7 +2376,8 @@
       "report_status": null,
       "practice_primary_injury": "Oblique",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2202,7 +2389,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "MIN",
@@ -2214,7 +2402,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2226,7 +2415,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2238,7 +2428,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2250,7 +2441,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2262,7 +2454,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2274,7 +2467,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2286,7 +2480,9 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "NE",
@@ -2298,7 +2494,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2310,7 +2507,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2322,7 +2520,8 @@
       "report_status": null,
       "practice_primary_injury": "Thigh",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NE",
@@ -2334,7 +2533,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2346,7 +2546,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2358,7 +2559,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2370,7 +2572,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2382,7 +2585,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2394,7 +2598,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2406,7 +2611,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2418,7 +2624,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2430,7 +2637,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2442,7 +2650,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NO",
@@ -2454,7 +2663,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2466,7 +2676,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2478,7 +2689,8 @@
       "report_status": null,
       "practice_primary_injury": "Thigh",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2490,7 +2702,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2502,7 +2715,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2514,7 +2728,8 @@
       "report_status": null,
       "practice_primary_injury": "Rib",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2526,7 +2741,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2538,7 +2754,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2550,7 +2767,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2562,7 +2780,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2574,7 +2793,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -2586,7 +2806,9 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "NYG",
@@ -2598,7 +2820,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2610,7 +2833,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2622,7 +2846,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2634,7 +2859,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2646,7 +2872,8 @@
       "report_status": null,
       "practice_primary_injury": "Finger",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2658,7 +2885,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2670,7 +2898,8 @@
       "report_status": null,
       "practice_primary_injury": "Thumb",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "NYJ",
@@ -2682,7 +2911,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2694,7 +2924,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2706,7 +2937,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2718,7 +2950,8 @@
       "report_status": null,
       "practice_primary_injury": "Pectoral",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2730,7 +2963,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2742,7 +2976,8 @@
       "report_status": null,
       "practice_primary_injury": "Wrist",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2754,7 +2989,8 @@
       "report_status": null,
       "practice_primary_injury": "Abdomen",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2766,7 +3002,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2778,7 +3015,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -2790,7 +3028,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2802,7 +3041,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2814,7 +3054,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - personal matter",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2826,7 +3067,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2838,7 +3080,8 @@
       "report_status": null,
       "practice_primary_injury": "Toe",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2850,7 +3093,8 @@
       "report_status": null,
       "practice_primary_injury": "Foot",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2862,7 +3106,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2874,7 +3119,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - other",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
@@ -2886,7 +3132,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2898,7 +3145,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2910,7 +3158,8 @@
       "report_status": null,
       "practice_primary_injury": "Glute",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2922,7 +3171,8 @@
       "report_status": null,
       "practice_primary_injury": "Calf",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2934,7 +3184,8 @@
       "report_status": null,
       "practice_primary_injury": "Neck",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2946,7 +3197,8 @@
       "report_status": null,
       "practice_primary_injury": "Chest",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2958,7 +3210,8 @@
       "report_status": null,
       "practice_primary_injury": "Concussion",
       "practice_secondary_injury": "Neck",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2970,7 +3223,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2982,7 +3236,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -2994,7 +3249,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SEA",
@@ -3006,7 +3262,8 @@
       "report_status": null,
       "practice_primary_injury": "Chest",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3018,7 +3275,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3030,7 +3288,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3042,7 +3301,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3054,7 +3314,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3066,7 +3327,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": "Achilles",
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3078,7 +3340,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Calf",
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3090,7 +3353,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "SF",
@@ -3102,7 +3366,8 @@
       "report_status": null,
       "practice_primary_injury": "Hand",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3114,7 +3379,8 @@
       "report_status": null,
       "practice_primary_injury": "Not injury related - resting player",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3126,7 +3392,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3138,7 +3405,8 @@
       "report_status": null,
       "practice_primary_injury": "Shin",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3150,7 +3418,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3162,7 +3431,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3174,7 +3444,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TB",
@@ -3186,7 +3457,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3198,7 +3470,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3210,7 +3483,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3222,7 +3496,8 @@
       "report_status": null,
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3234,7 +3509,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3246,7 +3522,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3258,7 +3535,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3270,7 +3548,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3282,7 +3561,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "TEN",
@@ -3294,7 +3574,8 @@
       "report_status": null,
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3306,7 +3587,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3318,7 +3600,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3330,7 +3613,8 @@
       "report_status": null,
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Elbow",
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3342,7 +3626,8 @@
       "report_status": null,
       "practice_primary_injury": "Ankle",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3354,7 +3639,8 @@
       "report_status": null,
       "practice_primary_injury": "Back",
       "practice_secondary_injury": "Shoulder",
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3366,7 +3652,8 @@
       "report_status": null,
       "practice_primary_injury": "Concussion",
       "practice_secondary_injury": "Throat",
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3378,7 +3665,8 @@
       "report_status": null,
       "practice_primary_injury": "Illness",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3390,7 +3678,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3402,7 +3691,8 @@
       "report_status": null,
       "practice_primary_injury": "Chest",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3414,7 +3704,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3426,7 +3717,8 @@
       "report_status": null,
       "practice_primary_injury": "Hamstring",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3438,7 +3730,8 @@
       "report_status": null,
       "practice_primary_injury": "Elbow",
       "practice_secondary_injury": null,
-      "practice_status": "Did Not Participate In Practice"
+      "practice_status": "Did Not Participate In Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3450,7 +3743,8 @@
       "report_status": null,
       "practice_primary_injury": "Finger",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3462,7 +3756,8 @@
       "report_status": null,
       "practice_primary_injury": "Groin",
       "practice_secondary_injury": null,
-      "practice_status": "Limited Participation in Practice"
+      "practice_status": "Limited Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3474,7 +3769,8 @@
       "report_status": null,
       "practice_primary_injury": "Hip",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
     },
     {
       "team": "WAS",
@@ -3486,7 +3782,2128 @@
       "report_status": null,
       "practice_primary_injury": "Hand",
       "practice_secondary_injury": null,
-      "practice_status": "Full Participation in Practice"
+      "practice_status": "Full Participation in Practice",
+      "availability_source": "injury report"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0032103",
+      "position": "LB",
+      "full_name": "Denzel Perryman",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0032380",
+      "position": "OL",
+      "full_name": "Laremy Tunsil",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0032667",
+      "position": "DL",
+      "full_name": "Roy Robertson-Harris",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0033051",
+      "position": "DL",
+      "full_name": "David Onyemata",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0033063",
+      "position": "LS",
+      "full_name": "Zach Wood",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0033284",
+      "position": "OL",
+      "full_name": "Taylor Moton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0033375",
+      "position": "WR",
+      "full_name": "Tim Patrick",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0033553",
+      "position": "RB",
+      "full_name": "James Conner",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0033752",
+      "position": "OL",
+      "full_name": "Storm Norton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0033868",
+      "position": "LB",
+      "full_name": "Myles Garrett",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0033872",
+      "position": "LB",
+      "full_name": "Jamal Adams",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0033885",
+      "position": "TE",
+      "full_name": "David Njoku",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0033902",
+      "position": "DL",
+      "full_name": "Tanoh Kpassagnon",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0033947",
+      "position": "DL",
+      "full_name": "Deatrich Wise",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0033955",
+      "position": "RB",
+      "full_name": "Jeremy McNichols",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0034277",
+      "position": "DB",
+      "full_name": "DeShon Elliott",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0034371",
+      "position": "DL",
+      "full_name": "Da'Shawn Hand",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0034377",
+      "position": "DB",
+      "full_name": "Avonte Maddox",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0034775",
+      "position": "WR",
+      "full_name": "Christian Kirk",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0034779",
+      "position": "LB",
+      "full_name": "Ronnie Harrison",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0034828",
+      "position": "LB",
+      "full_name": "Harold Landry III",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0034836",
+      "position": "OL",
+      "full_name": "Braden Smith",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0034987",
+      "position": "LB",
+      "full_name": "E.J. Speed",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "IND",
+      "gsis_id": "00-0035045",
+      "position": "WR",
+      "full_name": "D.J. Montgomery",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0035062",
+      "position": "OL",
+      "full_name": "Sam Mustipher",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0035112",
+      "position": "OL",
+      "full_name": "Patrick Mekari",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TB",
+      "gsis_id": "00-0035359",
+      "position": "WR",
+      "full_name": "David Sills",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0035645",
+      "position": "WR",
+      "full_name": "Gunner Olszewski",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0035665",
+      "position": "DB",
+      "full_name": "David Long",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0035676",
+      "position": "WR",
+      "full_name": "A.J. Brown",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0035686",
+      "position": "OL",
+      "full_name": "Michael Deiter",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0035700",
+      "position": "RB",
+      "full_name": "Josh Jacobs",
+      "availability_status": "EXE",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0035743",
+      "position": "OL",
+      "full_name": "Brett Toth",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0035829",
+      "position": "OL",
+      "full_name": "Austen Pleasants",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0035890",
+      "position": "DL",
+      "full_name": "Tershawn Wharton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0036198",
+      "position": "OL",
+      "full_name": "Mike Onwenu",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0036215",
+      "position": "OL",
+      "full_name": "Danny Pinter",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0036239",
+      "position": "LB",
+      "full_name": "Jonathan Garvin",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0036295",
+      "position": "OL",
+      "full_name": "Matt Hennessy",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0036376",
+      "position": "OL",
+      "full_name": "Tyler Biadasz",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0036396",
+      "position": "OL",
+      "full_name": "Jack Driscoll",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0036511",
+      "position": "LB",
+      "full_name": "Milo Eifler",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0036619",
+      "position": "OL",
+      "full_name": "Dillon Radunz",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0036634",
+      "position": "LB",
+      "full_name": "Tony Fields II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0036638",
+      "position": "DB",
+      "full_name": "Darrick Forrest",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0036871",
+      "position": "DB",
+      "full_name": "Nate Hobbs",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0036885",
+      "position": "DB",
+      "full_name": "Tre Brown",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0036915",
+      "position": "LB",
+      "full_name": "Jeremiah Owusu-Koramoah",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0036926",
+      "position": "DL",
+      "full_name": "Payton Turner",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0036932",
+      "position": "LB",
+      "full_name": "Micah Parsons",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0036937",
+      "position": "DB",
+      "full_name": "Paulson Adebo",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0036952",
+      "position": "LB",
+      "full_name": "Jonathon Cooper",
+      "availability_status": "EXE",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0036968",
+      "position": "OL",
+      "full_name": "Brady Christensen",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0036983",
+      "position": "OL",
+      "full_name": "Kendrick Green",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0036984",
+      "position": "RB",
+      "full_name": "Trey Sermon",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0037002",
+      "position": "OL",
+      "full_name": "Landon Dickerson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0037031",
+      "position": "TE",
+      "full_name": "Nikola Kalinic",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0037057",
+      "position": "LB",
+      "full_name": "Keir Thomas",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0037078",
+      "position": "TE",
+      "full_name": "Cole Turner",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0037086",
+      "position": "TE",
+      "full_name": "Grant Calcaterra",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0037112",
+      "position": "TE",
+      "full_name": "Jake Tonges",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0037141",
+      "position": "DB",
+      "full_name": "Joey Blount",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0037156",
+      "position": "WR",
+      "full_name": "Irvin Charles",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0037197",
+      "position": "RB",
+      "full_name": "Isiah Pacheco",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0037229",
+      "position": "OL",
+      "full_name": "Ikem Ekwonu",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0037243",
+      "position": "OL",
+      "full_name": "Tyler Smith",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0037251",
+      "position": "DL",
+      "full_name": "Alex Wright",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0037266",
+      "position": "OL",
+      "full_name": "Matt Waletzko",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0037276",
+      "position": "RB",
+      "full_name": "Ty Chandler",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0037281",
+      "position": "LB",
+      "full_name": "Damone Clark",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0037297",
+      "position": "OL",
+      "full_name": "Cade Mays",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0037303",
+      "position": "DL",
+      "full_name": "Matt Henningsen",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CIN",
+      "gsis_id": "00-0037307",
+      "position": "DB",
+      "full_name": "Ja'Sir Taylor",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0037327",
+      "position": "QB",
+      "full_name": "Skylar Thompson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0037329",
+      "position": "RB",
+      "full_name": "Brittain Brown",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0037395",
+      "position": "DB",
+      "full_name": "Dallis Flowers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0037431",
+      "position": "DL",
+      "full_name": "Kingsley Jonathan",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0037525",
+      "position": "RB",
+      "full_name": "Jordan Mason",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0037526",
+      "position": "LB",
+      "full_name": "Marcelino McCrary-Ball",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0037544",
+      "position": "LB",
+      "full_name": "Nephi Sewell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0037549",
+      "position": "DB",
+      "full_name": "Darrell Baker Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0037557",
+      "position": "RB",
+      "full_name": "Ronnie Rivers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0037563",
+      "position": "RB",
+      "full_name": "Malik Davis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0037602",
+      "position": "DL",
+      "full_name": "Sam Okuayinonu",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0037661",
+      "position": "DB",
+      "full_name": "Ja'Marcus Ingram",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0037667",
+      "position": "DB",
+      "full_name": "Kerby Joseph",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0037804",
+      "position": "DL",
+      "full_name": "Zachary Carter",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0037808",
+      "position": "LB",
+      "full_name": "DeAngelo Malone",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0037831",
+      "position": "OL",
+      "full_name": "Nick Zakelj",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0037832",
+      "position": "DL",
+      "full_name": "Kalia Davis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0037837",
+      "position": "WR",
+      "full_name": "Calvin Austin III",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0038043",
+      "position": "DB",
+      "full_name": "Joshua Williams",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0038099",
+      "position": "DL",
+      "full_name": "Phidarian Mathis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0038105",
+      "position": "DB",
+      "full_name": "Damarri Mathis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "IND",
+      "gsis_id": "00-0038107",
+      "position": "DL",
+      "full_name": "Micheal Clemons",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0038111",
+      "position": "DB",
+      "full_name": "Kyler Gordon",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0038136",
+      "position": "DB",
+      "full_name": "Coby Bryant",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0038145",
+      "position": "TE",
+      "full_name": "Thomas Odukoya",
+      "availability_status": "EXE",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "IND",
+      "gsis_id": "00-0038394",
+      "position": "TE",
+      "full_name": "Will Mallory",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0038401",
+      "position": "DB",
+      "full_name": "Jarrick Bernard-Converse",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0038506",
+      "position": "DL",
+      "full_name": "Jordon Riley",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0038566",
+      "position": "OL",
+      "full_name": "Nick Saldiveri",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "IND",
+      "gsis_id": "00-0038585",
+      "position": "DB",
+      "full_name": "Cameron Mitchell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0038590",
+      "position": "WR",
+      "full_name": "Justin Shorter",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0038599",
+      "position": "LB",
+      "full_name": "Henry To'oTo'o",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0038610",
+      "position": "P",
+      "full_name": "Bryce Baringer",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0038614",
+      "position": "RB",
+      "full_name": "Scott Matlock",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0038679",
+      "position": "WR",
+      "full_name": "Tyrell Shavers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0038703",
+      "position": "DB",
+      "full_name": "Kendell Brooks",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0038720",
+      "position": "TE",
+      "full_name": "Julian Hill",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0038724",
+      "position": "DL",
+      "full_name": "Ali Gaye",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0038735",
+      "position": "TE",
+      "full_name": "Princeton Fant",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0038752",
+      "position": "WR",
+      "full_name": "Jake Bobo",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0038781",
+      "position": "DB",
+      "full_name": "Rejzohn Wright",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0038865",
+      "position": "LB",
+      "full_name": "Andrew Farmer II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0038977",
+      "position": "WR",
+      "full_name": "Tank Dell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0038995",
+      "position": "DL",
+      "full_name": "Bryan Bresee",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0039009",
+      "position": "DL",
+      "full_name": "Dylan Horton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0039020",
+      "position": "OL",
+      "full_name": "Anthony Bradford",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TB",
+      "gsis_id": "00-0039051",
+      "position": "DB",
+      "full_name": "Josh Hayes",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0039072",
+      "position": "DB",
+      "full_name": "Jakorian Bennett",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0039141",
+      "position": "DB",
+      "full_name": "Brian Branch",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0039144",
+      "position": "TE",
+      "full_name": "Luke Musgrave",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0039165",
+      "position": "RB",
+      "full_name": "Zach Charbonnet",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0039234",
+      "position": "DB",
+      "full_name": "T.J. Tampa",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0039236",
+      "position": "WR",
+      "full_name": "Johnny Wilson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0039244",
+      "position": "RB",
+      "full_name": "Chris Collier",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0039267",
+      "position": "DB",
+      "full_name": "Andre' Sam",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0039344",
+      "position": "RB",
+      "full_name": "Jonathon Brooks",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0039352",
+      "position": "LB",
+      "full_name": "Marist Liufau",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0039362",
+      "position": "OL",
+      "full_name": "Giovanni Manu",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0039363",
+      "position": "RB",
+      "full_name": "Isaac Guerendo",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0039368",
+      "position": "LB",
+      "full_name": "Jordan Magee",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0039370",
+      "position": "LB",
+      "full_name": "JD Bertrand",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0039388",
+      "position": "LB",
+      "full_name": "Jaylan Ford",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0039389",
+      "position": "DL",
+      "full_name": "Logan Lee",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0039419",
+      "position": "OL",
+      "full_name": "Michael Jurgens",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0039427",
+      "position": "DL",
+      "full_name": "Solomon Byrd",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0039436",
+      "position": "LB",
+      "full_name": "Jaylen Harrell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0039438",
+      "position": "OL",
+      "full_name": "Nick Gargiulo",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0039481",
+      "position": "DB",
+      "full_name": "Storm Duck",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0039565",
+      "position": "LB",
+      "full_name": "Levelle Bailey",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0039568",
+      "position": "OL",
+      "full_name": "Frank Crum",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0039620",
+      "position": "DB",
+      "full_name": "Rico Payton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0039623",
+      "position": "WR",
+      "full_name": "Mason Tipton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0039626",
+      "position": "WR",
+      "full_name": "Cole Burgess",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0039676",
+      "position": "DB",
+      "full_name": "Chigozie Anusiem",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0039692",
+      "position": "DB",
+      "full_name": "Dell Pettus",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0039710",
+      "position": "WR",
+      "full_name": "Jeshaun Jones",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0039737",
+      "position": "TE",
+      "full_name": "Tip Reiman",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0039764",
+      "position": "DL",
+      "full_name": "Elijah Chatman",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0039784",
+      "position": "OL",
+      "full_name": "Justin Dedich",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0039836",
+      "position": "LB",
+      "full_name": "Brennan Jackson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TB",
+      "gsis_id": "00-0039877",
+      "position": "LB",
+      "full_name": "Mohamed Kamara",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0039878",
+      "position": "LB",
+      "full_name": "Edefuan Ulofoshio",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0039883",
+      "position": "DB",
+      "full_name": "Daequan Hardy",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0039903",
+      "position": "DB",
+      "full_name": "Terrion Arnold",
+      "availability_status": "EXE",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0039906",
+      "position": "DL",
+      "full_name": "Jer'Zhan Newton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0039916",
+      "position": "WR",
+      "full_name": "Ricky Pearsall",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0039921",
+      "position": "RB",
+      "full_name": "Trey Benson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0039936",
+      "position": "TE",
+      "full_name": "Thomas Yassmin",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0040009",
+      "position": "WR",
+      "full_name": "Savion Williams",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0040012",
+      "position": "LB",
+      "full_name": "Collin Oliver",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0040033",
+      "position": "DB",
+      "full_name": "Johnathan Baldwin",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0040073",
+      "position": "DB",
+      "full_name": "Bilhal Kone",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040118",
+      "position": "LB",
+      "full_name": "Cooper McDonald",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040120",
+      "position": "WR",
+      "full_name": "Jimmy Holiday",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0040125",
+      "position": "OL",
+      "full_name": "Kelvin Banks Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0040127",
+      "position": "DL",
+      "full_name": "Kenneth Grant",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0040130",
+      "position": "WR",
+      "full_name": "Jayden Higgins",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0040135",
+      "position": "LB",
+      "full_name": "Nick Martin",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0040162",
+      "position": "RB",
+      "full_name": "Dylan Sampson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0040167",
+      "position": "LB",
+      "full_name": "Ruben Hyppolite II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0040184",
+      "position": "WR",
+      "full_name": "KeAndre Lambert-Smith",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0040196",
+      "position": "LB",
+      "full_name": "Tyler Baron",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0040197",
+      "position": "DB",
+      "full_name": "Dorian Strong",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0040211",
+      "position": "QB",
+      "full_name": "Graham Mertz",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0040212",
+      "position": "OL",
+      "full_name": "Branson Taylor",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0040226",
+      "position": "OL",
+      "full_name": "Marcus Bryant",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0040230",
+      "position": "DB",
+      "full_name": "Kitan Crawford",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PIT",
+      "gsis_id": "00-0040232",
+      "position": "DB",
+      "full_name": "Donte Kent",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DEN",
+      "gsis_id": "00-0040240",
+      "position": "TE",
+      "full_name": "Caleb Lohner",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0040243",
+      "position": "DB",
+      "full_name": "Korie Black",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0040244",
+      "position": "TE",
+      "full_name": "Moliki Matavao",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0040289",
+      "position": "LB",
+      "full_name": "Bam Martin-Scott",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040328",
+      "position": "LB",
+      "full_name": "Ethan Downs",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0040329",
+      "position": "DL",
+      "full_name": "BJ Green II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0040395",
+      "position": "LB",
+      "full_name": "Jared Bartlett",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0040413",
+      "position": "LB",
+      "full_name": "K.C. Ossai",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0040432",
+      "position": "WR",
+      "full_name": "Beaux Collins",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0040488",
+      "position": "TE",
+      "full_name": "Carter Runyon",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0040492",
+      "position": "LB",
+      "full_name": "Tyler Batty",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0040503",
+      "position": "LB",
+      "full_name": "Dorian Mausi",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0040509",
+      "position": "TE",
+      "full_name": "Ben Yurosek",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0040570",
+      "position": "WR",
+      "full_name": "Jeremiah Webb",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0040577",
+      "position": "LB",
+      "full_name": "Jalon Walker",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0040578",
+      "position": "LB",
+      "full_name": "James Pearce Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0040581",
+      "position": "WR",
+      "full_name": "Dont'e Thornton Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0040582",
+      "position": "WR",
+      "full_name": "Arian Smith",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0040644",
+      "position": "RB",
+      "full_name": "Trevor Etienne",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0040649",
+      "position": "RB",
+      "full_name": "Robbie Ouzts",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0040652",
+      "position": "OL",
+      "full_name": "Mason Richman",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0040660",
+      "position": "DL",
+      "full_name": "Mykel Williams",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0040687",
+      "position": "OL",
+      "full_name": "Cameron Williams",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0040704",
+      "position": "QB",
+      "full_name": "Dillon Gabriel",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0040711",
+      "position": "DL",
+      "full_name": "C.J. West",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0040721",
+      "position": "DL",
+      "full_name": "Alfred Collins",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "WAS",
+      "gsis_id": "00-0040731",
+      "position": "DB",
+      "full_name": "Trey Amos",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0040746",
+      "position": "LB",
+      "full_name": "Nic Scourton",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040748",
+      "position": "DL",
+      "full_name": "Omarr Norman-Lott",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0040751",
+      "position": "DB",
+      "full_name": "Will Johnson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "IND",
+      "gsis_id": "00-0040853",
+      "position": "TE",
+      "full_name": "Carson Towt",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0040870",
+      "position": "WR",
+      "full_name": "Ja'Kobi Lane",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0040875",
+      "position": "DB",
+      "full_name": "Devin Moore",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0040888",
+      "position": "RB",
+      "full_name": "Adam Randall",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "TEN",
+      "gsis_id": "00-0040901",
+      "position": "TE",
+      "full_name": "Jaren Kanak",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0040929",
+      "position": "DB",
+      "full_name": "Tucker Large",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0040933",
+      "position": "DL",
+      "full_name": "Kelvin Gilliam",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DAL",
+      "gsis_id": "00-0040938",
+      "position": "TE",
+      "full_name": "DJ Rogers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040953",
+      "position": "WR",
+      "full_name": "Jeff Caldwell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "KC",
+      "gsis_id": "00-0040955",
+      "position": "TE",
+      "full_name": "John Michael Gyllenborg",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BAL",
+      "gsis_id": "00-0040988",
+      "position": "DB",
+      "full_name": "Jahquez Robinson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0041003",
+      "position": "OL",
+      "full_name": "Justin Pickett",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0041005",
+      "position": "WR",
+      "full_name": "Corey Rucker",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0041029",
+      "position": "WR",
+      "full_name": "Jordyn Tyson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0041035",
+      "position": "WR",
+      "full_name": "De'Zhaun Stribling",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CAR",
+      "gsis_id": "00-0041047",
+      "position": "WR",
+      "full_name": "Chris Brazzell II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CLE",
+      "gsis_id": "00-0041087",
+      "position": "TE",
+      "full_name": "Joe Royer",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0041089",
+      "position": "DB",
+      "full_name": "Lorenzo Styles Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0041091",
+      "position": "DL",
+      "full_name": "Zane Durant",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0041097",
+      "position": "OL",
+      "full_name": "Anez Cooper",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CIN",
+      "gsis_id": "00-0041098",
+      "position": "OL",
+      "full_name": "Brian Parker II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0041120",
+      "position": "DB",
+      "full_name": "VJ Payne",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0041122",
+      "position": "DL",
+      "full_name": "Zach Durfee",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0041127",
+      "position": "LB",
+      "full_name": "Parker Hughes",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0041136",
+      "position": "DL",
+      "full_name": "Rene Konga",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYG",
+      "gsis_id": "00-0041142",
+      "position": "DB",
+      "full_name": "Thaddeus Dixon",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "CHI",
+      "gsis_id": "00-0041170",
+      "position": "TE",
+      "full_name": "Hayden Large",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0041208",
+      "position": "OL",
+      "full_name": "Garrett DiGiorgio",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0041239",
+      "position": "RB",
+      "full_name": "Chip Trayanum",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0041303",
+      "position": "OL",
+      "full_name": "Sam Hagen",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0041321",
+      "position": "LB",
+      "full_name": "Khalil Jacobs",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NE",
+      "gsis_id": "00-0041323",
+      "position": "RB",
+      "full_name": "Myles Montgomery",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIN",
+      "gsis_id": "00-0041344",
+      "position": "DB",
+      "full_name": "Tyreek Chappell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SF",
+      "gsis_id": "00-0041360",
+      "position": "DL",
+      "full_name": "Mikail Kamara",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0041366",
+      "position": "TE",
+      "full_name": "Jameson Geers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0041387",
+      "position": "OL",
+      "full_name": "Isaiah World",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0041394",
+      "position": "OL",
+      "full_name": "Keagen Trost",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0041414",
+      "position": "QB",
+      "full_name": "Matthew Caldwell",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0041429",
+      "position": "LB",
+      "full_name": "Eddie Walls III",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "HOU",
+      "gsis_id": "00-0041440",
+      "position": "DL",
+      "full_name": "Kayden McDonald",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "DET",
+      "gsis_id": "00-0041446",
+      "position": "WR",
+      "full_name": "Kendrick Law",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NO",
+      "gsis_id": "00-0041451",
+      "position": "WR",
+      "full_name": "Brock Rechsteiner",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0041463",
+      "position": "DB",
+      "full_name": "Bud Clark",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0041468",
+      "position": "OL",
+      "full_name": "Chase Bisontis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "PHI",
+      "gsis_id": "00-0041483",
+      "position": "TE",
+      "full_name": "Eli Stowers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ATL",
+      "gsis_id": "00-0041484",
+      "position": "DL",
+      "full_name": "Anterio Thompson",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "GB",
+      "gsis_id": "00-0041493",
+      "position": "DB",
+      "full_name": "Marlon Jones",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "NYJ",
+      "gsis_id": "00-0041511",
+      "position": "WR",
+      "full_name": "Omar Cooper Jr.",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0041526",
+      "position": "LB",
+      "full_name": "Trey Moore",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0041527",
+      "position": "LB",
+      "full_name": "Kyle Louis",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "SEA",
+      "gsis_id": "00-0041542",
+      "position": "WR",
+      "full_name": "Malick Meiga",
+      "availability_status": "EXE",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LV",
+      "gsis_id": "00-0041553",
+      "position": "LB",
+      "full_name": "Keyron Crawford",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "ARI",
+      "gsis_id": "00-0041555",
+      "position": "DL",
+      "full_name": "Kaleb Proctor",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LA",
+      "gsis_id": "00-0041587",
+      "position": "LB",
+      "full_name": "Daniel Rickert",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
     }
   ]
 }
