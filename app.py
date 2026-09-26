@@ -1164,11 +1164,21 @@ def _format_injury_snapshot_time(value: Any) -> str:
 
 
 def _injury_status(entry: dict[str, Any]) -> tuple[str, str]:
+    availability = str(entry.get("availability_status") or "").strip()
     report = str(entry.get("report_status") or "").strip()
     practice = str(entry.get("practice_status") or "").strip()
-    status = report or practice or "Reported"
+    status = availability or report or practice or "Reported"
     normalized = status.casefold()
-    if normalized == "out":
+    if normalized in {
+        "ir",
+        "inj",
+        "pup",
+        "nfi",
+        "res",
+        "sus",
+        "exe",
+        "out",
+    }:
         css_class = "status-out"
     elif normalized == "doubtful":
         css_class = "status-doubtful"
@@ -1189,7 +1199,16 @@ def _injury_sort_key(entry: dict[str, Any]) -> tuple[int, str]:
     status, _ = _injury_status(entry)
     normalized = status.casefold()
     priority = 6
-    if normalized == "out":
+    if normalized in {
+        "ir",
+        "inj",
+        "pup",
+        "nfi",
+        "res",
+        "sus",
+        "exe",
+        "out",
+    }:
         priority = 0
     elif normalized == "doubtful":
         priority = 1
@@ -1213,7 +1232,11 @@ def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
             str(
                 entry.get("report_primary_injury")
                 or entry.get("practice_primary_injury")
-                or "No injury detail listed"
+                or (
+                    "Roster reserve status"
+                    if entry.get("availability_status")
+                    else "No injury detail listed"
+                )
             )
         )
         status, css_class = _injury_status(entry)
@@ -1227,12 +1250,16 @@ def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
             f'<div class="grid-injury-status {css_class}">{html_text(status)}</div>'
             "</div>"
         )
-    body = "".join(rows) if rows else '<div class="grid-injury-empty">No reported players.</div>'
+    body = (
+        "".join(rows)
+        if rows
+        else '<div class="grid-injury-empty">No unavailable or reported players.</div>'
+    )
     return (
         '<section class="grid-injury-team">'
         '<div class="grid-injury-team-head">'
         f'<div class="grid-injury-team-name">{html_text(team)}</div>'
-        f'<div class="grid-injury-team-count">{len(entries)} reported</div>'
+        f'<div class="grid-injury-team-count">{len(entries)} tracked</div>'
         "</div>"
         f'<div class="grid-injury-list">{body}</div>'
         "</section>"
@@ -1261,7 +1288,7 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
             (
                 f'<div class="grid-injury-summary {state_class}">'
                 '<span class="grid-injury-summary-dot"></span>'
-                "<span><strong>Injury context</strong> · "
+                "<span><strong>Player availability</strong> · "
                 f"{html_text(str(game['away_team']))} {len(away_entries)} · "
                 f"{html_text(str(game['home_team']))} {len(home_entries)} · "
                 f"{html_text(freshness)} · not applied to forecast</span>"
@@ -1278,10 +1305,10 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
     st.markdown(
         (
             '<details class="grid-injury-panel">'
-            "<summary>Official injury report snapshot</summary>"
+            "<summary>Player availability snapshot</summary>"
             '<div class="grid-injury-panel-body">'
             f'<div class="grid-injury-meta">{html_text(freshness)} · frozen {html_text(captured)} · '
-            "context only; these statuses do not change this forecast.</div>"
+            "injury report + roster reserve status · context only; these statuses do not change this forecast.</div>"
             f'<div class="grid-injury-columns">{teams_html}</div>'
             "</div>"
             "</details>"

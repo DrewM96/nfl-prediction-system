@@ -79,8 +79,8 @@ def test_results_are_available_for_both_sports() -> None:
 def test_nfl_matchup_views_expose_frozen_injury_context() -> None:
     source = Path("app.py").read_text()
     assert "def render_official_injury_snapshot" in source
-    assert "not applied to forecast" in source
-    assert "Official injury report snapshot" in source
+    assert "Player availability" in source
+    assert "Player availability snapshot" in source
     assert "grid-injury-panel" in source
     assert "_format_injury_snapshot_time" in source
 

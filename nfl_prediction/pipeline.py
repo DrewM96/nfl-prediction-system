@@ -498,56 +498,142 @@ def _score_ledger(ledger: PredictionLedger, schedules: pd.DataFrame) -> dict[str
     return performance_history(ledger.root)
 
 
+RESERVE_ROSTER_STATUSES = {"IR", "PUP", "NFI", "RES", "SUS", "EXE", "INJ"}
+
+
+def _is_reserve_roster_status(value: Any) -> bool:
+    status = str(value or "").strip().upper()
+    if not status:
+        return False
+    if status in RESERVE_ROSTER_STATUSES:
+        return True
+    return (
+        status.startswith("IR")
+        or "INJURED RESERVE" in status
+        or "PHYSICALLY UNABLE" in status
+        or "NON-FOOTBALL INJURY" in status
+        or "NON FOOTBALL INJURY" in status
+        or "SUSPEND" in status
+        or "EXEMPT" in status
+    )
+
+
+def _reserve_roster_entries(
+    rosters: pd.DataFrame,
+    prediction_season: int,
+    forecast_week: int | None,
+) -> tuple[list[dict[str, Any]], int | None]:
+    required = {"season", "week", "team", "status"}
+    if rosters.empty or not required.issubset(rosters):
+        return [], None
+
+    current = rosters[rosters["season"].eq(prediction_season)].copy()
+    if current.empty:
+        return [], None
+
+    current["week"] = pd.to_numeric(current["week"], errors="coerce")
+    if forecast_week is not None:
+        through_forecast = current[current["week"].le(forecast_week)]
+        if not through_forecast.empty:
+            current = through_forecast
+    available_week = int(current["week"].max())
+    current = current[current["week"].eq(available_week)].copy()
+    current = current[current["status"].map(_is_reserve_roster_status)]
+    if current.empty:
+        return [], available_week
+
+    fields = ["team", "gsis_id", "position", "full_name", "status"]
+    fields = [field for field in fields if field in current]
+    current = current[fields].drop_duplicates(
+        subset=[field for field in ["team", "gsis_id", "full_name"] if field in fields],
+        keep="last",
+    )
+    entries = current.where(pd.notna(current), None).to_dict("records")
+    for entry in entries:
+        entry["availability_status"] = entry.pop("status", None)
+        entry["availability_source"] = "weekly roster"
+    return entries, available_week
+
+
 def _official_injury_payload(
     injuries: pd.DataFrame,
     prediction_season: int,
     generated_at: datetime,
     *,
     forecast_week: int | None = None,
+    rosters: pd.DataFrame | None = None,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
-        "source": "nflverse injury reports",
+        "source": "nflverse injury reports + weekly rosters",
         "generated_at": generated_at.isoformat(),
         "prediction_season": prediction_season,
         "forecast_week": forecast_week,
         "available_season": None,
         "available_week": None,
+        "roster_available_week": None,
         "stale_for_prediction_season": True,
         "stale_for_prediction_week": True,
         "entries": [],
     }
-    if injuries.empty or not {"season", "week"}.issubset(injuries):
-        return payload
-    season = int(injuries["season"].max())
-    current = injuries[injuries["season"].eq(season)].copy()
-    week = int(current["week"].max())
-    current = current[current["week"].eq(week)]
-    fields = [
-        "team",
-        "gsis_id",
-        "position",
-        "full_name",
-        "report_primary_injury",
-        "report_secondary_injury",
-        "report_status",
-        "practice_primary_injury",
-        "practice_secondary_injury",
-        "practice_status",
-    ]
-    fields = [field for field in fields if field in current]
-    current = current[
-        current.get("report_status", pd.Series(index=current.index, dtype=object)).notna()
-        | current.get("practice_status", pd.Series(index=current.index, dtype=object)).notna()
-    ]
+
+    injury_entries: list[dict[str, Any]] = []
+    season: int | None = None
+    week: int | None = None
+    if not injuries.empty and {"season", "week"}.issubset(injuries):
+        season = int(injuries["season"].max())
+        current = injuries[injuries["season"].eq(season)].copy()
+        week = int(current["week"].max())
+        current = current[current["week"].eq(week)]
+        fields = [
+            "team",
+            "gsis_id",
+            "position",
+            "full_name",
+            "report_primary_injury",
+            "report_secondary_injury",
+            "report_status",
+            "practice_primary_injury",
+            "practice_secondary_injury",
+            "practice_status",
+        ]
+        fields = [field for field in fields if field in current]
+        current = current[
+            current.get("report_status", pd.Series(index=current.index, dtype=object)).notna()
+            | current.get("practice_status", pd.Series(index=current.index, dtype=object)).notna()
+        ]
+        injury_entries = current[fields].where(pd.notna(current[fields]), None).to_dict("records")
+        for entry in injury_entries:
+            entry["availability_source"] = "injury report"
+
+    roster_entries, roster_week = _reserve_roster_entries(
+        rosters if rosters is not None else pd.DataFrame(),
+        prediction_season,
+        forecast_week,
+    )
+
+    merged: dict[tuple[str, str], dict[str, Any]] = {}
+    for entry in injury_entries:
+        identity = str(entry.get("gsis_id") or entry.get("full_name") or "")
+        merged[(str(entry.get("team") or ""), identity)] = dict(entry)
+    for entry in roster_entries:
+        identity = str(entry.get("gsis_id") or entry.get("full_name") or "")
+        key = (str(entry.get("team") or ""), identity)
+        if key in merged:
+            merged[key]["availability_status"] = entry.get("availability_status")
+            merged[key]["availability_source"] = "injury report + weekly roster"
+        else:
+            merged[key] = dict(entry)
+
     payload.update(
         {
             "available_season": season,
             "available_week": week,
+            "roster_available_week": roster_week,
             "stale_for_prediction_season": season != prediction_season,
             "stale_for_prediction_week": (
                 season != prediction_season or forecast_week is None or week != forecast_week
             ),
-            "entries": current[fields].where(pd.notna(current[fields]), None).to_dict("records"),
+            "entries": list(merged.values()),
         }
     )
     return payload
@@ -658,6 +744,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         context.prediction_season,
         now,
         forecast_week=forecast_week,
+        rosters=data.rosters,
     )
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
     predictions = [p for p in predictions if _game_kickoff(p) and _game_kickoff(p) > now]
