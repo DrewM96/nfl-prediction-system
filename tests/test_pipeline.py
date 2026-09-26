@@ -113,7 +113,6 @@ def test_current_week_injury_feed_is_marked_fresh() -> None:
     assert payload["forecast_week"] == 3
 
 
-
 def test_reserve_roster_player_is_included_without_weekly_injury_row() -> None:
     injuries = pd.DataFrame(
         [
@@ -160,7 +159,9 @@ def test_reserve_roster_player_is_included_without_weekly_injury_row() -> None:
 
     by_name = {entry["full_name"]: entry for entry in payload["entries"]}
     assert by_name["Injured Reserve Player"]["availability_status"] == "IR"
-    assert by_name["Injured Reserve Player"]["availability_source"] == "weekly roster"
+    assert (
+        by_name["Injured Reserve Player"]["availability_source"] == "weekly roster"
+    )
     assert "Healthy Active Player" not in by_name
     assert payload["roster_available_week"] == 3
 
