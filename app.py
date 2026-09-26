@@ -1250,7 +1250,11 @@ def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
             f'<div class="grid-injury-status {css_class}">{html_text(status)}</div>'
             "</div>"
         )
-    body = "".join(rows) if rows else '<div class="grid-injury-empty">No unavailable or reported players.</div>'
+    body = (
+        "".join(rows)
+        if rows
+        else '<div class="grid-injury-empty">No unavailable or reported players.</div>'
+    )
     return (
         '<section class="grid-injury-team">'
         '<div class="grid-injury-team-head">'

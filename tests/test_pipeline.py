@@ -159,9 +159,7 @@ def test_reserve_roster_player_is_included_without_weekly_injury_row() -> None:
 
     by_name = {entry["full_name"]: entry for entry in payload["entries"]}
     assert by_name["Injured Reserve Player"]["availability_status"] == "IR"
-    assert (
-        by_name["Injured Reserve Player"]["availability_source"] == "weekly roster"
-    )
+    assert by_name["Injured Reserve Player"]["availability_source"] == "weekly roster"
     assert "Healthy Active Player" not in by_name
     assert payload["roster_available_week"] == 3
 
@@ -205,6 +203,7 @@ def test_roster_reserve_status_merges_with_existing_injury_row() -> None:
     assert payload["entries"][0]["availability_status"] == "IR"
     assert payload["entries"][0]["report_primary_injury"] == "Knee"
     assert payload["entries"][0]["availability_source"] == "injury report + weekly roster"
+
 
 def test_official_injuries_are_frozen_without_changing_prediction() -> None:
     prediction = {
