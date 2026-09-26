@@ -1169,9 +1169,7 @@ def _injury_status(entry: dict[str, Any]) -> tuple[str, str]:
     practice = str(entry.get("practice_status") or "").strip()
     status = availability or report or practice or "Reported"
     normalized = status.casefold()
-    if normalized in {"ir", "inj", "pup", "nfi", "res", "sus", "exe"}:
-        css_class = "status-out"
-    elif normalized == "out":
+    if normalized in {"ir", "inj", "pup", "nfi", "res", "sus", "exe", "out"}:
         css_class = "status-out"
     elif normalized == "doubtful":
         css_class = "status-doubtful"
@@ -1192,9 +1190,7 @@ def _injury_sort_key(entry: dict[str, Any]) -> tuple[int, str]:
     status, _ = _injury_status(entry)
     normalized = status.casefold()
     priority = 6
-    if normalized in {"ir", "inj", "pup", "nfi", "res", "sus", "exe"}:
-        priority = 0
-    elif normalized == "out":
+    if normalized in {"ir", "inj", "pup", "nfi", "res", "sus", "exe", "out"}:
         priority = 0
     elif normalized == "doubtful":
         priority = 1
