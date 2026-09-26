@@ -1,11 +1,21 @@
 {
-  "prediction_season": 2026,
-  "week": 3,
-  "generated_at": "2026-09-26T22:04:11.746263+00:00",
   "run_id": "20260926T221816Z-23efcaf3",
+  "created_at": "2026-09-26T22:18:16.403652+00:00",
+  "prediction_season": 2026,
   "data_cutoff": "2026-09-24",
   "model_hash": "c04fc2d5f9502de9e1cb3b415535b6b4d5bd014ad7f7fc9f4d3ca955d38c9d4f",
-  "raw_data_hash": "0bd2767567cc3681254c0297ad0602e95f146001052851c526ff6bad00b75dca",
+  "metadata": {
+    "git_commit": "b4a346686682f75947d4b3ba4040028ffa83244e",
+    "week": 3,
+    "market_snapshot_at": "2026-09-26T22:04:09.977103+00:00",
+    "injury_snapshot_at": "2026-09-26T22:04:11.746263+00:00",
+    "injury_available_week": 3,
+    "injury_stale_for_prediction_week": false,
+    "injury_data_used_as_model_input": false,
+    "qb_shadow_validation_enabled": true,
+    "qb_shadow_applied_to_published_forecast": false,
+    "qb_shadow_eligible_games": 15
+  },
   "predictions": [
     {
       "game_id": "2026_03_LAC_BUF",

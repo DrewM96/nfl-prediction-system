@@ -1279,6 +1279,22 @@
     "rushing_tds_l4": 0.0,
     "snap_share_l4": 0.24062010441115436
   },
+  "00-0035500": {
+    "player_id": "00-0035500",
+    "player_name": "Greg Dortch",
+    "team": "BUF",
+    "opponent": "LAC",
+    "opponent_def_epa": -0.048087471733571086,
+    "prediction_season": 2026,
+    "roster_season": 2026,
+    "rushing_yards_l4": -0.9881661614456162,
+    "rushing_yards_l8": 0.34750161618142217,
+    "carries_l4": 0.39526646457824643,
+    "carries_l8": 0.6101926458683592,
+    "yards_per_carry_l4": -2.5000000000000004,
+    "rushing_tds_l4": 0.0,
+    "snap_share_l4": 0.32823904857011305
+  },
   "00-0035535": {
     "player_id": "00-0035535",
     "player_name": "Darius Slayton",
