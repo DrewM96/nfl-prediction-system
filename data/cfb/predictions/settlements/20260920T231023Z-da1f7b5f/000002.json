@@ -1,0 +1,55 @@
+{
+  "run_id": "20260920T231023Z-da1f7b5f",
+  "revision": 2,
+  "scored_at": "2026-09-28T18:50:48.152582+00:00",
+  "source": {
+    "game_id": "401858470",
+    "status": "final",
+    "actual_home_margin": -3.0,
+    "actual_total": 51.0
+  },
+  "results": [
+    {
+      "game_id": "401858241",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 58.0
+    },
+    {
+      "game_id": "401860895",
+      "status": "final",
+      "actual_home_margin": -26.0,
+      "actual_total": 40.0
+    },
+    {
+      "game_id": "401866429",
+      "status": "final",
+      "actual_home_margin": -29.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "401860891",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "401864509",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 69.0
+    },
+    {
+      "game_id": "401858240",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 61.0
+    },
+    {
+      "game_id": "401858470",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 51.0
+    }
+  ]
+}
