@@ -1,11 +1,21 @@
 {
-  "prediction_season": 2026,
-  "week": 3,
-  "generated_at": "2026-09-28T21:05:54.059293+00:00",
   "run_id": "20260928T211925Z-c7c7e1db",
+  "created_at": "2026-09-28T21:19:25.561059+00:00",
+  "prediction_season": 2026,
   "data_cutoff": "2026-09-27",
   "model_hash": "b09c9ace59b6c98e41a83dd9954edc94793b29ffd8156a59542509dfbfc74614",
-  "raw_data_hash": "5ad08177cf6b6c43437e03956d04f55f38002f0f4f7b9295dbfa02ee26ba0138",
+  "metadata": {
+    "git_commit": "6221867179de480db1c555bafbae4f1a7875fa8e",
+    "week": 3,
+    "market_snapshot_at": "2026-09-28T21:05:52.350917+00:00",
+    "injury_snapshot_at": "2026-09-28T21:05:54.059293+00:00",
+    "injury_available_week": 3,
+    "injury_stale_for_prediction_week": false,
+    "injury_data_used_as_model_input": false,
+    "qb_shadow_validation_enabled": true,
+    "qb_shadow_applied_to_published_forecast": false,
+    "qb_shadow_eligible_games": 1
+  },
   "predictions": [
     {
       "game_id": "2026_03_PHI_CHI",
