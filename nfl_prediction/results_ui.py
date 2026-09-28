@@ -39,6 +39,10 @@ def render_results(root: str | Path, *, league: str) -> None:
     )
     versions = versions[versions.week.le(through)]
     rows = select_forecasts(versions, policy="first" if policy == "First published" else "horizon")
+    st.caption(
+        "First published may include preseason forecasts. Latest selects the most recent available "
+        "run before the cutoff; it does not imply a forecast was issued exactly 60 minutes before kickoff."
+    )
     controls = st.columns(3)
     source = (
         controls[0]

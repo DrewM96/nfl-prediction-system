@@ -47,6 +47,26 @@ def apply_preseason_calibration(
         home = str(game.get("home_team", ""))
         away = str(game.get("away_team", ""))
         kickoff = _game_kickoff(game)
+        requested_weight = roster_transition_weight(float(game.get("week", 1)))
+        reason = (
+            "outside_preseason_window"
+            if not requested_weight
+            else "no_timestamp_eligible_market"
+            if not market_snapshot
+            else "insufficient_market_schedule_rank"
+            if not ratings
+            else "team_missing_from_market_ratings"
+            if home not in rating_by_team or away not in rating_by_team
+            else "game_started"
+            if kickoff is not None and kickoff <= now
+            else None
+        )
+        game["calibration_status"] = {
+            "requested_weight": requested_weight,
+            "applied": reason is None,
+            "fallback_reason": reason,
+            "eligible_market_games": len((market_snapshot or {}).get("games", [])),
+        }
         if (
             not ratings
             or home not in rating_by_team
@@ -65,6 +85,8 @@ def apply_preseason_calibration(
                     forecast_method="football only",
                 )
                 game.pop("preseason_calibration", None)
+            game["forecast_method"] = "football only"
+            game["margin_interval_validated"] = True
             calibrated.append(game)
             continue
         football = dict(game.get("football_only") or {})

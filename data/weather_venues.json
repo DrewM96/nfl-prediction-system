@@ -1,0 +1,538 @@
+{
+  "ATL00": {
+    "names": [
+      "Georgia Dome"
+    ],
+    "latitude": 33.7576273,
+    "longitude": -84.4011555,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "ATL97": {
+    "names": [
+      "Mercedes-Benz Stadium"
+    ],
+    "latitude": 33.7555052,
+    "longitude": -84.4008484,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BAL00": {
+    "names": [
+      "M&T Bank Stadium"
+    ],
+    "latitude": 39.277958,
+    "longitude": -76.6227221,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BOS00": {
+    "names": [
+      "Gillette Stadium"
+    ],
+    "latitude": 42.0909217,
+    "longitude": -71.2643321,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BOS99": {
+    "names": [
+      "Foxboro Stadium"
+    ],
+    "latitude": 42.0925795,
+    "longitude": -71.2674657,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BRG00": {
+    "names": [
+      "Tiger Stadium (LSU)"
+    ],
+    "latitude": 30.4120328,
+    "longitude": -91.1838139,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BUF00": {
+    "names": [
+      "Highmark Stadium"
+    ],
+    "latitude": 42.7737531,
+    "longitude": -78.786954,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "BUF01": {
+    "names": [
+      "Rogers Centre"
+    ],
+    "latitude": 43.6416586,
+    "longitude": -79.3890887,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CAR00": {
+    "names": [
+      "Bank of America Stadium"
+    ],
+    "latitude": 35.2258152,
+    "longitude": -80.8528376,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CHI98": {
+    "names": [
+      "Soldier Field"
+    ],
+    "latitude": 41.8624598,
+    "longitude": -87.6167762,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CHI99": {
+    "names": [
+      "Memorial Stadium (Champaign)"
+    ],
+    "latitude": 40.0992975,
+    "longitude": -88.2359533,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CIN00": {
+    "names": [
+      "Paycor Stadium"
+    ],
+    "latitude": 39.0954306,
+    "longitude": -84.5160435,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CIN99": {
+    "names": [
+      "Cinergy Field"
+    ],
+    "latitude": 39.0965535,
+    "longitude": -84.5084173,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "CLE00": {
+    "names": [
+      "Huntington Bank Field"
+    ],
+    "latitude": 41.5060371,
+    "longitude": -81.699586,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DAL00": {
+    "names": [
+      "AT&T Stadium"
+    ],
+    "latitude": 32.7479723,
+    "longitude": -97.0928461,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DAL99": {
+    "names": [
+      "Texas Stadium"
+    ],
+    "latitude": 32.8398075,
+    "longitude": -96.9108917,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DEN00": {
+    "names": [
+      "Empower Field at Mile High"
+    ],
+    "latitude": 39.7439402,
+    "longitude": -105.0201065,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DEN99": {
+    "names": [
+      "Mile High Stadium"
+    ],
+    "latitude": 39.7460024,
+    "longitude": -105.0216427,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DET00": {
+    "names": [
+      "Ford Field"
+    ],
+    "latitude": 42.3401334,
+    "longitude": -83.0456783,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "DET99": {
+    "names": [
+      "Pontiac Silverdome"
+    ],
+    "latitude": 42.6457766,
+    "longitude": -83.2549503,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "FRA00": {
+    "names": [
+      "Deutsche Bank Park"
+    ],
+    "latitude": 50.0686586,
+    "longitude": 8.6454228,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "GER00": {
+    "names": [
+      "Allianz Arena"
+    ],
+    "latitude": 48.2188932,
+    "longitude": 11.6247241,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "GNB00": {
+    "names": [
+      "Lambeau Field"
+    ],
+    "latitude": 44.5014769,
+    "longitude": -88.0621617,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "HOU00": {
+    "names": [
+      "Reliant Stadium"
+    ],
+    "latitude": 29.6849239,
+    "longitude": -95.41082,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "IND00": {
+    "names": [
+      "Lucas Oil Stadium"
+    ],
+    "latitude": 39.7602037,
+    "longitude": -86.1638068,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "IND99": {
+    "names": [
+      "RCA Dome"
+    ],
+    "latitude": 39.7636251,
+    "longitude": -86.163448,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "JAX00": {
+    "names": [
+      "EverBank Stadium"
+    ],
+    "latitude": 30.3239164,
+    "longitude": -81.6373486,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "KAN00": {
+    "names": [
+      "GEHA Field at Arrowhead Stadium"
+    ],
+    "latitude": 39.0489275,
+    "longitude": -94.4839962,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LAX01": {
+    "names": [
+      "SoFi Stadium"
+    ],
+    "latitude": 33.953485,
+    "longitude": -118.3390307,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LAX97": {
+    "names": [
+      "StubHub Center"
+    ],
+    "latitude": 33.8643225,
+    "longitude": -118.2611153,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LAX99": {
+    "names": [
+      "Los Angeles Memorial Coliseum"
+    ],
+    "latitude": 34.0140427,
+    "longitude": -118.2878605,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LON00": {
+    "names": [
+      "Wembley Stadium"
+    ],
+    "latitude": 51.5559836,
+    "longitude": -0.2795903,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LON01": {
+    "names": [
+      "Twickenham Stadium"
+    ],
+    "latitude": 51.4560402,
+    "longitude": -0.3415439,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "LON02": {
+    "names": [
+      "Tottenham Hotspur Stadium"
+    ],
+    "latitude": 51.6042151,
+    "longitude": -0.0662246,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MEX00": {
+    "names": [
+      "Estadio Banorte"
+    ],
+    "latitude": 19.3029718,
+    "longitude": -99.150481,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MIA00": {
+    "names": [
+      "Hard Rock Stadium"
+    ],
+    "latitude": 25.9579623,
+    "longitude": -80.2388423,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MIN00": {
+    "names": [
+      "Mall of America Field"
+    ],
+    "latitude": 44.9738295,
+    "longitude": -93.2580358,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MIN01": {
+    "names": [
+      "U.S. Bank Stadium"
+    ],
+    "latitude": 44.9736273,
+    "longitude": -93.2574111,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MIN98": {
+    "names": [
+      "TCF Bank Stadium"
+    ],
+    "latitude": 44.9765379,
+    "longitude": -93.2245731,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "NAS00": {
+    "names": [
+      "Nissan Stadium"
+    ],
+    "latitude": 36.1664774,
+    "longitude": -86.7712938,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "NOR00": {
+    "names": [
+      "Caesars Superdome"
+    ],
+    "latitude": 29.9511425,
+    "longitude": -90.0810779,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "NYC00": {
+    "names": [
+      "Giants Stadium"
+    ],
+    "latitude": 40.813507465,
+    "longitude": -74.074342406,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "NYC01": {
+    "names": [
+      "MetLife Stadium"
+    ],
+    "latitude": 40.813507465,
+    "longitude": -74.074342406,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "OAK00": {
+    "names": [
+      "Ring Central Coliseum"
+    ],
+    "latitude": 37.7516083,
+    "longitude": -122.2006038,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PHI00": {
+    "names": [
+      "Lincoln Financial Field"
+    ],
+    "latitude": 39.9007914,
+    "longitude": -75.1674645,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PHI99": {
+    "names": [
+      "Veterans Stadium"
+    ],
+    "latitude": 39.9067652,
+    "longitude": -75.1706267,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PHO00": {
+    "names": [
+      "State Farm Stadium"
+    ],
+    "latitude": 33.5277555,
+    "longitude": -112.2625948,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PHO99": {
+    "names": [
+      "Sun Devil Stadium"
+    ],
+    "latitude": 33.4264274,
+    "longitude": -111.9325752,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PIT00": {
+    "names": [
+      "Acrisure Stadium"
+    ],
+    "latitude": 40.4467883,
+    "longitude": -80.0157692,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PIT99": {
+    "names": [
+      "Three Rivers Stadium"
+    ],
+    "latitude": 40.4465533,
+    "longitude": -80.0126137,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SAN00": {
+    "names": [
+      "Alamo Dome"
+    ],
+    "latitude": 29.4169713,
+    "longitude": -98.4788947,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SAO00": {
+    "names": [
+      "Arena Corinthians"
+    ],
+    "latitude": -23.5453166,
+    "longitude": -46.4742288,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SDG00": {
+    "names": [
+      "Qualcomm Stadium"
+    ],
+    "latitude": 32.7832189,
+    "longitude": 117.1195919,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SEA00": {
+    "names": [
+      "Lumen Field"
+    ],
+    "latitude": 47.5951513,
+    "longitude": -122.3316259,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SEA98": {
+    "names": [
+      "Seattle Kingdome"
+    ],
+    "latitude": 47.5956264,
+    "longitude": -122.3314355,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SEA99": {
+    "names": [
+      "Husky Stadium"
+    ],
+    "latitude": 47.6502858,
+    "longitude": -122.3016341,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SFO00": {
+    "names": [
+      "Candlestick Park"
+    ],
+    "latitude": 37.7134337,
+    "longitude": -122.3862306,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "SFO01": {
+    "names": [
+      "Levi's Stadium"
+    ],
+    "latitude": 37.4031837,
+    "longitude": -121.9698094,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "STL00": {
+    "names": [
+      "Edward Jones Dome"
+    ],
+    "latitude": 38.6329321,
+    "longitude": -90.1885301,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "TAM00": {
+    "names": [
+      "Raymond James Stadium"
+    ],
+    "latitude": 27.9759691,
+    "longitude": -82.503356,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "VEG00": {
+    "names": [
+      "Allegiant Stadium"
+    ],
+    "latitude": 36.0908515,
+    "longitude": -115.1833441,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "WAS00": {
+    "names": [
+      "Northwest Stadium"
+    ],
+    "latitude": 38.907703,
+    "longitude": -76.8645083,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MEL00": {
+    "names": [
+      "Melbourne Cricket Ground"
+    ],
+    "latitude": -37.819943,
+    "longitude": 144.983447,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "RIO00": {
+    "names": [
+      "Maracana Stadium"
+    ],
+    "latitude": -22.912222222222223,
+    "longitude": -43.23027777777778,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "PAR00": {
+    "names": [
+      "Stade de France"
+    ],
+    "latitude": 48.92444444444445,
+    "longitude": 2.36,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MAD01": {
+    "names": [
+      "Bernabeu"
+    ],
+    "latitude": 40.45306,
+    "longitude": -3.68835,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  },
+  "MUN01": {
+    "names": [
+      "FC Bayern Munich Stadium"
+    ],
+    "latitude": 48.2188932,
+    "longitude": 11.6247241,
+    "source": "https://github.com/greerreNFL/stadiums/blob/950a7cec2b577786189edfae9748a9bde58d7758/data/stadiums.csv"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-09-28T14:58:11.861077+00:00",
+  "source_hashes": {
+    "data\\cache\\research\\injuries-2020.parquet": "72defadc2d2a626e799c1d35b357363fd7f8697736700621aa81bbeddaf1badb",
+    "data\\cache\\research\\injuries-2021.parquet": "f1ec4248f25913bfcaddb119e193a398c51afca271c88b3c197bd8af847e17e2",
+    "data\\cache\\research\\injuries-2022.parquet": "cb6c2f92354df8ab84aab572658a4220ef58e6ca4cd9bccc0ac1e17c9f9bcf41",
+    "data\\cache\\research\\injuries-2023.parquet": "63dee59344eef00377816261bcecf9296671c665f671bdf6753bf56be5228b63",
+    "data\\cache\\research\\injuries-2024.parquet": "328ec1fe0de63ea09b729d1836ad1189e218d031dd61ea030294937f00b66cb6",
+    "data\\cache\\research\\injuries-2025.parquet": "af8d76c7159caf42be996278c9074440501f5b057aed09a8fdce8f7f5b3eafcf",
+    "data\\cache\\research\\pbp-2020.parquet": "184d1b1e4801d203d21b99104e7d300ee4fca634bb1163190fc617bf43ef08c2",
+    "data\\cache\\research\\pbp-2021.parquet": "eac4d1e2296748a1ded0348d83886acd867453a65a999d086a3a50b89eb1e156",
+    "data\\cache\\research\\pbp-2022.parquet": "f23a6413ea05972162031003ddb83be9a71c54cbc4ac1245b5b3a74c9ad92292",
+    "data\\cache\\research\\pbp-2023.parquet": "193a9b79a86940fe8dba1a9c9f4a8305d2ced1b50d6f8b9efe3bd5f4dd27ea89",
+    "data\\cache\\research\\pbp-2024.parquet": "b0e5a679d6519b46b8e937d1317b384bb94017e82bb9579c43a7f0565de83994",
+    "data\\cache\\research\\pbp-2025.parquet": "d3736d5312b54981516f5d47ad3019141cae29270f8714269377d0c00b4725c2",
+    "data\\cache\\research\\rosters-2020.parquet": "069bf555e06428f9509f3504a43dd05932de27a3a95008107dbce330a365e990",
+    "data\\cache\\research\\rosters-2021.parquet": "20f8cca8c0c6a2ced796bacdaebc1152026d06682f5b2cff0a2e6a2e66d497df",
+    "data\\cache\\research\\rosters-2022.parquet": "dd6d88965dfeb52947b0d614c1aad7fe7b0bf4ff634296131b225d0e12520669",
+    "data\\cache\\research\\rosters-2023.parquet": "60cb9b325b4fba3a26b192505923db25de2facac1256772648968e81322ab361",
+    "data\\cache\\research\\rosters-2024.parquet": "5cb0a81dc8a6e0acb5d8e2d037860549d6b611ed7257ab65fc4c2f79eded5074",
+    "data\\cache\\research\\rosters-2025.parquet": "4a7cfc3cd455bd1c8ae91fc3c66a2b932e1386c516ccdca5ddf0a404fd61561c",
+    "data\\cache\\research\\schedules.parquet": "bf4426db89e5e9cae2202ecfb8a0572c13567fcce3525648aaacab4d60f1e7cc",
+    "data\\cache\\research\\snaps-2020.parquet": "c263a4bc7dd600b091e98da82ee501e53aa44eae83ac57d2c083987f06c6f7b9",
+    "data\\cache\\research\\snaps-2021.parquet": "c2edbe6edf95e6923217e367b7b54c7c0f7cc5e6abe49def4ca51fdfe7c358c5",
+    "data\\cache\\research\\snaps-2022.parquet": "b56cc3953c4265cee0c6784857aa02ed6776c144b7428ea7bb7e348c980c428f",
+    "data\\cache\\research\\snaps-2023.parquet": "d1bfd5fca2d507d90dc2754d85448488a4b2c5e0262e8a0ffef9ce717340f1aa",
+    "data\\cache\\research\\snaps-2024.parquet": "d83c11a0b16bef838919be0353ec10bff63edbbe1083d7c968978c841ed22770",
+    "data\\cache\\research\\snaps-2025.parquet": "c944476448140e5a4a766f219b5f5e3f2b4ed0b3f4cbf889da1b6eeacc43ac53"
+  },
+  "code_hashes": {
+    "C:\\Users\\drew\\nfl-prediction-system\\nfl_strength_benchmark.py": "4fbddd90cfcbdd9c1eefca43bb506914cde9260caa05f585587b0f378458fded",
+    "nfl_prediction\\artifacts.py": "d5317ac1c464b070e43a4b52951d582816682536f2cefb901b0e605d801f6213",
+    "nfl_prediction\\config.py": "f6c2a9ebc747c55ab9c4e686bf925bb585de01f0a821728bb857cd5f74a3fb80",
+    "nfl_prediction\\data.py": "a630253d85014e826faf5e5bdeebaf19efd9bb87482998ecd3d96565ad6fbff4",
+    "nfl_prediction\\features.py": "5c12acca41b4ac1e6813eeb271b60ed6dec1b6d0de80571f53534184b52e23b5",
+    "nfl_prediction\\historical_market.py": "49a3b8c13b5ce8a75b4117bd333247821136ba5c906fa768d00131848e21986c",
+    "nfl_prediction\\injuries.py": "8d165a93908ef32480b2a79112936a8b029a5d58265be57c59ebfeb6e5c8f69b",
+    "nfl_prediction\\io.py": "25aa2ac3fa3618e34312b3a7290531af7785ea1c7289305f40bdbf8283815f67",
+    "nfl_prediction\\ledger.py": "dff57e443dcb87c91fa9712534a41cb0fdc3cb0f15b15ccfe07f8a8f3c919195",
+    "nfl_prediction\\lineup.py": "e7e22558c4a9b02c16831d360322a9950e8c74446e4f36de327fe9916cd601be",
+    "nfl_prediction\\market.py": "d334435521913f7d7106aa2b484bdb8c908a32c5488acdd16a925542515155d8",
+    "nfl_prediction\\modeling.py": "d05adaa4c69503c1f139a4f3066c3c27946c46ff51d73a802f1428e538e4a046",
+    "nfl_prediction\\odds.py": "3edc96e07883e4a03b34ce6bc8d3513af7a690b4bfc5490d34453ae73f5c2062",
+    "nfl_prediction\\pipeline.py": "5351631e4116b704fbcfbea166a4fd6bf77eee244db30037fb46d3ca40aa2fc7",
+    "nfl_prediction\\preseason.py": "29e328facd346323e7e79ce42e8b4df1b66e40cc60c08a3a340fb2eb2b9f5c25",
+    "nfl_prediction\\qb_replacement.py": "5ac02dc0c784cd1fd4b3058bc093f06223ca752a7cc740a6696583bb85c32e3f",
+    "nfl_prediction\\quality.py": "326c3315ba708fda09da61190330468fcc708fd81ef04fa920a4a51d38848333",
+    "nfl_prediction\\rankings.py": "02e3e161fa609a1fd1ba4497e53bd7ffd02706d70cdefa338fc0a0a9e2bfde01",
+    "nfl_prediction\\results.py": "426eee1ad067e8e50ba3fa7b5b4487aac272d78acae3b9dc70f7aa20bd82e980",
+    "nfl_prediction\\results_ui.py": "b785eeca877e24e729aa774a417890d9b29e726a5ad3ff084082a166a5072f04",
+    "nfl_prediction\\roster.py": "1257009c8749cf433641ce1b2a402406a51e20f9108cd94e12f5b08f843f4f7c",
+    "nfl_prediction\\strength.py": "6ebd466aaea74357eafa3d56e88957bcf94233aa5ef2f7e0bc1c431d5e17949a",
+    "nfl_prediction\\ui.py": "54e6d1b725f77e29c32216fc84f6d97366902ffd292373f99cc0b8f91a74097b",
+    "nfl_prediction\\validation.py": "18bdc4b531c44808561672bcdf6fa9c4bc09b476412c37d8ef39cab047dfa50c",
+    "nfl_prediction\\weather.py": "e99502e5b9bba89e4e7bca2526badeed04ec41221066efe466c8452d4e2506b2",
+    "nfl_prediction\\__init__.py": "ff26d7c14f0a274f0d47a578ef2d69f04e1aeab8c5e475516ca85e63d617dcd2"
+  },
+  "configs": {
+    "carry_50": {
+      "carry": 0.5,
+      "observation_variance": 144.0,
+      "offseason_variance": 16.0,
+      "process_variance": 1.0
+    },
+    "carry_75": {
+      "carry": 0.75,
+      "observation_variance": 144.0,
+      "offseason_variance": 16.0,
+      "process_variance": 1.0
+    }
+  },
+  "selection": "For each outer season 2023-2025, choose using earlier OOF seasons only",
+  "features": [
+    "strength_margin",
+    "strength_total",
+    "strength_uncertainty"
+  ],
+  "promotion": "No automatic promotion; report paired week-block intervals and early-season errors",
+  "timing_limit": "Both core features and strength state are fixed before the week. Historical feeds are latest revised vintages, not archived publication-time feeds."
+}

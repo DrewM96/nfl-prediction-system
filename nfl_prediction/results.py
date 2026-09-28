@@ -91,6 +91,7 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
             result = settled.get(str(prediction["game_id"]), {})
             football = prediction.get("football_only") or {}
             qb_shadow = prediction.get("qb_shadow") or {}
+            lineup_shadow = prediction.get("lineup_shadow") or {}
             calibrated = bool((prediction.get("preseason_calibration") or {}).get("weight"))
             market = prediction.get("market_consensus") or {}
             captured = market.get("snapshot_at")
@@ -142,6 +143,10 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                 qb_shadow_raw_adjustment=qb_shadow.get("raw_margin_adjustment"),
                 qb_shadow_lambda=qb_shadow.get("lambda"),
                 qb_shadow_eligible=bool(qb_shadow.get("eligible", False)),
+                lineup_shadow_margin=lineup_shadow.get("shadow_margin")
+                if lineup_shadow.get("eligible")
+                else None,
+                lineup_shadow_version=lineup_shadow.get("version"),
                 qb_shadow_injury_snapshot_at=qb_shadow.get("injury_snapshot_at"),
                 market_margin=spread.get("market_home_margin") if market_valid else None,
                 market_total=total_market.get("total") if market_valid else None,
