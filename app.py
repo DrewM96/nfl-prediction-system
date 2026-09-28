@@ -1267,6 +1267,19 @@ def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
 
 
 def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
+    if detailed:
+        with st.expander("Forecast inputs and availability"):
+            status = game.get("calibration_status")
+            if status:
+                st.write(
+                    {"forecast_method": game.get("forecast_method"), "market_calibration": status}
+                )
+            st.write(
+                game.get("input_quality")
+                or "Input provenance was not recorded for this older forecast."
+            )
+            if game.get("lineup_shadow"):
+                st.write({"QB research forecast (not applied)": game["lineup_shadow"]})
     snapshot = game.get("injury_snapshot") or {}
     if not snapshot:
         return

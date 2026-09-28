@@ -262,6 +262,43 @@ def _team_state(history: list[dict[str, Any]], priors: dict[str, float]) -> dict
     }
 
 
+def team_input_audit(history: list[dict[str, Any]], season: int) -> dict[str, Any]:
+    """Keep missing observations distinct from numerical prior fallbacks."""
+    recent = history[-4:]
+    current = sum(row.get("season") == season for row in recent)
+    return {
+        "current_season_games_l4": current,
+        "prior_season_games_l4": len(recent) - current,
+        "league_prior_game_equivalents": 2.0,
+        "current_season_direct_weight": current / (len(recent) + 2.0),
+        "sources_l8": [
+            {
+                key: str(row[key]) if key == "gameday" else row.get(key)
+                for key in (
+                    "game_id",
+                    "season",
+                    "gameday",
+                    "pbp_available",
+                    "imputed_fields",
+                    "offense_epa_plays",
+                    "defense_epa_plays",
+                    "offense_dropbacks",
+                    "defense_dropbacks",
+                    "missing_epa_plays",
+                    "primary_qb",
+                )
+            }
+            for row in history[-8:]
+        ],
+        "missing_pbp_games_l4": [
+            row.get("game_id") for row in recent if not row.get("pbp_available")
+        ],
+        "imputed_fields_l4": sorted(
+            {key for row in recent for key in row.get("imputed_fields", [])}
+        ),
+    }
+
+
 def _regular_season(frame: pd.DataFrame) -> pd.DataFrame:
     result = frame.copy()
     if "game_type" in result:
@@ -295,6 +332,12 @@ def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, A
     else:
         success = _series(plays, "epa").gt(0).astype(float)
     plays["_scrimmage_epa"] = _series(plays, "epa").where(scrimmage)
+    plays["_missing_epa"] = (
+        scrimmage
+        & pd.to_numeric(
+            plays.get("epa", pd.Series(np.nan, index=plays.index)), errors="coerce"
+        ).isna()
+    ).astype(int)
     plays["_success"] = success.where(scrimmage)
     plays["_early_down_epa"] = _series(plays, "epa").where(early_down)
     plays["_explosive"] = explosive.where(scrimmage).astype(float)
@@ -306,10 +349,16 @@ def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, A
     plays["_sack"] = sack.astype(float)
 
     summaries: dict[tuple[str, str], dict[str, Any]] = {}
+    defenses = {
+        (str(game_id), str(team)): group
+        for (game_id, team), group in plays.dropna(subset=["game_id", "defteam"]).groupby(
+            ["game_id", "defteam"], sort=False
+        )
+    }
     for (game_id, team), offense in plays.dropna(subset=["game_id", "posteam"]).groupby(
         ["game_id", "posteam"], sort=False
     ):
-        defense = plays[(plays["game_id"] == game_id) & (plays.get("defteam") == team)]
+        defense = defenses.get((str(game_id), str(team)), plays.iloc[:0])
         offense_dropbacks = float(offense["_dropback"].sum())
         defense_dropbacks = float(defense["_dropback"].sum())
         neutral_plays = float(offense["_neutral_play"].sum())
@@ -320,6 +369,15 @@ def _game_team_summaries(pbp: pd.DataFrame) -> dict[tuple[str, str], dict[str, A
         )
         primary_qb = str(passer_ids.value_counts().index[0]) if not passer_ids.empty else None
         summaries[(str(game_id), str(team))] = {
+            "offense_epa_plays": int(
+                offense["_scrimmage_epa"].count() - offense["_missing_epa"].sum()
+            ),
+            "defense_epa_plays": int(
+                defense["_scrimmage_epa"].count() - defense["_missing_epa"].sum()
+            ),
+            "offense_dropbacks": int(offense_dropbacks),
+            "defense_dropbacks": int(defense_dropbacks),
+            "missing_epa_plays": int(offense["_missing_epa"].sum() + defense["_missing_epa"].sum()),
             "yards": float(_series(offense, "yards_gained").sum()),
             "off_epa": float(offense["_scrimmage_epa"].mean()),
             "def_epa": float(defense["_scrimmage_epa"].mean()),
@@ -361,6 +419,7 @@ def build_point_in_time_game_features(
     include_unplayed: bool = False,
     rosters: pd.DataFrame | None = None,
     snap_counts: pd.DataFrame | None = None,
+    freeze_week: bool = False,
 ) -> FeatureBuildResult:
     """Build leak-free game rows using only prior calendar dates.
 
@@ -377,7 +436,8 @@ def build_point_in_time_game_features(
     histories: dict[str, list[dict[str, Any]]] = defaultdict(list)
     rows: list[dict[str, Any]] = []
 
-    for game_day, day_games in schedule.groupby(schedule["gameday"].dt.date, sort=True):
+    grouping = ["season", "week"] if freeze_week else schedule["gameday"].dt.date
+    for _, day_games in schedule.groupby(grouping, sort=True):
         pending_updates: list[tuple[str, dict[str, Any]]] = []
         completed_before_day = [item for history in histories.values() for item in history]
         priors = DEFAULT_PRIORS.copy()
@@ -387,6 +447,7 @@ def build_point_in_time_game_features(
                 priors[key] = float(np.mean(values))
 
         for _, game in day_games.iterrows():
+            game_day = pd.Timestamp(game["gameday"]).date()
             completed = pd.notna(game.get("home_score")) and pd.notna(game.get("away_score"))
             if not completed and not include_unplayed:
                 continue
@@ -415,6 +476,10 @@ def build_point_in_time_game_features(
                 "rest_advantage": float(home_rest - away_rest),
                 "division_game": float(is_division_game(home, away)),
                 "home_field": 0.0 if neutral else 1.0,
+                "input_audit": {
+                    "home": team_input_audit(histories[home], int(game["season"])),
+                    "away": team_input_audit(histories[away], int(game["season"])),
+                },
             }
             row.update({f"home_{key}": value for key, value in home_state.items()})
             row.update({f"away_{key}": value for key, value in away_state.items()})
@@ -442,6 +507,25 @@ def build_point_in_time_game_features(
                         (
                             home,
                             {
+                                "game_id": game_id,
+                                "season": int(game["season"]),
+                                "pbp_available": bool(home_summary),
+                                "imputed_fields": [
+                                    key
+                                    for key in priors
+                                    if key not in {"points_for", "points_against", "win"}
+                                    and pd.isna(home_summary.get(key))
+                                ],
+                                **{
+                                    key: home_summary.get(key)
+                                    for key in (
+                                        "offense_epa_plays",
+                                        "defense_epa_plays",
+                                        "offense_dropbacks",
+                                        "defense_dropbacks",
+                                        "missing_epa_plays",
+                                    )
+                                },
                                 "gameday": game_day,
                                 "points_for": home_score,
                                 "points_against": away_score,
@@ -460,6 +544,25 @@ def build_point_in_time_game_features(
                         (
                             away,
                             {
+                                "game_id": game_id,
+                                "season": int(game["season"]),
+                                "pbp_available": bool(away_summary),
+                                "imputed_fields": [
+                                    key
+                                    for key in priors
+                                    if key not in {"points_for", "points_against", "win"}
+                                    and pd.isna(away_summary.get(key))
+                                ],
+                                **{
+                                    key: away_summary.get(key)
+                                    for key in (
+                                        "offense_epa_plays",
+                                        "defense_epa_plays",
+                                        "offense_dropbacks",
+                                        "defense_dropbacks",
+                                        "missing_epa_plays",
+                                    )
+                                },
                                 "gameday": game_day,
                                 "points_for": away_score,
                                 "points_against": home_score,
@@ -480,11 +583,30 @@ def build_point_in_time_game_features(
         for team, update in pending_updates:
             histories[team].append(update)
 
+    # Use the same league prior for a live team snapshot as for the next game's
+    # feature row. Fixed defaults here caused builder/scheduled forecast drift.
+    snapshot_priors = DEFAULT_PRIORS.copy()
+    for key in snapshot_priors:
+        values = [
+            float(item[key])
+            for history in histories.values()
+            for item in history
+            if pd.notna(item.get(key))
+        ]
+        if values:
+            snapshot_priors[key] = float(np.mean(values))
     team_snapshot = {
-        team: _team_state(history, DEFAULT_PRIORS) for team, history in histories.items()
+        team: _team_state(history, snapshot_priors) for team, history in histories.items()
     }
     transitions = build_roster_transition_table(rosters, snap_counts)
     games = attach_roster_transition_features(pd.DataFrame(rows), transitions)
+    roster_keys = set(zip(transitions.get("season", []), transitions.get("team", []), strict=True))
+    if not games.empty:
+        for _, game in games.iterrows():
+            game["input_audit"]["roster_transition_available"] = {
+                side: (int(game["season"]), game[f"{side}_team"]) in roster_keys
+                for side in ("home", "away")
+            }
     if not schedule.empty:
         latest_season = int(schedule["season"].max())
         for team, roster_state in roster_snapshot_for_season(transitions, latest_season).items():

@@ -214,3 +214,5 @@ data/cfb/private/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+.tools/
+data/weather_private/

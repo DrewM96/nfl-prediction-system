@@ -321,6 +321,12 @@ See [docs/CFB_FOUNDATION.md](docs/CFB_FOUNDATION.md) for boundaries and producti
 
 ## Operations
 
+The input-integrity checks, independent settlement refresh, weather archive, and
+baseline-relative QB/season-transition research are described in
+[docs/NFL_RESEARCH.md](docs/NFL_RESEARCH.md). Run `python nfl_results_update.py`
+to settle existing forecasts without retraining. Experimental weather and QB
+layers do not alter the published model.
+
 See [MODEL_CARD.md](MODEL_CARD.md) for intended use and limitations and [docs/OPERATIONS.md](docs/OPERATIONS.md) for weekly refresh, failure, rollback, and launch procedures.
 
 ## Data attribution

@@ -1,0 +1,92 @@
+{
+  "run_id": "20260925T214836Z-1cdb5f07",
+  "revision": 1,
+  "scored_at": "2026-09-28T14:42:22.550675+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_03_LAC_BUF",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 40.0
+    },
+    {
+      "game_id": "2026_03_CAR_CLE",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "2026_03_NYJ_DET",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 55.0
+    },
+    {
+      "game_id": "2026_03_HOU_IND",
+      "status": "final",
+      "actual_home_margin": 2.0,
+      "actual_total": 36.0
+    },
+    {
+      "game_id": "2026_03_NE_JAX",
+      "status": "final",
+      "actual_home_margin": 29.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "2026_03_KC_MIA",
+      "status": "final",
+      "actual_home_margin": -14.0,
+      "actual_total": 34.0
+    },
+    {
+      "game_id": "2026_03_TEN_NYG",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 19.0
+    },
+    {
+      "game_id": "2026_03_CIN_PIT",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 57.0
+    },
+    {
+      "game_id": "2026_03_SEA_WAS",
+      "status": "final",
+      "actual_home_margin": 2.0,
+      "actual_total": 64.0
+    },
+    {
+      "game_id": "2026_03_ARI_SF",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 66.0
+    },
+    {
+      "game_id": "2026_03_MIN_TB",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "2026_03_BAL_DAL",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 65.0
+    },
+    {
+      "game_id": "2026_03_LV_NO",
+      "status": "final",
+      "actual_home_margin": -8.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "2026_03_LA_DEN",
+      "status": "final",
+      "actual_home_margin": 4.0,
+      "actual_total": 56.0
+    }
+  ]
+}

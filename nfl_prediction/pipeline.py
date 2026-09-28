@@ -23,10 +23,12 @@ from .features import (
 )
 from .io import atomic_write_json, read_json, sha256_file
 from .ledger import PredictionLedger
+from .lineup import attach_lineup_shadow, lineup_table
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import _game_kickoff, attach_market_consensus, load_market_consensus
 from .preseason import apply_preseason_calibration
 from .qb_replacement import attach_qb_shadow_forecasts, build_qb_replacement_table
+from .quality import forecast_quality, validate_source_schema
 from .results import performance_history, settle_schedule
 
 
@@ -488,6 +490,7 @@ def _predict_upcoming_games(
                 "features": {feature: float(game[feature]) for feature in GAME_FEATURES},
                 "market_line": None,
                 "injury_adjustments": [],
+                "input_quality": game.get("input_quality"),
             }
         )
     return predictions
@@ -679,8 +682,17 @@ def _attach_official_injury_context(
 
 def run_update(as_of: datetime | None = None) -> UpdateResult:
     now = as_of or datetime.now(UTC)
+    # This entry point consumes live feeds, not archived publication vintages.
+    # Reject accidental historical replay rather than claim point-in-time data.
+    if now.tzinfo is None:
+        raise ValueError("Update timestamp must include a timezone")
+    if as_of is not None and abs((now - datetime.now(UTC)).total_seconds()) > 300:
+        raise ValueError(
+            "Historical updates require archived input vintages; run_update uses live feeds"
+        )
     context = get_season_context(now)
     data = load_nflverse_data(list(context.training_seasons))
+    validate_source_schema(data.pbp, data.schedules)
     raw_data_hash = _raw_data_fingerprint(data)
     game_result = build_point_in_time_game_features(
         data.schedules,
@@ -691,6 +703,22 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
     )
     games = game_result.games
     completed = games.dropna(subset=["home_margin", "total_points"]).copy()
+    unplayed = games[games["home_score"].isna()].copy()
+    current_season = unplayed[unplayed["season"].eq(context.prediction_season)]
+    if current_season.empty:
+        upcoming = current_season
+    else:
+        next_week = int(current_season["week"].min())
+        upcoming = current_season[current_season["week"].eq(next_week)]
+    forecast_week = int(upcoming["week"].min()) if not upcoming.empty else None
+    upcoming = upcoming.copy()
+    upcoming["input_quality"] = [
+        forecast_quality(row, not data.rosters.empty and not data.snap_counts.empty)
+        for _, row in upcoming.iterrows()
+    ]
+    blocked = [row["failures"] for row in upcoming["input_quality"] if row["status"] == "blocked"]
+    if blocked:
+        raise ValueError(f"Forecast input quality gate failed: {blocked}")
     margin_baseline, total_baseline = _game_baselines(completed)
     ensembles = {
         "game_margin": fit_ensemble(
@@ -731,14 +759,6 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         git_commit=_git_commit(),
     )
 
-    unplayed = games[games["home_score"].isna()].copy()
-    current_season = unplayed[unplayed["season"].eq(context.prediction_season)]
-    if current_season.empty:
-        upcoming = current_season
-    else:
-        next_week = int(current_season["week"].min())
-        upcoming = current_season[current_season["week"].eq(next_week)]
-    forecast_week = int(upcoming["week"].min()) if not upcoming.empty else None
     official_injuries = _official_injury_payload(
         data.injuries,
         context.prediction_season,
@@ -776,6 +796,19 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         injury_stale_for_prediction_week=bool(
             official_injuries.get("stale_for_prediction_week", True)
         ),
+    )
+    predictions = attach_lineup_shadow(
+        predictions,
+        lineup_table(
+            data.injuries,
+            data.pbp,
+            data.rosters,
+            season=context.prediction_season,
+            week=forecast_week,
+        ),
+        captured_at=official_injuries["generated_at"],
+        as_of=now,
+        fresh=not official_injuries["stale_for_prediction_week"],
     )
 
     ledger = PredictionLedger()

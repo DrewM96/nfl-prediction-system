@@ -104,8 +104,8 @@ class PredictionLedger:
         game_ids = {str(row["game_id"]) for row in batch["predictions"]}
         latest = self.latest_results(run_id)
         changed = []
-        for source in results:
-            row = {**source, "game_id": str(source["game_id"])}
+        for result in results:
+            row = {**result, "game_id": str(result["game_id"])}
             if row["game_id"] not in game_ids:
                 raise ValueError("Settlement game is absent from prediction batch")
             previous = latest.get(row["game_id"], {})

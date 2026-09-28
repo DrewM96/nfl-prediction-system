@@ -1,0 +1,60 @@
+name: NFL results and weather observations
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 12 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-model-update
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Retain weather snapshots awaiting review
+        run: |
+          if git ls-remote --exit-code origin refs/heads/automation/nfl-observations >/dev/null 2>&1; then
+            git fetch origin automation/nfl-observations
+            git archive --format=tar FETCH_HEAD data/weather | tar --skip-old-files -xf -
+          fi
+      - run: python nfl_results_update.py
+      - run: python nfl_weather_update.py
+      - run: python -m pytest -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nfl-weather-raw-${{ github.run_id }}
+          path: data/weather_private/
+          retention-days: 90
+      - name: Open observation update for review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="automation/nfl-observations"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add data/predictions/settlements data/nfl_results_summary.json data/weather performance_history.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: refresh NFL settlements and weather observations"
+          git push --force-with-lease origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
+            cat > /tmp/observation-pr.md <<'EOF'
+          Append official outcomes and archive pregame weather for prospective research. Frozen predictions and production models are unchanged. The observation workflow passed the test suite.
+          EOF
+            gh pr create --draft --base main --head "$branch" --title "chore: refresh NFL observations" --body-file /tmp/observation-pr.md
+          fi
