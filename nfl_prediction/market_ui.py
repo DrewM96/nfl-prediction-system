@@ -6,6 +6,21 @@ from html import escape
 from typing import Any
 
 
+def age_label(seconds: float | None) -> str:
+    if seconds is None or seconds < 0:
+        return "unavailable"
+    minutes = int(seconds // 60)
+    if minutes == 0:
+        return "just now"
+    if minutes < 60:
+        return f"{minutes}m ago"
+    hours, minutes = divmod(minutes, 60)
+    if hours < 24:
+        return f"{hours}h {minutes}m ago" if minutes else f"{hours}h ago"
+    days, hours = divmod(hours, 24)
+    return f"{days}d {hours}h ago" if hours else f"{days}d ago"
+
+
 def public_action_html(game: dict[str, Any], context: dict[str, Any]) -> str:
     """Equal-weight book averages, with complete side pairs per metric."""
     panels = []
@@ -63,6 +78,19 @@ def public_action_html(game: dict[str, Any], context: dict[str, Any]) -> str:
         coverage = (
             f"Average across {count} books" if count > 1 else "1 book" if count else "Unavailable"
         )
+        source_age = ""
+        if used:
+            ages = [books[key].get("source_age_seconds") for key in used]
+            oldest = max(ages) if all(age is not None for age in ages) else None
+            label = "Oldest source" if count > 1 else "Source"
+            exact_times = "; ".join(
+                f"{titles.get(key, key)}: {books[key].get('source_timestamp') or 'unknown'}"
+                for key in sorted(used)
+            )
+            source_age = (
+                f'<div class="grid-splits-empty" title="{escape(exact_times)}">'
+                f"{label}: {age_label(oldest)}</div>"
+            )
         headings = "".join(
             f'<th scope="col">{label} <span class="grid-split-count">({len(contributors[field])})</span></th>'
             for field, label in (("ticket_pct", "Tickets"), ("handle_pct", "Handle"))
@@ -71,11 +99,19 @@ def public_action_html(game: dict[str, Any], context: dict[str, Any]) -> str:
             '<section class="grid-split-book">'
             f'<div class="grid-split-source">{title}{stale}</div>'
             f'<div class="grid-splits-empty">{coverage}</div>'
+            f"{source_age}"
             '<table class="grid-split-table"><thead><tr>'
             f'<th scope="col">{"Side" if kind == "total" else "Team"}</th>{headings}</tr></thead>'
             f"<tbody>{''.join(rows)}</tbody></table></section>"
         )
-    return '<div class="grid-public-splits">' + "".join(panels) + "</div>"
+    checked = ""
+    if context.get("last_attempt_at"):
+        failure = " · Refresh failed" if context.get("splits_error") else ""
+        checked = (
+            f'<div class="grid-splits-empty" title="{escape(str(context["last_attempt_at"]))}">'
+            f"Last check: {age_label(context.get('checked_age_seconds'))}{failure}</div>"
+        )
+    return '<div class="grid-public-splits">' + "".join(panels) + "</div>" + checked
 
 
 def market_context_html(game: dict[str, Any], context: dict[str, Any]) -> str:

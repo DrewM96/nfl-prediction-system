@@ -614,3 +614,50 @@ def test_book_average_empty_and_zero_values(slate, splits):
     rendered = public_action_html(slate[0], {"splits": books})
     assert ">0.0%</td>" in rendered and ">100.0%</td>" in rendered
     assert "Includes stale data" not in rendered
+
+
+@pytest.mark.parametrize(
+    "seconds,stale", [(900, False), (1800, False), (3600, False), (3601, True)]
+)
+def test_split_freshness_has_its_own_one_hour_window(odds, splits, slate, seconds, stale):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    books = parse_splits(splits)[EVENT]
+    for book in books.values():
+        book["source_timestamp"] = (NOW - timedelta(seconds=seconds)).isoformat()
+    board["games"][0]["splits"] = books
+    context = current_context(slate[0], board, now=NOW)
+    assert context["splits"]["draftkings"]["stale"] is stale
+    assert context["splits"]["draftkings"]["source_age_seconds"] == seconds
+    assert context["status"] == "fresh"  # Odds use their own source timestamps.
+
+
+def test_public_action_exposes_source_age_separately_from_poll_time(odds, splits, slate):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    books = parse_splits(splits)[EVENT]
+    books["draftkings"]["source_timestamp"] = (NOW - timedelta(minutes=20)).isoformat()
+    books["circa"]["source_timestamp"] = (NOW - timedelta(minutes=45)).isoformat()
+    board["games"][0]["splits"] = books
+    board["last_attempt_at"] = (NOW - timedelta(minutes=2)).isoformat()
+    context = current_context(slate[0], board, now=NOW)
+    rendered = public_action_html(slate[0], context)
+    assert "Oldest source: 45m ago" in rendered
+    assert rendered.count("Source: 20m ago") == 2  # Only DK contributes ML and totals.
+    assert "Last check: 2m ago" in rendered
+    assert "Includes stale data" not in rendered
+    assert books["circa"]["source_timestamp"] in rendered
+    board["splits_error"] = "Refresh failed"
+    context = current_context(slate[0], board, now=NOW)
+    rendered = public_action_html(slate[0], context)
+    assert "Includes stale data" in rendered and "Refresh failed" in rendered
+    assert "Oldest source: 45m ago" in rendered
+
+
+@pytest.mark.parametrize("stamp", [None, "bad", (NOW + timedelta(minutes=1)).isoformat()])
+def test_invalid_split_source_time_remains_explicit(odds, splits, slate, stamp):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    books = parse_splits(splits)[EVENT]
+    books["circa"]["source_timestamp"] = stamp
+    board["games"][0]["splits"] = books
+    context = current_context(slate[0], board, now=NOW)
+    assert context["splits"]["circa"]["stale"]
+    assert "Oldest source: unavailable" in public_action_html(slate[0], context)

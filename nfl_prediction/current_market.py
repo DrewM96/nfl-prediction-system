@@ -21,6 +21,7 @@ from .owls import OwlsClient, OwlsError, parse_odds, parse_splits, timestamp
 
 POLL_SECONDS = 300
 STALE_SECONDS = 900
+SPLIT_STALE_SECONDS = 3600
 
 
 def database_path() -> Path:
@@ -34,9 +35,15 @@ def market_provider() -> str:
     return provider
 
 
-def stale_at(value: str | None, now: datetime) -> bool:
+def age_seconds(value: str | None, now: datetime) -> float | None:
     stamp = timestamp(value)
-    return stamp is None or not 0 <= (now - parse_timestamp(stamp)).total_seconds() <= STALE_SECONDS
+    age = (now - parse_timestamp(stamp)).total_seconds() if stamp else None
+    return age if age is not None and age >= 0 else None
+
+
+def stale_at(value: str | None, now: datetime, *, max_age: int = STALE_SECONDS) -> bool:
+    age = age_seconds(value, now)
+    return age is None or age > max_age
 
 
 class MarketStore:
@@ -283,12 +290,17 @@ def current_context(
 ) -> dict[str, Any]:
     """Read-only projection of current context; frozen dictionaries are never mutated."""
     now = now or datetime.now(UTC)
+    checked = {
+        "last_attempt_at": board.get("last_attempt_at"),
+        "checked_age_seconds": age_seconds(board.get("last_attempt_at"), now),
+    }
     market = next(
         (g for g in board.get("games", []) if str(g["game_id"]) == str(forecast.get("game_id"))),
         None,
     )
     if market is None:
         return {
+            **checked,
             "status": "unavailable",
             "reason": board.get("odds_error") or "Game not matched",
             "splits": {},
@@ -303,6 +315,7 @@ def current_context(
         or any(market.get(k) != forecast.get(k) for k in ("home_team", "away_team"))
     ):
         return {
+            **checked,
             "status": "unavailable",
             "reason": "Game identity or kickoff mismatch",
             "splits": {},
@@ -329,10 +342,11 @@ def current_context(
         reasons.append("No spread available")
     splits = copy.deepcopy(market.get("splits", {}))
     for book in splits.values():
+        book["source_age_seconds"] = age_seconds(book.get("source_timestamp"), now)
         book["stale"] = bool(
             board.get("splits_error")
             or book.get("unavailable")
-            or stale_at(book.get("source_timestamp"), now)
+            or stale_at(book.get("source_timestamp"), now, max_age=SPLIT_STALE_SECONDS)
         )
     agreement: dict[str, dict[str, str]] = {}
     for kind in ("spread", "moneyline", "total"):
@@ -350,6 +364,7 @@ def current_context(
             )
     margin = forecast.get("predicted_home_margin")
     return {
+        **checked,
         "status": "stale" if reasons else "fresh",
         "reason": "; ".join(reasons),
         "provider": board.get("provider", "Owls Insight"),

@@ -132,7 +132,13 @@ missing/future source time, old capture time, provider stale flag, missing game,
 or provider failure marks the current comparison stale. After kickoff the
 comparison is marked stale/pregame-only. In-game lines are not presented as a
 fresh edge against a pregame projection. Split freshness is evaluated separately
-per book; stale books are excluded from cross-book agreement claims.
+per book with a **60-minute** threshold; missing/invalid source timestamps,
+failed split refreshes, and missing books still mark retained figures stale.
+Each public-action panel shows its oldest contributing source's age, with
+exact timestamps on hover and in Market details. A separate Last check time
+is the backend's last poll attempt, not the age of the sportsbook figures.
+Stale books are excluded from cross-book agreement claims. The odds/forecast
+snapshot threshold remains 15 minutes; the longer window applies to splits.
 
 ## Frozen versus current data
 
