@@ -11,6 +11,22 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: gridline_market_test
+          POSTGRES_USER: gridline_test
+          POSTGRES_PASSWORD: gridline_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      GRIDLINE_TEST_DATABASE_URL: postgresql://gridline_test:gridline_test@localhost:5432/gridline_market_test?sslmode=disable
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,4 +39,4 @@ jobs:
       - run: ruff format --check .
       - run: python -m mypy
       - run: python -m pytest -q
-      - run: python -m py_compile app.py injury_system.py weekly_nfl_update.py weekly_cfb_update.py cfb_historical_benchmark.py cfb_production_update.py market_update.py current_market_update.py historical_market_benchmark.py nfl_prediction/*.py cfb_prediction/*.py
+      - run: python -m py_compile app.py serve.py injury_system.py weekly_nfl_update.py weekly_cfb_update.py cfb_historical_benchmark.py cfb_production_update.py market_update.py current_market_update.py historical_market_benchmark.py nfl_prediction/*.py cfb_prediction/*.py

@@ -6,6 +6,43 @@ injury handling and model binaries are unchanged.
 
 ## Configuration and deployment
 
+### Heroku
+
+GitHub secrets are available to Actions, **not automatically to Heroku**. Set
+`OWLS_INSIGHT_API_KEY` under the Heroku app's **Settings > Config Vars**. Retain
+the existing `ODDS_API_KEY` for legacy jobs. Never put either value in Git.
+
+Attach a Postgres database under **Resources** (review the plan's charge before
+provisioning). Heroku supplies `DATABASE_URL`; the app and worker both use it.
+An existing external Postgres database can instead be supplied through
+`GRIDLINE_MARKET_DATABASE_URL`, which takes precedence. Connections default to
+TLS. The database role needs permission to create the `gridline_market` schema
+and its tables/functions/triggers; unrelated application tables are untouched.
+
+Deploy the code, then keep the `web` process running. Its `python serve.py`
+command starts Streamlit and a supervised backend poller automatically. A
+separate `market` dyno is unnecessary; if already enabled it can be scaled to
+zero. Multiple pollers still coordinate through the same Postgres transaction
+lock and persisted rate-limit gates. No browser session is needed to start the
+worker. A worker failure is retried after 60 seconds without stopping forecasts.
+
+Heroku's isolated ephemeral disks cannot safely host the market database.
+Polling is disabled with an explicit setup error when running on Heroku without
+Postgres. This prevents apparently successful but lost/unshared history.
+The first successful poll creates the schema and populates both slates; allow
+up to a minute for cards to reflect it. Source timestamps may still be stale.
+Eco dynos sleep, so continuous observations require a web dyno that stays awake.
+
+Check status from Heroku's **More > Run console** with
+`python current_market_update.py --status`, or via
+`heroku run python current_market_update.py --status --app YOUR_APP`.
+The command shows storage type, credential presence (never values), game counts,
+poll times, and redacted errors without making provider calls. If the key was
+added after an authentication failure, its persisted cooldown can last an hour;
+do not bypass it with repeated manual polls. Worker stdout appears in Heroku logs.
+
+### Local or persistent-disk hosts
+
 1. Install dependencies with `python -m pip install -r requirements-dev.txt`
    (use `requirements.txt` on the runtime host).
 2. Set **process environment variables** on the backend:
@@ -27,13 +64,14 @@ injury handling and model binaries are unchanged.
 4. Warm the cache: `python current_market_update.py --sport both`.
 5. Start one supervised backend worker:
    `python current_market_update.py --watch --sport both`.
-6. Start the app: `streamlit run app.py`. Both processes must use the same DB
+6. Start the app: `streamlit run app.py`. Alternatively, `python serve.py` starts
+   both automatically; use `GRIDLINE_MARKET_AUTOSTART=0` only with a separately
+   supervised worker. Both processes must use the same DB
    path, deployment checkout, and current schedule artifacts. `Procfile` includes
    a `market` process command, but **separate ephemeral Heroku dyno filesystems
    are not shared storage**. Deploy on a host/container with a persistent local
-   volume and colocated worker/app processes. Multi-host deployments need a
-   shared database service implementation before rollout; do not put SQLite WAL
-   on a network filesystem.
+   volume and colocated worker/app processes, or configure Postgres as above.
+   Do not put SQLite WAL on a network filesystem.
 7. Configure the existing GitHub secret `OWLS_INSIGHT_API_KEY` for forecast CI.
    Weekly jobs perform a best-effort cache warmup. They intentionally retain
    the explicit legacy NFL calibration snapshot step. CI's ephemeral cache is
@@ -139,6 +177,19 @@ report different lines and capture times. No opaque "sharp" score is produced.
 
 Tables are created idempotently on the first backend poll; no existing forecast
 database needs migration.
+
+Postgres uses equivalent tables in the `gridline_market` schema, an identity
+observation ID, a transaction-scoped advisory lock for writers/account limits,
+and a trigger rejecting UPDATE, DELETE, and TRUNCATE of history. The schema is
+created idempotently on first poll. Existing SQLite histories are not silently
+copied or discarded: retain/back up any local database when moving to Postgres;
+the remote store starts capturing prospectively. Database failures never fall
+back to an unshared local file. Local SQLite remains supported unchanged.
+
+The CI suite runs Postgres integration tests on an isolated Postgres 16 service.
+To run them locally, set `GRIDLINE_TEST_DATABASE_URL` to a disposable database
+named `gridline_market_test` (never production); these tests recreate only its
+`gridline_market` schema. Production credentials are not used in tests.
 
 | Table | Purpose |
 | --- | --- |

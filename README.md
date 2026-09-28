@@ -115,6 +115,12 @@ No current-market data is added to model inputs.
 
 Set `OWLS_INSIGHT_API_KEY` in the backend process environment, then run:
 
+On Heroku, set this key in **Heroku Config Vars** as well as GitHub secrets,
+and attach Postgres (`DATABASE_URL`). The web command starts its market poller
+automatically; persistent shared Postgres replaces dyno-local SQLite. See the
+[Heroku setup steps](docs/OWLS_MARKET_DATA.md#heroku). Check configuration without
+printing credentials using `python current_market_update.py --status`.
+
 ```bash
 python current_market_update.py --sport both
 python current_market_update.py --watch
