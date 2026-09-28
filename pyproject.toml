@@ -16,6 +16,7 @@ dependencies = [
   "nflreadpy==0.1.5",
   "polars==1.32.3",
   "pyarrow==21.0.0",
+  "psycopg[binary]==3.2.10",
 ]
 
 [tool.setuptools.packages.find]
@@ -34,7 +35,7 @@ select = ["E", "F", "I", "B", "UP", "SIM"]
 ignore = ["E501"]
 
 [tool.mypy]
-files = ["nfl_prediction/owls.py", "nfl_prediction/current_market.py", "nfl_prediction/market_parity.py", "nfl_prediction/market_ui.py", "current_market_update.py", "market_update.py"]
+files = ["nfl_prediction/owls.py", "nfl_prediction/current_market.py", "nfl_prediction/market_postgres.py", "nfl_prediction/market_parity.py", "nfl_prediction/market_ui.py", "current_market_update.py", "market_update.py", "serve.py"]
 follow_imports = "silent"
 ignore_missing_imports = true
 check_untyped_defs = true

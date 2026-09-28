@@ -7,11 +7,14 @@ import hashlib
 import json
 import os
 import sqlite3
-from contextlib import closing
+from contextlib import closing, contextmanager
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import psycopg
+
+from . import market_postgres
 from .config import MARKET_PRIVATE_DIR
 from .odds import _game_kickoff, attach_market_consensus, parse_timestamp
 from .owls import OwlsClient, OwlsError, parse_odds, parse_splits, timestamp
@@ -39,6 +42,28 @@ def stale_at(value: str | None, now: datetime) -> bool:
 class MarketStore:
     def __init__(self, path: str | Path | None = None):
         self.path = Path(path) if path is not None else database_path()
+        # An explicit CLI/test path selects SQLite. Otherwise all dynos use PG.
+        self.database_url = (
+            os.environ.get("GRIDLINE_MARKET_DATABASE_URL") or os.environ.get("DATABASE_URL")
+            if path is None
+            else None
+        )
+
+    @property
+    def configuration_error(self) -> str | None:
+        if os.environ.get("DYNO") and not self.database_url:
+            return "Persistent market database is not configured for Heroku"
+        return None
+
+    @contextmanager
+    def writer(self):
+        if self.database_url:
+            with market_postgres.writer(self.database_url) as db:
+                yield db
+        else:
+            with closing(self.connect()) as db, db:
+                db.execute("BEGIN IMMEDIATE")
+                yield db
 
     def connect(self) -> sqlite3.Connection:
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -72,25 +97,27 @@ class MarketStore:
         return connection
 
     def read(self, sport: str) -> dict[str, Any]:
-        if not self.path.exists():
+        if self.configuration_error:
+            return {"games": [], "odds_error": self.configuration_error}
+        if not self.database_url and not self.path.exists():
             return {"games": [], "odds_error": "Market worker has not populated the cache"}
         try:
-            with closing(
-                sqlite3.connect(f"{self.path.resolve().as_uri()}?mode=ro", uri=True, timeout=1)
-            ) as db:
-                row = db.execute(
-                    "SELECT payload FROM market_cache WHERE sport=?", (sport,)
-                ).fetchone()
-            return (
-                json.loads(row[0])
-                if row
-                else {"games": [], "odds_error": "No cached market for sport"}
-            )
-        except (sqlite3.Error, OSError, ValueError):
+            if self.database_url:
+                payload = market_postgres.read(self.database_url, sport)
+            else:
+                with closing(
+                    sqlite3.connect(f"{self.path.resolve().as_uri()}?mode=ro", uri=True, timeout=1)
+                ) as db:
+                    row = db.execute(
+                        "SELECT payload FROM market_cache WHERE sport=?", (sport,)
+                    ).fetchone()
+                payload = json.loads(row[0]) if row else None
+            return payload or {"games": [], "odds_error": "No cached market for sport"}
+        except (sqlite3.Error, psycopg.Error, OSError, ValueError):
             return {"games": [], "odds_error": "Market cache unavailable"}
 
     @staticmethod
-    def observe(db: sqlite3.Connection, game: dict[str, Any], captured_at: str) -> None:
+    def observe(db: Any, game: dict[str, Any], captured_at: str) -> None:
         for key in set(game.get("books", {})) | set(game.get("splits", {})):
             odds = game.get("books", {}).get(key, {})
             splits = game.get("splits", {}).get(key)
@@ -141,12 +168,13 @@ def poll_market(
 ) -> dict[str, Any]:
     """Transactional single writer, persisted cadence/backoff shared by all workers."""
     store = store or MarketStore()
+    if store.configuration_error:
+        return {"games": [], "odds_error": store.configuration_error}
     client = client or OwlsClient()
     now = now or datetime.now(UTC)
     captured = now.isoformat()
     try:
-        with closing(store.connect()) as db, db:
-            db.execute("BEGIN IMMEDIATE")
+        with store.writer() as db:
             old_row = db.execute(
                 "SELECT payload FROM market_cache WHERE sport=?", (sport,)
             ).fetchone()
@@ -166,7 +194,7 @@ def poll_market(
                         }
                     return board
             db.execute(
-                "INSERT OR REPLACE INTO poll_state VALUES (?,?)",
+                "INSERT INTO poll_state VALUES (?,?) ON CONFLICT(key) DO UPDATE SET next_at=excluded.next_at",
                 (sport, (now + timedelta(seconds=POLL_SECONDS)).isoformat()),
             )
             if not slate:
@@ -203,7 +231,7 @@ def poll_market(
                     board["odds_error"] = str(exc)
                     board["splits_error"] = "Splits not refreshed because odds request failed"
                     db.execute(
-                        "INSERT OR REPLACE INTO poll_state VALUES ('account',?)",
+                        "INSERT INTO poll_state VALUES ('account',?) ON CONFLICT(key) DO UPDATE SET next_at=excluded.next_at",
                         ((now + timedelta(seconds=exc.retry_after)).isoformat(),),
                     )
                 # Account-wide authentication/rate-limit backoff also stops the second request.
@@ -227,13 +255,13 @@ def poll_market(
                     except OwlsError as exc:
                         board["splits_error"] = str(exc)
                         db.execute(
-                            "INSERT OR REPLACE INTO poll_state VALUES ('account',?)",
+                            "INSERT INTO poll_state VALUES ('account',?) ON CONFLICT(key) DO UPDATE SET next_at=excluded.next_at",
                             ((now + timedelta(seconds=exc.retry_after)).isoformat(),),
                         )
                 quota_wait = getattr(client, "quota_retry_after", 0)
                 if quota_wait:
                     db.execute(
-                        "INSERT OR REPLACE INTO poll_state VALUES ('account',?)",
+                        "INSERT INTO poll_state VALUES ('account',?) ON CONFLICT(key) DO UPDATE SET next_at=excluded.next_at",
                         ((now + timedelta(seconds=quota_wait)).isoformat(),),
                     )
                 for game in board.get("games", []):
@@ -242,11 +270,11 @@ def poll_market(
                         store.observe(db, game, captured)
             board["last_attempt_at"] = captured
             db.execute(
-                "INSERT OR REPLACE INTO market_cache VALUES (?,?)",
+                "INSERT INTO market_cache VALUES (?,?) ON CONFLICT(sport) DO UPDATE SET payload=excluded.payload",
                 (sport, json.dumps(board, allow_nan=False)),
             )
             return board
-    except (sqlite3.Error, OSError):
+    except (sqlite3.Error, psycopg.Error, OSError, ValueError):
         return {**store.read(sport), "odds_error": "Market cache busy or unavailable"}
 
 

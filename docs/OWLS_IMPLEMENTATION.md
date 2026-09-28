@@ -1,5 +1,10 @@
 # Owls migration completion report
 
+Deployment follow-up: Heroku now uses shared Postgres and the web launcher
+starts its market worker automatically. GitHub secrets must also be configured
+in Heroku Config Vars. See the current [Heroku instructions](OWLS_MARKET_DATA.md#heroku).
+The original live parity results below remain the pre-deployment sample.
+
 ## 1. Architecture
 
 Owls normalized NFL/NCAAF odds → existing median consensus calculation →
@@ -92,8 +97,9 @@ games (DraftKings on 50, Circa on 52). Missing books/markets remain explicit.
   treating all returned medians as fresh. No stale quote is silently promoted.
 - History starts with deployment and scheduled capture; no historical API was
   used and nothing was backfilled.
-- SQLite requires colocated processes and persistent local disk. Separate
-  ephemeral app/worker hosts need a shared database service implementation.
+- SQLite requires colocated processes and persistent local disk. Heroku and
+  separate app/worker hosts use Postgres through `DATABASE_URL` or
+  `GRIDLINE_MARKET_DATABASE_URL`.
 - Matchups must be on the supplied GRIDLINE slate with matching kickoff and
   explicit aliases. Warm an upcoming slate before generating its forecasts.
 - Existing NFL preseason calibration already uses the legacy market snapshot.
@@ -105,14 +111,15 @@ Follow [OWLS_MARKET_DATA.md](OWLS_MARKET_DATA.md) for environment and host detai
 
 1. Install `requirements.txt` on the runtime host and `requirements-dev.txt` in CI.
 2. Set backend `OWLS_INSIGHT_API_KEY`, retain `ODDS_API_KEY`, and set
-   `GRIDLINE_MARKET_PROVIDER=owls` and an absolute persistent `GRIDLINE_MARKET_DB`.
+   `GRIDLINE_MARKET_PROVIDER=owls`. On Heroku attach Postgres (`DATABASE_URL`);
+   on persistent-disk hosts use an absolute persistent `GRIDLINE_MARKET_DB`.
 3. Configure the GitHub `OWLS_INSIGHT_API_KEY` secret for the weekly jobs.
 4. With the deployment's current slate files in place, run
    `python current_market_update.py --sport both`. Supply `--slate-nfl` /
    `--slate-ncaaf` for upcoming unpublished schedules.
-5. Supervise `python current_market_update.py --watch --sport both` and run
-   `streamlit run app.py` on the same persistent disk/DB path. Do not use
-   separate unshared ephemeral dynos for these two processes.
+5. Run `python serve.py` to start the web app and supervised poller (the Heroku
+   Procfile does this automatically). Separate workers remain supported when
+   they use the same persistent storage; disable autostart for that arrangement.
 6. Verify cards and stale/error states, database backups, and worker logs. Run
    `python current_market_update.py --parity --sport both --output reports/owls-parity.json`.
 7. Keep collecting/reviewing parity before turning off legacy jobs. No model

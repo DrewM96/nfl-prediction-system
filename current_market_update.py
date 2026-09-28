@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 from collections import Counter
 from pathlib import Path
@@ -43,10 +44,36 @@ def main(argv: list[str] | None = None) -> int:
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--watch", action="store_true")
     modes.add_argument("--parity", action="store_true")
+    modes.add_argument(
+        "--status", action="store_true", help="Read deployment status without polling"
+    )
     parser.add_argument("--output", type=Path, default=Path("reports/owls-parity.json"))
     args = parser.parse_args(argv)
     sports = ("nfl", "ncaaf") if args.sport == "both" else (args.sport,)
     store = MarketStore(args.db)
+    if args.status:
+        boards = {sport: store.read(sport) for sport in sports}
+        print(
+            json.dumps(
+                {
+                    "storage": "postgres" if store.database_url else "sqlite",
+                    "owls_key_configured": bool(os.environ.get("OWLS_INSIGHT_API_KEY", "").strip()),
+                    "configuration_error": store.configuration_error,
+                    "sports": {
+                        sport: {
+                            "cached_games": len(board.get("games", [])),
+                            "last_attempt_at": board.get("last_attempt_at"),
+                            "odds_error": board.get("odds_error"),
+                            "splits_error": board.get("splits_error"),
+                        }
+                        for sport, board in boards.items()
+                    },
+                },
+                indent=2,
+            ),
+            flush=True,
+        )
+        return int(bool(store.configuration_error))
     while True:
         results = {}
         for sport in sports:
