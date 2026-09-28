@@ -1,0 +1,36 @@
+{
+  "nfl": {
+    "captured_at": "2026-09-28T21:57:41.677838+00:00",
+    "cached_games": 1,
+    "odds_error": null,
+    "splits_error": null,
+    "split_games": 1,
+    "split_books": {
+      "draftkings": 1,
+      "circa": 1
+    },
+    "freshness": {
+      "unavailable": 14,
+      "fresh": 1
+    },
+    "unmatched_split_events": 16
+  },
+  "ncaaf": {
+    "captured_at": "2026-09-28T21:57:42.725889+00:00",
+    "cached_games": 56,
+    "odds_error": null,
+    "splits_error": null,
+    "split_games": 56,
+    "split_books": {
+      "draftkings": 50,
+      "circa": 52
+    },
+    "freshness": {
+      "fresh": 2,
+      "stale": 54
+    },
+    "unmatched_split_events": 0
+  },
+  "observations": 545,
+  "observations_with_splits": 104
+}

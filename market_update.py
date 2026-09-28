@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from datetime import datetime
 
@@ -27,11 +28,39 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--markets", default=",".join(DEFAULT_MARKETS))
     result.add_argument("--max-credits", type=int, default=20)
     result.add_argument("--dry-run", action="store_true")
+    result.add_argument("--provider", choices=("owls", "legacy"))
+    result.add_argument("--sport", choices=("nfl", "ncaaf", "both"), default="nfl")
     return result
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    provider = args.provider or (
+        "legacy" if args.historical_at else os.environ.get("GRIDLINE_MARKET_PROVIDER", "owls")
+    )
+    if provider == "owls":
+        if args.historical_at:
+            parser().error("Owls history is not used; pass --provider legacy for paid history")
+        if args.dry_run:
+            print(
+                json.dumps(
+                    {
+                        "provider": "Owls Insight",
+                        "maximum_requests": 4 if args.sport == "both" else 2,
+                        "minimum_poll_seconds": 300,
+                    }
+                )
+            )
+            return 0
+        from current_market_update import main as current_main
+
+        return current_main(["--sport", args.sport])
+    if provider != "legacy":
+        parser().error("GRIDLINE_MARKET_PROVIDER must be owls or legacy")
+    if args.sport != "nfl":
+        parser().error(
+            "Legacy snapshot publishing is NFL-only; use current_market_update.py --parity for NCAAF comparison"
+        )
     markets = tuple(item.strip() for item in args.markets.split(",") if item.strip())
     if not markets or not set(markets).issubset(DEFAULT_MARKETS):
         parser().error("markets must be spreads, totals, or both")

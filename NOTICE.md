@@ -14,6 +14,10 @@ Market comparison can use The Odds API. The provider's terms and attribution req
 
 Provider: https://the-odds-api.com/
 
+Current market context also uses Owls Insight (https://owlsinsight.com/).
+Book-level history remains private; public action is attributed to its source
+sportsbook. Owls' data-use terms apply independently of this project's license.
+
 Terms: https://the-odds-api.com/terms-and-conditions.html
 
 College Football foundation data is retrieved from CollegeFootballData. The API key and raw

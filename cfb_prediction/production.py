@@ -8,6 +8,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from nfl_prediction.current_market import freeze_market_context
 from nfl_prediction.io import atomic_write_json, read_json, sha256_file
 from nfl_prediction.results import performance_history, settle_schedule
 
@@ -307,7 +308,8 @@ def run_cfb_production_update(
         if market_consensus is not None:
             prediction["market_consensus"] = market_consensus
         predictions.append(prediction)
-    market_games = sum("market_consensus" in prediction for prediction in predictions)
+    predictions = freeze_market_context(predictions, "ncaaf", as_of=timestamp)
+    market_games = sum(bool(prediction.get("market_consensus")) for prediction in predictions)
     target = record_cfb_prediction_batch(
         predictions,
         model_hash=model_hash,
@@ -322,7 +324,14 @@ def run_cfb_production_update(
             "market_data_used": False,
             "market_data_used_as_model_input": False,
             "market_data_captured_for_evaluation": market_games > 0,
-            "market_snapshot_at": market_snapshot_at.isoformat() if market_games else None,
+            "market_snapshot_at": max(
+                (
+                    p["market_consensus"]["snapshot_at"]
+                    for p in predictions
+                    if p.get("market_consensus")
+                ),
+                default=None,
+            ),
             "market_coverage": {
                 "games_with_market": market_games,
                 "forecast_games": len(predictions),

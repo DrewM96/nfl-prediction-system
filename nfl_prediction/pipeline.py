@@ -811,6 +811,10 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         fresh=not official_injuries["stale_for_prediction_week"],
     )
 
+    # Provider context is attached only after every predictive calculation is complete.
+    from .current_market import freeze_market_context
+
+    predictions = freeze_market_context(predictions, "nfl", as_of=now)
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
         predictions,

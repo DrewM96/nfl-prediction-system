@@ -28,6 +28,7 @@ from nfl_prediction.config import (
     PROJECT_ROOT,
     is_division_game,
 )
+from nfl_prediction.current_market import MarketStore, current_context
 from nfl_prediction.io import read_json, sha256_file
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
@@ -35,6 +36,7 @@ from nfl_prediction.market import (
     no_vig_probabilities,
     over_probability,
 )
+from nfl_prediction.market_ui import market_context_html
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.preseason import apply_preseason_calibration
@@ -326,6 +328,21 @@ st.markdown(
       border-radius: var(--radius-md);
     }
     .grid-result-value { margin-top: 2px; font: 500 var(--text-title) var(--font-ui); }
+    .grid-public-splits { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; margin: 10px 0 4px; }
+    .grid-split-book { padding: 10px 14px; border: 1px solid var(--grid-border); border-radius: 10px; min-width: 0; }
+    .grid-split-source { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: 600; margin-bottom: 6px; }
+    .grid-split-count { color: var(--grid-faint); }
+    .grid-split-stale { font-size: var(--text-xs); font-weight: 500; color: #9a6700; background: #fff8e6; padding: 1px 6px; border-radius: var(--radius-pill); }
+    .grid-split-book table.grid-split-table { width: 100%; border: 0; border-collapse: collapse; font-size: var(--text-sm); margin: 0; }
+    .grid-split-book table.grid-split-table th, .grid-split-book table.grid-split-table td { border: 0; padding: 3px 6px; text-align: right; font-variant-numeric: tabular-nums; }
+    .grid-split-book table.grid-split-table thead th { font-size: var(--text-xs); font-weight: 500; color: var(--grid-muted); }
+    .grid-split-book table.grid-split-table thead tr:first-child th:first-child, .grid-split-book table.grid-split-table tbody th { text-align: left; }
+    .grid-split-book table.grid-split-table tbody th { font-weight: 500; max-width: 140px; white-space: normal; }
+    .grid-split-book table.grid-split-table tbody tr:first-child > * { padding-top: 7px; }
+    .grid-splits-empty { color: var(--grid-muted); font-size: var(--text-xs); padding-top: 6px; }
+    .grid-market-details { margin-top: 6px; font-size: var(--text-sm); }
+    .grid-market-details > summary { cursor: pointer; color: var(--grid-muted); padding: 6px 0; font-size: var(--text-xs); }
+    .grid-market-context { display: flex; flex-wrap: wrap; gap: 24px; padding: 12px 0; }
     .grid-market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .grid-market-card {
       display: flex;
@@ -764,7 +781,8 @@ st.markdown(
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] {
         display: grid !important;
         grid-template-columns: repeat(3,minmax(0,1fr));
-        gap: 8px 6px !important;
+        column-gap: 6px !important;
+        row-gap: 14px !important;
       }
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] {
         display: grid !important;
@@ -783,7 +801,8 @@ st.markdown(
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 3; grid-row: 1; }
       [class*="st-key-game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
-      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1),
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(6) { grid-column: 3; grid-row: 1; }
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) { grid-column: 1 / -1; }
       [class*="st-key-cfb_game_card_"] [data-testid="stHorizontalBlock"] > div:nth-child(2) {
         padding: 4px 0 6px;
@@ -1108,8 +1127,20 @@ def team_logo_html(team: str, sport: str, variant: str = "card") -> str:
     )
 
 
+@st.cache_data(ttl=30)
+def load_current_market(sport: str) -> dict[str, Any]:
+    return MarketStore().read(sport)
+
+
+@st.fragment(run_every="60s")
+def render_current_market(game: dict[str, Any], sport: str) -> None:
+    context = current_context(game, load_current_market(sport))
+    st.markdown(market_context_html(game, context), unsafe_allow_html=True)
+
+
 def market_tile(game: dict[str, Any]) -> str:
     label, value = market_line_label(game)
+    label = f"Market at forecast · {label}"
     pending = not bool(game.get("market_consensus"))
     classes = "grid-tile dashed" if pending else "grid-tile"
     value_class = "grid-tile-value pending" if pending else "grid-tile-value"
@@ -1330,33 +1361,91 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
     )
 
 
-def render_featured_game(game: dict[str, Any]) -> None:
-    away = html_text(game["away_team"])
-    home = html_text(game["home_team"])
+def forecast_card_values(game: dict[str, Any], sport: str) -> list[tuple[str, str]]:
+    college = sport == "cfb"
+    return [
+        ("GRIDLINE", cfb_spread_label(game) if college else spread_label(game)),
+        (
+            "Market at forecast",
+            cfb_market_spread_label(game) if college else nfl_market_spread_label(game),
+        ),
+        ("Home win", format_probability(game["home_win_probability"])),
+        ("Model total", f"{float(game['predicted_total'] if college else game['total']):.1f}"),
+    ]
+
+
+def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool = False) -> Any:
+    """One presentation for NFL and college; only source field names differ."""
+    college = sport == "cfb"
+    kickoff = format_cfb_game_time(game) if college else format_game_time(game)
+    separator = (
+        ("vs" if game.get("neutral_site") else "@") if college else game_matchup_separator(game)
+    )
+    if game.get("neutral_site"):
+        kickoff += " · neutral"
+    teams = []
+    for side in ("away", "home"):
+        score = game[f"predicted_{side}_score" if college else f"{side}_score"]
+        logo = (
+            team_logo_html(str(game[f"{side}_team"]), sport, "hero")
+            if featured
+            else team_logo_html(str(game[f"{side}_team"]), sport)
+        )
+        teams.append(
+            f'<div class="grid-team-inline">{logo}<span><b class="grid-cfb-team-name">{html_text(game[f"{side}_team"])}</b><br><span class="grid-muted">{float(score):.1f}</span></span></div>'
+        )
+    matchup = f'<div class="grid-cfb-team-pair">{teams[0]}<span class="grid-at">{separator}</span>{teams[1]}</div>'
+    values = forecast_card_values(game, sport)
+    if featured:
+        tiles = "".join(
+            f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div></div>'
+            for label, value in values
+        )
+        st.markdown(
+            '<div class="grid-hero grid-cfb-hero">'
+            '<div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured matchup</div>'
+            f'<div class="grid-hero-main"><div>{matchup}<div class="grid-row-date" style="text-align:center;margin-top:8px">{html_text(kickoff)}</div></div>'
+            f'<div class="grid-tiles">{tiles}</div></div></div>',
+            unsafe_allow_html=True,
+        )
+        return None
+    columns = st.columns([1.5, 4.2, 1.0, 1.0, 1.0, 1.0, 0.8], vertical_alignment="center")
+    columns[0].markdown(
+        f'<div class="grid-row-date">{html_text(kickoff)}</div>', unsafe_allow_html=True
+    )
+    columns[1].markdown(matchup, unsafe_allow_html=True)
+    for column, (label, value) in zip(columns[2:6], values, strict=False):
+        column.markdown(
+            f'<div class="grid-row-value"><div class="grid-mini-label">{label}</div>{html_text(value)}</div>',
+            unsafe_allow_html=True,
+        )
+    return columns[6]
+
+
+def render_forecast_details(game: dict[str, Any], sport: str, *, collapsed: bool = True) -> None:
+    college = sport == "cfb"
+    if college:
+        extra = f"80% margin range: {float(game['margin_p10']):+.1f} to {float(game['margin_p90']):+.1f}"
+    else:
+        extra = f"Edge at forecast: {nfl_market_edge_label(game)} · Total model / market at forecast: {nfl_total_label(game)}"
+    body = f'{probability_bar(game)}<div class="grid-detail-range">{html_text(extra)}</div>'
     st.markdown(
-        f"""
-        <div class="grid-hero">
-          <div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured matchup</div>
-          <div class="grid-hero-main">
-            <div class="grid-matchup">
-              <div class="grid-team">{team_logo_html(str(game["away_team"]), "nfl", "hero")}<div class="grid-team-abbr">{away}</div><div class="grid-score">{float(game["away_score"]):.1f}</div></div>
-              <div class="grid-at">{game_matchup_separator(game)}</div>
-              <div class="grid-team">{team_logo_html(str(game["home_team"]), "nfl", "hero")}<div class="grid-team-abbr">{home}</div><div class="grid-score">{float(game["home_score"]):.1f}</div></div>
-              <div class="grid-date">{html_text(format_game_time(game))}</div>
-            </div>
-            <div class="grid-tiles">
-              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value">{html_text(spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value">{html_text(nfl_market_spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Edge</div><div class="grid-tile-value">{html_text(nfl_market_edge_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Total · model / Vegas</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(nfl_total_label(game))}</div></div>
-            </div>
-          </div>
-          {probability_bar(game)}
-        </div>
-        """,
+        (
+            '<details class="grid-market-details"><summary>Forecast details</summary>'
+            + body
+            + "</details>"
+        )
+        if collapsed
+        else body,
         unsafe_allow_html=True,
     )
-    render_official_injury_snapshot(game)
+
+
+def render_featured_game(game: dict[str, Any]) -> None:
+    render_forecast_header(game, "nfl", featured=True)
+    render_current_market(game, "nfl")
+    render_forecast_details(game, "nfl")
+    render_official_injury_snapshot(game, detailed=True)
 
 
 def market_inputs(
@@ -1497,45 +1586,17 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
     game_id = str(game.get("game_id", index))
     expanded = st.session_state.get("expanded_game_id") == game_id
     with st.container(border=True, key=f"game_card_{index}"):
-        columns = st.columns([1.5, 4.2, 0.9, 0.9, 0.9, 1.1, 0.8], vertical_alignment="center")
-        columns[0].markdown(
-            f'<div class="grid-row-date">{html_text(format_game_time(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[1].markdown(
-            f"""
-            <div class="grid-team-pair">
-              <div class="grid-team-inline">{team_logo_html(str(game["away_team"]), "nfl")}<span><b>{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["away_score"]):.1f}</span></span></div>
-              <span class="grid-at">{game_matchup_separator(game)}</span>
-              <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "nfl")}<span><b>{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["home_score"]):.1f}</span></span></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        columns[2].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">GRIDLINE</div>{html_text(spread_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Vegas</div>{html_text(nfl_market_spread_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[4].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Edge</div>{html_text(nfl_market_edge_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[5].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Total · M / V</div>{html_text(nfl_total_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        if columns[6].button(
-            "Hide ▲" if expanded else "Why? ▼",
+        toggle = render_forecast_header(game, "nfl")
+        if toggle.button(
+            "Hide ▲" if expanded else "Details ▼",
             key=f"toggle_game_{index}",
             width="stretch",
         ):
             st.session_state.expanded_game_id = None if expanded else game_id
             st.rerun()
+        render_current_market(game, "nfl")
         if expanded:
+            render_forecast_details(game, "nfl", collapsed=False)
             reasons = "".join(
                 f'<div class="grid-reason"><span>›</span><div>{html_text(reason)}</div></div>'
                 for reason in game_reasoning(game)
@@ -1558,8 +1619,6 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
                 '<div class="grid-game-detail"><section>'
                 '<div class="grid-kicker">Why the model leans this way</div>'
                 f'<div class="grid-game-reasons">{reasons}</div></section><section>'
-                '<div class="grid-kicker">Win probability</div>'
-                f"{probability_bar(game).strip()}"
                 f'<div class="grid-detail-range">80% total range: <b>{float(game["total_p10"]):.1f}–{float(game["total_p90"]):.1f}</b></div>'
                 f"{basis}"
                 f"{market_tile(game).replace('grid-tile', 'grid-placeholder', 1).strip()}"
@@ -1596,7 +1655,10 @@ def _featured_game_score(game: dict[str, Any]) -> float:
 
 
 def render_this_week(state: dict[str, Any]) -> None:
-    schedule = state["schedule"]
+    schedule = [
+        {"forecast_at": (state.get("prediction_batch") or {}).get("created_at"), **g}
+        for g in state["schedule"]
+    ]
     week = state.get("report", {}).get("week")
     title = f"This Week — Week {week}" if week is not None else "This Week"
     calibrated = any(game.get("preseason_calibration") for game in schedule)
@@ -2093,71 +2155,26 @@ def cfb_market_spread_label(game: dict[str, Any]) -> str:
 
 
 def render_cfb_featured_game(game: dict[str, Any]) -> None:
-    away = html_text(game["away_team"])
-    home = html_text(game["home_team"])
-    venue = "Neutral site" if game.get("neutral_site") else "Campus game"
-    margin_range = f"{float(game['margin_p10']):+.1f} to {float(game['margin_p90']):+.1f}"
-    st.markdown(
-        f"""
-        <div class="grid-hero grid-cfb-hero">
-          <div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured CFB matchup</div>
-          <div class="grid-hero-main">
-            <div class="grid-matchup">
-              <div class="grid-cfb-team">{team_logo_html(str(game["away_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{away}</div><div class="grid-score">{float(game["predicted_away_score"]):.1f}</div></div>
-              <div class="grid-at">{"vs" if game.get("neutral_site") else "@"}</div>
-              <div class="grid-cfb-team">{team_logo_html(str(game["home_team"]), "cfb", "hero")}<div class="grid-cfb-team-name-large">{home}</div><div class="grid-score">{float(game["predicted_home_score"]):.1f}</div></div>
-              <div class="grid-date">{html_text(format_cfb_game_time(game))} · {venue}</div>
-            </div>
-            <div class="grid-tiles" style="grid-template-columns:repeat(5,minmax(88px,1fr))">
-              <div class="grid-tile"><div class="grid-tile-label">GRIDLINE</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(cfb_spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Vegas</div><div class="grid-tile-value" style="font-size: var(--text-md)">{html_text(cfb_market_spread_label(game))}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Home win</div><div class="grid-tile-value">{format_probability(game["home_win_probability"])}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">Total O/U</div><div class="grid-tile-value">{float(game["predicted_total"]):.1f}</div></div>
-              <div class="grid-tile"><div class="grid-tile-label">80% margin range</div><div class="grid-tile-value" style="font-size: var(--text-base)">{margin_range}</div></div>
-            </div>
-          </div>
-          {probability_bar(game)}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    render_forecast_header(game, "cfb", featured=True)
+    render_current_market(game, "ncaaf")
+    render_forecast_details(game, "cfb")
 
 
 def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
-    venue = " · neutral" if game.get("neutral_site") else ""
-    separator = "vs" if game.get("neutral_site") else "@"
+    game_id = str(game.get("game_id", index))
+    expanded = st.session_state.get("expanded_cfb_game_id") == game_id
     with st.container(border=True, key=f"cfb_game_card_{index}"):
-        columns = st.columns([1.5, 4.2, 1.0, 1.0, 1.0, 1.0], vertical_alignment="center")
-        columns[0].markdown(
-            f'<div class="grid-row-date">{html_text(format_cfb_game_time(game))}{venue}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[1].markdown(
-            f"""
-            <div class="grid-cfb-team-pair">
-              <div class="grid-team-inline">{team_logo_html(str(game["away_team"]), "cfb")}<span><b class="grid-cfb-team-name">{html_text(game["away_team"])}</b><br><span class="grid-muted">{float(game["predicted_away_score"]):.1f}</span></span></div>
-              <span class="grid-at">{separator}</span>
-              <div class="grid-team-inline">{team_logo_html(str(game["home_team"]), "cfb")}<span><b class="grid-cfb-team-name">{html_text(game["home_team"])}</b><br><span class="grid-muted">{float(game["predicted_home_score"]):.1f}</span></span></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        columns[2].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">GRIDLINE</div>{html_text(cfb_spread_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[3].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Vegas</div>{html_text(cfb_market_spread_label(game))}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[4].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Home win</div>{format_probability(game["home_win_probability"])}</div>',
-            unsafe_allow_html=True,
-        )
-        columns[5].markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">Total</div>{float(game["predicted_total"]):.1f}</div>',
-            unsafe_allow_html=True,
-        )
+        toggle = render_forecast_header(game, "cfb")
+        if toggle.button(
+            "Hide ▲" if expanded else "Details ▼",
+            key=f"toggle_game_cfb_{index}",
+            width="stretch",
+        ):
+            st.session_state.expanded_cfb_game_id = None if expanded else game_id
+            st.rerun()
+        render_current_market(game, "ncaaf")
+        if expanded:
+            render_forecast_details(game, "cfb", collapsed=False)
 
 
 def render_cfb_foundation(state: dict[str, Any]) -> None:
@@ -2165,7 +2182,14 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     forecast_ready = state.get("production_status") == "forecast_ready"
     prediction_batch = state.get("prediction_batch")
     model_manifest = state.get("model_manifest")
-    predictions = prediction_batch.get("predictions", []) if prediction_batch else []
+    predictions = (
+        [
+            {"forecast_at": prediction_batch.get("created_at"), **g}
+            for g in prediction_batch.get("predictions", [])
+        ]
+        if prediction_batch
+        else []
+    )
     forecast_week = (
         prediction_batch.get("metadata", {}).get("forecast_week", "—") if prediction_batch else "—"
     )

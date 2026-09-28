@@ -10,6 +10,14 @@ from .config import PREDICTIONS_DIR
 from .io import atomic_write_json, read_json
 
 
+def _forecast_context(prediction: dict[str, Any], created_at: datetime) -> dict[str, Any]:
+    spread = (prediction.get("market_consensus") or {}).get("spread") or {}
+    line = spread.get("home_spread")
+    if line is None and spread.get("market_home_margin") is not None:
+        line = -float(spread["market_home_margin"])
+    return {"forecast_at": created_at.isoformat(), "market_line": line, **prediction}
+
+
 class PredictionLedger:
     """Immutable pregame prediction batches.
 
@@ -39,7 +47,9 @@ class PredictionLedger:
             "data_cutoff": data_cutoff,
             "model_hash": model_hash,
             "metadata": metadata or {},
-            "predictions": list(predictions),
+            "predictions": [
+                _forecast_context(prediction, created_at) for prediction in predictions
+            ],
         }
         target = self.root / f"{run_id}.json"
         atomic_write_json(target, payload)
