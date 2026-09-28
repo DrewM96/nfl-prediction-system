@@ -49,6 +49,11 @@ jobs:
             cfb-data-${{ env.SEASON }}-
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -r requirements-dev.txt
+      - name: Refresh Owls market context
+        continue-on-error: true
+        env:
+          OWLS_INSIGHT_API_KEY: ${{ secrets.OWLS_INSIGHT_API_KEY }}
+        run: python current_market_update.py --sport ncaaf
       - name: Refresh and publish CFB forecast
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}

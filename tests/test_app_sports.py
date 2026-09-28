@@ -13,8 +13,13 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.error
     assert not app.exception
     assert any("GRIDLINE" in markdown.value for markdown in app.markdown)
-    assert any("Vegas" in markdown.value for markdown in app.markdown)
-    assert any("Edge" in markdown.value for markdown in app.markdown)
+    assert any("Market at forecast" in markdown.value for markdown in app.markdown)
+    assert any("Home win" in markdown.value for markdown in app.markdown)
+    assert any("Model total" in markdown.value for markdown in app.markdown)
+    nfl_labels = [m.value for m in app.markdown if 'class="grid-mini-label"' in m.value][:4]
+    next(button for button in app.button if button.label == "Details ▼").click().run(timeout=30)
+    assert not app.exception
+    assert any("Why the model leans this way" in m.value for m in app.markdown)
 
     sport.set_value("College Football").run(timeout=30)
 
@@ -22,11 +27,19 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.exception
     assert any("College Football" in markdown.value for markdown in app.markdown)
     assert any("Forecasts" in markdown.value for markdown in app.markdown)
-    assert any("Featured CFB matchup" in markdown.value for markdown in app.markdown)
+    assert any("Featured matchup" in markdown.value for markdown in app.markdown)
     assert any("logo" in markdown.value for markdown in app.markdown)
     assert any("Home win" in markdown.value for markdown in app.markdown)
+    assert any("Model total" in markdown.value for markdown in app.markdown)
     assert any("GRIDLINE" in markdown.value for markdown in app.markdown)
-    assert any("Vegas" in markdown.value for markdown in app.markdown)
+    assert any("Market at forecast" in markdown.value for markdown in app.markdown)
+
+    cfb_labels = [m.value for m in app.markdown if 'class="grid-mini-label"' in m.value][:4]
+    for nfl_label, cfb_label in zip(nfl_labels, cfb_labels, strict=True):
+        assert nfl_label.split("</div>")[0] == cfb_label.split("</div>")[0]
+    next(button for button in app.button if button.label == "Details ▼").click().run(timeout=30)
+    assert not app.exception
+    assert any(button.label == "Hide ▲" for button in app.button)
 
     navigation = next(radio for radio in app.radio if radio.label == "Navigate")
     navigation.set_value("Top 30").run(timeout=30)

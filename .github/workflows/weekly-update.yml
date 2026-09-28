@@ -27,9 +27,15 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -r requirements-dev.txt
       - name: Refresh NFL market consensus
+        continue-on-error: true
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python market_update.py --max-credits 2
+        run: python market_update.py --provider legacy --max-credits 2
+      - name: Refresh Owls market context
+        continue-on-error: true
+        env:
+          OWLS_INSIGHT_API_KEY: ${{ secrets.OWLS_INSIGHT_API_KEY }}
+        run: python current_market_update.py --sport nfl
       - name: Generate weekly NFL forecasts with market context
         run: python weekly_nfl_update.py
       - run: python -m pytest -q

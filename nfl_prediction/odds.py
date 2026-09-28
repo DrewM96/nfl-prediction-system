@@ -137,10 +137,16 @@ class OddsApiClient:
         )
 
     def current_odds(
-        self, *, regions: str = "us", markets: tuple[str, ...] = DEFAULT_MARKETS
+        self,
+        *,
+        regions: str = "us",
+        markets: tuple[str, ...] = DEFAULT_MARKETS,
+        sport_key: str = NFL_SPORT_KEY,
     ) -> OddsFetchResult:
+        if sport_key not in {NFL_SPORT_KEY, "americanfootball_ncaaf"}:
+            raise ValueError("Unsupported football sport")
         return self._get(
-            f"/sports/{NFL_SPORT_KEY}/odds",
+            f"/sports/{sport_key}/odds",
             {
                 "regions": regions,
                 "markets": ",".join(markets),

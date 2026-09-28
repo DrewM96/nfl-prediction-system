@@ -42,7 +42,7 @@ The `NFL market snapshot` workflow runs at six intentional weekly checkpoints: T
 
 Before first merge, applying the `live-market-test` label to a same-repository pull request performs one two-credit API smoke test. That labeled-PR path never publishes a snapshot or pushes an automation branch.
 
-1. Keep `ODDS_API_KEY` only in GitHub Actions secrets or a local ignored `.env`; never paste it into an issue, log, or artifact.
+1. See [Owls market deployment](OWLS_MARKET_DATA.md) for the new current-market worker, persistent storage, environment setup and parity gate. Keep `OWLS_INSIGHT_API_KEY` and `ODDS_API_KEY` in backend environment variables or GitHub Actions secrets; never paste them into an issue, log, or artifact. Use `--provider legacy` for the legacy commands below.
 2. Review the workflow's returned remaining/used/last-request quota fields after each run.
 3. Review the draft PR and confirm `snapshot_at`, game count, team mappings, spread direction, book count, and dispersion.
 4. Merge the consensus PR before running the weekly model update if that immutable prediction batch should include the snapshot.

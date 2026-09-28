@@ -105,23 +105,38 @@ The updater fetches schedules, play-by-play, weekly rosters, injury reports, and
 
 Never load model bundles from an untrusted source. Checksums detect corruption, but Python model serialization is still a trusted-artifact boundary.
 
-## Market snapshots
+## Market snapshots and semi-live context
 
-Create `.env` from `.env.example`, set `ODDS_API_KEY`, and fetch current NFL spreads and totals:
+Owls Insight supplies NFL and NCAAF current odds and sportsbook-attributed
+betting splits through a shared backend cache. Published forecast projections,
+market-at-forecast lines and timestamps remain frozen. Cards separately show
+current market, movement, current edge, freshness and per-book public action.
+No current-market data is added to model inputs.
+
+Set `OWLS_INSIGHT_API_KEY` in the backend process environment, then run:
 
 ```bash
-python market_update.py --dry-run
-python market_update.py
+python current_market_update.py --sport both
+python current_market_update.py --watch
 ```
 
-The dry run estimates credits without contacting the provider. Current `us` spreads plus totals are budgeted at two credits. A paid historical request is explicitly gated and estimated at 20 credits:
+The worker and Streamlit must share a persistent local SQLite path configured
+with `GRIDLINE_MARKET_DB`. The default is ignored `data/market_private/market.sqlite3`.
+See [deployment, schema, polling and parity instructions](docs/OWLS_MARKET_DATA.md)
+and the [pre-change audit](docs/OWLS_AUDIT.md).
+
+The Odds API remains available during verification. Set `ODDS_API_KEY` in the
+environment and use explicit legacy commands:
 
 ```bash
-python market_update.py --historical-at 2025-09-07T15:00:00Z --dry-run
-python market_update.py --historical-at 2025-09-07T15:00:00Z --max-credits 20
+python market_update.py --provider legacy --dry-run
+python market_update.py --provider legacy --max-credits 2
+python current_market_update.py --parity --sport both
+python market_update.py --provider legacy --historical-at 2025-09-07T15:00:00Z --max-credits 20
 ```
 
-Historical raw and consensus files remain private and ignored. Current public consensus is a small analytical summary, not a standalone odds feed. The automated workflow uses the repository secret `ODDS_API_KEY` and opens a draft pull request containing only `market_consensus.json`.
+The legacy NFL calibration snapshot is kept separate from the Owls cache.
+Raw legacy responses and the new book-level observation history remain private.
 
 ### Historical model-versus-market benchmark
 
