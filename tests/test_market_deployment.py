@@ -75,6 +75,8 @@ def test_deployment_status_never_fetches_or_prints_credentials(monkeypatch, tmp_
         pytest.fail("Status must never call the provider")
 
     monkeypatch.setattr(current_market_update, "poll_market", fail)
+    monkeypatch.setattr(current_market_update, "poll_props", fail)
+    monkeypatch.setattr(current_market_update, "poll_depth", fail)
     assert current_market_update.main(["--status", "--db", str(tmp_path / "empty.db")]) == 0
     output = capsys.readouterr().out
     assert "status-secret" not in output

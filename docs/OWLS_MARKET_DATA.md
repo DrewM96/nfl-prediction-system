@@ -100,12 +100,15 @@ substituted from another provider. Forecasts still complete.
 
 ## Polling and failure handling
 
-Only the backend worker requests `/api/v1/{nfl,ncaaf}/odds` and `/splits`.
+Only the backend worker requests `/api/v1/{nfl,ncaaf}/odds` and `/splits`, plus
+`/api/v1/nfl/props` for player comparisons.
 The normalized odds endpoint excludes exchanges. Each sport is polled at most
 once every 300 seconds, two sequential requests per sport. At continuous maximum
-usage this is 35,712 requests in 31 days, below the currently documented Rookie
+usage, including one NFL props request every 15 minutes, this is at most
+38,688 requests in 31 days, below the currently documented Rookie
 75,000/month and 120/minute limits. Other uses of the account consume that same
-quota. No historical endpoints, player props, or WebSocket add-ons are used.
+quota. No historical endpoints or WebSocket add-ons are used. Props requests
+are skipped when the configured NFL slate contains no upcoming games.
 See the [official API reference](https://owlsinsight.com/docs) for changing plan
 limits, schemas and coverage (checked 2026-09-28).
 
@@ -179,7 +182,68 @@ only fresh books favoring opposing sides. Per-book percentages and timestamps,
 including DraftKings and Circa attribution, remain in Market details. Books may
 report different lines and capture times. No opaque "sharp" score is produced.
 
-## Database schema (SQLite user_version 1)
+## NFL player comparisons
+
+The NFL **Props** page compares existing passing-yards, rushing-yards,
+receiving-yards and receptions projections with Owls main over/under lines.
+Rows are sorted by absolute `projection - line` within the selected stat;
+positive differences lean Over and negative differences lean Under. These
+differences are stat units, not win probabilities or expected financial returns.
+The default line is the median of eligible books; a sportsbook selector shows
+an individual sportsbook line and the details identify each book's prices.
+A median is a comparison value and may not be offered by any sportsbook.
+The existing manual comparison remains available in a collapsed expander.
+
+Only expected starters from the latest team depth chart are eligible. The
+backend fetches the current season's
+[nflverse / ESPN depth-chart Parquet](https://github.com/nflverse/nflverse-data/releases/tag/depth_charts)
+every six hours, using the lowest depth rank **within each position slot**.
+This includes multiple starting WR slots. Assignments older than 48 hours,
+ambiguous slots and players without GSIS IDs are excluded. A failed refresh
+retains the last chart with its original timestamp; it remains usable only
+within that 48-hour window. Expected starters are not confirmed game-day
+lineups and may lag late availability changes.
+
+GSIS ID and team connect the chart to the published player feature snapshot.
+Normalized full names, game ID, exact kickoff and team when supplied connect
+Owls quotes to those players. Only punctuation, accents and name suffixes are
+normalized; there is no first-initial/fuzzy fallback. Ambiguous names are
+excluded. Unknown matches stay absent rather than receiving another player's
+line. Only players covered by the existing model snapshot and published slate
+can appear; this does not generate predictions for later games or rookies
+without features. College player models are not present, so this view is NFL-only.
+
+The request includes Pinnacle, FanDuel, DraftKings, Caesars, BetMGM and Bet365;
+availability varies by game and market. Exchanges, milestone/alternate bets,
+conflicting main lines, missing sides and invalid prices are excluded. A root
+line without a declared market structure must be a two-sided half-point line;
+ambiguous integer lines are excluded. An explicit `over_under` structure can
+have an integer line. Alternate-line arrays are never substituted for main lines.
+Excluded/unmatched counts are available in **Data coverage**.
+
+Props use a 60-minute source/capture freshness window. Failed refreshes, missing
+quotes, provider stale flags and unknown/future timestamps also mark lines stale.
+Stale quotes are excluded by default; **Include older lines** reveals them with
+an explicit stale label. Games disappear at kickoff. Last check and source time
+are separate. A blank board is expected when the published slate has finished,
+books have not posted matching markets, or starter/projection coverage is missing.
+
+The Streamlit projection cache is keyed by release-manifest hash and published
+player/schedule snapshot. It uses the existing model distributions without
+retraining or adding market/depth-chart features. Only arithmetic and filtering
+run when the 60-second market fragment refreshes. Restarting the app or publishing
+a new release can rebuild this cache. Session-only injury scenarios remain in
+the manual tool and do not affect the ranked board. Published game forecast
+artifacts and model binaries are unchanged.
+
+Deployment requires the same Owls key, database and web process described above.
+No new config vars or additional dyno are required. First poll adds the props
+table and warms the depth cache; allow one polling interval for matching props.
+`python current_market_update.py --status` includes prop counts and redacted
+props/depth errors. One-shot polling returns nonzero on props/depth errors too;
+the supervised worker continues serving cached data and retrying on its gates.
+
+## Database schema (SQLite user_version 2)
 
 Tables are created idempotently on the first backend poll; no existing forecast
 database needs migration.
@@ -202,6 +266,23 @@ named `gridline_market_test` (never production); these tests recreate only its
 | `market_cache(sport PRIMARY KEY, payload)` | Latest board, preserved last-good games, per-book odds/splits, errors, source/capture times and diagnostics |
 | `poll_state(key PRIMARY KEY, next_at)` | Per-sport cadence and account-wide retry/quota gate |
 | `market_observations` | Append-only per-event/per-book material changes |
+| `prop_observations` | Append-only per-event/book/player/category line and price changes |
+
+The shared cache and poll gates add keys `nfl_props` (15 minutes) and `nfl_depth`
+(six hours). Props share the existing account-wide quota/backoff lock. Depth
+fetching does not consume Owls requests. `nfl_props` contains normalized quotes,
+diagnostics, last attempt and error; `nfl_depth` contains player ID/name, team,
+position, starter assignment and chart timestamp. Retained missing quotes are
+marked unavailable, and quotes more than two days past kickoff leave the mutable
+cache. History remains intact.
+
+`prop_observations` columns are `id`, `event_id`, `sportsbook`, `player_key`,
+`category`, `game_id`, `captured_at`, `payload` and `material_hash`. Payload
+includes player name/team, kickoff, line, over/under American prices and source
+timestamp. The latest material hash ignores timestamp-only changes; A→B→A
+is retained. SQLite and Postgres both reject history mutations. Existing
+databases gain the new table/index/triggers automatically without rewriting
+previous observations or published forecasts.
 
 Each observation has `id`, `event_id`, GRIDLINE `game_id`, `sport`, `sportsbook`,
 `captured_at`, `source_timestamp`, home `spread`, home `spread_price`, home
@@ -267,8 +348,8 @@ ruff format --check .
 python -m mypy
 ```
 
-CI additionally compiles entry points and both packages. Mypy is newly configured
-for the six provider/service/CLI/UI-helper modules; the repository did not have
+CI additionally compiles entry points and both packages. Mypy is configured
+for the ten provider/service/CLI/UI-helper modules; the repository did not have
 a static type gate before this change. Existing forecast, artifact, model and
 Streamlit regression tests run in the full suite. No production forecast update
 or model fitting is required to deploy the current-market layer.

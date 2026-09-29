@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import math
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -28,7 +28,7 @@ from nfl_prediction.config import (
     PROJECT_ROOT,
     is_division_game,
 )
-from nfl_prediction.current_market import MarketStore, current_context
+from nfl_prediction.current_market import MarketStore, age_seconds, current_context
 from nfl_prediction.io import read_json, sha256_file
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
@@ -36,9 +36,10 @@ from nfl_prediction.market import (
     no_vig_probabilities,
     over_probability,
 )
-from nfl_prediction.market_ui import market_context_html
+from nfl_prediction.market_ui import age_label, market_context_html
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
+from nfl_prediction.player_props import comparisons, projection_rows
 from nfl_prediction.preseason import apply_preseason_calibration
 from nfl_prediction.rankings import (
     build_football_form_ratings,
@@ -1794,6 +1795,104 @@ def render_builder(service: PredictionService, injury_system: InjuryAdjustmentSy
         )
 
 
+@st.cache_data(show_spinner=False)
+def cached_prop_projections(model_hash: str, snapshot: dict, _models: dict) -> list[dict]:
+    # Only immutable model/state inputs participate; never odds, splits or depth charts.
+    del model_hash
+    return projection_rows(snapshot, _models, {"prediction_season": snapshot["prediction_season"]})
+
+
+@st.fragment(run_every="60s")
+def render_prop_rankings(projections: list[dict], category: str) -> None:
+    board = load_current_market("nfl_props")
+    depth = load_current_market("nfl_depth")
+    columns = st.columns([3, 2])
+    books = sorted(
+        {row["sportsbook"] for row in board.get("rows", []) if row["category"] == category}
+    )
+    book = columns[0].selectbox(
+        "Sportsbook",
+        ["Consensus", *books],
+        format_func=lambda b: "Consensus (median)" if b == "Consensus" else b.title(),
+        key=f"prop_book_{category}",
+    )
+    include_stale = columns[1].checkbox(
+        "Include older lines", value=False, key=f"prop_stale_{category}"
+    )
+    now = datetime.now(UTC)
+    rows = comparisons(
+        projections, board, depth, category, book=book, include_stale=include_stale, now=now
+    )
+    st.caption(
+        "Expected starters · Largest absolute difference first · Difference = GRIDLINE − market line"
+    )
+    if rows:
+        display = [
+            {
+                "Player": row["player_name"],
+                "Pos": row["position"],
+                "Team": row["team"],
+                "Opponent": row["opponent"],
+                "GRIDLINE": round(row["projection"], 1),
+                "Market line": row["line"],
+                "Difference": round(row["difference"], 1),
+                "Lean": row["lean"],
+                "Books": row["books"],
+                "Source age": age_label(age_seconds(row["source_timestamp"], now))
+                + (" · stale" if row["stale"] else ""),
+            }
+            for row in rows
+        ]
+        st.dataframe(
+            pd.DataFrame(display),
+            hide_index=True,
+            width="stretch",
+            column_config={
+                "Difference": st.column_config.NumberColumn(format="%+.1f"),
+                "GRIDLINE": st.column_config.NumberColumn(format="%.1f"),
+            },
+        )
+        with st.expander("Sportsbook lines and starter sources"):
+            st.caption(
+                "Consensus is the median of available main lines. Prices below belong to individual books. "
+                "Expected starters come from nflverse / ESPN depth charts, not confirmed game-day lineups. "
+                "Differences are stat units, not expected returns."
+            )
+            details = [
+                {
+                    "Player": row["player_name"],
+                    "Book": q["sportsbook"],
+                    "Line": q["line"],
+                    "Over": q["over_price"],
+                    "Under": q["under_price"],
+                    "Source time": q["source_timestamp"],
+                    "Stale": q["stale"],
+                    "Depth chart time": row["depth_timestamp"],
+                }
+                for row in rows
+                for q in row["quotes"]
+            ]
+            st.dataframe(pd.DataFrame(details), hide_index=True, width="stretch")
+    else:
+        st.info(
+            "No matching upcoming starter props are available for this selection. Comparisons require a published GRIDLINE projection, a recent depth chart, and a matching sportsbook line."
+        )
+    if board.get("error") or depth.get("error"):
+        st.caption(
+            "Some market or depth-chart data could not refresh; cached timestamps are retained."
+        )
+    with st.expander("Data coverage"):
+        st.write(
+            {
+                "Quotes in cache": len(board.get("rows", [])),
+                "Last props check": board.get("last_attempt_at"),
+                "Props status": board.get("error") or board.get("odds_error") or "Available",
+                "Depth chart status": depth.get("error") or depth.get("odds_error") or "Available",
+                "Unmatched / excluded": board.get("diagnostics", {}),
+            }
+        )
+
+
 def render_props(
     state: dict[str, Any], service: PredictionService, injury_system: InjuryAdjustmentSystem
 ) -> None:
@@ -1812,6 +1911,24 @@ def render_props(
         key="prop_type",
     )
     state_key, model_name = mapping[prop]
+    snapshot = {key: state[key] for key in ("qb", "rb", "wr", "schedule")}
+    snapshot["prediction_season"] = service.manifest["prediction_season"]
+    projections = cached_prop_projections(
+        sha256_file(release_manifest(PROJECT_ROOT)), snapshot, service.models
+    )
+    render_prop_rankings(projections, model_name)
+    with st.expander("Manual player comparison"):
+        render_manual_prop(state, service, injury_system, state_key, model_name, prop)
+
+
+def render_manual_prop(
+    state: dict,
+    service: PredictionService,
+    injury_system: InjuryAdjustmentSystem,
+    state_key: str,
+    model_name: str,
+    prop: str,
+) -> None:
     players = state[state_key]
     roster_seasons = {
         int(player["roster_season"])

@@ -342,17 +342,22 @@ def test_malformed_board_is_explicit(payload, slate):
 
 
 @pytest.mark.parametrize("code", [401, 403, 429, 500])
-def test_redacted_http_errors_and_retry_after(monkeypatch, code):
+@pytest.mark.parametrize("endpoint", ["odds", "props"])
+def test_redacted_http_errors_and_retry_after(monkeypatch, code, endpoint):
     monkeypatch.setenv("OWLS_INSIGHT_API_KEY", "secret-never-log")
 
     def fail(request, **kwargs):
         assert request.get_header("Authorization") == "Bearer secret-never-log"
         assert "secret" not in request.full_url
+        if endpoint == "props":
+            assert request.full_url.endswith(
+                "/nfl/props?books=pinnacle,fanduel,draftkings,caesars,betmgm,bet365"
+            )
         raise HTTPError(request.full_url, code, "secret-never-log", {"Retry-After": "1900"}, None)
 
     monkeypatch.setattr("nfl_prediction.owls.urlopen", fail)
     with pytest.raises(OwlsError) as caught:
-        OwlsClient().get("nfl", "odds")
+        OwlsClient().get("nfl", endpoint)
     assert "secret" not in str(caught.value)
     assert caught.value.retry_after >= 1900
 

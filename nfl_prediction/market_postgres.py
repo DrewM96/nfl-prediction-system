@@ -26,12 +26,23 @@ CREATE TABLE IF NOT EXISTS market_observations (
 );
 CREATE INDEX IF NOT EXISTS market_observation_latest
     ON market_observations(sport, event_id, sportsbook, id DESC);
+CREATE TABLE IF NOT EXISTS prop_observations (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    event_id TEXT NOT NULL, sportsbook TEXT NOT NULL, player_key TEXT NOT NULL,
+    category TEXT NOT NULL, game_id TEXT NOT NULL, captured_at TEXT NOT NULL,
+    payload TEXT NOT NULL, material_hash TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS prop_observation_latest
+    ON prop_observations(event_id, sportsbook, player_key, category, id DESC);
 CREATE OR REPLACE FUNCTION reject_market_history_change() RETURNS trigger
 LANGUAGE plpgsql AS $$
 BEGIN RAISE EXCEPTION 'Market history is append-only'; END;
 $$;
 CREATE OR REPLACE TRIGGER market_observations_immutable
     BEFORE UPDATE OR DELETE OR TRUNCATE ON market_observations
+    FOR EACH STATEMENT EXECUTE FUNCTION reject_market_history_change();
+CREATE OR REPLACE TRIGGER prop_observations_immutable
+    BEFORE UPDATE OR DELETE OR TRUNCATE ON prop_observations
     FOR EACH STATEMENT EXECUTE FUNCTION reject_market_history_change();
 """
 
