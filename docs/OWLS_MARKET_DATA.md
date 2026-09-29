@@ -146,9 +146,12 @@ is the backend's last poll attempt, not the age of the sportsbook figures.
 Stale books are excluded from cross-book agreement claims. The odds/forecast
 snapshot threshold remains 15 minutes; the longer window applies to splits.
 
-The live spread and comparison refresh in the market fragment for both featured
-and regular cards. Current-market status, book count, and oldest source age are
-visible outside Market details. When live odds are unavailable, any retained line
+The Live Market metric and slider refresh together in a 60-second card fragment
+for both featured and regular NFL/CFB cards, using the same current context.
+Live Market replaces Market at forecast on the main card; book count and oldest
+source age appear under that metric, with no duplicate market panel below the
+slider. When fresh odds are unavailable, the metric says Unavailable. In Market
+details, any retained line
 is explicitly labeled stale; the slider never substitutes frozen odds as
 "Market now". Frozen odds remain separately labeled "Market at forecast".
 Stored consensus, opening observations, and the existing forecast-time capture
