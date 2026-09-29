@@ -421,7 +421,7 @@ def test_live_consensus_expires_each_book_without_a_new_poll(odds, slate):
 
 
 @pytest.mark.parametrize("status", ["fresh", "stale", "unavailable"])
-def test_current_market_is_visible_before_collapsed_details(slate, status):
+def test_market_panel_keeps_odds_and_coverage_inside_details(slate, status):
     context = {
         "status": status,
         "home_spread": -4.0 if status != "unavailable" else None,
@@ -431,16 +431,16 @@ def test_current_market_is_visible_before_collapsed_details(slate, status):
     }
     markup = market_context_html(slate[0], context)
     visible = markup.split('<details class="grid-market-details">')[0]
-    assert "Oldest source: 2m ago" in visible
-    assert "old&lt;book&gt;" in visible and "old<book>" not in markup
+    assert "Oldest source: 2m ago" in markup
+    assert "old&lt;book&gt;" in markup and "old<book>" not in markup
     assert "Market at forecast" not in visible
+    assert "Current market" not in visible and "Last cached" not in visible
     assert "Market at forecast: BUF -3.00" in markup
     if status == "fresh":
-        assert "Current market: BUF -4.00" in visible
-        assert "1 book" in visible
+        assert "Current market: BUF -4.00" in markup
+        assert "1 book" in markup
     else:
-        assert "Current market unavailable" in visible
-        assert ("Last cached line — STALE: BUF -4.00" in visible) == (status == "stale")
+        assert ("Last cached market — STALE: BUF -4.00" in markup) == (status == "stale")
 
 
 @pytest.mark.parametrize(

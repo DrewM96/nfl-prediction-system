@@ -1319,9 +1319,9 @@ def load_current_market(sport: str) -> dict[str, Any]:
     return MarketStore().read(sport)
 
 
-@st.fragment(run_every="60s")
-def render_current_market(game: dict[str, Any], sport: str, *, show_slider: bool = False) -> None:
-    context = current_context(game, load_current_market(sport))
+def render_current_market(
+    game: dict[str, Any], sport: str, *, context: dict[str, Any], show_slider: bool = False
+) -> None:
     if show_slider:
         slider = spread_slider_html(game, sport, context=context)
         if slider:
@@ -1539,20 +1539,29 @@ def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = Fa
     )
 
 
-def forecast_card_values(game: dict[str, Any], sport: str) -> list[tuple[str, str]]:
+def forecast_card_values(
+    game: dict[str, Any], sport: str, *, context: dict[str, Any]
+) -> list[tuple[str, str]]:
     college = sport == "cfb"
+    line = context.get("home_spread")
+    live_market = "Unavailable"
+    if context.get("status") == "fresh" and line is not None:
+        live_market = (
+            cfb_margin_label(game, -float(line))
+            if college
+            else spread_label({**game, "predicted_home_margin": -float(line)})
+        )
     return [
         ("GRIDLINE", cfb_spread_label(game) if college else spread_label(game)),
-        (
-            "Market at forecast",
-            cfb_market_spread_label(game) if college else nfl_market_spread_label(game),
-        ),
+        ("Live Market", live_market),
         ("Home win", format_probability(game["home_win_probability"])),
         ("Model total", f"{float(game['predicted_total'] if college else game['total']):.1f}"),
     ]
 
 
-def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool = False) -> Any:
+def render_forecast_header(
+    game: dict[str, Any], sport: str, *, context: dict[str, Any], featured: bool = False
+) -> Any:
     """One presentation for NFL and college; only source field names differ."""
     college = sport == "cfb"
     kickoff = format_cfb_game_time(game) if college else format_game_time(game)
@@ -1573,10 +1582,21 @@ def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool =
             f'<div class="grid-team-inline">{logo}<span><b class="grid-cfb-team-name">{html_text(game[f"{side}_team"])}</b><br><span class="grid-muted">{float(score):.1f}</span></span></div>'
         )
     matchup = f'<div class="grid-cfb-team-pair">{teams[0]}<span class="grid-at">{separator}</span>{teams[1]}</div>'
-    values = forecast_card_values(game, sport)
+    values = forecast_card_values(game, sport, context=context)
+    count = context.get("book_count", 0)
+    market_note = (
+        f"{count} {'book' if count == 1 else 'books'} · {age_label(context.get('source_age_seconds'))}"
+        if context.get("status") == "fresh"
+        else "Cached quote is stale"
+        if context.get("home_spread") is not None
+        else ""
+    )
+    market_note_html = (
+        f'<br><small class="grid-muted">{html_text(market_note)}</small>' if market_note else ""
+    )
     if featured:
         tiles = "".join(
-            f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div></div>'
+            f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div>{market_note_html if label == "Live Market" else ""}</div>'
             for label, value in values
         )
         st.markdown(
@@ -1594,7 +1614,7 @@ def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool =
     columns[1].markdown(matchup, unsafe_allow_html=True)
     for column, (label, value) in zip(columns[2:6], values, strict=False):
         column.markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">{label}</div>{html_text(value)}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">{label}</div>{html_text(value)}{market_note_html if label == "Live Market" else ""}</div>',
             unsafe_allow_html=True,
         )
     return columns[6]
@@ -1619,9 +1639,11 @@ def render_forecast_details(game: dict[str, Any], sport: str, *, collapsed: bool
     )
 
 
+@st.fragment(run_every="60s")
 def render_featured_game(game: dict[str, Any]) -> None:
-    render_forecast_header(game, "nfl", featured=True)
-    render_current_market(game, "nfl", show_slider=True)
+    context = current_context(game, load_current_market("nfl"))
+    render_forecast_header(game, "nfl", context=context, featured=True)
+    render_current_market(game, "nfl", context=context, show_slider=True)
     render_forecast_details(game, "nfl")
     render_official_injury_snapshot(game, detailed=True)
 
@@ -1760,11 +1782,13 @@ def render_market_comparison(
     )
 
 
+@st.fragment(run_every="60s")
 def render_game_row(game: dict[str, Any], index: int) -> None:
     game_id = str(game.get("game_id", index))
     expanded = st.session_state.get("expanded_game_id") == game_id
+    context = current_context(game, load_current_market("nfl"))
     with st.container(border=True, key=f"game_card_{index}"):
-        toggle = render_forecast_header(game, "nfl")
+        toggle = render_forecast_header(game, "nfl", context=context)
         if toggle.button(
             "Hide ▲" if expanded else "Details ▼",
             key=f"toggle_game_{index}",
@@ -1772,7 +1796,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
         ):
             st.session_state.expanded_game_id = None if expanded else game_id
             st.rerun()
-        render_current_market(game, "nfl", show_slider=True)
+        render_current_market(game, "nfl", context=context, show_slider=True)
         if expanded:
             render_forecast_details(game, "nfl", collapsed=False)
             reasons = "".join(
@@ -2450,17 +2474,21 @@ def cfb_market_spread_label(game: dict[str, Any]) -> str:
     return cfb_margin_label(game, float(margin))
 
 
+@st.fragment(run_every="60s")
 def render_cfb_featured_game(game: dict[str, Any]) -> None:
-    render_forecast_header(game, "cfb", featured=True)
-    render_current_market(game, "ncaaf", show_slider=True)
+    context = current_context(game, load_current_market("ncaaf"))
+    render_forecast_header(game, "cfb", context=context, featured=True)
+    render_current_market(game, "ncaaf", context=context, show_slider=True)
     render_forecast_details(game, "cfb")
 
 
+@st.fragment(run_every="60s")
 def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
     game_id = str(game.get("game_id", index))
     expanded = st.session_state.get("expanded_cfb_game_id") == game_id
+    context = current_context(game, load_current_market("ncaaf"))
     with st.container(border=True, key=f"cfb_game_card_{index}"):
-        toggle = render_forecast_header(game, "cfb")
+        toggle = render_forecast_header(game, "cfb", context=context)
         if toggle.button(
             "Hide ▲" if expanded else "Details ▼",
             key=f"toggle_game_cfb_{index}",
@@ -2468,7 +2496,7 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
         ):
             st.session_state.expanded_cfb_game_id = None if expanded else game_id
             st.rerun()
-        render_current_market(game, "ncaaf", show_slider=True)
+        render_current_market(game, "ncaaf", context=context, show_slider=True)
         if expanded:
             render_forecast_details(game, "cfb", collapsed=False)
 

@@ -139,6 +139,32 @@ def test_live_market_needs_no_frozen_market(slider, game):
     assert "Market now <b>PHI -2.5</b>" in markup
 
 
+@pytest.mark.parametrize("sport", ["nfl", "cfb"])
+@pytest.mark.parametrize(
+    "context,expected",
+    [
+        ({"status": "fresh", "home_spread": -2.5}, "CHI -2.5"),
+        ({"status": "fresh", "home_spread": 0}, "Pick"),
+        ({"status": "stale", "home_spread": -2.5}, "Unavailable"),
+        ({"status": "unavailable"}, "Unavailable"),
+        ({"status": "fresh", "home_spread": None}, "Unavailable"),
+    ],
+)
+def test_card_live_market_ignores_frozen_line(game, sport, context, expected):
+    namespace = {
+        "Any": Any,
+        "spread_label": spread_label,
+        "format_probability": lambda value: f"{value:.0%}",
+    }
+    exec(app_functions({"forecast_card_values", "cfb_spread_label", "cfb_margin_label"}), namespace)
+    game.update(home_win_probability=0.6, total=45, predicted_total=45)
+    before = copy.deepcopy(game)
+    values = dict(namespace["forecast_card_values"](game, sport, context=context))
+    assert values["Live Market"] == expected
+    assert "Market at forecast" not in values
+    assert game == before
+
+
 def test_team_text_is_escaped_everywhere(slider, game):
     game.update(home_team='<img src=x onerror="bad">', away_team="A&B")
     markup = slider(
@@ -177,11 +203,12 @@ from zoneinfo import ZoneInfo
 from typing import Any
 import streamlit as st
 from nfl_prediction.ui import html_text, spread_label, format_probability, game_matchup_separator
+from nfl_prediction.market_ui import age_label
 def format_game_time(game): return "Sun 9/13 1p"
 format_cfb_game_time = format_game_time
 def team_logo_html(*args): return ""
 def load_current_market(sport): return {}
-def current_context(*args): return {"status": "fresh", "home_spread": 3.5}
+def current_context(*args): return {"status": st.session_state.get("market_status", "fresh"), "home_spread": -2.5, "book_count": 11, "source_age_seconds": 120}
 def market_context_html(*args): return '<div class="test-market-panel">Current market</div>'
 def render_forecast_details(*args): pass
 game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_margin=2,
@@ -203,6 +230,10 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     rendered = [m.value for m in app.markdown]
     sliders = [m for m in rendered if 'class="grid-slider"' in m]
     assert len(sliders) == 2
+    assert sum("Live Market" in m for m in rendered) == 2
+    assert any("CHI -2.5" in m and "Live Market" in m for m in rendered)
+    assert sum("11 books" in m and "2m ago" in m for m in rendered) == 2
+    assert not any("Market at forecast" in m for m in rendered)
     assert any('class="grid-hero grid-cfb-hero"' in m for m in rendered)
     panels = [i for i, m in enumerate(rendered) if "test-market-panel" in m]
     assert len(panels) == 2
@@ -211,14 +242,27 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert any("Player availability snapshot" in m for m in rendered)
     assert not any("Forecast inputs and availability" in m for m in rendered)
     assert not any(e.label == "Forecast inputs and availability" for e in app.expander)
-    assert 'run_every="60s"' in ast.get_source_segment(
-        Path("app.py").read_text(encoding="utf-8"),
-        next(
-            node
-            for node in APP_TREE.body
-            if isinstance(node, ast.FunctionDef) and node.name == "render_current_market"
-        ).decorator_list[0],
-    )
+    for name in (
+        "render_featured_game",
+        "render_game_row",
+        "render_cfb_featured_game",
+        "render_cfb_game_row",
+    ):
+        assert 'run_every="60s"' in ast.get_source_segment(
+            Path("app.py").read_text(encoding="utf-8"),
+            next(
+                node
+                for node in APP_TREE.body
+                if isinstance(node, ast.FunctionDef) and node.name == name
+            ).decorator_list[0],
+        )
+    app.session_state["market_status"] = "stale"
+    app.run(timeout=15)
+    assert not app.exception
+    rendered = [m.value for m in app.markdown]
+    assert not any('class="grid-slider"' in m for m in rendered)
+    assert sum("Live Market" in m and "Unavailable" in m for m in rendered) == 2
+    assert sum("Cached quote is stale" in m for m in rendered) == 2
 
 
 def test_slider_css_bounds_labels_without_new_breakpoints():
