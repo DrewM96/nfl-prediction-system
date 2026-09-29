@@ -253,12 +253,20 @@ def test_freezer_uses_only_fresh_consensus_and_does_not_publish_raw_quotes(monke
 
 
 def test_player_results_ui_with_real_archive_and_stats(tmp_path):
-    batch(tmp_path)
-    settle_player_predictions(tmp_path, stats(), schedule(), now=AFTER)
+    legacy_path = batch(tmp_path, "legacy", published=NOW - timedelta(days=7), projections=[])
+    legacy = legacy_path.read_bytes()
     app = AppTest.from_string(
         f'from nfl_prediction.results_ui import _player_results\n_player_results({str(tmp_path)!r}, season=2026, through=1, policy="first", prefix="test")'
     ).run(timeout=15)
     assert not app.exception
+    assert any("Earlier releases did not archive" in m.value for m in app.markdown)
+
+    batch(tmp_path)
+    settle_player_predictions(tmp_path, stats(), schedule(), now=AFTER)
+    app.run(timeout=15)
+    assert not app.exception
+    assert not any("Earlier releases did not archive" in m.value for m in app.markdown)
+    assert legacy_path.read_bytes() == legacy
     assert app.dataframe[0].value.iloc[0]["Result"] == "Win"
     assert app.dataframe[0].value.iloc[0]["GRIDLINE"] == 250
     assert any("1–0–0" in m.value for m in app.markdown)

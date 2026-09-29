@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 from streamlit.testing.v1 import AppTest
 
+from nfl_prediction.prop_results import player_forecast_rows
 from nfl_prediction.results import forecast_rows, select_forecasts
 from nfl_prediction.results_tracker import (
     grade_pick,
@@ -193,4 +194,9 @@ def test_results_filters_and_source_switch(league, root):
     )
     assert not app.exception
     if league == "NFL":
-        assert any("Earlier releases did not archive" in m.value for m in app.markdown)
+        # Weekly updates start archiving player projections after the legacy batches.
+        no_player_history = player_forecast_rows(root, policy="first").empty
+        assert (
+            any("Earlier releases did not archive" in m.value for m in app.markdown)
+            == no_player_history
+        )
