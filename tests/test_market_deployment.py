@@ -93,6 +93,7 @@ def test_postgres_separate_workers_readers_and_restart(pg_store, odds, splits, s
     reader = MarketStore()
     assert reader.read("nfl") == board
     assert current_context(slate[0], reader.read("nfl"), now=NOW)["home_spread"] == -3.75
+    assert current_context(slate[0], reader.read("nfl"), now=NOW)["open_home_spread"] == -3.75
     poll_market("nfl", slate, store=MarketStore(), client=client, now=NOW + timedelta(seconds=30))
     assert len(client.calls) == 2
     poll_market("nfl", slate, store=MarketStore(), client=client, now=NOW + timedelta(minutes=5))
@@ -104,6 +105,7 @@ def test_postgres_separate_workers_readers_and_restart(pg_store, odds, splits, s
     with pg_store.writer() as db:
         assert db.execute("SELECT count(*) FROM market_observations").fetchone()[0] == 3
     assert MarketStore().read("nfl")["games"][0]["spread"]["home_spread"] == -4.5
+    assert MarketStore().read("nfl")["games"][0]["open_home_spread"] == -3.75
     assert slate == original
 
 

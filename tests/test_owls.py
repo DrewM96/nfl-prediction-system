@@ -232,6 +232,8 @@ def test_cache_history_edge_and_frozen_separation(tmp_path, odds, splits, slate)
     assert context["status"] == "fresh"
     assert context["movement"] == -0.75
     assert context["current_home_edge"] == -1.75
+    assert context["open_home_spread"] == -3.75
+    assert context["open_snapshot_at"] == STAMP
     assert context["sportsbook_agreement"]["spread"]["majority_ticket_side"] == "disagree"
     assert slate == original
     poll_market("nfl", slate, store=store, client=client, now=NOW + timedelta(seconds=30))
@@ -245,12 +247,47 @@ def test_cache_history_edge_and_frozen_separation(tmp_path, odds, splits, slate)
     client.odds["data"]["draftkings"][0]["bookmakers"][0]["markets"][0]["outcomes"][1]["point"] = 5
     changed = poll_market("nfl", slate, store=store, client=client, now=NOW + timedelta(minutes=10))
     assert (
+        current_context(slate[0], changed, now=NOW + timedelta(minutes=10))["open_home_spread"]
+        == -3.75
+    )
+    assert (
         current_context(slate[0], changed, now=NOW + timedelta(minutes=10))["current_home_edge"]
         == -2.5
     )
     with sqlite3.connect(store.path) as db:
         assert db.execute("SELECT count(*) FROM market_observations").fetchone()[0] == 3
     assert slate == original
+
+
+@pytest.mark.parametrize("sport", ["nfl", "ncaaf"])
+def test_first_seen_consensus_survives_restart_and_cache_loss(tmp_path, sport):
+    path = tmp_path / "openings.db"
+    game = {"sport": sport, "game_id": "game", "event_id": "event", "spread": {}}
+    with MarketStore(path).writer() as db:
+        MarketStore.observe(db, game, STAMP)
+        assert db.execute("SELECT count(*) FROM market_openings").fetchone()[0] == 0
+        game["spread"] = {"home_spread": 0.0}
+        MarketStore.observe(db, game, STAMP)
+    assert game["open_home_spread"] == 0.0
+
+    # A new process/event and no cache payload must still retain the initial pick line.
+    changed = {**game, "event_id": "new-event", "spread": {"home_spread": -7}}
+    changed.pop("open_home_spread")
+    changed.pop("open_snapshot_at")
+    with MarketStore(path).writer() as db:
+        MarketStore.observe(db, changed, (NOW + timedelta(minutes=5)).isoformat())
+        assert db.execute("SELECT count(*) FROM market_openings").fetchone()[0] == 1
+    assert changed["open_home_spread"] == 0.0
+    assert changed["open_snapshot_at"] == STAMP
+    other = {**changed, "sport": "ncaaf" if sport == "nfl" else "nfl"}
+    with MarketStore(path).writer() as db:
+        MarketStore.observe(db, other, STAMP)
+    assert other["open_home_spread"] == -7
+
+
+def test_old_cached_board_has_no_invented_opening(odds, slate):
+    context = current_context(slate[0], parse_odds(odds, "nfl", slate, STAMP), now=NOW)
+    assert context["open_home_spread"] is None
 
 
 def test_freeze_captures_once_without_changing_projection(

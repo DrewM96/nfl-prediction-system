@@ -83,6 +83,11 @@ class MarketStore:
             CREATE TABLE IF NOT EXISTS poll_state (
                 key TEXT PRIMARY KEY, next_at TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS market_openings (
+                sport TEXT NOT NULL, game_id TEXT NOT NULL,
+                open_home_spread REAL NOT NULL, open_snapshot_at TEXT NOT NULL,
+                PRIMARY KEY (sport, game_id)
+            );
             CREATE TABLE IF NOT EXISTS market_observations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 event_id TEXT NOT NULL, game_id TEXT NOT NULL, sport TEXT NOT NULL,
@@ -139,6 +144,21 @@ class MarketStore:
 
     @staticmethod
     def observe(db: Any, game: dict[str, Any], captured_at: str) -> None:
+        # First observed consensus, independent of provider event IDs and cache lifetime.
+        home_spread = (game.get("spread") or {}).get("home_spread")
+        if home_spread is not None:
+            db.execute(
+                """INSERT INTO market_openings
+                (sport,game_id,open_home_spread,open_snapshot_at) VALUES (?,?,?,?)
+                ON CONFLICT(sport,game_id) DO NOTHING""",
+                (game["sport"], game["game_id"], home_spread, captured_at),
+            )
+        opening = db.execute(
+            "SELECT open_home_spread,open_snapshot_at FROM market_openings WHERE sport=? AND game_id=?",
+            (game["sport"], game["game_id"]),
+        ).fetchone()
+        if opening:
+            game["open_home_spread"], game["open_snapshot_at"] = opening
         for key in set(game.get("books", {})) | set(game.get("splits", {})):
             odds = game.get("books", {}).get(key, {})
             splits = game.get("splits", {}).get(key)
@@ -384,6 +404,8 @@ def current_context(
         "provider": board.get("provider", "Owls Insight"),
         "event_id": market["event_id"],
         "home_spread": current,
+        "open_home_spread": market.get("open_home_spread"),
+        "open_snapshot_at": market.get("open_snapshot_at"),
         "source_timestamp": market.get("source_timestamp"),
         "captured_at": market.get("captured_at"),
         "movement": round(current - original, 3)

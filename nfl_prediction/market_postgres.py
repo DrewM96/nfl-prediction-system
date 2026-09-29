@@ -16,6 +16,11 @@ CREATE SCHEMA IF NOT EXISTS gridline_market;
 SET LOCAL search_path TO gridline_market;
 CREATE TABLE IF NOT EXISTS market_cache (sport TEXT PRIMARY KEY, payload TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS poll_state (key TEXT PRIMARY KEY, next_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS market_openings (
+    sport TEXT NOT NULL, game_id TEXT NOT NULL,
+    open_home_spread DOUBLE PRECISION NOT NULL, open_snapshot_at TEXT NOT NULL,
+    PRIMARY KEY (sport, game_id)
+);
 CREATE TABLE IF NOT EXISTS market_observations (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     event_id TEXT NOT NULL, game_id TEXT NOT NULL, sport TEXT NOT NULL,
