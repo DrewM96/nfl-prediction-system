@@ -1,0 +1,14 @@
+{
+  "run_id": "20260925T214836Z-1cdb5f07",
+  "revision": 2,
+  "scored_at": "2026-09-29T12:20:16.905584+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_03_PHI_CHI",
+      "status": "final",
+      "actual_home_margin": 20.0,
+      "actual_total": 34.0
+    }
+  ]
+}

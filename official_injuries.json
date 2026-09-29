@@ -1,13 +1,13 @@
 {
   "source": "nflverse injury reports + weekly rosters",
-  "generated_at": "2026-09-28T21:05:54.059293+00:00",
+  "generated_at": "2026-09-29T12:08:23.995413+00:00",
   "prediction_season": 2026,
-  "forecast_week": 3,
+  "forecast_week": 4,
   "available_season": 2026,
   "available_week": 3,
   "roster_available_week": 3,
   "stale_for_prediction_season": false,
-  "stale_for_prediction_week": false,
+  "stale_for_prediction_week": true,
   "entries": [
     {
       "team": "ARI",
