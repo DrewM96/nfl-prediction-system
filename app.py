@@ -201,6 +201,54 @@ st.markdown(
       font-size: var(--text-sm);
       white-space: nowrap;
     }
+    .grid-slider {
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--grid-subtle);
+      display: flex; flex-direction: column; gap: 10px; min-width: 0;
+    }
+    .grid-slider-legend {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px; font-size: var(--text-sm);
+    }
+    .grid-slider-items { display: flex; flex-wrap: wrap; gap: 6px 18px; min-width: 0; }
+    .grid-slider-item {
+      display: inline-flex; align-items: center; gap: 6px; color: var(--grid-faint);
+      min-width: 0; overflow-wrap: anywhere;
+    }
+    .grid-slider-item b { color: var(--grid-ink); font-weight: 600; }
+    .grid-slider-gap {
+      padding: 3px 10px; border-radius: 999px; background: #fff4ee; color: #c94b19;
+      font-size: var(--text-sm); font-weight: 600; white-space: nowrap;
+      max-width: 100%; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box;
+    }
+    .grid-slider-track { position: relative; height: 52px; margin: 0 8px; }
+    .grid-slider-track > * { position: absolute; }
+    .grid-slider-base { top: 24px; height: 4px; border-radius: 2px; background: #eef0f3; width: 100%; }
+    .grid-slider-pick { left: 50%; top: 20px; width: 1px; height: 12px; background: var(--grid-border-strong); }
+    .grid-slider-band { top: 24px; height: 4px; background: rgba(255,107,53,.35); }
+    .grid-slider-movement { top: 25px; height: 2px; background: var(--grid-faint); }
+    .grid-slider-marker {
+      top: 20px; width: 12px; height: 12px; transform: translateX(-50%);
+      box-shadow: 0 0 0 2px #fff; box-sizing: border-box;
+    }
+    .grid-slider-model { background: var(--grid-orange); transform: translateX(-50%) rotate(45deg); }
+    .grid-slider-market { background: #334155; border-radius: 50%; }
+    .grid-slider-open { top: 21px; width: 10px; height: 10px; background: #fff; border: 1.5px solid var(--grid-faint); border-radius: 50%; }
+    .grid-slider-swatch { display: inline-block; flex: 0 0 9px; width: 9px; height: 9px; box-sizing: border-box; }
+    .grid-slider-swatch.grid-slider-model { transform: rotate(45deg); }
+    .grid-slider-value {
+      width: 140px; max-width: 100%; left: clamp(70px, var(--grid-position), calc(100% - 70px));
+      transform: translateX(-50%); text-align: center; font-size: var(--text-xs); font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .grid-slider-value-model { top: 0; color: #c94b19; }
+    .grid-slider-value-market { top: 37px; color: #334155; }
+    .grid-slider-axis {
+      display: flex; justify-content: space-between; gap: 8px; margin: -2px 8px 0;
+      font-size: var(--text-xs); color: var(--grid-faint); overflow-wrap: anywhere;
+    }
+    .grid-slider-axis span { flex: 1; min-width: 0; }
+    .grid-slider-axis span:nth-child(2) { flex: 0 0 auto; }
+    .grid-slider-axis span:last-child { text-align: right; }
     .grid-hero {
       padding: 24px 28px;
       margin-bottom: 14px;
@@ -1115,6 +1163,87 @@ def probability_bar(game: dict[str, Any]) -> str:
     """
 
 
+def spread_slider_html(
+    game: dict[str, Any],
+    sport: str,
+    current_home_spread: float | None = None,
+    *,
+    context: dict[str, Any] | None = None,
+) -> str:
+    """Compare all lines in home-margin space, using only fresh live quotes."""
+    if context is None:
+        context = current_context(game, load_current_market("ncaaf" if sport == "cfb" else sport))
+    if current_home_spread is None:
+        current_home_spread = context.get("home_spread")
+    frozen = (game.get("market_consensus") or {}).get("spread") or {}
+    if context.get("status") == "fresh" and current_home_spread is not None:
+        market = -float(current_home_spread)
+    elif frozen.get("home_spread") is not None:
+        market = -float(frozen["home_spread"])
+    elif frozen.get("market_home_margin") is not None:
+        market = float(frozen["market_home_margin"])
+    else:
+        return ""
+    model = float(game["predicted_home_margin"])
+    opening = context.get("open_home_spread")
+    opening = -float(opening) if opening is not None else None
+    if not math.isfinite(model) or not math.isfinite(market):
+        return ""
+    if opening is not None and not math.isfinite(opening):
+        opening = None
+    radius = max(10, math.ceil(max(abs(model), abs(market), abs(opening or 0)) + 3))
+
+    def position(margin: float) -> float:
+        return min(max((margin + radius) / (2 * radius), 0.02), 0.98) * 100
+
+    def label(margin: float) -> str:
+        value = (
+            cfb_margin_label(game, margin)
+            if sport in {"cfb", "ncaaf"}
+            else spread_label({**game, "predicted_home_margin": margin})
+        )
+        return html_text(value)
+
+    model_x, market_x = position(model), position(market)
+    model_label, market_label = label(model), label(market)
+    gap = model - market
+    gap_label = (
+        "even"
+        if abs(gap) < 0.05
+        else f"{abs(gap):.1f} pts toward {game['home_team'] if gap > 0 else game['away_team']}"
+    )
+    open_legend = open_track = ""
+    if opening is not None:
+        open_x = position(opening)
+        open_legend = (
+            '<span class="grid-slider-item grid-slider-open-item">'
+            '<i class="grid-slider-swatch grid-slider-open" aria-hidden="true"></i>'
+            f"Open <b>{label(opening)}</b></span>"
+        )
+        open_track = (
+            f'<span class="grid-slider-movement" style="left:{min(open_x, market_x):.2f}%;width:{abs(open_x - market_x):.2f}%"></span>'
+            f'<span class="grid-slider-marker grid-slider-open" style="left:{open_x:.2f}%"></span>'
+        )
+    return (
+        '<section class="grid-slider" aria-label="Spread · market vs model">'
+        '<div class="grid-slider-legend"><div class="grid-slider-items">'
+        '<span class="grid-slider-item"><i class="grid-slider-swatch grid-slider-model" aria-hidden="true"></i>'
+        f"GRIDLINE <b>{model_label}</b></span>"
+        '<span class="grid-slider-item"><i class="grid-slider-swatch grid-slider-market" aria-hidden="true"></i>'
+        f"Market now <b>{market_label}</b></span>{open_legend}</div>"
+        f'<span class="grid-slider-gap" title="{html_text(gap_label)}">{html_text(gap_label)}</span></div>'
+        '<div class="grid-slider-track" aria-hidden="true">'
+        f'<span class="grid-slider-value grid-slider-value-model" style="--grid-position:{model_x:.2f}%" title="{model_label}">{model_label}</span>'
+        '<span class="grid-slider-base"></span><span class="grid-slider-pick"></span>'
+        f'<span class="grid-slider-band" style="left:{min(model_x, market_x):.2f}%;width:{abs(model_x - market_x):.2f}%"></span>'
+        f'{open_track}<span class="grid-slider-marker grid-slider-market" style="left:{market_x:.2f}%"></span>'
+        f'<span class="grid-slider-marker grid-slider-model" style="left:{model_x:.2f}%"></span>'
+        f'<span class="grid-slider-value grid-slider-value-market" style="--grid-position:{market_x:.2f}%" title="{market_label}">{market_label}</span></div>'
+        f'<div class="grid-slider-axis"><span>{html_text(game["away_team"])} favored</span>'
+        f"<span>Pick</span><span>{html_text(game['home_team'])} favored</span></div></section>"
+    )
+
+
 def team_logo_html(team: str, sport: str, variant: str = "card") -> str:
     url = team_logo_url(team, sport)
     if not url:
@@ -1134,8 +1263,12 @@ def load_current_market(sport: str) -> dict[str, Any]:
 
 
 @st.fragment(run_every="60s")
-def render_current_market(game: dict[str, Any], sport: str) -> None:
+def render_current_market(game: dict[str, Any], sport: str, *, show_slider: bool = False) -> None:
     context = current_context(game, load_current_market(sport))
+    if show_slider:
+        slider = spread_slider_html(game, sport, context=context)
+        if slider:
+            st.markdown(slider, unsafe_allow_html=True)
     st.markdown(market_context_html(game, context), unsafe_allow_html=True)
 
 
@@ -1299,19 +1432,6 @@ def _injury_team_html(team: str, entries: list[dict[str, Any]]) -> str:
 
 
 def render_official_injury_snapshot(game: dict[str, Any], *, detailed: bool = False) -> None:
-    if detailed:
-        with st.expander("Forecast inputs and availability"):
-            status = game.get("calibration_status")
-            if status:
-                st.write(
-                    {"forecast_method": game.get("forecast_method"), "market_calibration": status}
-                )
-            st.write(
-                game.get("input_quality")
-                or "Input provenance was not recorded for this older forecast."
-            )
-            if game.get("lineup_shadow"):
-                st.write({"QB research forecast (not applied)": game["lineup_shadow"]})
     snapshot = game.get("injury_snapshot") or {}
     if not snapshot:
         return
@@ -1406,7 +1526,7 @@ def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool =
             '<div class="grid-hero grid-cfb-hero">'
             '<div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured matchup</div>'
             f'<div class="grid-hero-main"><div>{matchup}<div class="grid-row-date" style="text-align:center;margin-top:8px">{html_text(kickoff)}</div></div>'
-            f'<div class="grid-tiles">{tiles}</div></div></div>',
+            f'<div class="grid-tiles">{tiles}</div></div>{spread_slider_html(game, sport)}</div>',
             unsafe_allow_html=True,
         )
         return None
@@ -1595,7 +1715,7 @@ def render_game_row(game: dict[str, Any], index: int) -> None:
         ):
             st.session_state.expanded_game_id = None if expanded else game_id
             st.rerun()
-        render_current_market(game, "nfl")
+        render_current_market(game, "nfl", show_slider=True)
         if expanded:
             render_forecast_details(game, "nfl", collapsed=False)
             reasons = "".join(
@@ -2289,7 +2409,7 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
         ):
             st.session_state.expanded_cfb_game_id = None if expanded else game_id
             st.rerun()
-        render_current_market(game, "ncaaf")
+        render_current_market(game, "ncaaf", show_slider=True)
         if expanded:
             render_forecast_details(game, "cfb", collapsed=False)
 
