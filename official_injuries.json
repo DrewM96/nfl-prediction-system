@@ -1,11 +1,11 @@
 {
   "source": "nflverse injury reports + weekly rosters",
-  "generated_at": "2026-09-29T12:08:23.995413+00:00",
+  "generated_at": "2026-09-29T17:58:32.728210+00:00",
   "prediction_season": 2026,
   "forecast_week": 4,
   "available_season": 2026,
   "available_week": 3,
-  "roster_available_week": 3,
+  "roster_available_week": 4,
   "stale_for_prediction_season": false,
   "stale_for_prediction_week": true,
   "entries": [
@@ -1186,7 +1186,8 @@
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": null,
       "practice_status": "Did Not Participate In Practice",
-      "availability_source": "injury report"
+      "availability_source": "injury report + weekly roster",
+      "availability_status": "RES"
     },
     {
       "team": "GB",
@@ -4682,7 +4683,7 @@
       "gsis_id": "00-0038099",
       "position": "DL",
       "full_name": "Phidarian Mathis",
-      "availability_status": "RES",
+      "availability_status": "EXE",
       "availability_source": "weekly roster"
     },
     {
@@ -4715,14 +4716,6 @@
       "position": "DB",
       "full_name": "Coby Bryant",
       "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "KC",
-      "gsis_id": "00-0038145",
-      "position": "TE",
-      "full_name": "Thomas Odukoya",
-      "availability_status": "EXE",
       "availability_source": "weekly roster"
     },
     {
@@ -4890,6 +4883,14 @@
       "gsis_id": "00-0039020",
       "position": "OL",
       "full_name": "Anthony Bradford",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0039040",
+      "position": "RB",
+      "full_name": "De'Von Achane",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5122,14 +5123,6 @@
       "gsis_id": "00-0039692",
       "position": "DB",
       "full_name": "Dell Pettus",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "MIN",
-      "gsis_id": "00-0039710",
-      "position": "WR",
-      "full_name": "Jeshaun Jones",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },

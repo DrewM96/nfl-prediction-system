@@ -1,11 +1,11 @@
 {
   "prediction_season": 2026,
   "week": 4,
-  "generated_at": "2026-09-29T12:08:23.995413+00:00",
-  "run_id": "20260929T122016Z-c5bc229e",
+  "generated_at": "2026-09-29T17:58:32.728210+00:00",
+  "run_id": "20260929T181202Z-7aaf5ee0",
   "data_cutoff": "2026-09-28",
-  "model_hash": "c4924e324fa8745395cd2dee79f153f2e6444bf887b934eab77da6da06d32b3e",
-  "raw_data_hash": "f5a0f9bce8dd032b3780507e3044ed3d516adc9e8615c96569922a1c368d571b",
+  "model_hash": "4c753193a6115787da933136ef5199180dcaa8d896c1075607619430dc980e5d",
+  "raw_data_hash": "131fd114d2f170417a374615f56dc4a2bb8a1bf9ea684b3ef8eae89bdf8db1d2",
   "predictions": [
     {
       "game_id": "2026_04_PIT_CLE",
@@ -314,7 +314,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -658,7 +658,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": -2.18,
@@ -672,16 +672,48 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
-        "home": {},
+        "home": {
+          "eligible": true,
+          "starter_id": "00-0033537",
+          "backup_id": "00-0040668",
+          "starter_basis": "inferred prior usage; not a confirmed depth chart",
+          "probability_basis": "fixed designation proxy; not calibrated",
+          "reason": null,
+          "baseline_epa": -0.02669242673536454,
+          "baseline_qb_shares": {
+            "00-0033537": 0.7426470588235294,
+            "00-0040668": 0.25735294117647056
+          },
+          "expected_points_change": 1.6806985780438812,
+          "unavailability_probability": 0.0,
+          "source_weeks": [
+            {
+              "season": 2025,
+              "week": 18
+            },
+            {
+              "season": 2026,
+              "week": 1
+            },
+            {
+              "season": 2026,
+              "week": 2
+            },
+            {
+              "season": 2026,
+              "week": 3
+            }
+          ]
+        },
         "away": {},
         "margin_change": null,
         "shadow_margin": null,
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -719,7 +751,7 @@
         "away_points_for_l4": 24.4712187958884,
         "away_points_against_l4": 28.9712187958884,
         "away_yards_l4": 316.98120411160056,
-        "away_off_epa_l4": -0.04868642891686831,
+        "away_off_epa_l4": -0.0486864289168683,
         "away_def_epa_l4": 0.07010255565198441,
         "away_turnovers_l4": 1.9177679882525698,
         "away_win_pct_l8": 0.2,
@@ -991,7 +1023,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -1438,7 +1470,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 1.35,
@@ -1452,7 +1484,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -1461,7 +1493,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -1771,7 +1803,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -2150,7 +2182,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 9.58,
@@ -2164,16 +2196,47 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
-        "home": {},
+        "home": {
+          "eligible": true,
+          "starter_id": "00-0034796",
+          "backup_id": "00-0035993",
+          "starter_basis": "inferred prior usage; not a confirmed depth chart",
+          "probability_basis": "fixed designation proxy; not calibrated",
+          "reason": null,
+          "baseline_epa": 0.049075595728171384,
+          "baseline_qb_shares": {
+            "00-0034796": 1.0
+          },
+          "expected_points_change": 0.0,
+          "unavailability_probability": 0.0,
+          "source_weeks": [
+            {
+              "season": 2025,
+              "week": 18
+            },
+            {
+              "season": 2026,
+              "week": 1
+            },
+            {
+              "season": 2026,
+              "week": 2
+            },
+            {
+              "season": 2026,
+              "week": 3
+            }
+          ]
+        },
         "away": {},
         "margin_change": null,
         "shadow_margin": null,
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -2483,7 +2546,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -2630,7 +2693,7 @@
             "gsis_id": "00-0038099",
             "position": "DL",
             "full_name": "Phidarian Mathis",
-            "availability_status": "RES",
+            "availability_status": "EXE",
             "availability_source": "weekly roster"
           },
           {
@@ -2878,7 +2941,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 6.71,
@@ -2892,7 +2955,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -2901,7 +2964,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -3211,7 +3274,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -3609,7 +3672,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 10.2,
@@ -3623,7 +3686,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -3632,7 +3695,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -3942,7 +4005,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -4191,7 +4254,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": -1.14,
@@ -4205,7 +4268,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -4214,7 +4277,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -4243,8 +4306,8 @@
         "home_points_for_l4": 22.804552129221733,
         "home_points_against_l4": 24.9712187958884,
         "home_yards_l4": 330.81453744493393,
-        "home_off_epa_l4": -0.05137505284812186,
-        "home_def_epa_l4": -0.011337539626328599,
+        "home_off_epa_l4": -0.051375052848121855,
+        "home_def_epa_l4": -0.011337539626328594,
         "home_turnovers_l4": 0.751101321585903,
         "home_win_pct_l8": 0.6,
         "home_pressure_allowed_l4": 0.14638109307847857,
@@ -4524,7 +4587,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -4923,7 +4986,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 1.18,
@@ -4937,16 +5000,49 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
-        "home": {},
+        "home": {
+          "eligible": true,
+          "starter_id": "00-0039163",
+          "backup_id": "00-0036898",
+          "starter_basis": "inferred prior usage; not a confirmed depth chart",
+          "probability_basis": "fixed designation proxy; not calibrated",
+          "reason": null,
+          "baseline_epa": 0.024679538967767367,
+          "baseline_qb_shares": {
+            "00-0036898": 0.0703125,
+            "00-0039163": 0.9255208333333333,
+            "00-0040654": 0.004166666666666667
+          },
+          "expected_points_change": 0.291936854497627,
+          "unavailability_probability": 0.0,
+          "source_weeks": [
+            {
+              "season": 2025,
+              "week": 18
+            },
+            {
+              "season": 2026,
+              "week": 1
+            },
+            {
+              "season": 2026,
+              "week": 2
+            },
+            {
+              "season": 2026,
+              "week": 3
+            }
+          ]
+        },
         "away": {},
         "margin_change": null,
         "shadow_margin": null,
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -5258,7 +5354,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -5696,7 +5792,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 4.66,
@@ -5710,16 +5806,50 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
-        "home": {},
+        "home": {
+          "eligible": true,
+          "starter_id": "00-0031503",
+          "backup_id": "00-0040691",
+          "starter_basis": "inferred prior usage; not a confirmed depth chart",
+          "probability_basis": "fixed designation proxy; not calibrated",
+          "reason": null,
+          "baseline_epa": 0.016651971931107366,
+          "baseline_qb_shares": {
+            "00-0031503": 0.4632352941176471,
+            "00-0035250": 0.006578947368421052,
+            "00-0035645": 0.006578947368421052,
+            "00-0040691": 0.5236068111455108
+          },
+          "expected_points_change": -1.321315624446702,
+          "unavailability_probability": 0.0,
+          "source_weeks": [
+            {
+              "season": 2025,
+              "week": 18
+            },
+            {
+              "season": 2026,
+              "week": 1
+            },
+            {
+              "season": 2026,
+              "week": 2
+            },
+            {
+              "season": 2026,
+              "week": 3
+            }
+          ]
+        },
         "away": {},
         "margin_change": null,
         "shadow_margin": null,
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -5758,7 +5888,7 @@
         "away_points_against_l4": 21.304552129221733,
         "away_yards_l4": 385.9812041116006,
         "away_off_epa_l4": 0.04281930172906879,
-        "away_def_epa_l4": -0.03998378888733796,
+        "away_def_epa_l4": -0.03998378888733795,
         "away_turnovers_l4": 1.4177679882525698,
         "away_win_pct_l8": 0.5,
         "away_pressure_allowed_l4": 0.16206577550696125,
@@ -6029,7 +6159,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -6442,7 +6572,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": -1.78,
@@ -6456,16 +6586,48 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
-        "away": {},
+        "away": {
+          "eligible": true,
+          "starter_id": "00-0026498",
+          "backup_id": "00-0039107",
+          "starter_basis": "inferred prior usage; not a confirmed depth chart",
+          "probability_basis": "fixed designation proxy; not calibrated",
+          "reason": null,
+          "baseline_epa": 0.17470828004259123,
+          "baseline_qb_shares": {
+            "00-0026498": 0.9732142857142857,
+            "00-0039107": 0.026785714285714284
+          },
+          "expected_points_change": 0.1665105165355224,
+          "unavailability_probability": 0.0,
+          "source_weeks": [
+            {
+              "season": 2025,
+              "week": 18
+            },
+            {
+              "season": 2026,
+              "week": 1
+            },
+            {
+              "season": 2026,
+              "week": 2
+            },
+            {
+              "season": 2026,
+              "week": 3
+            }
+          ]
+        },
         "margin_change": null,
         "shadow_margin": null,
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -6775,7 +6937,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -6966,7 +7128,8 @@
             "practice_primary_injury": "Knee",
             "practice_secondary_injury": null,
             "practice_status": "Did Not Participate In Practice",
-            "availability_source": "injury report"
+            "availability_source": "injury report + weekly roster",
+            "availability_status": "RES"
           },
           {
             "team": "GB",
@@ -7138,7 +7301,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 3.71,
@@ -7152,7 +7315,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -7161,7 +7324,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -7471,7 +7634,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -7634,14 +7797,6 @@
             "gsis_id": "00-0039419",
             "position": "OL",
             "full_name": "Michael Jurgens",
-            "availability_status": "RES",
-            "availability_source": "weekly roster"
-          },
-          {
-            "team": "MIN",
-            "gsis_id": "00-0039710",
-            "position": "WR",
-            "full_name": "Jeshaun Jones",
             "availability_status": "RES",
             "availability_source": "weekly roster"
           },
@@ -7827,6 +7982,14 @@
           },
           {
             "team": "MIA",
+            "gsis_id": "00-0039040",
+            "position": "RB",
+            "full_name": "De'Von Achane",
+            "availability_status": "RES",
+            "availability_source": "weekly roster"
+          },
+          {
+            "team": "MIA",
             "gsis_id": "00-0039481",
             "position": "DB",
             "full_name": "Storm Duck",
@@ -7872,7 +8035,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 8.87,
@@ -7886,7 +8049,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -7895,7 +8058,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -8205,7 +8368,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -8586,14 +8749,6 @@
           },
           {
             "team": "KC",
-            "gsis_id": "00-0038145",
-            "position": "TE",
-            "full_name": "Thomas Odukoya",
-            "availability_status": "EXE",
-            "availability_source": "weekly roster"
-          },
-          {
-            "team": "KC",
             "gsis_id": "00-0040118",
             "position": "LB",
             "full_name": "Cooper McDonald",
@@ -8647,7 +8802,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 5.25,
@@ -8661,7 +8816,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -8670,7 +8825,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -8980,7 +9135,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -9454,7 +9609,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 9.3,
@@ -9468,7 +9623,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -9477,7 +9632,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -9787,7 +9942,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -10157,7 +10312,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 5.07,
@@ -10171,7 +10326,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -10180,7 +10335,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -10490,7 +10645,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -10877,7 +11032,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 2.49,
@@ -10891,7 +11046,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -10900,7 +11055,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     },
     {
@@ -11210,7 +11365,7 @@
       "margin_interval_validated": true,
       "injury_snapshot": {
         "source": "nflverse injury reports + weekly rosters",
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "prediction_season": 2026,
         "forecast_week": 4,
         "available_season": 2026,
@@ -11683,7 +11838,7 @@
         "applied_to_published_forecast": false,
         "eligible": false,
         "ineligible_reason": "stale_injury_feed",
-        "injury_snapshot_at": "2026-09-29T12:08:23.995413+00:00",
+        "injury_snapshot_at": "2026-09-29T17:58:32.728210+00:00",
         "injury_available_week": 3,
         "lambda": 1.5,
         "base_independent_margin": 1.06,
@@ -11697,7 +11852,7 @@
         "research_only": true,
         "applied_to_published_forecast": false,
         "eligible": false,
-        "captured_at": "2026-09-29T12:08:23.995413+00:00",
+        "captured_at": "2026-09-29T17:58:32.728210+00:00",
         "fresh_for_week": false,
         "home": {},
         "away": {},
@@ -11706,7 +11861,7 @@
         "coefficient": 1.0,
         "coefficient_validated": false
       },
-      "forecast_at": "2026-09-29T12:08:23.995413+00:00",
+      "forecast_at": "2026-09-29T17:58:32.728210+00:00",
       "market_context_status": "unavailable"
     }
   ]
