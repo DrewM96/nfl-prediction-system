@@ -37,6 +37,7 @@ class PredictionLedger:
         data_cutoff: str,
         prediction_season: int,
         metadata: dict[str, Any] | None = None,
+        player_predictions: Iterable[dict[str, Any]] | None = None,
     ) -> Path:
         created_at = datetime.now(UTC)
         run_id = f"{created_at:%Y%m%dT%H%M%SZ}-{uuid4().hex[:8]}"
@@ -52,6 +53,8 @@ class PredictionLedger:
             ],
         }
         target = self.root / f"{run_id}.json"
+        if player_predictions is not None:
+            payload["player_predictions"] = list(player_predictions)
         atomic_write_json(target, payload)
         return target
 

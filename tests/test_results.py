@@ -213,3 +213,18 @@ def test_scored_results_chart_uses_the_pinned_streamlit_api() -> None:
     )
 
     _weekly_chart(rows, target="margin")
+
+
+def test_nfl_home_spread_normalizes_into_result_market_margin(tmp_path):
+    import json
+
+    prediction = _prediction("spread-only", 2, market=3.5)
+    prediction["market_consensus"]["spread"] = {"home_spread": 3.5}
+    path = PredictionLedger(tmp_path).record_batch(
+        [prediction], model_hash="m", data_cutoff="2026-09-01", prediction_season=2026
+    )
+    payload = json.loads(path.read_text())
+    payload["created_at"] = "2026-09-01T13:00:00+00:00"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    rows = forecast_rows(tmp_path, as_of=datetime(2026, 9, 20, tzinfo=UTC))
+    assert rows.iloc[0].market_margin == -3.5

@@ -11,6 +11,7 @@ import pandas as pd
 from nfl_prediction.config import PREDICTIONS_DIR, PROJECT_ROOT, get_season_context
 from nfl_prediction.io import atomic_write_json
 from nfl_prediction.odds import _game_kickoff
+from nfl_prediction.prop_results import refresh_player_results
 from nfl_prediction.results import (
     forecast_rows,
     performance_history,
@@ -77,10 +78,14 @@ def main() -> None:
         now=datetime.now(UTC),
         season=args.season,
     )
+    prop_writes = refresh_player_results(
+        PREDICTIONS_DIR, schedules, args.season, now=datetime.now(UTC)
+    )
     atomic_write_json(
         PROJECT_ROOT / "performance_history.json", performance_history(PREDICTIONS_DIR)
     )
     print(f"Added {report['settlement_documents_added']} settlement documents")
+    print(f"Added {prop_writes} player settlement documents")
 
 
 if __name__ == "__main__":

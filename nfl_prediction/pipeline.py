@@ -27,6 +27,8 @@ from .lineup import attach_lineup_shadow, lineup_table
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import _game_kickoff, attach_market_consensus, load_market_consensus
 from .preseason import apply_preseason_calibration
+from .prop_cache import poll_depth, poll_props
+from .prop_results import freeze_player_predictions, refresh_player_results
 from .qb_replacement import attach_qb_shadow_forecasts, build_qb_replacement_table
 from .quality import forecast_quality, validate_source_schema
 from .results import performance_history, settle_schedule
@@ -812,15 +814,36 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
     )
 
     # Provider context is attached only after every predictive calculation is complete.
-    from .current_market import freeze_market_context
+    from .current_market import MarketStore, freeze_market_context
 
     predictions = freeze_market_context(predictions, "nfl", as_of=now)
+    player_snapshots = _current_player_snapshots(
+        raw_player_logs,
+        upcoming,
+        context.prediction_season,
+        data.rosters,
+        game_result.team_snapshot,
+    )
+    market_store = MarketStore()
+    # The pre-training worker may still have the previous week's slate. Capture
+    # props against the newly selected games before freezing their comparisons.
+    prop_board = poll_props(predictions, store=market_store)
+    prop_depth = poll_depth(context.prediction_season, store=market_store)
+    player_predictions = freeze_player_predictions(
+        {**player_snapshots, "schedule": predictions},
+        ensembles,
+        {"prediction_season": context.prediction_season},
+        prop_board,
+        prop_depth,
+        now=datetime.now(UTC),
+    )
     ledger = PredictionLedger()
     ledger_path = ledger.record_batch(
         predictions,
         model_hash=sha256_file(MODEL_MANIFEST_PATH),
         data_cutoff=cutoff_text,
         prediction_season=context.prediction_season,
+        player_predictions=player_predictions,
         metadata={
             "git_commit": _git_commit(),
             "week": forecast_week,
@@ -848,13 +871,8 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         },
     )
     performance = _score_ledger(ledger, data.schedules)
-
-    player_snapshots = _current_player_snapshots(
-        raw_player_logs,
-        upcoming,
-        context.prediction_season,
-        data.rosters,
-        game_result.team_snapshot,
+    refresh_player_results(
+        ledger.root, data.schedules, context.prediction_season, now=datetime.now(UTC)
     )
     team_payload = {
         team: {**state, "prediction_season": context.prediction_season, "data_cutoff": cutoff_text}
