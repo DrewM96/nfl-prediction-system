@@ -1237,13 +1237,8 @@ def spread_slider_html(
         context = current_context(game, load_current_market("ncaaf" if sport == "cfb" else sport))
     if current_home_spread is None:
         current_home_spread = context.get("home_spread")
-    frozen = (game.get("market_consensus") or {}).get("spread") or {}
     if context.get("status") == "fresh" and current_home_spread is not None:
         market = -float(current_home_spread)
-    elif frozen.get("home_spread") is not None:
-        market = -float(frozen["home_spread"])
-    elif frozen.get("market_home_margin") is not None:
-        market = float(frozen["market_home_margin"])
     else:
         return ""
     model = float(game["predicted_home_margin"])
@@ -1588,7 +1583,7 @@ def render_forecast_header(game: dict[str, Any], sport: str, *, featured: bool =
             '<div class="grid-hero grid-cfb-hero">'
             '<div class="grid-kicker" style="color:#FF6B35;margin-bottom:14px">Featured matchup</div>'
             f'<div class="grid-hero-main"><div>{matchup}<div class="grid-row-date" style="text-align:center;margin-top:8px">{html_text(kickoff)}</div></div>'
-            f'<div class="grid-tiles">{tiles}</div></div>{spread_slider_html(game, sport)}</div>',
+            f'<div class="grid-tiles">{tiles}</div></div></div>',
             unsafe_allow_html=True,
         )
         return None
@@ -1626,7 +1621,7 @@ def render_forecast_details(game: dict[str, Any], sport: str, *, collapsed: bool
 
 def render_featured_game(game: dict[str, Any]) -> None:
     render_forecast_header(game, "nfl", featured=True)
-    render_current_market(game, "nfl")
+    render_current_market(game, "nfl", show_slider=True)
     render_forecast_details(game, "nfl")
     render_official_injury_snapshot(game, detailed=True)
 
@@ -2457,7 +2452,7 @@ def cfb_market_spread_label(game: dict[str, Any]) -> str:
 
 def render_cfb_featured_game(game: dict[str, Any]) -> None:
     render_forecast_header(game, "cfb", featured=True)
-    render_current_market(game, "ncaaf")
+    render_current_market(game, "ncaaf", show_slider=True)
     render_forecast_details(game, "cfb")
 
 

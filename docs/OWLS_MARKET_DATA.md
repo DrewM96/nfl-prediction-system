@@ -130,8 +130,11 @@ mismatches and unmatched split IDs appear in diagnostics. Raw error bodies and
 credentials are never logged. An application User-Agent is required by the
 observed Owls edge service; the adapter sends `GRIDLINE/4.0 (market context)`.
 
-Freshness is conservative: a contributing spread book older than 15 minutes,
-missing/future source time, old capture time, provider stale flag, missing game,
+The live spread is the median of book quotes with valid source times no older
+than 15 minutes and no later than their capture time. Eligibility is checked on
+every display read, including existing caches; stale/invalid books are excluded
+and listed. A single fresh book is allowed and labeled with its book count.
+No fresh books, old capture time, provider stale flag, missing game,
 or provider failure marks the current comparison stale. After kickoff the
 comparison is marked stale/pregame-only. In-game lines are not presented as a
 fresh edge against a pregame projection. Split freshness is evaluated separately
@@ -142,6 +145,15 @@ exact timestamps on hover and in Market details. A separate Last check time
 is the backend's last poll attempt, not the age of the sportsbook figures.
 Stale books are excluded from cross-book agreement claims. The odds/forecast
 snapshot threshold remains 15 minutes; the longer window applies to splits.
+
+The live spread and comparison refresh in the market fragment for both featured
+and regular cards. Current-market status, book count, and oldest source age are
+visible outside Market details. When live odds are unavailable, any retained line
+is explicitly labeled stale; the slider never substitutes frozen odds as
+"Market now". Frozen odds remain separately labeled "Market at forecast".
+Stored consensus, opening observations, and the existing forecast-time capture
+policy are unchanged. This display change requires a code deployment, not a
+model refresh or historical-data rewrite.
 
 ## Frozen versus current data
 

@@ -16,7 +16,7 @@ import psycopg
 
 from . import market_postgres
 from .config import MARKET_PRIVATE_DIR
-from .odds import _game_kickoff, attach_market_consensus, parse_timestamp
+from .odds import _game_kickoff, _market_summary, attach_market_consensus, parse_timestamp
 from .owls import OwlsClient, OwlsError, parse_odds, parse_splits, timestamp
 
 POLL_SECONDS = 300
@@ -354,7 +354,27 @@ def current_context(
             "reason": "Game identity or kickoff mismatch",
             "splits": {},
         }
-    current = (market.get("spread") or {}).get("home_spread")
+    # Re-evaluate book ages on every read, including already-populated caches.
+    # Keep the stored consensus intact for audit and forecast-time capture.
+    fresh_books = []
+    excluded_books = []
+    spread_rows = []
+    captured = timestamp(market.get("captured_at"))
+    for key, book in market.get("books", {}).items():
+        if book.get("spread") is None:
+            continue
+        source = timestamp(book.get("source_timestamp"))
+        if source is None or stale_at(source, now) or not captured or source > captured:
+            excluded_books.append(key)
+            continue
+        fresh_books.append(key)
+        spread_rows.append({"home_spread": book["spread"], "last_update": source})
+    live_spread = _market_summary(spread_rows, "home_spread")
+    selected_spread = live_spread or market.get("spread") or {}
+    current = live_spread["line"] if live_spread else selected_spread.get("home_spread")
+    source_timestamp = (
+        live_spread["oldest_book_update"] if live_spread else market.get("source_timestamp")
+    )
     frozen = (forecast.get("market_consensus") or {}).get("spread") or {}
     original = frozen.get("home_spread")
     if original is None and frozen.get("market_home_margin") is not None:
@@ -366,10 +386,12 @@ def current_context(
         reasons.append(market["unavailable"])
     if market.get("provider_stale"):
         reasons.append("Provider reports stale odds")
-    if market.get("invalid_source_timestamp"):
+    if not live_spread and market.get("invalid_source_timestamp"):
         reasons.append("A contributing book has a missing or future timestamp")
-    if stale_at(market.get("captured_at"), now) or stale_at(market.get("source_timestamp"), now):
+    if stale_at(market.get("captured_at"), now) or stale_at(source_timestamp, now):
         reasons.append("Odds timestamp is old, missing, or in the future")
+    if not live_spread:
+        reasons.append("No fresh spread books available")
     if kickoff <= now:
         reasons.append("Kickoff reached; pregame projection comparison only")
     if current is None:
@@ -404,9 +426,13 @@ def current_context(
         "provider": board.get("provider", "Owls Insight"),
         "event_id": market["event_id"],
         "home_spread": current,
+        "book_count": selected_spread.get("book_count", 0),
+        "fresh_books": sorted(fresh_books),
+        "excluded_books": sorted(excluded_books),
+        "source_age_seconds": age_seconds(source_timestamp, now),
         "open_home_spread": market.get("open_home_spread"),
         "open_snapshot_at": market.get("open_snapshot_at"),
-        "source_timestamp": market.get("source_timestamp"),
+        "source_timestamp": source_timestamp,
         "captured_at": market.get("captured_at"),
         "movement": round(current - original, 3)
         if current is not None and original is not None
@@ -436,7 +462,14 @@ def freeze_market_context(
     for prediction in predictions:
         context = current_context(prediction, board, now=as_of)
         if context["status"] == "fresh":
-            eligible.extend(g for g in board["games"] if g["game_id"] == str(prediction["game_id"]))
+            # Live display filtering must not relax the existing frozen-snapshot policy.
+            eligible.extend(
+                g
+                for g in board["games"]
+                if g["game_id"] == str(prediction["game_id"])
+                and not g.get("invalid_source_timestamp")
+                and not stale_at(g.get("source_timestamp"), as_of)
+            )
     snapshot = {**board, "games": eligible}
     # Existing attachment preserves all predictive fields and benchmark conventions.
     enriched = attach_market_consensus(
