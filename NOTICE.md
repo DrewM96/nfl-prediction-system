@@ -17,6 +17,10 @@ Provider: https://the-odds-api.com/
 Current market context also uses Owls Insight (https://owlsinsight.com/).
 Book-level history remains private; public action is attributed to its source
 sportsbook. Owls' data-use terms apply independently of this project's license.
+NFL player comparisons use Owls prop lines and expected starter assignments from
+nflverse's ESPN depth charts. Chart assignments are context filters, not model
+inputs or confirmed game-day lineups. Dataset source:
+https://github.com/nflverse/nflverse-data/releases/tag/depth_charts
 
 Terms: https://the-odds-api.com/terms-and-conditions.html
 

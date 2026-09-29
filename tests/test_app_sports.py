@@ -89,6 +89,17 @@ def test_results_are_available_for_both_sports() -> None:
     assert not app.error and not app.exception
 
 
+def test_props_page_preserves_manual_comparison_and_handles_empty_cache() -> None:
+    app = AppTest.from_file("app.py").run(timeout=30)
+    next(radio for radio in app.radio if radio.label == "Navigate").set_value("Props").run(
+        timeout=30
+    )
+    assert not app.error and not app.exception
+    assert any("Expected starters" in caption.value for caption in app.caption)
+    assert any(expander.label == "Manual player comparison" for expander in app.expander)
+    assert next(box for box in app.checkbox if box.label == "Include older lines").value is False
+
+
 def test_nfl_matchup_views_expose_frozen_injury_context() -> None:
     source = Path("app.py").read_text()
     assert "def render_official_injury_snapshot" in source

@@ -36,6 +36,7 @@ The current application is configured for the 2026 season. It loads the upcoming
 - Game and player forecasts include residual uncertainty and 80% intervals.
 - Receiving targets are counted before completions, and snap-count participation preserves active zero-opportunity games.
 - Current prop menus use stable GSIS player IDs and exclude retired/cut players through the latest roster feed.
+- NFL Props ranks expected starters by projection-versus-line discrepancy for passing yards, rushing yards, receiving yards and receptions. Owls lines refresh through the shared backend cache; per-book lines, freshness and depth-chart sources remain visible. See [player comparison setup and coverage](docs/OWLS_MARKET_DATA.md#nfl-player-comparisons).
 - Sportsbook signs are converted explicitly: a home favorite at `-6` corresponds to a `+6` market home margin.
 - Official nflverse injury reports are frozen into each NFL forecast as matchup context, with source week and freshness metadata; they are display/evaluation context only and do not change model outputs. Manual injuries remain session-only what-if scenarios.
 - Dependencies are pinned, CI is required, and a scheduled updater opens a reviewable artifact pull request.

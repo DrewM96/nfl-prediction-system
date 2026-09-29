@@ -8,6 +8,7 @@ import json
 import os
 import time
 from collections import Counter
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +16,7 @@ from nfl_prediction.config import PROJECT_ROOT
 from nfl_prediction.current_market import MarketStore, poll_market
 from nfl_prediction.io import atomic_write_json, read_json
 from nfl_prediction.market_parity import live_parity
+from nfl_prediction.prop_cache import poll_depth, poll_props
 
 
 def load_slate(sport: str, path: str | Path | None = None) -> list[dict[str, Any]]:
@@ -53,6 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     store = MarketStore(args.db)
     if args.status:
         boards = {sport: store.read(sport) for sport in sports}
+        props, depth = store.read("nfl_props"), store.read("nfl_depth")
         print(
             json.dumps(
                 {
@@ -67,6 +70,12 @@ def main(argv: list[str] | None = None) -> int:
                             "splits_error": board.get("splits_error"),
                         }
                         for sport, board in boards.items()
+                    },
+                    "props": {
+                        "cached_quotes": len(props.get("rows", [])),
+                        "last_attempt_at": props.get("last_attempt_at"),
+                        "error": props.get("error") or props.get("odds_error"),
+                        "depth_error": depth.get("error") or depth.get("odds_error"),
                     },
                 },
                 indent=2,
@@ -92,6 +101,21 @@ def main(argv: list[str] | None = None) -> int:
                 }
         if args.parity:
             atomic_write_json(args.output, results)
+        elif "nfl" in sports:
+            slate = load_slate("nfl", args.slate_nfl)
+            props = poll_props(slate, store=store)
+            season = max(
+                (int(g.get("season") or datetime.now(UTC).year) for g in slate),
+                default=datetime.now(UTC).year,
+            )
+            depth = poll_depth(season, store=store)
+            results["nfl_props"] = {
+                "cached_quotes": len(props.get("rows", [])),
+                "error": props.get("error"),
+                "last_attempt_at": props.get("last_attempt_at"),
+                "diagnostics": props.get("diagnostics", {}),
+                "depth_error": depth.get("error"),
+            }
         summary = {
             sport: {
                 key: value
@@ -104,7 +128,11 @@ def main(argv: list[str] | None = None) -> int:
         if not args.watch:
             return int(
                 any(
-                    r.get("odds_error") or r.get("status") == "unverified" for r in results.values()
+                    r.get("odds_error")
+                    or r.get("error")
+                    or r.get("depth_error")
+                    or r.get("status") == "unverified"
+                    for r in results.values()
                 )
             )
         # Check persisted gates frequently; cadence is enforced transactionally in the DB.

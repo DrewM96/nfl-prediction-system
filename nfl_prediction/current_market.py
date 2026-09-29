@@ -93,13 +93,27 @@ class MarketStore:
             );
             CREATE INDEX IF NOT EXISTS market_observation_latest
                 ON market_observations(sport, event_id, sportsbook, id DESC);
+            CREATE TABLE IF NOT EXISTS prop_observations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                event_id TEXT NOT NULL, sportsbook TEXT NOT NULL, player_key TEXT NOT NULL,
+                category TEXT NOT NULL, game_id TEXT NOT NULL, captured_at TEXT NOT NULL,
+                payload TEXT NOT NULL, material_hash TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS prop_observation_latest
+                ON prop_observations(event_id, sportsbook, player_key, category, id DESC);
+            CREATE TRIGGER IF NOT EXISTS prop_observations_no_update
+                BEFORE UPDATE ON prop_observations
+                BEGIN SELECT RAISE(ABORT, 'Prop history is append-only'); END;
+            CREATE TRIGGER IF NOT EXISTS prop_observations_no_delete
+                BEFORE DELETE ON prop_observations
+                BEGIN SELECT RAISE(ABORT, 'Prop history is append-only'); END;
             CREATE TRIGGER IF NOT EXISTS market_observations_no_update
                 BEFORE UPDATE ON market_observations
                 BEGIN SELECT RAISE(ABORT, 'Market history is append-only'); END;
             CREATE TRIGGER IF NOT EXISTS market_observations_no_delete
                 BEFORE DELETE ON market_observations
                 BEGIN SELECT RAISE(ABORT, 'Market history is append-only'); END;
-            PRAGMA user_version=1;
+            PRAGMA user_version=2;
         """)
         return connection
 

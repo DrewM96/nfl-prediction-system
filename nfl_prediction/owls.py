@@ -61,12 +61,14 @@ class OwlsClient:
         self.quota_retry_after = 0
 
     def get(self, sport: str, endpoint: str) -> dict[str, Any]:
-        if sport not in SPORT_KEYS or endpoint not in {"odds", "splits"}:
+        if sport not in SPORT_KEYS or endpoint not in {"odds", "splits", "props"}:
             raise ValueError("Unsupported Owls sport or endpoint")
         key = os.environ.get("OWLS_INSIGHT_API_KEY", "").strip()
         if not key:
             raise OwlsError("OWLS_INSIGHT_API_KEY is not configured", retry_after=3600)
         suffix = "?exclude_exchanges=true" if endpoint == "odds" else ""
+        if endpoint == "props":
+            suffix = "?books=pinnacle,fanduel,draftkings,caesars,betmgm,bet365"
         request = Request(
             f"https://api.owlsinsight.com/api/v1/{sport}/{endpoint}{suffix}",
             headers={
