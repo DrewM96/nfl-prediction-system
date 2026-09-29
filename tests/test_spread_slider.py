@@ -57,7 +57,7 @@ def test_favorite_labels_and_pick(slider, game, sport, margin, label):
 )
 def test_gap_direction_and_value(slider, game, margin, gap):
     game["predicted_home_margin"] = margin
-    markup = slider(game, "nfl", context={})
+    markup = slider(game, "nfl", context={"status": "fresh", "home_spread": 3.5})
     assert f">{gap}</span>" in markup
     assert "Market now <b>PHI -3.5</b>" in markup
 
@@ -83,16 +83,20 @@ def test_extreme_spreads_are_clamped(slider, game):
 
 
 def test_opening_is_included_in_scale_and_zero_is_a_valid_open(slider, game):
-    markup = slider(game, "nfl", context={"open_home_spread": 10000})
+    markup = slider(
+        game, "nfl", context={"status": "fresh", "home_spread": 3.5, "open_home_spread": 10000}
+    )
     assert 'grid-slider-marker grid-slider-open" style="left:2.00%' in markup
-    markup = slider(game, "nfl", context={"open_home_spread": 0})
+    markup = slider(
+        game, "nfl", context={"status": "fresh", "home_spread": 3.5, "open_home_spread": 0}
+    )
     assert "Open <b>Pick</b>" in markup
     assert 'grid-slider-marker grid-slider-open" style="left:50.00%' in markup
 
 
 @pytest.mark.parametrize("context", [{}, {"open_home_spread": None}])
 def test_missing_opening_has_no_marker_movement_or_legend(slider, game, context):
-    markup = slider(game, "nfl", context=context)
+    markup = slider(game, "nfl", context={"status": "fresh", "home_spread": 3.5, **context})
     assert "grid-slider-open" not in markup
     assert "grid-slider-movement" not in markup
     assert "Open" not in markup
@@ -100,11 +104,10 @@ def test_missing_opening_has_no_marker_movement_or_legend(slider, game, context)
 
 @pytest.mark.parametrize("status", ["stale", "unavailable"])
 @pytest.mark.parametrize("spread", [{"home_spread": 3.5}, {"market_home_margin": -3.5}])
-def test_nonfresh_context_falls_back_to_frozen_consensus(slider, game, status, spread):
+def test_nonfresh_context_never_labels_frozen_consensus_as_current(slider, game, status, spread):
     game["market_consensus"]["spread"] = spread
     markup = slider(game, "cfb", context={"status": status, "home_spread": -7})
-    assert "Market now <b>PHI -3.5</b>" in markup
-    assert "CHI -7.0" not in markup
+    assert markup == ""
 
 
 def test_default_context_loads_correct_sport_and_prefers_live(slider, game, monkeypatch):
@@ -130,9 +133,17 @@ def test_no_market_omits_entire_slider(slider, game, context):
     assert slider(game, "nfl", context=context) == ""
 
 
+def test_live_market_needs_no_frozen_market(slider, game):
+    game["market_consensus"] = None
+    markup = slider(game, "nfl", context={"status": "fresh", "home_spread": 2.5})
+    assert "Market now <b>PHI -2.5</b>" in markup
+
+
 def test_team_text_is_escaped_everywhere(slider, game):
     game.update(home_team='<img src=x onerror="bad">', away_team="A&B")
-    markup = slider(game, "cfb", context={"open_home_spread": 0})
+    markup = slider(
+        game, "cfb", context={"status": "fresh", "home_spread": 3.5, "open_home_spread": 0}
+    )
     assert "<img" not in markup
     assert "&lt;img" in markup and "&quot;bad&quot;" in markup and "A&amp;B" in markup
 
@@ -148,6 +159,8 @@ def test_hero_and_collapsed_row_render_slider_before_market_panel(sport, tmp_pat
             "nfl_market_spread_label",
             "forecast_card_values",
             "render_forecast_header",
+            "render_featured_game",
+            "render_cfb_featured_game",
             "render_current_market",
             "render_game_row",
             "render_cfb_game_row",
@@ -170,13 +183,17 @@ def team_logo_html(*args): return ""
 def load_current_market(sport): return {}
 def current_context(*args): return {"status": "fresh", "home_spread": 3.5}
 def market_context_html(*args): return '<div class="test-market-panel">Current market</div>'
+def render_forecast_details(*args): pass
 game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_margin=2,
             home_win_probability=.6, total=45, predicted_total=45, home_score=24, away_score=21,
             predicted_home_score=24, predicted_away_score=21,
             market_consensus={"spread": {"home_spread": 3.5, "market_home_margin": -3.5}},
             injury_snapshot={"away": [], "home": [], "available_week": 1, "forecast_week": 1})
 """
-    script += functions + f'\nrender_forecast_header(game, "{sport}", featured=True)\n'
+    script += (
+        functions
+        + f"\n{'render_featured_game' if sport == 'nfl' else 'render_cfb_featured_game'}(game)\n"
+    )
     script += f"{'render_game_row' if sport == 'nfl' else 'render_cfb_game_row'}(game, 0)\n"
     script += "render_official_injury_snapshot(game, detailed=True)\n"
     path = tmp_path / "slider_app.py"
@@ -186,11 +203,11 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     rendered = [m.value for m in app.markdown]
     sliders = [m for m in rendered if 'class="grid-slider"' in m]
     assert len(sliders) == 2
-    assert 'class="grid-hero grid-cfb-hero"' in sliders[0]
-    assert sliders[0].endswith("</section></div>")
-    assert rendered.index(sliders[1]) < next(
-        i for i, m in enumerate(rendered) if "test-market-panel" in m
-    )
+    assert any('class="grid-hero grid-cfb-hero"' in m for m in rendered)
+    panels = [i for i, m in enumerate(rendered) if "test-market-panel" in m]
+    assert len(panels) == 2
+    for slider_markup, panel_index in zip(sliders, panels, strict=True):
+        assert rendered.index(slider_markup) < panel_index
     assert any("Player availability snapshot" in m for m in rendered)
     assert not any("Forecast inputs and availability" in m for m in rendered)
     assert not any(e.label == "Forecast inputs and availability" for e in app.expander)

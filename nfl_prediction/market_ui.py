@@ -147,6 +147,24 @@ def market_context_html(game: dict[str, Any], context: dict[str, Any]) -> str:
     missing_label = (
         "Books missing from latest poll: " + ", ".join(missing_books) if missing_books else ""
     )
+    count = context.get("book_count", 0)
+    coverage = f"{count} {'book' if count == 1 else 'books'}"
+    source_age = age_label(context.get("source_age_seconds"))
+    if status == "fresh":
+        live_label = f"Current market: {spread(context.get('home_spread'))}"
+    else:
+        live_label = "Current market unavailable"
+        if context.get("home_spread") is not None:
+            live_label += f"<br>Last cached line — STALE: {spread(context['home_spread'])}"
+    excluded = context.get("excluded_books", [])
+    excluded_label = (
+        "<br>Excluded stale or invalid books: " + text(", ".join(excluded)) if excluded else ""
+    )
+    live_panel = (
+        '<div class="grid-market-context"><div>'
+        f"<b>{live_label}</b><br><small>{coverage} · Oldest source: {text(source_age)}"
+        f"{excluded_label}</small></div></div>"
+    )
     sections = [
         f"<div><b>GRIDLINE · Frozen projection</b><br>{spread(model_line)}<br><small>Forecast: {text(game.get('forecast_at') or 'timestamp unavailable')}</small></div>",
         f"<div><b>MARKET</b><br>Market at forecast: {spread(line)}<br><small>{text(frozen.get('provider') or 'No snapshot')} · {text(frozen.get('snapshot_at') or 'unavailable')}</small><br>{current_label}: {spread(context.get('home_spread'))}<br>Movement: {points(context.get('movement'))}<br>{edge_label}: {points(context.get('current_home_edge'))}<br><small>Updated: {text(context.get('source_timestamp') or 'unknown')}<br>Fetched: {text(context.get('captured_at') or 'unavailable')} · {text(context.get('provider') or 'Owls Insight')}<br>{text(context.get('reason') or '')}<br>{text(missing_label)}</small></div>",
@@ -172,7 +190,8 @@ def market_context_html(game: dict[str, Any], context: dict[str, Any]) -> str:
         f"<div><b>PUBLIC ACTION</b><p>Equal weight per book, not volume-weighted. Counts beside Tickets and Handle show contributing books; missing pairs are excluded. Cached stale figures are included only with a visible warning. Books may report different lines and timestamps.</p>{''.join(public) or 'Splits unavailable'}<small>{text(context.get('splits_error') or '')}</small></div>"
     )
     return (
-        public_action_html(game, context)
+        live_panel
+        + public_action_html(game, context)
         + '<details class="grid-market-details"><summary>Market details</summary>'
         + '<div class="grid-market-context">'
         + "".join(sections)

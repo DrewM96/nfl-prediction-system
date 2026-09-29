@@ -354,10 +354,16 @@ def test_failed_splits_do_not_hide_fresh_odds(tmp_path, odds, splits, slate):
 @pytest.mark.parametrize(
     "timestamp_value", [None, "invalid", "2026-09-10T12:00:00Z", "2026-09-11T16:00:00Z"]
 )
-def test_stale_source_never_relabelled_by_fresh_capture(odds, slate, timestamp_value):
+def test_invalid_or_stale_book_is_excluded_from_live_consensus(odds, slate, timestamp_value):
     odds["data"]["draftkings"][0]["bookmakers"][0]["last_update"] = timestamp_value
     board = parse_odds(odds, "nfl", slate, STAMP)
-    assert current_context(slate[0], board, now=NOW)["status"] == "stale"
+    context = current_context(slate[0], board, now=NOW)
+    assert context["status"] == "fresh"
+    assert context["home_spread"] == -4.0
+    assert context["book_count"] == 1
+    assert context["fresh_books"] == ["circa"]
+    assert context["excluded_books"] == ["draftkings"]
+    assert context["source_timestamp"] == STAMP
 
 
 def test_unavailable_cache_and_mismatched_kickoff_do_not_crash(tmp_path, odds, slate):
@@ -368,6 +374,73 @@ def test_unavailable_cache_and_mismatched_kickoff_do_not_crash(tmp_path, odds, s
     board = parse_odds(odds, "nfl", slate, STAMP)
     slate[0]["commence_time"] = "2026-09-20T17:00:00Z"
     assert current_context(slate[0], board, now=NOW)["status"] == "unavailable"
+
+
+def test_fresh_book_consensus_survives_cache_roundtrip_and_preserves_forecast(
+    tmp_path, odds, splits, slate, monkeypatch
+):
+    monkeypatch.setenv("GRIDLINE_MARKET_PROVIDER", "owls")
+    odds["data"]["draftkings"][0]["bookmakers"][0]["last_update"] = (
+        NOW - timedelta(minutes=31)
+    ).isoformat()
+    store = MarketStore(tmp_path / "market.db")
+    poll_market("nfl", slate, store=store, client=Client(odds, splits), now=NOW)
+    board = store.read("nfl")
+    before = copy.deepcopy((board, slate))
+    context = current_context(slate[0], board, now=NOW)
+    assert context["status"] == "fresh"
+    assert context["home_spread"] == -4.0
+    assert context["movement"] == -1.0
+    assert context["current_home_edge"] == -2.0
+    assert context["book_count"] == 1
+    assert context["source_age_seconds"] == 0
+    assert not context["splits"]["draftkings"]["stale"]
+    assert (board, slate) == before
+    # The live comparison does not change the pre-existing archive capture policy.
+    assert (
+        freeze_market_context(slate, "nfl", as_of=NOW, store=store)[0]["market_consensus"] is None
+    )
+    assert store.read("nfl") == board
+    assert slate == before[1]
+
+
+def test_live_consensus_expires_each_book_without_a_new_poll(odds, slate):
+    odds["data"]["draftkings"][0]["bookmakers"][0]["last_update"] = (
+        NOW - timedelta(minutes=14)
+    ).isoformat()
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    assert current_context(slate[0], board, now=NOW)["home_spread"] == -3.75
+    context = current_context(slate[0], board, now=NOW + timedelta(minutes=2))
+    assert context["status"] == "fresh"
+    assert context["home_spread"] == -4.0
+    assert context["excluded_books"] == ["draftkings"]
+    expired = current_context(slate[0], board, now=NOW + timedelta(minutes=16))
+    assert expired["status"] == "stale"
+    assert expired["fresh_books"] == []
+    assert expired["home_spread"] == -3.75
+
+
+@pytest.mark.parametrize("status", ["fresh", "stale", "unavailable"])
+def test_current_market_is_visible_before_collapsed_details(slate, status):
+    context = {
+        "status": status,
+        "home_spread": -4.0 if status != "unavailable" else None,
+        "book_count": 1 if status != "unavailable" else 0,
+        "source_age_seconds": 120,
+        "excluded_books": ["old<book>"],
+    }
+    markup = market_context_html(slate[0], context)
+    visible = markup.split('<details class="grid-market-details">')[0]
+    assert "Oldest source: 2m ago" in visible
+    assert "old&lt;book&gt;" in visible and "old<book>" not in markup
+    assert "Market at forecast" not in visible
+    assert "Market at forecast: BUF -3.00" in markup
+    if status == "fresh":
+        assert "Current market: BUF -4.00" in visible
+        assert "1 book" in visible
+    else:
+        assert "Current market unavailable" in visible
+        assert ("Last cached line — STALE: BUF -4.00" in visible) == (status == "stale")
 
 
 @pytest.mark.parametrize(
