@@ -148,7 +148,13 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                 else None,
                 lineup_shadow_version=lineup_shadow.get("version"),
                 qb_shadow_injury_snapshot_at=qb_shadow.get("injury_snapshot_at"),
-                market_margin=spread.get("market_home_margin") if market_valid else None,
+                market_margin=(
+                    -float(spread["home_spread"])
+                    if spread.get("home_spread") is not None
+                    else spread.get("market_home_margin")
+                )
+                if market_valid
+                else None,
                 market_total=total_market.get("total") if market_valid else None,
                 market_at=captured if market_valid else None,
                 published_probability=prediction.get("home_win_probability"),

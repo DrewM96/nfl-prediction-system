@@ -201,6 +201,66 @@ st.markdown(
       font-size: var(--text-sm);
       white-space: nowrap;
     }
+    .grid-results-hero {
+      display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap;
+      gap: 24px; padding: 28px; margin: 4px 0 20px; border: 1px solid var(--grid-border);
+      border-radius: var(--radius-xl); background: linear-gradient(115deg, #fff 55%, #fff4ee);
+    }
+    .grid-results-eyebrow { color: #c94b19; font-size: var(--text-xs); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .grid-results-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; letter-spacing: -.04em; line-height: 1.15; margin: 8px 0 12px; color: var(--grid-ink); }
+    .grid-results-copy { font-size: var(--text-sm); color: var(--grid-muted); line-height: 1.6; max-width: 520px; }
+    .grid-results-coverage { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .grid-results-pill { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--grid-border); border-radius: 999px; padding: 4px 10px; font-size: var(--text-xs); color: var(--grid-muted); }
+    .grid-results-pill b { color: var(--grid-ink); font-weight: 600; }
+    .grid-results-hero-stat { min-width: 150px; border-left: 2px solid var(--grid-orange); padding-left: 20px; }
+    .grid-results-big { font-size: 44px; line-height: 1.2; letter-spacing: -.055em; font-weight: 700; color: var(--grid-ink); font-variant-numeric: tabular-nums; }
+    .grid-results-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 12px; margin-bottom: 24px; }
+    .grid-results-stat { border: 1px solid var(--grid-border); border-radius: var(--radius-panel); padding: 20px; background: #fff; min-width: 0; }
+    .grid-results-stat-label { color: var(--grid-muted); font-size: var(--text-sm); font-weight: 600; }
+    .grid-results-stat-number { font-size: 30px; font-weight: 700; letter-spacing: -.04em; line-height: 1.25; margin: 10px 0 6px; color: var(--grid-ink); font-variant-numeric: tabular-nums; }
+    .grid-results-stat-meta { color: var(--grid-muted); font-size: var(--text-xs); line-height: 1.6; }
+    .grid-results-meter { height: 4px; background: var(--grid-subtle); border-radius: 4px; overflow: hidden; margin: 14px 0 10px; }
+    .grid-results-meter span { height: 100%; display: block; background: var(--grid-orange); border-radius: 4px; }
+    .grid-results-section { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 26px 0 14px; }
+    .grid-results-section h3 { margin: 0; padding: 0; font-size: 20px; letter-spacing: -.025em; color: var(--grid-ink); }
+    .grid-results-section p { margin: 5px 0 0; color: var(--grid-muted); font-size: var(--text-sm); }
+    .grid-results-tag { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: var(--text-xs); font-weight: 600; background: var(--grid-subtle); color: var(--grid-muted); white-space: nowrap; }
+    .grid-results-tag.is-win { background: #eaf6ef; color: #18734a; }
+    .grid-results-tag.is-loss { background: #fceeed; color: #b7443e; }
+    .grid-results-tag.is-push, .grid-results-tag.is-tie { background: #fff5df; color: #916318; }
+    .grid-results-week-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr)); gap: 12px; }
+    .grid-results-week { padding: 18px; border: 1px solid var(--grid-border); border-radius: var(--radius-panel); }
+    .grid-results-week-head { display: flex; justify-content: space-between; gap: 12px; font-size: var(--text-sm); font-weight: 600; margin-bottom: 14px; }
+    .grid-results-week-line { display: flex; justify-content: space-between; gap: 12px; font-size: var(--text-sm); color: var(--grid-muted); margin: 7px 0; }
+    .grid-results-week-line b { color: var(--grid-ink); font-variant-numeric: tabular-nums; }
+    .grid-results-games { display: flex; flex-direction: column; gap: 12px; }
+    .grid-results-game { border: 1px solid var(--grid-border); border-radius: var(--radius-panel); padding: 18px 20px; background: #fff; }
+    .grid-results-game-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid var(--grid-subtle); }
+    .grid-results-matchup { font-size: var(--text-md); color: var(--grid-ink); font-weight: 600; overflow-wrap: anywhere; }
+    .grid-results-game-meta { color: var(--grid-muted); font-size: var(--text-xs); }
+    .grid-results-game-picks { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,155px),1fr)); gap: 16px; padding-top: 14px; }
+    .grid-results-pick { min-width: 0; }
+    .grid-results-pick-label { font-size: var(--text-xs); color: var(--grid-faint); margin-bottom: 6px; }
+    .grid-results-pick-value { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; font-size: var(--text-sm); font-weight: 600; color: var(--grid-ink); overflow-wrap: anywhere; }
+    .grid-results-pick-detail { font-size: var(--text-xs); color: var(--grid-muted); margin-top: 6px; }
+    .grid-results-wagons { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr)); gap: 12px; margin-bottom: 18px; }
+    .grid-results-wagon { padding: 20px; border-radius: var(--radius-panel); border: 1px solid var(--grid-border); background: #fff; }
+    .grid-results-wagon:first-child { background: #fff8f3; border-color: #ffdbc7; }
+    .grid-results-wagon-team { font-size: 22px; font-weight: 700; margin: 12px 0 6px; color: var(--grid-ink); overflow-wrap: anywhere; }
+    .grid-results-team-list { border: 1px solid var(--grid-border); border-radius: var(--radius-panel); overflow: hidden; }
+    .grid-results-team { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--grid-subtle); }
+    .grid-results-team:last-child { border-bottom: 0; }
+    .grid-results-team-name { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 180px; }
+    .grid-results-team-name b { font-size: var(--text-base); color: var(--grid-ink); overflow-wrap: anywhere; }
+    .grid-results-team-rank { font-size: var(--text-xs); color: var(--grid-faint); min-width: 20px; }
+    .grid-results-team-stats { display: flex; flex-wrap: wrap; gap: 18px; font-size: var(--text-sm); color: var(--grid-ink); }
+    .grid-results-team-stats small { display: block; color: var(--grid-faint); font-size: var(--text-xs); margin-bottom: 4px; }
+    .grid-results-form { display: flex; gap: 4px; margin-top: 6px; }
+    .grid-results-form span { width: 17px; height: 17px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; }
+    .grid-results-empty { border: 1px dashed var(--grid-border-strong); border-radius: var(--radius-panel); padding: 30px; background: #fafbfc; margin: 16px 0; }
+    .grid-results-empty b { display: block; color: var(--grid-ink); font-size: var(--text-md); margin-bottom: 8px; }
+    .grid-results-empty p { color: var(--grid-muted); font-size: var(--text-sm); line-height: 1.7; margin: 0; max-width: 620px; }
+    .grid-results-note { font-size: var(--text-xs); line-height: 1.7; color: var(--grid-muted); margin: 12px 0; }
     .grid-slider {
       margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--grid-subtle);
       display: flex; flex-direction: column; gap: 10px; min-width: 0;
@@ -889,6 +949,8 @@ st.markdown(
       .grid-mobile-hint { display: block; margin: 4px 0 8px; color: var(--grid-muted); font-size: var(--text-sm); }
     }
     @media (max-width: 520px) {
+      .grid-results-stat { padding: 16px; }
+      .grid-results-stat-number { font-size: 26px; }
       .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(6,minmax(0,1fr)); }
       .st-key-active_screen label::before, .st-key-cfb_active_screen label::before { display: none; }
       .st-key-active_screen label, .st-key-cfb_active_screen label {
@@ -2033,9 +2095,11 @@ def render_props(
     state_key, model_name = mapping[prop]
     snapshot = {key: state[key] for key in ("qb", "rb", "wr", "schedule")}
     snapshot["prediction_season"] = service.manifest["prediction_season"]
-    projections = cached_prop_projections(
-        sha256_file(release_manifest(PROJECT_ROOT)), snapshot, service.models
-    )
+    projections = (state.get("prediction_batch") or {}).get("player_predictions")
+    if projections is None:
+        projections = cached_prop_projections(
+            sha256_file(release_manifest(PROJECT_ROOT)), snapshot, service.models
+        )
     render_prop_rankings(projections, model_name)
     with st.expander("Manual player comparison"):
         render_manual_prop(state, service, injury_system, state_key, model_name, prop)
