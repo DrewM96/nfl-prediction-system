@@ -88,7 +88,8 @@ $env:OWLS_INSIGHT_API_KEY = [Environment]::GetEnvironmentVariable('OWLS_INSIGHT_
 $env:ODDS_API_KEY = [Environment]::GetEnvironmentVariable('ODDS_API_KEY', 'User')
 ```
 
-The default NFL slate is `weekly_schedule.json`; CFB uses the immutable batch
+The default NFL slate is the published batch in `data/nfl_release.json`, with
+`weekly_schedule.json` as a legacy fallback; CFB uses the immutable batch
 referenced by `data/cfb/latest_prediction.json`. For a broader schedule or
 upcoming unpublished slate, supply `--slate-nfl schedule.json` and/or
 `--slate-ncaaf schedule.json`. Input is a list or a `predictions`/`games` envelope;
@@ -150,13 +151,56 @@ The Live Market metric and slider refresh together in a 60-second card fragment
 for both featured and regular NFL/CFB cards, using the same current context.
 Live Market replaces Market at forecast on the main card; book count and oldest
 source age appear under that metric, with no duplicate market panel below the
-slider. When fresh odds are unavailable, the metric says Unavailable. In Market
-details, any retained line
-is explicitly labeled stale; the slider never substitutes frozen odds as
+slider. When fresh odds are unavailable, the metric shows any retained quote
+with a "Last known—stale" label, source age, and exact source timestamp on hover.
+It says Unavailable only when no matching quote exists. In Market details,
+any retained line is explicitly labeled stale; the slider never substitutes frozen odds as
 "Market now". Frozen odds remain separately labeled "Market at forecast".
 Stored consensus, opening observations, and the existing forecast-time capture
 policy are unchanged. This display change requires a code deployment, not a
 model refresh or historical-data rewrite.
+
+## Blood-in-the-water Picks of The Week
+
+Both NFL and CFB show a live weekly picks section, explanatory tooltips, and
+per-game pick badges. The **Picks** page holds the prospective record and each
+recorded observation's per-book inputs. Spreads and totals qualify when:
+
+- The ticket majority is strictly greater than 50% on one side.
+- The opposite side has at least 65% of handle.
+- The published GRIDLINE projection favors that handle side against the fresh
+  consensus line, using the existing 0.05-point no-pick tolerance.
+- At least two books have complete ticket and handle pairs with valid source
+  times no older than one hour. Both averages use exactly the same books, with
+  equal weights. This is not a volume-weighted share of the entire market.
+- At least one valid pregame odds book supplies a quote no older than 15 minutes.
+  Spread and total source timestamps are validated separately. Cached total
+  quotes without a total timestamp wait for the next worker poll.
+
+Qualification uses the fresh sample only. General public-action panels may
+include clearly labeled stale books and separate samples for tickets and handle,
+so their displayed averages can differ. Tooltips identify the pick's sample and
+explain the thresholds. Handle is wager volume, not bettor identity.
+
+The existing market worker records each qualifying poll in the append-only
+`money_signals` table in the shared SQLite/Postgres market store. The table and
+immutability triggers are added automatically by the worker. No extra provider
+requests, model runs, or browser sessions are required. Poll backoff and cadence
+still apply. Source times, line, model projection, forecast publication/run/hash,
+and per-book splits and quotes are frozen in each observation; published forecast
+artifacts are untouched. Recording begins after deployment, without backfill.
+
+The record grades only the first qualifying observation for each game and market
+against official results already recorded in the forecast ledger. Later polls,
+new forecast releases, and side changes do not increase the number of picks.
+Pushes/voids are excluded from hit rate; missing results remain pending. Result
+corrections are reflected using the latest recorded settlement. The tracker
+measures directional outcomes at the recorded consensus line, not priced returns.
+
+The worker reads the NFL release's published batch (with the legacy weekly slate
+as fallback) and CFB's latest published batch to preserve model provenance. The
+web UI only reads history; storage problems are shown rather than presented as
+an empty performance record.
 
 ## Frozen versus current data
 

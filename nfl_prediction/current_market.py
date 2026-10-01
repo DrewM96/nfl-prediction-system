@@ -16,6 +16,7 @@ import psycopg
 
 from . import market_postgres
 from .config import MARKET_PRIVATE_DIR
+from .money_signals import qualifying_signals
 from .odds import _game_kickoff, _market_summary, attach_market_consensus, parse_timestamp
 from .owls import OwlsClient, OwlsError, parse_odds, parse_splits, timestamp
 
@@ -83,6 +84,18 @@ class MarketStore:
             CREATE TABLE IF NOT EXISTS poll_state (
                 key TEXT PRIMARY KEY, next_at TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS money_signals (
+                signal_id TEXT PRIMARY KEY, sport TEXT NOT NULL,
+                game_id TEXT NOT NULL, observed_at TEXT NOT NULL, payload TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS money_signals_by_sport
+                ON money_signals(sport, observed_at);
+            CREATE TRIGGER IF NOT EXISTS money_signals_no_update
+                BEFORE UPDATE ON money_signals
+                BEGIN SELECT RAISE(ABORT, 'Signal history is append-only'); END;
+            CREATE TRIGGER IF NOT EXISTS money_signals_no_delete
+                BEFORE DELETE ON money_signals
+                BEGIN SELECT RAISE(ABORT, 'Signal history is append-only'); END;
             CREATE TABLE IF NOT EXISTS market_openings (
                 sport TEXT NOT NULL, game_id TEXT NOT NULL,
                 open_home_spread REAL NOT NULL, open_snapshot_at TEXT NOT NULL,
@@ -118,7 +131,7 @@ class MarketStore:
             CREATE TRIGGER IF NOT EXISTS market_observations_no_delete
                 BEFORE DELETE ON market_observations
                 BEGIN SELECT RAISE(ABORT, 'Market history is append-only'); END;
-            PRAGMA user_version=2;
+            PRAGMA user_version=3;
         """)
         return connection
 
@@ -143,6 +156,46 @@ class MarketStore:
             return {"games": [], "odds_error": "Market cache unavailable"}
 
     @staticmethod
+    def record_signals(db: Any, signals: list[dict[str, Any]]) -> None:
+        for signal in signals:
+            db.execute(
+                "INSERT INTO money_signals VALUES (?,?,?,?,?) ON CONFLICT(signal_id) DO NOTHING",
+                (
+                    signal["signal_id"],
+                    signal["sport"],
+                    signal["game_id"],
+                    signal["observed_at"],
+                    json.dumps(signal, allow_nan=False),
+                ),
+            )
+
+    def read_signals(self, sport: str) -> dict[str, Any]:
+        if self.configuration_error:
+            return {"observations": [], "error": self.configuration_error}
+        if not self.database_url and not self.path.exists():
+            return {"observations": [], "error": "Signal storage is waiting for the market worker"}
+        try:
+            if self.database_url:
+                rows = market_postgres.read_signals(self.database_url, sport)
+            else:
+                with closing(
+                    sqlite3.connect(f"{self.path.resolve().as_uri()}?mode=ro", uri=True, timeout=1)
+                ) as db:
+                    rows = [
+                        json.loads(row[0])
+                        for row in db.execute(
+                            "SELECT payload FROM money_signals WHERE sport=? ORDER BY observed_at,signal_id",
+                            (sport,),
+                        ).fetchall()
+                    ]
+            return {"observations": rows, "error": None}
+        except (sqlite3.Error, psycopg.Error, OSError, ValueError):
+            return {
+                "observations": [],
+                "error": "Signal history unavailable; check the market worker and database",
+            }
+
+    @staticmethod
     def observe(db: Any, game: dict[str, Any], captured_at: str) -> None:
         # First observed consensus, independent of provider event IDs and cache lifetime.
         home_spread = (game.get("spread") or {}).get("home_spread")
@@ -163,7 +216,7 @@ class MarketStore:
             odds = game.get("books", {}).get(key, {})
             splits = game.get("splits", {}).get(key)
             material = {
-                "odds": {k: v for k, v in odds.items() if k != "source_timestamp"},
+                "odds": {k: v for k, v in odds.items() if not k.endswith("source_timestamp")},
                 "splits": splits.get("markets") if splits else None,
                 "game_id": game["game_id"],
             }
@@ -310,6 +363,8 @@ def poll_market(
                     if not board.get("odds_error") and not game.get("unavailable"):
                         store.observe(db, game, captured)
             board["last_attempt_at"] = captured
+            for forecast in slate:
+                store.record_signals(db, qualifying_signals(forecast, board, now=now))
             db.execute(
                 "INSERT INTO market_cache VALUES (?,?) ON CONFLICT(sport) DO UPDATE SET payload=excluded.payload",
                 (sport, json.dumps(board, allow_nan=False)),

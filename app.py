@@ -38,6 +38,7 @@ from nfl_prediction.market import (
 )
 from nfl_prediction.market_ui import age_label, market_context_html
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
+from nfl_prediction.money_signals import published_forecasts, qualifying_signals
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.player_props import comparisons, projection_rows
 from nfl_prediction.preseason import apply_preseason_calibration
@@ -48,6 +49,7 @@ from nfl_prediction.rankings import (
 )
 from nfl_prediction.results_ui import render_results
 from nfl_prediction.roster import decay_roster_feature
+from nfl_prediction.signals_ui import render_pick_badge, render_signal_tracker, render_weekly_picks
 from nfl_prediction.ui import (
     format_game_time,
     format_probability,
@@ -69,10 +71,11 @@ PAGE_LABELS = [
     "Props",
     "Rankings",
     "Results",
+    "Picks",
     "Model",
 ]
 SPORT_LABELS = ["NFL", "College Football"]
-CFB_PAGE_LABELS = ["This Week", "Builder", "Top 30", "Results"]
+CFB_PAGE_LABELS = ["This Week", "Builder", "Top 30", "Results", "Picks"]
 
 st.set_page_config(
     page_title="GRIDLINE — Model-Based Forecasts",
@@ -1327,6 +1330,8 @@ def render_current_market(
         if slider:
             st.markdown(slider, unsafe_allow_html=True)
     st.markdown(market_context_html(game, context), unsafe_allow_html=True)
+    for signal in qualifying_signals(game, load_current_market(sport)):
+        render_pick_badge(signal)
 
 
 def market_tile(game: dict[str, Any]) -> str:
@@ -1545,7 +1550,7 @@ def forecast_card_values(
     college = sport == "cfb"
     line = context.get("home_spread")
     live_market = "Unavailable"
-    if context.get("status") == "fresh" and line is not None:
+    if context.get("status") in {"fresh", "stale"} and line is not None:
         live_market = (
             cfb_margin_label(game, -float(line))
             if college
@@ -1587,12 +1592,14 @@ def render_forecast_header(
     market_note = (
         f"{count} {'book' if count == 1 else 'books'} · {age_label(context.get('source_age_seconds'))}"
         if context.get("status") == "fresh"
-        else "Cached quote is stale"
+        else f"Last known—stale · {age_label(context.get('source_age_seconds'))}"
         if context.get("home_spread") is not None
         else ""
     )
     market_note_html = (
-        f'<br><small class="grid-muted">{html_text(market_note)}</small>' if market_note else ""
+        f'<br><small class="grid-muted" title="Source: {html_text(context.get("source_timestamp") or "Timestamp unknown")}">{html_text(market_note)}</small>'
+        if market_note
+        else ""
     )
     if featured:
         tiles = "".join(
@@ -1873,6 +1880,7 @@ def render_this_week(state: dict[str, Any]) -> None:
     if not schedule:
         st.info("No upcoming games are available for the current prediction season.")
         return
+    render_weekly_picks(published_forecasts(state.get("prediction_batch") or {}), sport="nfl")
     featured = max(schedule, key=_featured_game_score)
     if "expanded_game_id" not in st.session_state:
         st.session_state.expanded_game_id = None
@@ -2525,6 +2533,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     )
     if predictions:
         page_header(f"College Football — Week {forecast_week}", badge)
+        render_weekly_picks(published_forecasts(prediction_batch), sport="ncaaf")
         featured = max(predictions, key=lambda game: abs(float(game["predicted_home_margin"])))
         render_cfb_featured_game(featured)
     else:
@@ -2806,6 +2815,12 @@ if active_sport == "College Football":
         render_cfb_rankings(cfb_state)
     elif st.session_state.cfb_active_screen == "Results":
         render_results(CFB_PREDICTIONS_DIR, league="CFB")
+    elif st.session_state.cfb_active_screen == "Picks":
+        render_signal_tracker(
+            CFB_PREDICTIONS_DIR,
+            sport="ncaaf",
+            forecasts=published_forecasts(cfb_state.get("prediction_batch") or {}),
+        )
     else:
         render_cfb_foundation(cfb_state)
     st.radio(
@@ -2852,6 +2867,12 @@ elif page == "Rankings":
     render_rankings(service, state)
 elif page == "Results":
     render_performance(state)
+elif page == "Picks":
+    render_signal_tracker(
+        PREDICTIONS_DIR,
+        sport="nfl",
+        forecasts=published_forecasts(state.get("prediction_batch") or {}),
+    )
 else:
     render_model_card(manifest)
 

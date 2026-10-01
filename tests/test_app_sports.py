@@ -120,7 +120,7 @@ def test_featured_nfl_game_prioritizes_intrigue_not_largest_spread() -> None:
 
 def test_cfb_builder_is_available() -> None:
     source = Path("app.py").read_text()
-    assert 'CFB_PAGE_LABELS = ["This Week", "Builder", "Top 30", "Results"]' in source
+    assert 'CFB_PAGE_LABELS = ["This Week", "Builder", "Top 30", "Results", "Picks"]' in source
     assert "def render_cfb_builder" in source
     assert 'cfb_active_screen == "Builder"' in source
     assert "Schedule-decomposed model scenario" in source
