@@ -145,7 +145,8 @@ def test_live_market_needs_no_frozen_market(slider, game):
     [
         ({"status": "fresh", "home_spread": -2.5}, "CHI -2.5"),
         ({"status": "fresh", "home_spread": 0}, "Pick"),
-        ({"status": "stale", "home_spread": -2.5}, "Unavailable"),
+        ({"status": "stale", "home_spread": -2.5}, "CHI -2.5"),
+        ({"status": "stale", "home_spread": 0}, "Pick"),
         ({"status": "unavailable"}, "Unavailable"),
         ({"status": "fresh", "home_spread": None}, "Unavailable"),
     ],
@@ -204,11 +205,13 @@ from typing import Any
 import streamlit as st
 from nfl_prediction.ui import html_text, spread_label, format_probability, game_matchup_separator
 from nfl_prediction.market_ui import age_label
+from nfl_prediction.money_signals import qualifying_signals
+from nfl_prediction.signals_ui import render_pick_badge
 def format_game_time(game): return "Sun 9/13 1p"
 format_cfb_game_time = format_game_time
 def team_logo_html(*args): return ""
 def load_current_market(sport): return {}
-def current_context(*args): return {"status": st.session_state.get("market_status", "fresh"), "home_spread": -2.5, "book_count": 11, "source_age_seconds": 120}
+def current_context(*args): return {"status": st.session_state.get("market_status", "fresh"), "home_spread": -2.5, "book_count": 11, "source_age_seconds": 120, "source_timestamp": "2026-09-30T12:00:00+00:00"}
 def market_context_html(*args): return '<div class="test-market-panel">Current market</div>'
 def render_forecast_details(*args): pass
 game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_margin=2,
@@ -261,8 +264,9 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert not app.exception
     rendered = [m.value for m in app.markdown]
     assert not any('class="grid-slider"' in m for m in rendered)
-    assert sum("Live Market" in m and "Unavailable" in m for m in rendered) == 2
-    assert sum("Cached quote is stale" in m for m in rendered) == 2
+    assert sum("Live Market" in m and "CHI -2.5" in m for m in rendered) == 2
+    assert sum("Last known—stale · 2m ago" in m for m in rendered) == 2
+    assert sum('title="Source: 2026-09-30T12:00:00+00:00"' in m for m in rendered) == 2
 
 
 def test_slider_css_bounds_labels_without_new_breakpoints():

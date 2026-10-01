@@ -16,6 +16,11 @@ CREATE SCHEMA IF NOT EXISTS gridline_market;
 SET LOCAL search_path TO gridline_market;
 CREATE TABLE IF NOT EXISTS market_cache (sport TEXT PRIMARY KEY, payload TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS poll_state (key TEXT PRIMARY KEY, next_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS money_signals (
+    signal_id TEXT PRIMARY KEY, sport TEXT NOT NULL,
+    game_id TEXT NOT NULL, observed_at TEXT NOT NULL, payload TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS money_signals_by_sport ON money_signals(sport, observed_at);
 CREATE TABLE IF NOT EXISTS market_openings (
     sport TEXT NOT NULL, game_id TEXT NOT NULL,
     open_home_spread DOUBLE PRECISION NOT NULL, open_snapshot_at TEXT NOT NULL,
@@ -48,6 +53,9 @@ CREATE OR REPLACE TRIGGER market_observations_immutable
     FOR EACH STATEMENT EXECUTE FUNCTION reject_market_history_change();
 CREATE OR REPLACE TRIGGER prop_observations_immutable
     BEFORE UPDATE OR DELETE OR TRUNCATE ON prop_observations
+    FOR EACH STATEMENT EXECUTE FUNCTION reject_market_history_change();
+CREATE OR REPLACE TRIGGER money_signals_immutable
+    BEFORE UPDATE OR DELETE OR TRUNCATE ON money_signals
     FOR EACH STATEMENT EXECUTE FUNCTION reject_market_history_change();
 """
 
@@ -93,3 +101,14 @@ def read(url: str, sport: str) -> dict[str, Any] | None:
             "SELECT payload FROM market_cache WHERE sport=%s", (sport,)
         ).fetchone()
     return json.loads(row[0]) if row else None
+
+
+def read_signals(url: str, sport: str) -> list[dict[str, Any]]:
+    import json
+
+    with connect(url) as connection:
+        rows = connection.execute(
+            "SELECT payload FROM money_signals WHERE sport=%s ORDER BY observed_at,signal_id",
+            (sport,),
+        ).fetchall()
+    return [json.loads(row[0]) for row in rows]

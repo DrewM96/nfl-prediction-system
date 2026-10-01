@@ -240,6 +240,8 @@ def parse_odds(
                 row: dict[str, Any] = {
                     "sportsbook": key,
                     "source_timestamp": timestamp(book.get("last_update")),
+                    "spread_source_timestamp": timestamp(book.get("last_update")),
+                    "total_source_timestamp": timestamp(book.get("last_update")),
                     "spread": None,
                     "spread_price": None,
                     "away_spread_price": None,
@@ -271,6 +273,7 @@ def parse_odds(
                         row["source_timestamp"] = (
                             timestamp(market.get("last_update")) or row["source_timestamp"]
                         )
+                        row["spread_source_timestamp"] = row["source_timestamp"]
                         away_point = number(away.get("point"))
                         if (
                             row["spread"] is not None
@@ -290,6 +293,9 @@ def parse_odds(
                             total=number(outcomes.get("Over", {}).get("point")),
                             over_price=number(outcomes.get("Over", {}).get("price")),
                             under_price=number(outcomes.get("Under", {}).get("price")),
+                        )
+                        row["total_source_timestamp"] = (
+                            timestamp(market.get("last_update")) or row["total_source_timestamp"]
                         )
                     elif market.get("key") == "h2h":
                         row.update(

@@ -16,6 +16,7 @@ from nfl_prediction.config import PROJECT_ROOT
 from nfl_prediction.current_market import MarketStore, poll_market
 from nfl_prediction.io import atomic_write_json, read_json
 from nfl_prediction.market_parity import live_parity
+from nfl_prediction.money_signals import published_forecasts
 from nfl_prediction.prop_cache import poll_depth, poll_props
 
 
@@ -23,18 +24,17 @@ def load_slate(sport: str, path: str | Path | None = None) -> list[dict[str, Any
     if path:
         payload = read_json(path, [])
     elif sport == "nfl":
-        payload = read_json(PROJECT_ROOT / "weekly_schedule.json", [])
+        release = read_json(PROJECT_ROOT / "data/nfl_release.json", {})
+        payload = (release.get("state") or {}).get("prediction_batch") or read_json(
+            PROJECT_ROOT / "weekly_schedule.json", []
+        )
     else:
         pointer = read_json(PROJECT_ROOT / "data/cfb/latest_prediction.json", {})
         filename = str(pointer.get("path", ""))
         if not filename or Path(filename).name != filename:
             return []
         payload = read_json(PROJECT_ROOT / "data/cfb/predictions" / filename, {})
-    return (
-        payload
-        if isinstance(payload, list)
-        else payload.get("predictions", payload.get("games", []))
-    )
+    return published_forecasts(payload)
 
 
 def main(argv: list[str] | None = None) -> int:
