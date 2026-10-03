@@ -670,6 +670,64 @@ st.markdown(
       box-shadow: 0 1px 2px rgba(15,20,25,.08) !important;
     }
 
+    .st-key-cfb_schedule_filters {
+      padding: 20px 22px 16px;
+      margin-bottom: 12px;
+      border: 1px solid #e7e9ed;
+      border-radius: 18px;
+      background: linear-gradient(120deg, #fff8f4 0%, #fafbfc 48%, #fafbfc 100%);
+      box-shadow: 0 4px 20px rgba(15,20,25,.035);
+      gap: 16px !important;
+    }
+    .grid-filter-heading { display: flex; align-items: center; gap: 11px; }
+    .grid-filter-icon {
+      display: grid; place-items: center; width: 36px; height: 36px;
+      border: 1px solid #ffdfd0; border-radius: 11px;
+      background: #fff0e8; color: #c94c20; flex-shrink: 0;
+    }
+    .grid-filter-title { font: 600 var(--text-base)/1.3 var(--font-ui); }
+    .grid-filter-subtitle { margin-top: 2px; color: var(--grid-muted); font-size: var(--text-sm); }
+    .st-key-cfb_schedule_filters [data-testid="stWidgetLabel"] p {
+      color: #596575; font-size: var(--text-xs); font-weight: 600;
+      letter-spacing: .045em; text-transform: uppercase;
+    }
+    .st-key-cfb_schedule_filters [data-baseweb="select"] > div,
+    .st-key-cfb_schedule_filters [data-baseweb="input"] {
+      min-height: 46px; border: 1px solid #dce1e7 !important;
+      border-radius: 11px !important; background: #fff !important;
+      box-shadow: 0 2px 3px rgba(15,20,25,.025);
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .st-key-cfb_schedule_filters [data-baseweb="input"] > div { background: transparent !important; }
+    .st-key-cfb_schedule_filters input { background: transparent !important; font-size: var(--text-base); }
+    .st-key-cfb_schedule_filters input::placeholder { color: #8a94a3; }
+    .st-key-cfb_schedule_filters [data-baseweb="select"] > div:hover,
+    .st-key-cfb_schedule_filters [data-baseweb="input"]:hover { border-color: #bdc6d1 !important; }
+    .st-key-cfb_schedule_filters [data-baseweb="select"]:focus-within > div,
+    .st-key-cfb_schedule_filters [data-baseweb="input"]:focus-within {
+      border-color: var(--grid-orange) !important;
+      box-shadow: 0 0 0 3px rgba(255,107,53,.13);
+    }
+    .st-key-cfb_filter_reset button {
+      min-height: 46px !important; border-radius: 11px !important; border-color: #dce1e7;
+      background: transparent; color: #596575;
+    }
+    .st-key-cfb_filter_reset button:hover {
+      border-color: #ffc5ab; background: #fff0e8; color: #b7431b;
+    }
+    .grid-filter-footer {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      padding-top: 12px; border-top: 1px solid #e7e9ed;
+      color: var(--grid-muted); font-size: var(--text-sm);
+    }
+    .grid-filter-count { color: var(--grid-body); margin-right: auto; }
+    .grid-filter-count strong { color: var(--grid-ink); }
+    .grid-filter-chip {
+      padding: 4px 9px; border: 1px solid #ffdccb; border-radius: var(--radius-pill);
+      background: #fff0e8; color: #a73e18; font-weight: 500; overflow-wrap: anywhere;
+    }
+    .grid-filter-timezone { white-space: nowrap; }
+
     .grid-injury-summary {
       display: flex;
       align-items: center;
@@ -896,7 +954,7 @@ st.markdown(
       .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] {
         display: grid !important;
         grid-template-columns: repeat(2,minmax(0,1fr));
-        gap: 8px !important;
+        gap: 12px !important;
       }
       .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div {
         width: auto !important;
@@ -905,6 +963,11 @@ st.markdown(
       .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div:nth-child(4) {
         grid-column: 1 / -1;
       }
+      .st-key-cfb_schedule_filters { padding: 16px; border-radius: 14px; }
+      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div:nth-child(5) {
+        grid-column: 2; grid-row: 2;
+      }
+      .grid-filter-count { flex-basis: 100%; }
       .grid-rank-row { grid-template-columns: 26px minmax(0,1fr) 46px; gap: 6px 8px; padding: 12px 0; }
       .grid-rank-track { grid-column: 2 / 4; }
       .grid-rank-roster { white-space: normal; overflow-wrap: anywhere; }
@@ -2564,6 +2627,18 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
         if st.session_state.get(key) not in choices:
             st.session_state[key] = choices[0]
     with st.container(key="cfb_schedule_filters"):
+        st.markdown(
+            '<div class="grid-filter-heading">'
+            '<span class="grid-filter-icon" aria-hidden="true">'
+            '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" '
+            'stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'
+            '<path d="M4 7h7m4 0h5M4 17h3m4 0h9"/>'
+            '<circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>'
+            '</span><div><div class="grid-filter-title">Find your matchup</div>'
+            '<div class="grid-filter-subtitle">Narrow the slate to the games you care about.</div>'
+            "</div></div>",
+            unsafe_allow_html=True,
+        )
         columns = st.columns([1.3, 1.1, 1.1, 1.5, 0.6], vertical_alignment="bottom")
         conference = columns[0].selectbox(
             "Conference",
@@ -2579,15 +2654,35 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
             help="Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. All times Eastern.",
         )
         search = columns[3].text_input(
-            "Find a team", key="cfb_filter_search", placeholder="Team name"
+            "Find a team", key="cfb_filter_search", placeholder="Search team name…"
         )
         columns[4].button(
             "Reset", key="cfb_filter_reset", on_click=reset_cfb_schedule_filters, width="stretch"
         )
-    filtered = filter_schedule(
-        games, conferences, conference=conference, day=day, slot=slot, search=search
-    )
-    st.caption(f"Showing {len(filtered)} of {len(games)} games · Kickoff times ET")
+        filtered = filter_schedule(
+            games, conferences, conference=conference, day=day, slot=slot, search=search
+        )
+        active_filters = [
+            value
+            for value, default in (
+                (conference, "All conferences"),
+                (day, "All days"),
+                (slot, "All times"),
+            )
+            if value != default
+        ]
+        if search.strip():
+            active_filters.append(f"Team: {search.strip()}")
+        chips = "".join(
+            f'<span class="grid-filter-chip">{html_text(value)}</span>' for value in active_filters
+        )
+        st.markdown(
+            '<div class="grid-filter-footer" role="status">'
+            f'<span class="grid-filter-count">Showing <strong>{len(filtered)}</strong> '
+            f"of {len(games)} games</span>{chips}"
+            '<span class="grid-filter-timezone">Kickoff times ET</span></div>',
+            unsafe_allow_html=True,
+        )
     if not filtered:
         st.info("No games match these filters. Try another selection or Reset.")
     return filtered
