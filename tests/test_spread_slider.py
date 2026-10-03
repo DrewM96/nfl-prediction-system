@@ -176,7 +176,27 @@ def test_team_text_is_escaped_everywhere(slider, game):
 
 
 @pytest.mark.parametrize("sport", ["nfl", "cfb"])
-def test_hero_and_collapsed_row_render_slider_before_market_panel(sport, tmp_path):
+@pytest.mark.parametrize(
+    "total_source,total_label",
+    [
+        ("47.5", "O/U 47.5"),
+        ("'48'", "O/U 48.0"),
+        ("missing", None),
+        ("null_market", None),
+        ("null_total", None),
+        ("None", None),
+        ("float('nan')", None),
+        ("float('inf')", None),
+        ("0", None),
+        ("-47.5", None),
+        ("''", None),
+        ("'invalid'", None),
+        ("True", None),
+    ],
+)
+def test_hero_and_collapsed_row_render_slider_before_market_panel(
+    sport, tmp_path, total_source, total_label
+):
     functions = app_functions(
         {
             "spread_slider_html",
@@ -220,6 +240,12 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
             market_consensus={"spread": {"home_spread": 3.5, "market_home_margin": -3.5}},
             injury_snapshot={"away": [], "home": [], "available_week": 1, "forecast_week": 1})
 """
+    if total_source == "null_market":
+        script += "\ngame['market_consensus'] = None\n"
+    elif total_source == "null_total":
+        script += "\ngame['market_consensus']['total'] = None\n"
+    elif total_source != "missing":
+        script += f"\ngame['market_consensus']['total'] = {{'total': {total_source}}}\n"
     script += (
         functions
         + f"\n{'render_featured_game' if sport == 'nfl' else 'render_cfb_featured_game'}(game)\n"
@@ -236,6 +262,11 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert sum("Live Market" in m for m in rendered) == 2
     assert any("CHI -2.5" in m and "Live Market" in m for m in rendered)
     assert sum("11 books" in m and "2m ago" in m for m in rendered) == 2
+    totals = [m for m in rendered if "O/U" in m]
+    assert len(totals) == (2 if total_label else 0)
+    if total_label:
+        assert all(total_label in m and "Live Market" in m for m in totals)
+        assert all('class="grid-muted" title="Market total at forecast"' in m for m in totals)
     assert not any("Market at forecast" in m for m in rendered)
     assert any('class="grid-hero grid-cfb-hero"' in m for m in rendered)
     panels = [i for i, m in enumerate(rendered) if "test-market-panel" in m]
@@ -266,6 +297,7 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert not any('class="grid-slider"' in m for m in rendered)
     assert sum("Live Market" in m and "CHI -2.5" in m for m in rendered) == 2
     assert sum("Last known—stale · 2m ago" in m for m in rendered) == 2
+    assert sum("O/U" in m for m in rendered) == (2 if total_label else 0)
     assert sum('title="Source: 2026-09-30T12:00:00+00:00"' in m for m in rendered) == 2
 
 
