@@ -1,0 +1,14 @@
+{
+  "run_id": "20260929T181202Z-7aaf5ee0",
+  "revision": 1,
+  "scored_at": "2026-10-03T16:34:23.563033+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_04_PIT_CLE",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 51.0
+    }
+  ]
+}

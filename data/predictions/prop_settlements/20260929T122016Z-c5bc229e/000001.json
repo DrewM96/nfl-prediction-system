@@ -1,0 +1,428 @@
+{
+  "run_id": "20260929T122016Z-c5bc229e",
+  "revision": 1,
+  "scored_at": "2026-10-03T16:34:23.658950+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0023459:passing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 299.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0033537:passing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 268.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0033729:passing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0034721:passing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040784:passing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0023459:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0033537:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0033729:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035594:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035640:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036252:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036407:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036862:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036894:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0037228:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 93.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038409:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038794:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039739:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039920:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040466:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040663:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040782:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040784:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 53.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041037:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041489:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041547:rushing_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0023459:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035594:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035640:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 115.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036252:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036407:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 36.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036862:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036894:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0037228:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 33.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038409:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038558:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 27.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038609:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038710:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038794:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039739:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 74.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039920:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040466:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040663:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 27.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040782:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040784:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 43.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041037:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 89.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041489:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041547:receiving_yards",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 64.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0023459:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035594:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0035640:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036252:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036407:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036862:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0036894:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0037228:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038409:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038558:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038609:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038710:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0038794:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039739:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0039920:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040466:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040663:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040782:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0040784:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041037:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041489:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_04_PIT_CLE:00-0041547:receptions",
+      "game_id": "2026_04_PIT_CLE",
+      "actual": 5.0,
+      "status": "final"
+    }
+  ]
+}
