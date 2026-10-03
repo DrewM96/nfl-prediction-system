@@ -1596,7 +1596,17 @@ def render_forecast_header(
         if context.get("home_spread") is not None
         else ""
     )
-    market_note_html = (
+    raw_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
+    try:
+        market_total = float(raw_total) if not isinstance(raw_total, bool) else math.nan
+    except (TypeError, ValueError, OverflowError):
+        market_total = math.nan
+    market_total_html = (
+        f'<br><small class="grid-muted" title="Market total at forecast">O/U {market_total:.1f}</small>'
+        if math.isfinite(market_total) and market_total > 0
+        else ""
+    )
+    market_note_html = market_total_html + (
         f'<br><small class="grid-muted" title="Source: {html_text(context.get("source_timestamp") or "Timestamp unknown")}">{html_text(market_note)}</small>'
         if market_note
         else ""
