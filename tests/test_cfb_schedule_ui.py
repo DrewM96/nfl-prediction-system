@@ -1,0 +1,168 @@
+from __future__ import annotations
+
+import ast
+import copy
+import json
+from pathlib import Path
+
+import pytest
+from streamlit.testing.v1 import AppTest
+
+from cfb_prediction.schedule_ui import filter_schedule, game_conferences, kickoff_day, time_slot
+
+CONFERENCES = {"Alabama": "SEC", "Georgia": "SEC", "Miami": "ACC", "Boise State": "Pac-12"}
+GAMES = [
+    {
+        "game_id": 1,
+        "home_team": "Alabama",
+        "away_team": "Miami",
+        "start_date": "2026-10-03T16:00:00Z",
+        "predicted_home_margin": 8,
+    },
+    {
+        "game_id": 2,
+        "home_team": "Miami",
+        "away_team": "Boise State",
+        "start_date": "2026-10-03T19:30:00Z",
+        "predicted_home_margin": 3,
+    },
+    {
+        "game_id": 3,
+        "home_team": "Boise State",
+        "away_team": "Georgia",
+        "start_date": "2026-10-04T02:30:00Z",
+        "predicted_home_margin": 5,
+    },
+    {
+        "game_id": 4,
+        "home_team": "Georgia",
+        "away_team": "Alabama",
+        "start_date": "2026-10-02T23:00:00Z",
+        "predicted_home_margin": 2,
+    },
+]
+
+
+@pytest.mark.parametrize(
+    "hour,minute,expected",
+    [
+        (18, 59, "Early"),
+        (19, 0, "Afternoon"),
+        (22, 59, "Afternoon"),
+        (23, 0, "Primetime"),
+        (1, 59, "Primetime"),
+        (2, 0, "Late"),
+    ],
+)
+def test_slot_boundaries_use_eastern_time(hour, minute, expected):
+    day = 4 if hour < 2 or hour == 2 else 3
+    assert time_slot({"start_date": f"2026-10-{day:02d}T{hour:02d}:{minute:02d}:00Z"}) == expected
+
+
+def test_day_and_slot_handle_utc_date_rollover_dst_and_missing_time():
+    assert kickoff_day(GAMES[2]) == "Sat 10/3"
+    assert time_slot({"start_date": "2026-12-05T20:00:00Z"}) == "Afternoon"
+    assert time_slot({"start_date": "2026-10-03T19:00:00"}) == "Afternoon"
+    assert kickoff_day({}) == "Time TBD"
+    assert time_slot({"start_date": "invalid"}) == "Time TBD"
+
+
+def test_filters_combine_match_either_team_and_preserve_forecasts():
+    before = copy.deepcopy(GAMES)
+    assert [g["game_id"] for g in filter_schedule(GAMES, CONFERENCES, conference="SEC")] == [
+        1,
+        3,
+        4,
+    ]
+    assert [
+        g["game_id"]
+        for g in filter_schedule(
+            GAMES, CONFERENCES, conference="SEC", day="Sat 10/3", slot="Late", search="  GEORGIA "
+        )
+    ] == [3]
+    assert filter_schedule(GAMES, CONFERENCES, conference="SEC", slot="Afternoon") == []
+    assert filter_schedule(GAMES, {}) == GAMES
+    assert game_conferences({**GAMES[0], "home_conference": "Other"}, CONFERENCES) == {
+        "Other",
+        "ACC",
+    }
+    assert before == GAMES
+
+
+def test_conference_registry_covers_current_forecasts():
+    registry = json.loads(Path("data/cfb/team_conferences.json").read_text(encoding="utf-8"))
+    assert registry["season"] == 2026
+    assert registry["source"].startswith("https://sports.core.api.espn.com/")
+    assert len(registry["teams"]) == 138
+    assert registry["teams"]["Alabama"] == "SEC"
+    assert registry["teams"]["Boise State"] == "Pac-12"
+
+
+@pytest.fixture
+def schedule_app(tmp_path):
+    tree = ast.parse(Path("app.py").read_text(encoding="utf-8"))
+    functions = "\n\n".join(
+        ast.unparse(node)
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef)
+        and node.name
+        in {"reset_cfb_schedule_filters", "render_cfb_schedule_filters", "render_cfb_foundation"}
+    )
+    script = f"""
+from pathlib import Path
+from datetime import datetime
+from typing import Any
+import streamlit as st
+from cfb_prediction.schedule_ui import TIME_SLOTS, filter_schedule, game_conferences, kickoff_day, time_slot
+from nfl_prediction.ui import html_text
+PROJECT_ROOT = Path('.')
+def read_json(*args): return {{'season': 2026, 'teams': {CONFERENCES!r}}}
+def page_header(*args): st.markdown('College Football')
+def published_forecasts(*args): return []
+def render_weekly_picks(*args, **kwargs): pass
+def render_cfb_featured_game(game): st.markdown(f"featured {{game['game_id']}}")
+def render_cfb_game_row(game, index): st.markdown(f"card {{game['game_id']}} key {{index}}")
+{functions}
+metrics = {{'latest_holdout_season': 2025, 'latest_holdout_mae': 8.0}}
+state = {{'status': 'data_ready', 'prediction_season': st.session_state.get('season', 2026),
+          'prediction_batch': {{'predictions': {GAMES!r}, 'metadata': {{'forecast_week': 5}}}},
+          'model_manifest': {{'models': {{'margin': {{'metrics': metrics}}, 'total': {{'metrics': metrics}}}}}}}}
+render_cfb_foundation(state)
+"""
+    path = tmp_path / "schedule_app.py"
+    path.write_text(script, encoding="utf-8")
+    return AppTest.from_file(str(path)).run(timeout=15)
+
+
+def test_filter_controls_update_featured_cards_empty_state_and_reset(schedule_app):
+    app = schedule_app
+    assert not app.exception
+    assert any(c.value == "Showing 4 of 4 games · Kickoff times ET" for c in app.caption)
+    app.selectbox(key="cfb_filter_conference").select("SEC").run()
+    app.selectbox(key="cfb_filter_slot").select("Late").run()
+    assert not app.exception
+    rendered = [m.value for m in app.markdown]
+    assert "featured 3" in rendered
+    assert "card 3 key 3" in rendered
+    assert sum(m.startswith("card ") for m in rendered) == 1
+    app.text_input(key="cfb_filter_search").set_value("Miami").run()
+    assert not app.exception
+    assert any("No games match" in message.value for message in app.info)
+    assert not any(m.value.startswith(("featured ", "card ")) for m in app.markdown)
+    app.button(key="cfb_filter_reset").click().run()
+    assert not app.exception
+    assert app.selectbox(key="cfb_filter_conference").value == "All conferences"
+    assert app.selectbox(key="cfb_filter_slot").value == "All times"
+    assert app.text_input(key="cfb_filter_search").value == ""
+    assert sum(m.value.startswith("card ") for m in app.markdown) == 4
+
+
+def test_filter_selection_recovers_when_metadata_season_changes(schedule_app):
+    app = schedule_app
+    app.selectbox(key="cfb_filter_conference").select("SEC").run()
+    app.session_state["season"] = 2027
+    app.run()
+    assert not app.exception
+    assert app.selectbox(key="cfb_filter_conference").options == ["All conferences"]
+    assert app.selectbox(key="cfb_filter_conference").value == "All conferences"
+    assert sum(m.value.startswith("card ") for m in app.markdown) == 4
