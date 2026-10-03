@@ -138,7 +138,7 @@ def test_filter_controls_update_featured_cards_empty_state_and_reset(schedule_ap
     app = schedule_app
     assert not app.exception
     assert any(
-        'Showing <strong>4</strong> of 4 games' in m.value and 'Kickoff times ET' in m.value
+        "Showing <strong>4</strong> of 4 games" in m.value and "Kickoff times ET" in m.value
         for m in app.markdown
     )
     app.selectbox(key="cfb_filter_conference").select("SEC").run()

@@ -2636,7 +2636,7 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
             '<circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>'
             '</span><div><div class="grid-filter-title">Find your matchup</div>'
             '<div class="grid-filter-subtitle">Narrow the slate to the games you care about.</div>'
-            '</div></div>',
+            "</div></div>",
             unsafe_allow_html=True,
         )
         columns = st.columns([1.3, 1.1, 1.1, 1.5, 0.6], vertical_alignment="bottom")
@@ -2665,20 +2665,21 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
         active_filters = [
             value
             for value, default in (
-                (conference, "All conferences"), (day, "All days"), (slot, "All times")
+                (conference, "All conferences"),
+                (day, "All days"),
+                (slot, "All times"),
             )
             if value != default
         ]
         if search.strip():
-            active_filters.append(f'Team: {search.strip()}')
+            active_filters.append(f"Team: {search.strip()}")
         chips = "".join(
-            f'<span class="grid-filter-chip">{html_text(value)}</span>'
-            for value in active_filters
+            f'<span class="grid-filter-chip">{html_text(value)}</span>' for value in active_filters
         )
         st.markdown(
             '<div class="grid-filter-footer" role="status">'
             f'<span class="grid-filter-count">Showing <strong>{len(filtered)}</strong> '
-            f'of {len(games)} games</span>{chips}'
+            f"of {len(games)} games</span>{chips}"
             '<span class="grid-filter-timezone">Kickoff times ET</span></div>',
             unsafe_allow_html=True,
         )
