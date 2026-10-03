@@ -16,6 +16,13 @@ from cfb_prediction.config import (
 )
 from cfb_prediction.ledger import load_latest_cfb_prediction_batch
 from cfb_prediction.modeling import load_cfb_model_bundle
+from cfb_prediction.schedule_ui import (
+    TIME_SLOTS,
+    filter_schedule,
+    game_conferences,
+    kickoff_day,
+    time_slot,
+)
 from injury_system import (
     InjuryAdjustmentSystem,
     integrate_injuries_into_game_prediction,
@@ -886,6 +893,18 @@ st.markdown(
       .grid-cfb-hero .grid-hero-main { display: block; }
       .grid-cfb-hero .grid-tiles { margin-top: 18px; }
       .grid-model-metrics { grid-template-columns: repeat(2,1fr); }
+      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] {
+        display: grid !important;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 8px !important;
+      }
+      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div {
+        width: auto !important;
+        min-width: 0 !important;
+      }
+      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div:nth-child(4) {
+        grid-column: 1 / -1;
+      }
       .grid-rank-row { grid-template-columns: 26px minmax(0,1fr) 46px; gap: 6px 8px; padding: 12px 0; }
       .grid-rank-track { grid-column: 2 / 4; }
       .grid-rank-roster { white-space: normal; overflow-wrap: anywhere; }
@@ -2519,6 +2538,61 @@ def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
             render_forecast_details(game, "cfb", collapsed=False)
 
 
+def reset_cfb_schedule_filters() -> None:
+    for name, value in (
+        ("conference", "All conferences"),
+        ("day", "All days"),
+        ("slot", "All times"),
+        ("search", ""),
+    ):
+        st.session_state[f"cfb_filter_{name}"] = value
+
+
+def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> list[dict[str, Any]]:
+    registry = read_json(PROJECT_ROOT / "data" / "cfb" / "team_conferences.json", {})
+    conferences = registry.get("teams", {}) if registry.get("season") == season else {}
+    ordered = sorted(games, key=lambda game: str(game.get("start_date") or "z"))
+    options = {
+        "conference": ["All conferences"]
+        + sorted({name for game in games for name in game_conferences(game, conferences)}),
+        "day": ["All days"] + list(dict.fromkeys(kickoff_day(game) for game in ordered)),
+        "slot": ["All times"]
+        + [slot for slot in TIME_SLOTS if any(time_slot(g) == slot for g in games)],
+    }
+    for name, choices in options.items():
+        key = f"cfb_filter_{name}"
+        if st.session_state.get(key) not in choices:
+            st.session_state[key] = choices[0]
+    with st.container(key="cfb_schedule_filters"):
+        columns = st.columns([1.3, 1.1, 1.1, 1.5, 0.6], vertical_alignment="bottom")
+        conference = columns[0].selectbox(
+            "Conference",
+            options["conference"],
+            key="cfb_filter_conference",
+            help="Includes games with either team in the selected conference.",
+        )
+        day = columns[1].selectbox("Day", options["day"], key="cfb_filter_day")
+        slot = columns[2].selectbox(
+            "Time slot (ET)",
+            options["slot"],
+            key="cfb_filter_slot",
+            help="Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. All times Eastern.",
+        )
+        search = columns[3].text_input(
+            "Find a team", key="cfb_filter_search", placeholder="Team name"
+        )
+        columns[4].button(
+            "Reset", key="cfb_filter_reset", on_click=reset_cfb_schedule_filters, width="stretch"
+        )
+    filtered = filter_schedule(
+        games, conferences, conference=conference, day=day, slot=slot, search=search
+    )
+    st.caption(f"Showing {len(filtered)} of {len(games)} games · Kickoff times ET")
+    if not filtered:
+        st.info("No games match these filters. Try another selection or Reset.")
+    return filtered
+
+
 def render_cfb_foundation(state: dict[str, Any]) -> None:
     ready = state.get("status") == "data_ready"
     forecast_ready = state.get("production_status") == "forecast_ready"
@@ -2543,9 +2617,13 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     )
     if predictions:
         page_header(f"College Football — Week {forecast_week}", badge)
+        filtered_predictions = render_cfb_schedule_filters(predictions, prediction_season)
         render_weekly_picks(published_forecasts(prediction_batch), sport="ncaaf")
-        featured = max(predictions, key=lambda game: abs(float(game["predicted_home_margin"])))
-        render_cfb_featured_game(featured)
+        if filtered_predictions:
+            featured = max(
+                filtered_predictions, key=lambda game: abs(float(game["predicted_home_margin"]))
+            )
+            render_cfb_featured_game(featured)
     else:
         page_header("College Football", badge)
         st.markdown(
@@ -2587,10 +2665,12 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             """,
             unsafe_allow_html=True,
         )
+        visible_ids = {game["game_id"] for game in filtered_predictions} if predictions else set()
         for index, prediction in enumerate(
             sorted(predictions, key=lambda game: game["start_date"])
         ):
-            render_cfb_game_row(prediction, index)
+            if prediction["game_id"] in visible_ids:
+                render_cfb_game_row(prediction, index)
         st.caption(
             "GRIDLINE records every forecast before kickoff. The CFB model uses Elo, recent form, "
             "advanced efficiency, recruiting, transfers, and available roster context."
