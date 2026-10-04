@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import json
+from dataclasses import replace
+
 import numpy as np
 import pandas as pd
 import pytest
 from test_cfb_features import _historical
 
+import cfb_ranking_evaluation as evaluation
 from cfb_prediction.data import CFBHistoricalData
 from cfb_ranking_evaluation import (
     common_opponent_ratings,
@@ -91,3 +95,50 @@ def test_snapshot_replay_ignores_validation_scores_and_efficiency():
     data.advanced.loc[data.advanced.game_id.eq(2), "off_ppa"] = 100.0
     _, _, after, _ = frozen_frames(data, 2025, 2, cutoff)
     assert before == after
+
+
+def test_complete_benchmark_serializes_and_keeps_holdout_out_of_selection(monkeypatch, tmp_path):
+    parts = []
+    for season in range(2018, 2027):
+        data = _historical()
+        frames = {}
+        for name in data.__dataclass_fields__:
+            frame = getattr(data, name).copy()
+            if "season" in frame:
+                frame["season"] = season
+            if "game_id" in frame:
+                frame["game_id"] = frame.game_id + season * 10
+            for column in ("start_date", "transfer_date"):
+                if column in frame:
+                    frame[column] = frame[column].map(
+                        lambda value, year=season: value.replace(year=year)
+                    )
+            frame = frame.replace({"Alpha": "James Madison", "Beta": "Other"})
+            frames[name] = frame
+        frames["games"]["home_conference"] = "Sun Belt"
+        frames["games"]["away_conference"] = "American"
+        parts.append(replace(data, **frames))
+    data = evaluation._combine(parts)
+    monkeypatch.setattr(evaluation.CFBDClient, "from_environment", lambda: object())
+
+    def fake_load(client, seasons, **kwargs):
+        return replace(
+            data,
+            **{
+                name: frame[frame.season.isin(seasons)].copy()
+                if "season" in frame
+                else frame.iloc[:0].copy()
+                for name in data.__dataclass_fields__
+                for frame in [getattr(data, name)]
+            },
+        )
+
+    monkeypatch.setattr(evaluation, "load_historical_data", fake_load)
+    output = tmp_path / "evaluation.json"
+    evaluation.run(output)
+    result = json.loads(output.read_text())
+    assert result["metrics"]["development_2022_2024"]["all"]["schedule_projection"]["games"] == 3
+    assert result["metrics"]["holdout_2025"]["all"]["schedule_projection"]["games"] == 1
+    assert result["metrics"]["followup_2026"]["all"]["schedule_projection"]["games"] == 1
+    assert all(m["games"] == 3 for m in result["candidate_development_metrics"].values())
+    assert len(result["skipped_weeks"]) == 5
