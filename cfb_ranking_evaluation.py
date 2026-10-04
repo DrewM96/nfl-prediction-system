@@ -6,7 +6,7 @@ import argparse
 import json
 import subprocess
 from dataclasses import replace
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +17,7 @@ from cfb_prediction.data import CFBHistoricalData
 from cfb_prediction.features import CFB_FULL_FEATURES, build_point_in_time_features
 from cfb_prediction.historical import load_historical_data
 from cfb_prediction.modeling import make_ridge
+from cfb_prediction.production import _combine
 from cfb_prediction.rankings import build_cfb_power_ratings
 
 FEATURES = CFB_FULL_FEATURES
@@ -229,7 +230,13 @@ def paired_intervals(rows, method, baseline="schedule_projection", samples=2000)
 
 
 def run(output: Path, quick=False):
-    data = load_historical_data(CFBDClient.from_environment(), list(range(2018, 2027)))
+    client = CFBDClient.from_environment()
+    data = _combine(
+        [
+            load_historical_data(client, list(range(2018, 2026)), max_age=timedelta(days=3650)),
+            load_historical_data(client, [2026]),
+        ]
+    )
     full = build_point_in_time_features(data)
     rows = []
     skipped = []
@@ -250,7 +257,7 @@ def run(output: Path, quick=False):
         )
         _, _, preseason_snapshots, _ = frozen_frames(data, season, 0, first_cutoff)
         prior = common_opponent_ratings(preseason_model, preseason_snapshots, 1)
-        for week in sorted(current_games.week.dropna().astype(int).unique()):
+        for week in map(int, sorted(current_games.week.dropna().astype(int).unique())):
             if not 1 <= week <= 11:
                 continue
             outcomes = current_games[

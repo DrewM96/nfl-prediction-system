@@ -3,11 +3,13 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from test_cfb_features import _historical
 
 from cfb_prediction.data import CFBHistoricalData
 from cfb_ranking_evaluation import (
     common_opponent_ratings,
     freeze_data,
+    frozen_frames,
     paired_intervals,
     results_ratings,
 )
@@ -77,3 +79,15 @@ def test_paired_bootstrap_reports_signed_error_difference():
     result = paired_intervals(rows, "candidate", samples=100)
     assert result["delta_mae"] == pytest.approx(-3.0)
     assert result["ci95"] == pytest.approx([-3.0, -3.0])
+
+
+def test_snapshot_replay_ignores_validation_scores_and_efficiency():
+    data = _historical()
+    data.games["home_conference"] = "SEC"
+    data.games["away_conference"] = "ACC"
+    cutoff = pd.Timestamp("2025-09-06T16:00:00Z")
+    _, _, before, _ = frozen_frames(data, 2025, 2, cutoff)
+    data.games.loc[data.games.week.eq(2), "home_points"] = 99
+    data.advanced.loc[data.advanced.game_id.eq(2), "off_ppa"] = 100.0
+    _, _, after, _ = frozen_frames(data, 2025, 2, cutoff)
+    assert before == after
