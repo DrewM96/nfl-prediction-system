@@ -1,0 +1,2696 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-04T13:43:25.161055+00:00",
+  "source_commit": "0a94614e802a0d8da8eaa8ebbf07057cc8973ee6",
+  "methodology": {
+    "raw_data_published": false,
+    "development_seasons": [
+      2022,
+      2023,
+      2024
+    ],
+    "holdout_season": 2025,
+    "followup_season": 2026,
+    "evaluated_weeks": "1 through 11; late-season underdetermined production fits excluded by design",
+    "weekly_freeze": "before the first kickoff of each week; no same-week outcomes in snapshots or model training",
+    "common_opponent": "all-team neutral comparisons, both orientations, equal 7-day rest",
+    "results_prior": "preseason common-opponent model ratings; fixed 3-point home edge; lambda/cap selected on development MAE only",
+    "parameter_grid": [
+      [
+        1.0,
+        21.0
+      ],
+      [
+        1.0,
+        28.0
+      ],
+      [
+        1.0,
+        null
+      ],
+      [
+        4.0,
+        21.0
+      ],
+      [
+        4.0,
+        28.0
+      ],
+      [
+        4.0,
+        null
+      ],
+      [
+        8.0,
+        21.0
+      ],
+      [
+        8.0,
+        28.0
+      ],
+      [
+        8.0,
+        null
+      ]
+    ],
+    "ridge_alpha": 50.0,
+    "model_features": "production elo_form_advanced_preseason",
+    "preseason_data_limitation": "returning/talent/recruiting are season-level proxies without historical publication timestamps",
+    "historical_schedule_limitation": "final archived schedules are used as schedule-known proxies",
+    "holdout_limitation": "2025 has previously been inspected for production model selection; untouched here means no ranking-parameter selection on 2025"
+  },
+  "selected_results_method": "results_l4_capnone",
+  "candidate_development_metrics": {
+    "results_l1_cap21.0": {
+      "games": 1768,
+      "mae": 13.06644462247867,
+      "rmse": 16.405451352889784,
+      "bias": 0.17650329320432115,
+      "winner_accuracy": 0.6923076923076923,
+      "power_side_bias": null
+    },
+    "results_l1_cap28.0": {
+      "games": 1768,
+      "mae": 13.045002123467212,
+      "rmse": 16.330262269521967,
+      "bias": 0.26627943309401314,
+      "winner_accuracy": 0.7030542986425339,
+      "power_side_bias": null
+    },
+    "results_l1_capnone": {
+      "games": 1768,
+      "mae": 13.203238617740464,
+      "rmse": 16.483455659088982,
+      "bias": 0.37988910975887336,
+      "winner_accuracy": 0.7047511312217195,
+      "power_side_bias": null
+    },
+    "results_l4_cap21.0": {
+      "games": 1768,
+      "mae": 12.917421155620902,
+      "rmse": 16.256723948883234,
+      "bias": 0.07201248338444033,
+      "winner_accuracy": 0.7030542986425339,
+      "power_side_bias": null
+    },
+    "results_l4_cap28.0": {
+      "games": 1768,
+      "mae": 12.839498101814783,
+      "rmse": 16.11558429182648,
+      "bias": 0.1273436374897494,
+      "winner_accuracy": 0.709841628959276,
+      "power_side_bias": null
+    },
+    "results_l4_capnone": {
+      "games": 1768,
+      "mae": 12.804416918716747,
+      "rmse": 16.041116449327202,
+      "bias": 0.20111705203675984,
+      "winner_accuracy": 0.705316742081448,
+      "power_side_bias": null
+    },
+    "results_l8_cap21.0": {
+      "games": 1768,
+      "mae": 13.028306800819708,
+      "rmse": 16.415820728520348,
+      "bias": 0.021230238705064346,
+      "winner_accuracy": 0.6934389140271493,
+      "power_side_bias": null
+    },
+    "results_l8_cap28.0": {
+      "games": 1768,
+      "mae": 12.953063349881281,
+      "rmse": 16.28785167149572,
+      "bias": 0.05876871331603843,
+      "winner_accuracy": 0.7002262443438914,
+      "power_side_bias": null
+    },
+    "results_l8_capnone": {
+      "games": 1768,
+      "mae": 12.882198983890383,
+      "rmse": 16.178707924759387,
+      "bias": 0.10905094333834107,
+      "winner_accuracy": 0.704185520361991,
+      "power_side_bias": null
+    }
+  },
+  "metrics": {
+    "all": {
+      "all": {
+        "schedule_projection": {
+          "games": 2606,
+          "mae": 12.923243153398095,
+          "rmse": 16.375819680110336,
+          "bias": -0.6198914791638265,
+          "winner_accuracy": 0.7141212586339217,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 2606,
+          "mae": 12.934186181990974,
+          "rmse": 16.373269215113165,
+          "bias": -0.46859583429344415,
+          "winner_accuracy": 0.7179585571757483,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 2606,
+          "mae": 12.936889663815514,
+          "rmse": 16.403518540522718,
+          "bias": 0.11571667764957702,
+          "winner_accuracy": 0.7091327705295472,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 2606,
+          "mae": 12.77683803617438,
+          "rmse": 16.1605328157068,
+          "bias": -0.38987471716937067,
+          "winner_accuracy": 0.7141212586339217,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 917,
+          "mae": 13.455494455064281,
+          "rmse": 16.9112337792203,
+          "bias": -1.4722517943964029,
+          "winner_accuracy": 0.7579062159214831,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 917,
+          "mae": 13.366193007557,
+          "rmse": 16.807763001278023,
+          "bias": -1.5118927468528938,
+          "winner_accuracy": 0.7600872410032715,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 917,
+          "mae": 13.336684639527492,
+          "rmse": 16.780158435456567,
+          "bias": 0.692679678726508,
+          "winner_accuracy": 0.7513631406761178,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 917,
+          "mae": 13.38365879225949,
+          "rmse": 16.821364150355336,
+          "bias": -1.7400222826906435,
+          "winner_accuracy": 0.7546346782988005,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 456,
+          "mae": 13.699052558242636,
+          "rmse": 17.144357129452054,
+          "bias": -3.7767446029298206,
+          "winner_accuracy": 0.8618421052631579,
+          "power_side_bias": -6.333907096289415
+        },
+        "common_opponent": {
+          "games": 456,
+          "mae": 13.51285538405935,
+          "rmse": 16.925520583281994,
+          "bias": -3.4305323576159994,
+          "winner_accuracy": 0.8618421052631579,
+          "power_side_bias": -5.269458877157606
+        },
+        "direct_score_model": {
+          "games": 456,
+          "mae": 13.138686139868284,
+          "rmse": 16.556845436407915,
+          "bias": -1.0898173466314096,
+          "winner_accuracy": 0.8640350877192983,
+          "power_side_bias": -3.671536669311792
+        },
+        "results_l4_capnone": {
+          "games": 456,
+          "mae": 13.616009994048659,
+          "rmse": 17.08516389058761,
+          "bias": -3.9714209459018117,
+          "winner_accuracy": 0.8574561403508771,
+          "power_side_bias": -6.356185696966868
+        }
+      }
+    },
+    "development_2022_2024": {
+      "all": {
+        "schedule_projection": {
+          "games": 1768,
+          "mae": 12.959784694721739,
+          "rmse": 16.29594426910625,
+          "bias": -0.21972432871221592,
+          "winner_accuracy": 0.7104072398190046,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 1768,
+          "mae": 12.98620370293881,
+          "rmse": 16.30359838504661,
+          "bias": 0.14445962662636605,
+          "winner_accuracy": 0.7143665158371041,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 1768,
+          "mae": 13.0487798337856,
+          "rmse": 16.42468980925175,
+          "bias": 0.4453337746736709,
+          "winner_accuracy": 0.7007918552036199,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 1768,
+          "mae": 12.804416918716747,
+          "rmse": 16.041116449327202,
+          "bias": 0.20111705203675984,
+          "winner_accuracy": 0.705316742081448,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 567,
+          "mae": 13.32640238043246,
+          "rmse": 16.577463145027505,
+          "bias": -0.5182705850914757,
+          "winner_accuracy": 0.7442680776014109,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 567,
+          "mae": 13.262036948348971,
+          "rmse": 16.47562730713359,
+          "bias": -0.31883311846856394,
+          "winner_accuracy": 0.7477954144620811,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 567,
+          "mae": 13.396260103290867,
+          "rmse": 16.69554510637101,
+          "bias": 1.5464175715385613,
+          "winner_accuracy": 0.7301587301587301,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 567,
+          "mae": 13.282963626426556,
+          "rmse": 16.475905541921946,
+          "bias": -0.5960189921408238,
+          "winner_accuracy": 0.7389770723104057,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 283,
+          "mae": 13.304072189102058,
+          "rmse": 16.46323504947335,
+          "bias": -2.130447801004628,
+          "winner_accuracy": 0.8303886925795053,
+          "power_side_bias": -5.099268234288246
+        },
+        "common_opponent": {
+          "games": 283,
+          "mae": 13.182531474733537,
+          "rmse": 16.267899375053815,
+          "bias": -1.5910624743150616,
+          "winner_accuracy": 0.8303886925795053,
+          "power_side_bias": -3.8696183563447657
+        },
+        "direct_score_model": {
+          "games": 283,
+          "mae": 13.045475705612255,
+          "rmse": 16.251773211833566,
+          "bias": 0.4376716918654038,
+          "winner_accuracy": 0.8268551236749117,
+          "power_side_bias": -2.5582439543948747
+        },
+        "results_l4_capnone": {
+          "games": 283,
+          "mae": 13.17949038502593,
+          "rmse": 16.33428725515889,
+          "bias": -2.1177545069176102,
+          "winner_accuracy": 0.8197879858657244,
+          "power_side_bias": -5.148409515970753
+        }
+      }
+    },
+    "holdout_2025": {
+      "all": {
+        "schedule_projection": {
+          "games": 567,
+          "mae": 12.639839887197137,
+          "rmse": 16.356519927489444,
+          "bias": -1.2094496566550157,
+          "winner_accuracy": 0.6966490299823633,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 567,
+          "mae": 12.668220490148704,
+          "rmse": 16.342770379527835,
+          "bias": -1.4509298159683601,
+          "winner_accuracy": 0.7037037037037037,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 567,
+          "mae": 12.544437972291162,
+          "rmse": 16.291577918339836,
+          "bias": -0.5634574312502522,
+          "winner_accuracy": 0.7001763668430335,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 567,
+          "mae": 12.496079252744009,
+          "rmse": 16.20274862080397,
+          "bias": -1.3010904245022805,
+          "winner_accuracy": 0.708994708994709,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 186,
+          "mae": 13.801837889512171,
+          "rmse": 17.772687056905188,
+          "bias": -2.253382320933007,
+          "winner_accuracy": 0.7258064516129032,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 186,
+          "mae": 13.78061278699269,
+          "rmse": 17.678242302570634,
+          "bias": -2.582201134227044,
+          "winner_accuracy": 0.7258064516129032,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 186,
+          "mae": 13.405745374569896,
+          "rmse": 17.467199656863087,
+          "bias": 0.04911898817115184,
+          "winner_accuracy": 0.7204301075268817,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 186,
+          "mae": 13.525204483876147,
+          "rmse": 17.57083876509351,
+          "bias": -2.8317088528264485,
+          "winner_accuracy": 0.7311827956989247,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 97,
+          "mae": 13.717160218631276,
+          "rmse": 17.849761208254765,
+          "bias": -4.413454219383605,
+          "winner_accuracy": 0.8762886597938144,
+          "power_side_bias": -6.791777803115355
+        },
+        "common_opponent": {
+          "games": 97,
+          "mae": 13.52999178920321,
+          "rmse": 17.630517269352666,
+          "bias": -4.174065018248474,
+          "winner_accuracy": 0.8865979381443299,
+          "power_side_bias": -5.660906731473087
+        },
+        "direct_score_model": {
+          "games": 97,
+          "mae": 13.014859432523807,
+          "rmse": 17.101524461440015,
+          "bias": -1.542198674745395,
+          "winner_accuracy": 0.8969072164948454,
+          "power_side_bias": -4.026877155542103
+        },
+        "results_l4_capnone": {
+          "games": 97,
+          "mae": 13.762722019478627,
+          "rmse": 17.95840689714781,
+          "bias": -4.9237871155696125,
+          "winner_accuracy": 0.8969072164948454,
+          "power_side_bias": -6.654818477001929
+        }
+      }
+    },
+    "followup_2026": {
+      "all": {
+        "schedule_projection": {
+          "games": 271,
+          "mae": 13.277797422312272,
+          "rmse": 16.926743689345756,
+          "bias": -1.997072421455129,
+          "winner_accuracy": 0.7749077490774908,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 271,
+          "mae": 13.151291607226346,
+          "rmse": 16.882661509851967,
+          "bias": -2.412871433173691,
+          "winner_accuracy": 0.7712177121771218,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 271,
+          "mae": 13.02802726007819,
+          "rmse": 16.498442440984228,
+          "bias": -0.61369774224856,
+          "winner_accuracy": 0.7822878228782287,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 271,
+          "mae": 13.184331637171123,
+          "rmse": 16.83424065501045,
+          "bias": -2.339004392072245,
+          "winner_accuracy": 0.7822878228782287,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 164,
+          "mae": 13.509002549630953,
+          "rmse": 17.051318458651636,
+          "bias": -3.884550987933509,
+          "winner_accuracy": 0.8414634146341463,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 164,
+          "mae": 13.256280852654037,
+          "rmse": 16.93144473625681,
+          "bias": -4.422791827598767,
+          "winner_accuracy": 0.8414634146341463,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 164,
+          "mae": 13.05238839152921,
+          "rmse": 16.269013895450808,
+          "bias": -1.5290709114023815,
+          "winner_accuracy": 0.8597560975609756,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 164,
+          "mae": 13.57126037998251,
+          "rmse": 17.131648105530836,
+          "bias": -4.457072061327768,
+          "winner_accuracy": 0.8353658536585366,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 76,
+          "mae": 15.146723629414808,
+          "rmse": 18.64568359441224,
+          "bias": -9.09439147330893,
+          "winner_accuracy": 0.9605263157894737,
+          "power_side_bias": -10.34692471976591
+        },
+        "common_opponent": {
+          "games": 76,
+          "mae": 14.721005845115284,
+          "rmse": 18.348377407894052,
+          "bias": -9.331154843047779,
+          "winner_accuracy": 0.9473684210526315,
+          "power_side_bias": -9.982411844544876
+        },
+        "direct_score_model": {
+          "games": 76,
+          "mae": 13.643814343906037,
+          "rmse": 16.97058549204304,
+          "bias": -6.200322729099062,
+          "winner_accuracy": 0.9605263157894737,
+          "power_side_bias": -7.363560500326888
+        },
+        "results_l4_capnone": {
+          "games": 76,
+          "mae": 15.05422029518977,
+          "rmse": 18.608795856458975,
+          "bias": -9.658369416622243,
+          "winner_accuracy": 0.9473684210526315,
+          "power_side_bias": -10.472413059578704
+        }
+      }
+    }
+  },
+  "by_season": {
+    "2022": {
+      "all": {
+        "schedule_projection": {
+          "games": 598,
+          "mae": 12.817907312022383,
+          "rmse": 16.224514605214598,
+          "bias": 0.20338452045153654,
+          "winner_accuracy": 0.7073578595317725,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 598,
+          "mae": 12.88100013918797,
+          "rmse": 16.27859781314419,
+          "bias": 0.304991493007597,
+          "winner_accuracy": 0.7123745819397993,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 598,
+          "mae": 12.892238460252393,
+          "rmse": 16.380567348107352,
+          "bias": 0.8108590466397119,
+          "winner_accuracy": 0.7023411371237458,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 598,
+          "mae": 12.663813533148572,
+          "rmse": 15.876066184002509,
+          "bias": 0.30925971055318063,
+          "winner_accuracy": 0.697324414715719,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 188,
+          "mae": 13.907702196495727,
+          "rmse": 16.94408127316077,
+          "bias": -0.11950594731935911,
+          "winner_accuracy": 0.7127659574468085,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 188,
+          "mae": 14.01192307871494,
+          "rmse": 17.07547339691854,
+          "bias": -0.20535439684625814,
+          "winner_accuracy": 0.7127659574468085,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 188,
+          "mae": 13.995784498807597,
+          "rmse": 17.21142567438196,
+          "bias": 1.74417798327008,
+          "winner_accuracy": 0.7074468085106383,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 188,
+          "mae": 13.937738535430894,
+          "rmse": 16.907245809368824,
+          "bias": -0.6121791657616218,
+          "winner_accuracy": 0.6968085106382979,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 94,
+          "mae": 13.20623574529159,
+          "rmse": 16.34496167082455,
+          "bias": -1.3005358198659394,
+          "winner_accuracy": 0.7659574468085106,
+          "power_side_bias": -4.259197995989483
+        },
+        "common_opponent": {
+          "games": 94,
+          "mae": 13.450862670740557,
+          "rmse": 16.632399668996793,
+          "bias": -1.201558529848461,
+          "winner_accuracy": 0.7659574468085106,
+          "power_side_bias": -3.4626306682266206
+        },
+        "direct_score_model": {
+          "games": 94,
+          "mae": 13.05348294575022,
+          "rmse": 16.597920613065927,
+          "bias": 0.9617608828943294,
+          "winner_accuracy": 0.7872340425531915,
+          "power_side_bias": -2.108019759464368
+        },
+        "results_l4_capnone": {
+          "games": 94,
+          "mae": 13.464124306295101,
+          "rmse": 16.595411535195527,
+          "bias": -2.02886627361974,
+          "winner_accuracy": 0.7446808510638298,
+          "power_side_bias": -5.229164239298682
+        }
+      }
+    },
+    "2023": {
+      "all": {
+        "schedule_projection": {
+          "games": 610,
+          "mae": 12.617248785828131,
+          "rmse": 15.580989540094963,
+          "bias": -0.735554829245956,
+          "winner_accuracy": 0.7295081967213115,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 610,
+          "mae": 12.670611423725553,
+          "rmse": 15.628012231452841,
+          "bias": 0.09969199237623579,
+          "winner_accuracy": 0.7295081967213115,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 610,
+          "mae": 12.672388001437668,
+          "rmse": 15.654875209112651,
+          "bias": 0.09183215151149947,
+          "winner_accuracy": 0.7114754098360656,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 610,
+          "mae": 12.669310765285424,
+          "rmse": 15.696247225608603,
+          "bias": 0.1635995781483785,
+          "winner_accuracy": 0.7098360655737705,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 188,
+          "mae": 12.415642418499516,
+          "rmse": 15.424736905343028,
+          "bias": -0.672979509522259,
+          "winner_accuracy": 0.7553191489361702,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 188,
+          "mae": 12.374034144380802,
+          "rmse": 15.316339983163218,
+          "bias": -0.1861184241121734,
+          "winner_accuracy": 0.7553191489361702,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 188,
+          "mae": 12.2801538768834,
+          "rmse": 15.334722644075532,
+          "bias": 1.7253149619755617,
+          "winner_accuracy": 0.7340425531914894,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 188,
+          "mae": 12.320491527842172,
+          "rmse": 15.35058725827117,
+          "bias": -0.4600483210623887,
+          "winner_accuracy": 0.7287234042553191,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 96,
+          "mae": 12.885194768559087,
+          "rmse": 16.153297220784687,
+          "bias": -2.8403649149104844,
+          "winner_accuracy": 0.875,
+          "power_side_bias": -5.166944476356037
+        },
+        "common_opponent": {
+          "games": 96,
+          "mae": 12.76684340285857,
+          "rmse": 15.938454891834509,
+          "bias": -1.9592865421385397,
+          "winner_accuracy": 0.875,
+          "power_side_bias": -3.843965810407059
+        },
+        "direct_score_model": {
+          "games": 96,
+          "mae": 12.568621555981219,
+          "rmse": 15.860843610231937,
+          "bias": 0.12905599295334125,
+          "winner_accuracy": 0.84375,
+          "power_side_bias": -2.5573329649553633
+        },
+        "results_l4_capnone": {
+          "games": 96,
+          "mae": 12.613934682388054,
+          "rmse": 15.993334016385406,
+          "bias": -2.494478819990116,
+          "winner_accuracy": 0.8645833333333334,
+          "power_side_bias": -5.099336175546128
+        }
+      }
+    },
+    "2024": {
+      "all": {
+        "schedule_projection": {
+          "games": 560,
+          "mae": 13.48440894343481,
+          "rmse": 17.11326352753565,
+          "bias": -0.10965734027354149,
+          "winner_accuracy": 0.6928571428571428,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 560,
+          "mae": 13.442316241230044,
+          "rmse": 17.03454852232639,
+          "bias": 0.021799270906014762,
+          "winner_accuracy": 0.7,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 560,
+          "mae": 13.625941903616134,
+          "rmse": 17.26894207320849,
+          "bias": 0.4400692701972999,
+          "winner_accuracy": 0.6875,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 560,
+          "mae": 13.101730451150452,
+          "rmse": 16.579062617231124,
+          "bias": 0.12650339003514027,
+          "winner_accuracy": 0.7089285714285715,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 191,
+          "mae": 13.650687759613088,
+          "rmse": 17.292370111734545,
+          "bias": -0.7584929626211648,
+          "winner_accuracy": 0.7643979057591623,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 191,
+          "mae": 13.397984250114483,
+          "rmse": 16.968029942153496,
+          "bias": -0.561159622154401,
+          "winner_accuracy": 0.774869109947644,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 191,
+          "mae": 13.904728083434623,
+          "rmse": 17.447833933407782,
+          "bias": 1.175675860503579,
+          "winner_accuracy": 0.7486910994764397,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 191,
+          "mae": 13.585827875856124,
+          "rmse": 17.10364090271973,
+          "bias": -0.7139476493242565,
+          "winner_accuracy": 0.7905759162303665,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 93,
+          "mae": 13.835350233083878,
+          "rmse": 16.893648679732696,
+          "bias": -2.236465900919406,
+          "winner_accuracy": 0.8494623655913979,
+          "power_side_bias": -5.87851213925143
+        },
+        "common_opponent": {
+          "games": 93,
+          "mae": 13.340412361565118,
+          "rmse": 16.231940851091125,
+          "bias": -1.6046523696785733,
+          "winner_accuracy": 0.8494623655913979,
+          "power_side_bias": -4.307462303582673
+        },
+        "direct_score_model": {
+          "games": 93,
+          "mae": 13.529618907672582,
+          "rmse": 16.296802208673412,
+          "bias": 0.22651817722926343,
+          "winner_accuracy": 0.8494623655913979,
+          "power_side_bias": -3.0142496458966024
+        },
+        "results_l4_capnone": {
+          "games": 93,
+          "mae": 13.475595318939199,
+          "rmse": 16.416318067045502,
+          "bias": -1.818721817401902,
+          "winner_accuracy": 0.8494623655913979,
+          "power_side_bias": -5.1174428136905235
+        }
+      }
+    },
+    "2025": {
+      "all": {
+        "schedule_projection": {
+          "games": 567,
+          "mae": 12.639839887197137,
+          "rmse": 16.356519927489444,
+          "bias": -1.2094496566550157,
+          "winner_accuracy": 0.6966490299823633,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 567,
+          "mae": 12.668220490148704,
+          "rmse": 16.342770379527835,
+          "bias": -1.4509298159683601,
+          "winner_accuracy": 0.7037037037037037,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 567,
+          "mae": 12.544437972291162,
+          "rmse": 16.291577918339836,
+          "bias": -0.5634574312502522,
+          "winner_accuracy": 0.7001763668430335,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 567,
+          "mae": 12.496079252744009,
+          "rmse": 16.20274862080397,
+          "bias": -1.3010904245022805,
+          "winner_accuracy": 0.708994708994709,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 186,
+          "mae": 13.801837889512171,
+          "rmse": 17.772687056905188,
+          "bias": -2.253382320933007,
+          "winner_accuracy": 0.7258064516129032,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 186,
+          "mae": 13.78061278699269,
+          "rmse": 17.678242302570634,
+          "bias": -2.582201134227044,
+          "winner_accuracy": 0.7258064516129032,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 186,
+          "mae": 13.405745374569896,
+          "rmse": 17.467199656863087,
+          "bias": 0.04911898817115184,
+          "winner_accuracy": 0.7204301075268817,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 186,
+          "mae": 13.525204483876147,
+          "rmse": 17.57083876509351,
+          "bias": -2.8317088528264485,
+          "winner_accuracy": 0.7311827956989247,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 97,
+          "mae": 13.717160218631276,
+          "rmse": 17.849761208254765,
+          "bias": -4.413454219383605,
+          "winner_accuracy": 0.8762886597938144,
+          "power_side_bias": -6.791777803115355
+        },
+        "common_opponent": {
+          "games": 97,
+          "mae": 13.52999178920321,
+          "rmse": 17.630517269352666,
+          "bias": -4.174065018248474,
+          "winner_accuracy": 0.8865979381443299,
+          "power_side_bias": -5.660906731473087
+        },
+        "direct_score_model": {
+          "games": 97,
+          "mae": 13.014859432523807,
+          "rmse": 17.101524461440015,
+          "bias": -1.542198674745395,
+          "winner_accuracy": 0.8969072164948454,
+          "power_side_bias": -4.026877155542103
+        },
+        "results_l4_capnone": {
+          "games": 97,
+          "mae": 13.762722019478627,
+          "rmse": 17.95840689714781,
+          "bias": -4.9237871155696125,
+          "winner_accuracy": 0.8969072164948454,
+          "power_side_bias": -6.654818477001929
+        }
+      }
+    },
+    "2026": {
+      "all": {
+        "schedule_projection": {
+          "games": 271,
+          "mae": 13.277797422312272,
+          "rmse": 16.926743689345756,
+          "bias": -1.997072421455129,
+          "winner_accuracy": 0.7749077490774908,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 271,
+          "mae": 13.151291607226346,
+          "rmse": 16.882661509851967,
+          "bias": -2.412871433173691,
+          "winner_accuracy": 0.7712177121771218,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 271,
+          "mae": 13.02802726007819,
+          "rmse": 16.498442440984228,
+          "bias": -0.61369774224856,
+          "winner_accuracy": 0.7822878228782287,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 271,
+          "mae": 13.184331637171123,
+          "rmse": 16.83424065501045,
+          "bias": -2.339004392072245,
+          "winner_accuracy": 0.7822878228782287,
+          "power_side_bias": null
+        }
+      },
+      "cross_conference": {
+        "schedule_projection": {
+          "games": 164,
+          "mae": 13.509002549630953,
+          "rmse": 17.051318458651636,
+          "bias": -3.884550987933509,
+          "winner_accuracy": 0.8414634146341463,
+          "power_side_bias": null
+        },
+        "common_opponent": {
+          "games": 164,
+          "mae": 13.256280852654037,
+          "rmse": 16.93144473625681,
+          "bias": -4.422791827598767,
+          "winner_accuracy": 0.8414634146341463,
+          "power_side_bias": null
+        },
+        "direct_score_model": {
+          "games": 164,
+          "mae": 13.05238839152921,
+          "rmse": 16.269013895450808,
+          "bias": -1.5290709114023815,
+          "winner_accuracy": 0.8597560975609756,
+          "power_side_bias": null
+        },
+        "results_l4_capnone": {
+          "games": 164,
+          "mae": 13.57126037998251,
+          "rmse": 17.131648105530836,
+          "bias": -4.457072061327768,
+          "winner_accuracy": 0.8353658536585366,
+          "power_side_bias": null
+        }
+      },
+      "power_vs_nonpower": {
+        "schedule_projection": {
+          "games": 76,
+          "mae": 15.146723629414808,
+          "rmse": 18.64568359441224,
+          "bias": -9.09439147330893,
+          "winner_accuracy": 0.9605263157894737,
+          "power_side_bias": -10.34692471976591
+        },
+        "common_opponent": {
+          "games": 76,
+          "mae": 14.721005845115284,
+          "rmse": 18.348377407894052,
+          "bias": -9.331154843047779,
+          "winner_accuracy": 0.9473684210526315,
+          "power_side_bias": -9.982411844544876
+        },
+        "direct_score_model": {
+          "games": 76,
+          "mae": 13.643814343906037,
+          "rmse": 16.97058549204304,
+          "bias": -6.200322729099062,
+          "winner_accuracy": 0.9605263157894737,
+          "power_side_bias": -7.363560500326888
+        },
+        "results_l4_capnone": {
+          "games": 76,
+          "mae": 15.05422029518977,
+          "rmse": 18.608795856458975,
+          "bias": -9.658369416622243,
+          "winner_accuracy": 0.9473684210526315,
+          "power_side_bias": -10.472413059578704
+        }
+      }
+    }
+  },
+  "holdout_paired_delta_mae_ci95": {
+    "common_opponent": {
+      "all": {
+        "delta_mae": 0.02838060295156444,
+        "ci95": [
+          -0.09262565036135892,
+          0.14674428480393154
+        ],
+        "week_clusters": 11
+      },
+      "cross_conference": {
+        "delta_mae": -0.021225102519481738,
+        "ci95": [
+          -0.3467856311257379,
+          0.41246663431902536
+        ],
+        "week_clusters": 11
+      },
+      "power_vs_nonpower": {
+        "delta_mae": -0.1871684294280644,
+        "ci95": [
+          -0.8611619992492706,
+          0.7867472969214154
+        ],
+        "week_clusters": 9
+      }
+    },
+    "results_l4_capnone": {
+      "all": {
+        "delta_mae": -0.14376063445312842,
+        "ci95": [
+          -0.3392560041388872,
+          0.05160239204544188
+        ],
+        "week_clusters": 11
+      },
+      "cross_conference": {
+        "delta_mae": -0.2766334056360253,
+        "ci95": [
+          -1.0947410274120133,
+          0.1107215617860254
+        ],
+        "week_clusters": 11
+      },
+      "power_vs_nonpower": {
+        "delta_mae": 0.04556180084735093,
+        "ci95": [
+          -0.7054247540917538,
+          0.6612225871788576
+        ],
+        "week_clusters": 9
+      }
+    }
+  },
+  "current_ranking_examples": {
+    "common_opponent": {
+      "jmu_rank": 24,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 30.63457828471926
+        },
+        {
+          "rank": 2,
+          "team": "Ohio State",
+          "rating": 29.347840351993383
+        },
+        {
+          "rank": 3,
+          "team": "Alabama",
+          "rating": 26.797043603243438
+        },
+        {
+          "rank": 4,
+          "team": "Miami",
+          "rating": 26.267573051009958
+        },
+        {
+          "rank": 5,
+          "team": "Texas",
+          "rating": 25.814352033687495
+        },
+        {
+          "rank": 6,
+          "team": "Notre Dame",
+          "rating": 25.06288032747682
+        },
+        {
+          "rank": 7,
+          "team": "LSU",
+          "rating": 22.405596969624046
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 19.623398746731564
+        },
+        {
+          "rank": 9,
+          "team": "Oregon",
+          "rating": 19.53818276973841
+        },
+        {
+          "rank": 10,
+          "team": "USC",
+          "rating": 18.1979835993606
+        },
+        {
+          "rank": 11,
+          "team": "Tennessee",
+          "rating": 16.653301771881484
+        },
+        {
+          "rank": 12,
+          "team": "Utah",
+          "rating": 16.514983721733575
+        },
+        {
+          "rank": 13,
+          "team": "Michigan",
+          "rating": 14.656823414000746
+        },
+        {
+          "rank": 14,
+          "team": "Texas A&M",
+          "rating": 14.536849231075209
+        },
+        {
+          "rank": 15,
+          "team": "Texas Tech",
+          "rating": 14.120850173708911
+        },
+        {
+          "rank": 16,
+          "team": "BYU",
+          "rating": 13.766878431739828
+        },
+        {
+          "rank": 17,
+          "team": "Ole Miss",
+          "rating": 13.718638377330914
+        },
+        {
+          "rank": 18,
+          "team": "Boise State",
+          "rating": 12.964874053403939
+        },
+        {
+          "rank": 19,
+          "team": "Oklahoma",
+          "rating": 12.414770679510468
+        },
+        {
+          "rank": 20,
+          "team": "Nebraska",
+          "rating": 12.13303944592783
+        },
+        {
+          "rank": 21,
+          "team": "Arizona",
+          "rating": 11.868552529767168
+        },
+        {
+          "rank": 22,
+          "team": "Missouri",
+          "rating": 11.866022301211048
+        },
+        {
+          "rank": 23,
+          "team": "UCLA",
+          "rating": 11.617126291978131
+        },
+        {
+          "rank": 24,
+          "team": "James Madison",
+          "rating": 11.392184891634754
+        },
+        {
+          "rank": 25,
+          "team": "Florida",
+          "rating": 11.122582522493753
+        },
+        {
+          "rank": 26,
+          "team": "Northwestern",
+          "rating": 11.02994510643333
+        },
+        {
+          "rank": 27,
+          "team": "Iowa",
+          "rating": 9.926684765478283
+        },
+        {
+          "rank": 28,
+          "team": "Kansas State",
+          "rating": 9.925763914286994
+        },
+        {
+          "rank": 29,
+          "team": "Houston",
+          "rating": 9.900160621805037
+        },
+        {
+          "rank": 30,
+          "team": "Washington",
+          "rating": 9.53417325113291
+        }
+      ]
+    },
+    "results_l1_cap21.0": {
+      "jmu_rank": 20,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Alabama",
+          "rating": 22.73043543687272
+        },
+        {
+          "rank": 2,
+          "team": "Miami",
+          "rating": 19.62420437304938
+        },
+        {
+          "rank": 3,
+          "team": "Notre Dame",
+          "rating": 19.615388929292166
+        },
+        {
+          "rank": 4,
+          "team": "Georgia",
+          "rating": 18.871201302211748
+        },
+        {
+          "rank": 5,
+          "team": "Texas",
+          "rating": 17.60753121200163
+        },
+        {
+          "rank": 6,
+          "team": "Ohio State",
+          "rating": 16.638443243705
+        },
+        {
+          "rank": 7,
+          "team": "Oregon",
+          "rating": 16.4159176552428
+        },
+        {
+          "rank": 8,
+          "team": "Utah",
+          "rating": 16.274892132269894
+        },
+        {
+          "rank": 9,
+          "team": "Boise State",
+          "rating": 15.458753946210194
+        },
+        {
+          "rank": 10,
+          "team": "Texas Tech",
+          "rating": 14.800398060028714
+        },
+        {
+          "rank": 11,
+          "team": "LSU",
+          "rating": 14.290303609321391
+        },
+        {
+          "rank": 12,
+          "team": "Indiana",
+          "rating": 13.929249333400861
+        },
+        {
+          "rank": 13,
+          "team": "BYU",
+          "rating": 12.860596788160805
+        },
+        {
+          "rank": 14,
+          "team": "Northwestern",
+          "rating": 12.685905739043886
+        },
+        {
+          "rank": 15,
+          "team": "Missouri",
+          "rating": 12.364154849119942
+        },
+        {
+          "rank": 16,
+          "team": "Tennessee",
+          "rating": 12.205453035318682
+        },
+        {
+          "rank": 17,
+          "team": "Nebraska",
+          "rating": 12.172836327236713
+        },
+        {
+          "rank": 18,
+          "team": "UCLA",
+          "rating": 11.863987619918197
+        },
+        {
+          "rank": 19,
+          "team": "Houston",
+          "rating": 11.260492096899348
+        },
+        {
+          "rank": 20,
+          "team": "James Madison",
+          "rating": 10.683739908382215
+        },
+        {
+          "rank": 21,
+          "team": "Florida",
+          "rating": 10.512370429128342
+        },
+        {
+          "rank": 22,
+          "team": "Mississippi State",
+          "rating": 9.636209796119159
+        },
+        {
+          "rank": 23,
+          "team": "Wisconsin",
+          "rating": 8.539860603465868
+        },
+        {
+          "rank": 24,
+          "team": "Kentucky",
+          "rating": 8.253438374364222
+        },
+        {
+          "rank": 25,
+          "team": "Texas A&M",
+          "rating": 8.016500343331284
+        },
+        {
+          "rank": 26,
+          "team": "USC",
+          "rating": 7.992411458034778
+        },
+        {
+          "rank": 27,
+          "team": "Arizona",
+          "rating": 7.769666343985568
+        },
+        {
+          "rank": 28,
+          "team": "Baylor",
+          "rating": 6.8971120181264665
+        },
+        {
+          "rank": 29,
+          "team": "Penn State",
+          "rating": 6.590956978619292
+        },
+        {
+          "rank": 30,
+          "team": "Ole Miss",
+          "rating": 6.565413367673679
+        }
+      ]
+    },
+    "results_l1_cap28.0": {
+      "jmu_rank": 19,
+      "nonpower_top30": 3,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Alabama",
+          "rating": 28.111467506774773
+        },
+        {
+          "rank": 2,
+          "team": "Notre Dame",
+          "rating": 23.737162699619397
+        },
+        {
+          "rank": 3,
+          "team": "Georgia",
+          "rating": 23.148252038762195
+        },
+        {
+          "rank": 4,
+          "team": "Miami",
+          "rating": 22.66787602529761
+        },
+        {
+          "rank": 5,
+          "team": "Texas",
+          "rating": 20.070098227428204
+        },
+        {
+          "rank": 6,
+          "team": "Utah",
+          "rating": 19.948965315236617
+        },
+        {
+          "rank": 7,
+          "team": "Ohio State",
+          "rating": 19.1532022549178
+        },
+        {
+          "rank": 8,
+          "team": "LSU",
+          "rating": 18.91490619446589
+        },
+        {
+          "rank": 9,
+          "team": "Indiana",
+          "rating": 18.234461498566713
+        },
+        {
+          "rank": 10,
+          "team": "Oregon",
+          "rating": 16.706519223707794
+        },
+        {
+          "rank": 11,
+          "team": "Texas Tech",
+          "rating": 16.427958553232187
+        },
+        {
+          "rank": 12,
+          "team": "Boise State",
+          "rating": 16.09325697022135
+        },
+        {
+          "rank": 13,
+          "team": "Northwestern",
+          "rating": 16.0782228819913
+        },
+        {
+          "rank": 14,
+          "team": "Nebraska",
+          "rating": 14.979861886730411
+        },
+        {
+          "rank": 15,
+          "team": "Missouri",
+          "rating": 14.631268716000347
+        },
+        {
+          "rank": 16,
+          "team": "Tennessee",
+          "rating": 14.010757552727659
+        },
+        {
+          "rank": 17,
+          "team": "BYU",
+          "rating": 13.002722072060736
+        },
+        {
+          "rank": 18,
+          "team": "UCLA",
+          "rating": 12.92483484821511
+        },
+        {
+          "rank": 19,
+          "team": "James Madison",
+          "rating": 12.09970337770874
+        },
+        {
+          "rank": 20,
+          "team": "Florida",
+          "rating": 12.000235978995926
+        },
+        {
+          "rank": 21,
+          "team": "Houston",
+          "rating": 11.981929974567219
+        },
+        {
+          "rank": 22,
+          "team": "Mississippi State",
+          "rating": 11.270411033412936
+        },
+        {
+          "rank": 23,
+          "team": "Wisconsin",
+          "rating": 11.21651572504434
+        },
+        {
+          "rank": 24,
+          "team": "Texas A&M",
+          "rating": 10.176286816246131
+        },
+        {
+          "rank": 25,
+          "team": "Penn State",
+          "rating": 9.330616380842967
+        },
+        {
+          "rank": 26,
+          "team": "Arizona",
+          "rating": 8.975726645188368
+        },
+        {
+          "rank": 27,
+          "team": "Florida State",
+          "rating": 8.91828667998753
+        },
+        {
+          "rank": 28,
+          "team": "Kentucky",
+          "rating": 8.812167082381906
+        },
+        {
+          "rank": 29,
+          "team": "USC",
+          "rating": 8.780818295772237
+        },
+        {
+          "rank": 30,
+          "team": "New Mexico",
+          "rating": 8.571754024743974
+        }
+      ]
+    },
+    "results_l1_capnone": {
+      "jmu_rank": 32,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Alabama",
+          "rating": 33.23143886771826
+        },
+        {
+          "rank": 2,
+          "team": "Notre Dame",
+          "rating": 30.63649744603544
+        },
+        {
+          "rank": 3,
+          "team": "Miami",
+          "rating": 28.344603175196767
+        },
+        {
+          "rank": 4,
+          "team": "Georgia",
+          "rating": 27.75463872936723
+        },
+        {
+          "rank": 5,
+          "team": "Ohio State",
+          "rating": 26.942052219437674
+        },
+        {
+          "rank": 6,
+          "team": "Texas",
+          "rating": 26.065208168791752
+        },
+        {
+          "rank": 7,
+          "team": "Utah",
+          "rating": 23.982070241808525
+        },
+        {
+          "rank": 8,
+          "team": "LSU",
+          "rating": 23.741291538868573
+        },
+        {
+          "rank": 9,
+          "team": "Indiana",
+          "rating": 22.103207074410815
+        },
+        {
+          "rank": 10,
+          "team": "Northwestern",
+          "rating": 19.948044486745207
+        },
+        {
+          "rank": 11,
+          "team": "Missouri",
+          "rating": 17.735537661567783
+        },
+        {
+          "rank": 12,
+          "team": "Oregon",
+          "rating": 17.413841384515564
+        },
+        {
+          "rank": 13,
+          "team": "Texas Tech",
+          "rating": 17.223741895664045
+        },
+        {
+          "rank": 14,
+          "team": "UCLA",
+          "rating": 16.955421159814843
+        },
+        {
+          "rank": 15,
+          "team": "Boise State",
+          "rating": 16.82620642505467
+        },
+        {
+          "rank": 16,
+          "team": "Wisconsin",
+          "rating": 16.675050600159263
+        },
+        {
+          "rank": 17,
+          "team": "Tennessee",
+          "rating": 16.519817938087
+        },
+        {
+          "rank": 18,
+          "team": "Nebraska",
+          "rating": 16.479218051349623
+        },
+        {
+          "rank": 19,
+          "team": "Florida",
+          "rating": 16.05141616028861
+        },
+        {
+          "rank": 20,
+          "team": "Mississippi State",
+          "rating": 15.874385300545763
+        },
+        {
+          "rank": 21,
+          "team": "Penn State",
+          "rating": 14.79880312640363
+        },
+        {
+          "rank": 22,
+          "team": "Texas A&M",
+          "rating": 14.462806061726052
+        },
+        {
+          "rank": 23,
+          "team": "New Mexico",
+          "rating": 12.67897346539925
+        },
+        {
+          "rank": 24,
+          "team": "BYU",
+          "rating": 12.620590151073426
+        },
+        {
+          "rank": 25,
+          "team": "South Carolina",
+          "rating": 12.091598049266503
+        },
+        {
+          "rank": 26,
+          "team": "Houston",
+          "rating": 11.814322975365643
+        },
+        {
+          "rank": 27,
+          "team": "Kentucky",
+          "rating": 11.593989070111652
+        },
+        {
+          "rank": 28,
+          "team": "Iowa",
+          "rating": 10.861527644865243
+        },
+        {
+          "rank": 29,
+          "team": "Florida State",
+          "rating": 10.721825596445527
+        },
+        {
+          "rank": 30,
+          "team": "Wake Forest",
+          "rating": 10.674013423375381
+        }
+      ]
+    },
+    "results_l4_cap21.0": {
+      "jmu_rank": 17,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 21.168566642031987
+        },
+        {
+          "rank": 2,
+          "team": "Alabama",
+          "rating": 19.2251437921305
+        },
+        {
+          "rank": 3,
+          "team": "Ohio State",
+          "rating": 18.809066882863224
+        },
+        {
+          "rank": 4,
+          "team": "Miami",
+          "rating": 18.551571487060574
+        },
+        {
+          "rank": 5,
+          "team": "Notre Dame",
+          "rating": 18.471119637028863
+        },
+        {
+          "rank": 6,
+          "team": "Oregon",
+          "rating": 17.855965402800006
+        },
+        {
+          "rank": 7,
+          "team": "Texas",
+          "rating": 17.26767305820545
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 14.59104661389298
+        },
+        {
+          "rank": 9,
+          "team": "Texas Tech",
+          "rating": 13.737324552071206
+        },
+        {
+          "rank": 10,
+          "team": "Utah",
+          "rating": 12.968319700177705
+        },
+        {
+          "rank": 11,
+          "team": "LSU",
+          "rating": 12.853722859739353
+        },
+        {
+          "rank": 12,
+          "team": "Tennessee",
+          "rating": 12.527786519118564
+        },
+        {
+          "rank": 13,
+          "team": "BYU",
+          "rating": 11.450374257601164
+        },
+        {
+          "rank": 14,
+          "team": "Boise State",
+          "rating": 11.235841331137289
+        },
+        {
+          "rank": 15,
+          "team": "Texas A&M",
+          "rating": 10.995625931687224
+        },
+        {
+          "rank": 16,
+          "team": "USC",
+          "rating": 10.542525383505366
+        },
+        {
+          "rank": 17,
+          "team": "James Madison",
+          "rating": 10.083726916453317
+        },
+        {
+          "rank": 18,
+          "team": "Missouri",
+          "rating": 9.63727897095271
+        },
+        {
+          "rank": 19,
+          "team": "Ole Miss",
+          "rating": 8.774774804154418
+        },
+        {
+          "rank": 20,
+          "team": "Arizona",
+          "rating": 8.453556550281652
+        },
+        {
+          "rank": 21,
+          "team": "Florida",
+          "rating": 8.277370942987144
+        },
+        {
+          "rank": 22,
+          "team": "Oklahoma",
+          "rating": 8.100895537950269
+        },
+        {
+          "rank": 23,
+          "team": "Northwestern",
+          "rating": 7.900826956200861
+        },
+        {
+          "rank": 24,
+          "team": "Nebraska",
+          "rating": 7.456398986894066
+        },
+        {
+          "rank": 25,
+          "team": "Michigan",
+          "rating": 6.934581864565873
+        },
+        {
+          "rank": 26,
+          "team": "UCLA",
+          "rating": 6.874737015771162
+        },
+        {
+          "rank": 27,
+          "team": "Houston",
+          "rating": 6.813218781122593
+        },
+        {
+          "rank": 28,
+          "team": "Washington",
+          "rating": 6.6015947727207145
+        },
+        {
+          "rank": 29,
+          "team": "Iowa",
+          "rating": 6.570033848483047
+        },
+        {
+          "rank": 30,
+          "team": "SMU",
+          "rating": 6.373279567975132
+        }
+      ]
+    },
+    "results_l4_cap28.0": {
+      "jmu_rank": 16,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 23.815491747058207
+        },
+        {
+          "rank": 2,
+          "team": "Alabama",
+          "rating": 22.512883041367353
+        },
+        {
+          "rank": 3,
+          "team": "Notre Dame",
+          "rating": 20.90796222145244
+        },
+        {
+          "rank": 4,
+          "team": "Miami",
+          "rating": 20.70353187052335
+        },
+        {
+          "rank": 5,
+          "team": "Ohio State",
+          "rating": 20.482646935496824
+        },
+        {
+          "rank": 6,
+          "team": "Texas",
+          "rating": 18.694361551192383
+        },
+        {
+          "rank": 7,
+          "team": "Oregon",
+          "rating": 17.99800650965322
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 17.104854692948415
+        },
+        {
+          "rank": 9,
+          "team": "LSU",
+          "rating": 15.530546250441752
+        },
+        {
+          "rank": 10,
+          "team": "Utah",
+          "rating": 14.892835211562073
+        },
+        {
+          "rank": 11,
+          "team": "Texas Tech",
+          "rating": 14.713902600437697
+        },
+        {
+          "rank": 12,
+          "team": "Tennessee",
+          "rating": 13.549288586238353
+        },
+        {
+          "rank": 13,
+          "team": "Texas A&M",
+          "rating": 12.330967348089581
+        },
+        {
+          "rank": 14,
+          "team": "Boise State",
+          "rating": 11.67891259807485
+        },
+        {
+          "rank": 15,
+          "team": "BYU",
+          "rating": 11.530296221211655
+        },
+        {
+          "rank": 16,
+          "team": "James Madison",
+          "rating": 11.218662291540625
+        },
+        {
+          "rank": 17,
+          "team": "USC",
+          "rating": 11.207425859829153
+        },
+        {
+          "rank": 18,
+          "team": "Missouri",
+          "rating": 10.78750017944307
+        },
+        {
+          "rank": 19,
+          "team": "Ole Miss",
+          "rating": 9.409840016412831
+        },
+        {
+          "rank": 20,
+          "team": "Arizona",
+          "rating": 9.401167114678495
+        },
+        {
+          "rank": 21,
+          "team": "Northwestern",
+          "rating": 9.397788587239953
+        },
+        {
+          "rank": 22,
+          "team": "Nebraska",
+          "rating": 9.36643798224173
+        },
+        {
+          "rank": 23,
+          "team": "Florida",
+          "rating": 8.9569943837601
+        },
+        {
+          "rank": 24,
+          "team": "Oklahoma",
+          "rating": 8.356059874190283
+        },
+        {
+          "rank": 25,
+          "team": "Iowa",
+          "rating": 7.713000709785513
+        },
+        {
+          "rank": 26,
+          "team": "UCLA",
+          "rating": 7.567553653835607
+        },
+        {
+          "rank": 27,
+          "team": "Michigan",
+          "rating": 7.521512042015607
+        },
+        {
+          "rank": 28,
+          "team": "Penn State",
+          "rating": 7.478078389694967
+        },
+        {
+          "rank": 29,
+          "team": "Houston",
+          "rating": 7.092828599803047
+        },
+        {
+          "rank": 30,
+          "team": "Mississippi State",
+          "rating": 6.852843546290412
+        }
+      ]
+    },
+    "results_l4_capnone": {
+      "jmu_rank": 23,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 26.461753523353337
+        },
+        {
+          "rank": 2,
+          "team": "Ohio State",
+          "rating": 25.86110809752525
+        },
+        {
+          "rank": 3,
+          "team": "Alabama",
+          "rating": 25.18631809683354
+        },
+        {
+          "rank": 4,
+          "team": "Notre Dame",
+          "rating": 24.945856294909415
+        },
+        {
+          "rank": 5,
+          "team": "Miami",
+          "rating": 24.22915123208836
+        },
+        {
+          "rank": 6,
+          "team": "Texas",
+          "rating": 22.145084369445982
+        },
+        {
+          "rank": 7,
+          "team": "Indiana",
+          "rating": 19.522160562155197
+        },
+        {
+          "rank": 8,
+          "team": "Oregon",
+          "rating": 18.20394866363271
+        },
+        {
+          "rank": 9,
+          "team": "LSU",
+          "rating": 17.961367595504136
+        },
+        {
+          "rank": 10,
+          "team": "Utah",
+          "rating": 16.650988455903416
+        },
+        {
+          "rank": 11,
+          "team": "Texas Tech",
+          "rating": 15.368640769356476
+        },
+        {
+          "rank": 12,
+          "team": "Texas A&M",
+          "rating": 14.6942963239975
+        },
+        {
+          "rank": 13,
+          "team": "Tennessee",
+          "rating": 14.642416350029835
+        },
+        {
+          "rank": 14,
+          "team": "USC",
+          "rating": 12.331997376242834
+        },
+        {
+          "rank": 15,
+          "team": "Boise State",
+          "rating": 11.914009734457162
+        },
+        {
+          "rank": 16,
+          "team": "Missouri",
+          "rating": 11.79048641703468
+        },
+        {
+          "rank": 17,
+          "team": "BYU",
+          "rating": 11.455119498959625
+        },
+        {
+          "rank": 18,
+          "team": "Oklahoma",
+          "rating": 11.235812678711836
+        },
+        {
+          "rank": 19,
+          "team": "Florida",
+          "rating": 11.160333135443262
+        },
+        {
+          "rank": 20,
+          "team": "Nebraska",
+          "rating": 11.05102966289376
+        },
+        {
+          "rank": 21,
+          "team": "Northwestern",
+          "rating": 11.04729683364138
+        },
+        {
+          "rank": 22,
+          "team": "Penn State",
+          "rating": 10.983594982211356
+        },
+        {
+          "rank": 23,
+          "team": "James Madison",
+          "rating": 10.83037011192644
+        },
+        {
+          "rank": 24,
+          "team": "Ole Miss",
+          "rating": 10.157857181071552
+        },
+        {
+          "rank": 25,
+          "team": "UCLA",
+          "rating": 10.121990402927828
+        },
+        {
+          "rank": 26,
+          "team": "Iowa",
+          "rating": 10.112595651510448
+        },
+        {
+          "rank": 27,
+          "team": "Wisconsin",
+          "rating": 9.243942412369822
+        },
+        {
+          "rank": 28,
+          "team": "Mississippi State",
+          "rating": 9.210524849853813
+        },
+        {
+          "rank": 29,
+          "team": "Arizona",
+          "rating": 9.175465212060235
+        },
+        {
+          "rank": 30,
+          "team": "South Carolina",
+          "rating": 8.863165895191033
+        }
+      ]
+    },
+    "results_l8_cap21.0": {
+      "jmu_rank": 17,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 21.61572696926073
+        },
+        {
+          "rank": 2,
+          "team": "Ohio State",
+          "rating": 19.987901779077387
+        },
+        {
+          "rank": 3,
+          "team": "Oregon",
+          "rating": 19.14418829750061
+        },
+        {
+          "rank": 4,
+          "team": "Notre Dame",
+          "rating": 18.643837303433404
+        },
+        {
+          "rank": 5,
+          "team": "Miami",
+          "rating": 17.767078999215762
+        },
+        {
+          "rank": 6,
+          "team": "Alabama",
+          "rating": 17.63380935545685
+        },
+        {
+          "rank": 7,
+          "team": "Texas",
+          "rating": 16.90046788795578
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 14.67901919126143
+        },
+        {
+          "rank": 9,
+          "team": "Texas Tech",
+          "rating": 14.281745875438009
+        },
+        {
+          "rank": 10,
+          "team": "Texas A&M",
+          "rating": 12.662818791143508
+        },
+        {
+          "rank": 11,
+          "team": "Tennessee",
+          "rating": 12.195613111165608
+        },
+        {
+          "rank": 12,
+          "team": "LSU",
+          "rating": 11.674463401766639
+        },
+        {
+          "rank": 13,
+          "team": "USC",
+          "rating": 11.607395671293853
+        },
+        {
+          "rank": 14,
+          "team": "Utah",
+          "rating": 11.585618491539245
+        },
+        {
+          "rank": 15,
+          "team": "BYU",
+          "rating": 10.873531660352263
+        },
+        {
+          "rank": 16,
+          "team": "Ole Miss",
+          "rating": 9.922099603134708
+        },
+        {
+          "rank": 17,
+          "team": "James Madison",
+          "rating": 9.50154038595319
+        },
+        {
+          "rank": 18,
+          "team": "Oklahoma",
+          "rating": 9.282149874615543
+        },
+        {
+          "rank": 19,
+          "team": "Boise State",
+          "rating": 9.022183893889688
+        },
+        {
+          "rank": 20,
+          "team": "Michigan",
+          "rating": 8.607333085330806
+        },
+        {
+          "rank": 21,
+          "team": "Missouri",
+          "rating": 8.556571090387914
+        },
+        {
+          "rank": 22,
+          "team": "Arizona",
+          "rating": 8.436095680326575
+        },
+        {
+          "rank": 23,
+          "team": "Washington",
+          "rating": 8.149418954371678
+        },
+        {
+          "rank": 24,
+          "team": "SMU",
+          "rating": 7.624446090298679
+        },
+        {
+          "rank": 25,
+          "team": "Iowa",
+          "rating": 7.5637251202523155
+        },
+        {
+          "rank": 26,
+          "team": "Vanderbilt",
+          "rating": 7.35864366164369
+        },
+        {
+          "rank": 27,
+          "team": "Florida",
+          "rating": 7.232311935372678
+        },
+        {
+          "rank": 28,
+          "team": "Clemson",
+          "rating": 7.057587241429967
+        },
+        {
+          "rank": 29,
+          "team": "Louisville",
+          "rating": 6.434034107531736
+        },
+        {
+          "rank": 30,
+          "team": "South Carolina",
+          "rating": 6.097047279047011
+        }
+      ]
+    },
+    "results_l8_cap28.0": {
+      "jmu_rank": 16,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 23.427364761113974
+        },
+        {
+          "rank": 2,
+          "team": "Ohio State",
+          "rating": 21.160285096823575
+        },
+        {
+          "rank": 3,
+          "team": "Notre Dame",
+          "rating": 20.275252688045192
+        },
+        {
+          "rank": 4,
+          "team": "Alabama",
+          "rating": 19.842177584694824
+        },
+        {
+          "rank": 5,
+          "team": "Miami",
+          "rating": 19.29410099290675
+        },
+        {
+          "rank": 6,
+          "team": "Oregon",
+          "rating": 19.212136409744243
+        },
+        {
+          "rank": 7,
+          "team": "Texas",
+          "rating": 17.81418326601239
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 16.348032593303653
+        },
+        {
+          "rank": 9,
+          "team": "Texas Tech",
+          "rating": 14.934080364103941
+        },
+        {
+          "rank": 10,
+          "team": "Texas A&M",
+          "rating": 13.593234100762297
+        },
+        {
+          "rank": 11,
+          "team": "LSU",
+          "rating": 13.428370257545659
+        },
+        {
+          "rank": 12,
+          "team": "Tennessee",
+          "rating": 12.844147438680215
+        },
+        {
+          "rank": 13,
+          "team": "Utah",
+          "rating": 12.802800681785097
+        },
+        {
+          "rank": 14,
+          "team": "USC",
+          "rating": 12.097072407362251
+        },
+        {
+          "rank": 15,
+          "team": "BYU",
+          "rating": 10.913107954247948
+        },
+        {
+          "rank": 16,
+          "team": "James Madison",
+          "rating": 10.33908304796862
+        },
+        {
+          "rank": 17,
+          "team": "Ole Miss",
+          "rating": 10.304392278402617
+        },
+        {
+          "rank": 18,
+          "team": "Oklahoma",
+          "rating": 9.404884752307687
+        },
+        {
+          "rank": 19,
+          "team": "Boise State",
+          "rating": 9.330263867829192
+        },
+        {
+          "rank": 20,
+          "team": "Missouri",
+          "rating": 9.252366192877325
+        },
+        {
+          "rank": 21,
+          "team": "Arizona",
+          "rating": 9.129588236100618
+        },
+        {
+          "rank": 22,
+          "team": "Michigan",
+          "rating": 9.046573693237944
+        },
+        {
+          "rank": 23,
+          "team": "Iowa",
+          "rating": 8.26667567458544
+        },
+        {
+          "rank": 24,
+          "team": "Washington",
+          "rating": 8.133593450563593
+        },
+        {
+          "rank": 25,
+          "team": "SMU",
+          "rating": 7.633199060439445
+        },
+        {
+          "rank": 26,
+          "team": "Florida",
+          "rating": 7.6119242185116684
+        },
+        {
+          "rank": 27,
+          "team": "Vanderbilt",
+          "rating": 7.228210584007565
+        },
+        {
+          "rank": 28,
+          "team": "Penn State",
+          "rating": 6.948934880226039
+        },
+        {
+          "rank": 29,
+          "team": "Nebraska",
+          "rating": 6.614236309389164
+        },
+        {
+          "rank": 30,
+          "team": "Northwestern",
+          "rating": 6.509163101900377
+        }
+      ]
+    },
+    "results_l8_capnone": {
+      "jmu_rank": 18,
+      "nonpower_top30": 2,
+      "top30": [
+        {
+          "rank": 1,
+          "team": "Georgia",
+          "rating": 25.181148145957618
+        },
+        {
+          "rank": 2,
+          "team": "Ohio State",
+          "rating": 24.972957436283988
+        },
+        {
+          "rank": 3,
+          "team": "Notre Dame",
+          "rating": 22.972274483670905
+        },
+        {
+          "rank": 4,
+          "team": "Miami",
+          "rating": 21.71120387076446
+        },
+        {
+          "rank": 5,
+          "team": "Alabama",
+          "rating": 21.50312290487939
+        },
+        {
+          "rank": 6,
+          "team": "Texas",
+          "rating": 20.019850749609244
+        },
+        {
+          "rank": 7,
+          "team": "Oregon",
+          "rating": 19.29657686691698
+        },
+        {
+          "rank": 8,
+          "team": "Indiana",
+          "rating": 18.003756546662483
+        },
+        {
+          "rank": 9,
+          "team": "Texas Tech",
+          "rating": 15.427292707697358
+        },
+        {
+          "rank": 10,
+          "team": "Texas A&M",
+          "rating": 15.175305577112361
+        },
+        {
+          "rank": 11,
+          "team": "LSU",
+          "rating": 14.948341042713244
+        },
+        {
+          "rank": 12,
+          "team": "Utah",
+          "rating": 13.823869298695332
+        },
+        {
+          "rank": 13,
+          "team": "Tennessee",
+          "rating": 13.455424143074318
+        },
+        {
+          "rank": 14,
+          "team": "USC",
+          "rating": 12.898742932942616
+        },
+        {
+          "rank": 15,
+          "team": "Oklahoma",
+          "rating": 11.322981491759341
+        },
+        {
+          "rank": 16,
+          "team": "BYU",
+          "rating": 10.888701537801554
+        },
+        {
+          "rank": 17,
+          "team": "Ole Miss",
+          "rating": 10.723569076947904
+        },
+        {
+          "rank": 18,
+          "team": "James Madison",
+          "rating": 10.200296587024072
+        },
+        {
+          "rank": 19,
+          "team": "Iowa",
+          "rating": 9.680452274422672
+        },
+        {
+          "rank": 20,
+          "team": "Missouri",
+          "rating": 9.677898994917216
+        },
+        {
+          "rank": 21,
+          "team": "Michigan",
+          "rating": 9.54407880627597
+        },
+        {
+          "rank": 22,
+          "team": "Boise State",
+          "rating": 9.43682359173375
+        },
+        {
+          "rank": 23,
+          "team": "Penn State",
+          "rating": 9.337012360801946
+        },
+        {
+          "rank": 24,
+          "team": "Arizona",
+          "rating": 9.038060007577899
+        },
+        {
+          "rank": 25,
+          "team": "Florida",
+          "rating": 9.03480960974329
+        },
+        {
+          "rank": 26,
+          "team": "South Carolina",
+          "rating": 8.298025085624545
+        },
+        {
+          "rank": 27,
+          "team": "Washington",
+          "rating": 8.228659697904085
+        },
+        {
+          "rank": 28,
+          "team": "Nebraska",
+          "rating": 7.94847776802578
+        },
+        {
+          "rank": 29,
+          "team": "SMU",
+          "rating": 7.513902606721149
+        },
+        {
+          "rank": 30,
+          "team": "Northwestern",
+          "rating": 7.390642211510928
+        }
+      ]
+    }
+  },
+  "skipped_weeks": [],
+  "comparison_games": 2606,
+  "quick_mode": false
+}
