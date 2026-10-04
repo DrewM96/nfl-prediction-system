@@ -142,3 +142,18 @@ def test_complete_benchmark_serializes_and_keeps_holdout_out_of_selection(monkey
     assert result["metrics"]["followup_2026"]["all"]["schedule_projection"]["games"] == 1
     assert all(m["games"] == 3 for m in result["candidate_development_metrics"].values())
     assert len(result["skipped_weeks"]) == 5
+    for method in evaluation.BLENDS:
+        assert result["metrics"]["holdout_2025"]["all"][method]["games"] == 1
+
+
+def test_blend_uses_point_ratings_and_matchup_audit_detects_reversals():
+    common = {"A": 10.0, "B": 0.0, "C": -10.0}
+    results = {"A": -10.0, "B": 0.0, "C": 10.0}
+    blended = evaluation.blend_ratings(common, results, 0.75)
+    assert blended == pytest.approx({"A": -5.0, "B": 0.0, "C": 5.0})
+    margins = np.array([[0.0, 10.0, 20.0], [-10.0, 0.0, 10.0], [-20.0, -10.0, 0.0]])
+    audit = evaluation.matchup_audit(blended, ["A", "B", "C"], margins)
+    assert audit["pair_count"] == 3
+    assert audit["disagreements"] == 3
+    assert audit["pairs"][0]["higher_team"] == "C"
+    assert evaluation.matchup_audit(common, ["A", "B", "C"], margins)["disagreements"] == 0

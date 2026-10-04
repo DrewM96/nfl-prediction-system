@@ -22,6 +22,7 @@ from cfb_prediction.rankings import build_cfb_power_ratings
 
 FEATURES = CFB_FULL_FEATURES
 PARAMETERS = [(strength, cap) for strength in (1.0, 4.0, 8.0) for cap in (21.0, 28.0, None)]
+BLENDS = {"blend_results25": 0.25, "blend_results50": 0.50, "blend_results75": 0.75}
 
 
 def team_metadata(games: pd.DataFrame, season: int) -> dict[str, dict]:
@@ -97,8 +98,8 @@ def frozen_frames(data, season, week, cutoff):
     return frozen, ordinary, snapshots, metadata
 
 
-def common_opponent_ratings(estimator, snapshots: dict, week: int) -> dict[str, float]:
-    """Fit the complete symmetric neutral comparison graph, independent of schedule."""
+def neutral_margin_matrix(estimator, snapshots: dict, week: int):
+    """Predict every neutral equal-rest matchup in both designations."""
     teams = sorted(snapshots)
     n = len(teams)
     home_indices = np.repeat(np.arange(n), n)
@@ -124,11 +125,73 @@ def common_opponent_ratings(estimator, snapshots: dict, week: int) -> dict[str, 
         rest_advantage=np.zeros(n * n),
     )
     margins = estimator.predict(pd.DataFrame(values)[FEATURES]).reshape(n, n)
+    return teams, margins
+
+
+def common_opponent_ratings(estimator, snapshots: dict, week: int) -> dict[str, float]:
+    """Fit the complete symmetric neutral comparison graph, independent of schedule."""
+    teams, margins = neutral_margin_matrix(estimator, snapshots, week)
     symmetric = (margins - margins.T) / 2.0
     # Complete-graph least squares with mean-zero ratings has this closed form.
     ratings = symmetric.mean(axis=1)
     assert abs(ratings.sum()) < 1e-7
     return dict(zip(teams, ratings.tolist(), strict=True))
+
+
+def blend_ratings(common, results, weight):
+    assert set(common) == set(results)
+    return {t: (1 - weight) * common[t] + weight * results[t] for t in common}
+
+
+def ranking_example(ratings, metadata, season):
+    ordered = sorted(ratings, key=lambda t: (-ratings[t], t))
+    return {
+        "jmu_rank": ordered.index("James Madison") + 1 if "James Madison" in ordered else None,
+        "nonpower_top30": sum(
+            not is_power(metadata[t]["conference"], t, season) for t in ordered[:30]
+        ),
+        "ratings": [
+            {"rank": i + 1, "team": t, "rating": ratings[t]} for i, t in enumerate(ordered)
+        ],
+        "top30": [
+            {"rank": i + 1, "team": t, "rating": ratings[t]} for i, t in enumerate(ordered[:30])
+        ],
+    }
+
+
+def matchup_audit(ratings, teams, margins):
+    """Compare ranking order with an independently queried neutral matchup model."""
+    ordered = sorted(ratings, key=lambda t: (-ratings[t], t))[:30]
+    indices = {t: i for i, t in enumerate(teams)}
+    pairs = []
+    for rank, higher in enumerate(ordered, 1):
+        for lower_rank, lower in enumerate(ordered[rank:], rank + 1):
+            i, j = indices[higher], indices[lower]
+            forward = float(margins[i, j])
+            reverse = -float(margins[j, i])
+            neutral = (forward + reverse) / 2
+            pairs.append(
+                {
+                    "higher_rank": rank,
+                    "higher_team": higher,
+                    "lower_rank": lower_rank,
+                    "lower_team": lower,
+                    "rating_margin": ratings[higher] - ratings[lower],
+                    "direct_neutral_margin": neutral,
+                    "higher_designated_home_margin": forward,
+                    "higher_designated_away_margin": reverse,
+                    "designation_changes_winner": forward * reverse < 0,
+                    "ranking_disagreement": neutral < -1e-8,
+                }
+            )
+    return {
+        "pairs": pairs,
+        "pair_count": len(pairs),
+        "disagreements": sum(p["ranking_disagreement"] for p in pairs),
+        "disagreements_over_1_point": sum(p["direct_neutral_margin"] < -1 for p in pairs),
+        "disagreements_over_3_points": sum(p["direct_neutral_margin"] < -3 for p in pairs),
+        "designation_changes_winner": sum(p["designation_changes_winner"] for p in pairs),
+    }
 
 
 def results_ratings(games, teams, prior, strength, cap, home_edge=3.0):
@@ -241,6 +304,8 @@ def run(output: Path, quick=False):
     rows = []
     skipped = []
     current = {}
+    current_options = {}
+    current_matchups = {}
     candidates = [
         f"results_l{strength:g}_cap{cap if cap is not None else 'none'}"
         for strength, cap in PARAMETERS
@@ -377,23 +442,30 @@ def run(output: Path, quick=False):
                     },
                 }
                 for name, ratings in options.items():
-                    ordered = sorted(ratings, key=lambda t: (-ratings[t], t))
-                    current[name] = {
-                        "jmu_rank": ordered.index("James Madison") + 1,
-                        "nonpower_top30": sum(
-                            not is_power(metadata[t]["conference"], t, season) for t in ordered[:30]
-                        ),
-                        "top30": [
-                            {"rank": i + 1, "team": t, "rating": ratings[t]}
-                            for i, t in enumerate(ordered[:30])
-                        ],
-                    }
+                    current[name] = ranking_example(ratings, metadata, season)
+                current_options = options
+                current_teams, current_margins = neutral_margin_matrix(estimator, snapshots, week)
+                current_cutoff = cutoff.isoformat()
     development = [r for r in rows if r["season"] < 2025]
     if not development:
         selected = candidates[4]
     else:
         selected = min(candidates, key=lambda name: (metrics(development, name)["mae"], name))
-    methods = ["schedule_projection", "common_opponent", "direct_score_model", selected]
+    for row in rows:
+        for name, weight in BLENDS.items():
+            row[name] = (1 - weight) * row["common_opponent"] + weight * row[selected]
+    selected_blend = min(BLENDS, key=lambda name: (metrics(development, name)["mae"], name))
+    if current_options:
+        for name, weight in BLENDS.items():
+            current_options[name] = blend_ratings(
+                current_options["common_opponent"], current_options[selected], weight
+            )
+            current[name] = ranking_example(current_options[name], metadata, 2026)
+        for name in ("common_opponent", selected, *BLENDS):
+            current_matchups[name] = matchup_audit(
+                current_options[name], current_teams, current_margins
+            )
+    methods = ["schedule_projection", "common_opponent", "direct_score_model", selected, *BLENDS]
     result = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
@@ -415,6 +487,10 @@ def run(output: Path, quick=False):
             "holdout_limitation": "2025 has previously been inspected for production model selection; untouched here means no ranking-parameter selection on 2025",
         },
         "selected_results_method": selected,
+        "blend_results_weights": BLENDS,
+        "selected_blend_on_development": selected_blend,
+        "current_snapshot_cutoff": current_cutoff if current_options else None,
+        "current_neutral_matchup_audits": current_matchups,
         "candidate_development_metrics": {name: metrics(development, name) for name in candidates},
         "metrics": summaries(rows, methods),
         "by_season": {
@@ -438,7 +514,7 @@ def run(output: Path, quick=False):
                 )
                 for group in ("all", "cross_conference", "power_vs_nonpower")
             }
-            for method in ("common_opponent", selected)
+            for method in ("common_opponent", selected, *BLENDS)
         },
         "current_ranking_examples": current,
         "skipped_weeks": skipped,
