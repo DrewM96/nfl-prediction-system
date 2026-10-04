@@ -332,10 +332,13 @@ The scheduled `Weekly CFB model update` workflow detects the active CFB season, 
 
 Each run writes release-specific checksummed estimators and an immutable manifest to
 `data/cfb/models/`, an immutable batch under `data/cfb/predictions/`, an archived model-matched
-power ranking, and a small latest-run pointer used by the app. The Top 30 scores every remaining scheduled FBS-vs-FBS matchup with the
-margin model, then uses a regularized schedule decomposition to express each team in points above
-or below an average FBS team on a neutral field. It is an independent model rating rather than an
-AP-style poll, and sportsbook lines are not ranking inputs. The independent forecast model
+power ranking, and a small latest-run pointer used by the app. The Top 30 combines 75% symmetric
+neutral common-opponent model ratings with 25% opponent-adjusted completed scoring results.
+Every current FBS team faces the same hypothetical opponent pool with equal rest. Results are
+anchored to preseason model ratings with prior strength 4 and no margin cap. Ratings express
+points above or below an average FBS team; sportsbook lines are not ranking inputs. The custom
+matchup builder uses blended rating differences and a three-point home edge. Scheduled score
+forecasts continue to use the independent forecast model, which
 does not consume sportsbook lines. Forecasts remain labeled provisional because the margin
 residual standard deviation is roughly 16 points and early-season roster inputs retain the
 timing limitations described in the model documentation. The August 30 run covers all 138 teams
