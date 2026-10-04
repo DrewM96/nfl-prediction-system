@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
@@ -47,8 +48,16 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert not app.error
     assert not app.exception
     assert any("College Football Top 30" in markdown.value for markdown in app.markdown)
-    assert any("GRIDLINE scores every scheduled" in caption.value for caption in app.caption)
-    assert any("scheduled FBS games" in markdown.value for markdown in app.markdown)
+    pointer = json.loads(Path("data/cfb/latest_prediction.json").read_text(encoding="utf-8"))
+    ranking_path = pointer.get("rankings_path") or "data/cfb/power_rankings.json"
+    rankings = json.loads(Path(ranking_path).read_text(encoding="utf-8"))
+    if rankings.get("kind") == "blended_common_opponent_results":
+        assert any("75% common-opponent model ratings + 25%" in c.value for c in app.caption)
+        assert any("completed FBS games" in m.value for m in app.markdown)
+        assert any("Model disagreement MAE" in m.value for m in app.markdown)
+    else:
+        assert any("GRIDLINE scores every scheduled" in c.value for c in app.caption)
+        assert any("scheduled FBS games" in m.value for m in app.markdown)
     assert any("logo" in markdown.value for markdown in app.markdown)
 
 
