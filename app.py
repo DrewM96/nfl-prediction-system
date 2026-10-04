@@ -2909,10 +2909,16 @@ def render_cfb_builder(state: dict[str, Any]) -> None:
                 unsafe_allow_html=True,
             )
             fit_mae = float(rankings.get("line_fit_mae", 0.0))
-            st.caption(
-                f"Session-only scenario · active model decomposition · scheduled-margin reconstruction MAE {fit_mae:.2f} points. "
-                "Custom builder outputs are excluded from season results."
-            )
+            if rankings.get("kind") == "blended_common_opponent_results":
+                st.caption(
+                    "Session-only scenario · 75% common-opponent / 25% results ratings with a "
+                    "three-point home edge. Custom builder outputs are excluded from season results."
+                )
+            else:
+                st.caption(
+                    f"Session-only scenario · active model decomposition · scheduled-margin reconstruction MAE {fit_mae:.2f} points. "
+                    "Custom builder outputs are excluded from season results."
+                )
 
 
 def render_cfb_rankings(state: dict[str, Any]) -> None:
@@ -2932,30 +2938,41 @@ def render_cfb_rankings(state: dict[str, Any]) -> None:
 
     display_count = int(rankings.get("display_count", 30))
     ranking_rows = rankings.get("ratings", [])[:display_count]
+    blended_rankings = rankings.get("kind") == "blended_common_opponent_results"
+    games_label = "Completed FBS games" if blended_rankings else "Schedule games"
+    fit_label = "Model disagreement MAE" if blended_rankings else "Margin reconstruction MAE"
     page_header("College Football Top 30", f"{prediction_season} model ratings")
     st.markdown(
         f"""
-        <div class="grid-muted" style="margin-bottom:14px">Independent model-implied points above or below an average FBS team on a neutral field | data cutoff {html_text(str(rankings.get("data_cutoff", "unknown"))[:10])}</div>
+        <div class="grid-muted" style="margin-bottom:14px">Neutral-field rating in points above or below an average FBS team | data cutoff {html_text(str(rankings.get("data_cutoff", "unknown"))[:10])}</div>
         <div class="grid-results">
           <div class="grid-result"><div class="grid-tile-label">Ranked teams</div><div class="grid-result-value">{len(ranking_rows)}</div></div>
-          <div class="grid-result"><div class="grid-tile-label">Schedule games</div><div class="grid-result-value">{int(rankings.get("game_count", 0)):,}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">{games_label}</div><div class="grid-result-value">{int(rankings.get("game_count", 0)):,}</div></div>
           <div class="grid-result"><div class="grid-tile-label">Implied home field</div><div class="grid-result-value">{float(rankings.get("home_field_points", 0)):.2f}</div></div>
-          <div class="grid-result"><div class="grid-tile-label">Margin reconstruction MAE</div><div class="grid-result-value">{float(rankings.get("line_fit_mae", 0)):.2f}</div></div>
+          <div class="grid-result"><div class="grid-tile-label">{fit_label}</div><div class="grid-result-value">{float(rankings.get("line_fit_mae", 0)):.2f}</div></div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    st.caption(
-        f"GRIDLINE scores every scheduled {prediction_season} FBS-vs-FBS matchup with its margin "
-        "model, then decomposes the full schedule into neutral-field team strength. Sportsbook "
-        "lines play no role."
-    )
+    if blended_rankings:
+        st.caption(
+            "75% common-opponent model ratings + 25% opponent-adjusted scoring results. "
+            "Every team faces the same neutral comparison pool. Results are anchored to "
+            "preseason ratings; sportsbook lines play no role. Scheduled score forecasts "
+            "continue to use the independent score model."
+        )
+    else:
+        st.caption(
+            f"GRIDLINE scores every scheduled {prediction_season} FBS-vs-FBS matchup with its margin "
+            "model, then decomposes the full schedule into neutral-field team strength. Sportsbook "
+            "lines play no role."
+        )
     max_abs = max((abs(float(row["rating"])) for row in ranking_rows), default=1.0)
     row_html = "".join(
         f'<div class="grid-rank-row"><div class="grid-rank">{rank}</div>'
         f'<div class="grid-rank-team">{team_logo_html(str(row["team"]), "cfb", "rank")}'
         f'<div class="grid-rank-team-copy">{html_text(str(row["team"]))}'
-        f'<div class="grid-rank-roster">{int(row["scheduled_games"])} scheduled FBS games</div></div></div>'
+        f'<div class="grid-rank-roster">{int(row.get("completed_games", 0) if blended_rankings else row["scheduled_games"])} {"completed" if blended_rankings else "scheduled"} FBS games</div></div></div>'
         f'<div class="grid-rank-track"><div class="grid-rank-fill" '
         f'style="width:{max(4.0, abs(float(row["rating"])) / max_abs * 100):.1f}%;'
         f'background:{"#16a34a" if float(row["rating"]) >= 0 else "#dc2626"}"></div></div>'
