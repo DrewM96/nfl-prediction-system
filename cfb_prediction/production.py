@@ -12,6 +12,7 @@ from nfl_prediction.current_market import freeze_market_context
 from nfl_prediction.io import atomic_write_json, read_json, sha256_file
 from nfl_prediction.results import performance_history, settle_schedule
 
+from .blended_rankings import build_blended_cfb_power_ratings
 from .client import CFBDClient
 from .config import (
     CFB_HISTORICAL_BENCHMARK_PATH,
@@ -24,8 +25,7 @@ from .data import CFBHistoricalData
 from .features import CFB_FEATURE_CONFIGURATIONS, build_point_in_time_features
 from .historical import load_historical_data
 from .ledger import record_cfb_prediction_batch
-from .modeling import fit_cfb_model, save_cfb_model_bundle
-from .rankings import build_cfb_power_ratings
+from .modeling import fit_cfb_model, make_ridge, save_cfb_model_bundle
 
 
 def _combine(parts: list[CFBHistoricalData]) -> CFBHistoricalData:
@@ -260,12 +260,20 @@ def run_cfb_production_update(
     )
     manifest_path = Path(models_dir) / "manifest.json"
     model_hash = sha256_file(manifest_path)
-    ranking_payload = build_cfb_power_ratings(
-        all_scheduled,
-        models["margin"].predict(all_scheduled),
+    preseason_training = training[training["season"].lt(prediction_season)].dropna(
+        subset=[*selected_features["margin"], "home_margin"]
+    )
+    preseason_model = make_ridge(float(benchmark["ridge_alpha"])).fit(
+        preseason_training[selected_features["margin"]], preseason_training["home_margin"]
+    )
+    ranking_payload = build_blended_cfb_power_ratings(
+        data,
+        models["margin"].estimator,
+        preseason_model,
+        selected_features["margin"],
         created_at=timestamp,
         prediction_season=prediction_season,
-        data_cutoff=timestamp.isoformat(),
+        forecast_week=forecast_week,
         model_hash=model_hash,
         input_coverage=input_coverage,
     )
