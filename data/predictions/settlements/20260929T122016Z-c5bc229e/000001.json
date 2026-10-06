@@ -1,0 +1,104 @@
+{
+  "run_id": "20260929T122016Z-c5bc229e",
+  "revision": 1,
+  "scored_at": "2026-10-06T13:37:24.327876+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_04_PIT_CLE",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 51.0
+    },
+    {
+      "game_id": "2026_04_IND_WAS",
+      "status": "final",
+      "actual_home_margin": -17.0,
+      "actual_total": 43.0
+    },
+    {
+      "game_id": "2026_04_TEN_BAL",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 42.0
+    },
+    {
+      "game_id": "2026_04_NE_BUF",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 55.0
+    },
+    {
+      "game_id": "2026_04_NYJ_CHI",
+      "status": "final",
+      "actual_home_margin": 11.0,
+      "actual_total": 35.0
+    },
+    {
+      "game_id": "2026_04_JAX_CIN",
+      "status": "final",
+      "actual_home_margin": -5.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "2026_04_DAL_HOU",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 64.0
+    },
+    {
+      "game_id": "2026_04_ARI_NYG",
+      "status": "final",
+      "actual_home_margin": 12.0,
+      "actual_total": 60.0
+    },
+    {
+      "game_id": "2026_04_LA_PHI",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 44.0
+    },
+    {
+      "game_id": "2026_04_GB_TB",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 31.0
+    },
+    {
+      "game_id": "2026_04_MIA_MIN",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 25.0
+    },
+    {
+      "game_id": "2026_04_KC_LV",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 57.0
+    },
+    {
+      "game_id": "2026_04_LAC_SEA",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 53.0
+    },
+    {
+      "game_id": "2026_04_DEN_SF",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "2026_04_DET_CAR",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 58.0
+    },
+    {
+      "game_id": "2026_04_ATL_NO",
+      "status": "final",
+      "actual_home_margin": -21.0,
+      "actual_total": 69.0
+    }
+  ]
+}
