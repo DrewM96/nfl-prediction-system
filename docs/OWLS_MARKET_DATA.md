@@ -9,8 +9,9 @@ injury handling and model binaries are unchanged.
 ### Heroku
 
 GitHub secrets are available to Actions, **not automatically to Heroku**. Set
-`OWLS_INSIGHT_API_KEY` under the Heroku app's **Settings > Config Vars**. Retain
-the existing `ODDS_API_KEY` for legacy jobs. Never put either value in Git.
+`OWLS_INSIGHT_API_KEY` under the Heroku app's **Settings > Config Vars**.
+`ODDS_API_KEY` is only needed for optional legacy diagnostics or historical
+benchmarks with an active The Odds API subscription. Never put either value in Git.
 
 Attach a Postgres database under **Resources** (review the plan's charge before
 provisioning). Heroku supplies `DATABASE_URL`; the app and worker both use it.
@@ -53,8 +54,9 @@ do not bypass it with repeated manual polls. Worker stdout appears in Heroku log
      into newly generated forecasts. `legacy` preserves existing NFL The Odds
      API / CFB CollegeFootballData forecast context. This switch never rewrites
      published batches and does not change the Owls current-market worker.
-   - `ODDS_API_KEY`: retained for explicit legacy snapshot jobs, historical
-     benchmarks, and live parity. Keep it while parity is being evaluated.
+   - `ODDS_API_KEY`: optional, only for explicit legacy snapshots, historical
+     benchmarks, and live parity with an active The Odds API subscription.
+     Manual NFL snapshots and weekly forecasts use Owls and do not need it.
    - `GRIDLINE_MARKET_DB`: absolute path on a **persistent local disk shared by
      the worker and Streamlit**, e.g. `/var/lib/gridline/market.sqlite3`.
      Default: ignored `data/market_private/market.sqlite3`.
@@ -73,9 +75,22 @@ do not bypass it with repeated manual polls. Worker stdout appears in Heroku log
    volume and colocated worker/app processes, or configure Postgres as above.
    Do not put SQLite WAL on a network filesystem.
 7. Configure the existing GitHub secret `OWLS_INSIGHT_API_KEY` for forecast CI.
-   Weekly jobs perform a best-effort cache warmup. They intentionally retain
-   the explicit legacy NFL calibration snapshot step. CI's ephemeral cache is
-   only for that forecast run; it is not the production market-history store.
+   The manual-only NFL snapshot workflow calls `market_update.py --provider owls`
+   and publishes only aggregate consensus to `market_consensus.json`. It has no
+   scheduled or PR-label triggers; run it only for an extra saved snapshot. It matches
+   the live upcoming nflverse schedule rather than last week's frozen release.
+   Weekly NFL forecasts refresh Owls after training, using the newly selected
+   games for both preseason calibration and frozen market comparisons. Provider
+   failures leave forecasts without market context; they never use a legacy
+   fallback. CFB jobs still perform a best-effort Owls cache warmup. CI's
+   ephemeral cache is not the production market-history store.
+
+   Public snapshots omit book-level odds, splits, raw responses, and credentials.
+   Quotes must pass the existing pregame identity and timestamp checks, including
+   the 15-minute freshness limit; totals are checked by their own timestamps.
+   No fresh eligible lines makes the snapshot command fail without replacing the
+   last saved consensus. Historical The Odds API workflows remain manual-only
+   and require a separate active subscription; Owls does not replace that history.
 8. Run checks and parity below, then inspect both sports' cards, stale states,
    provider diagnostics, and worker logs before release.
 
@@ -388,15 +403,12 @@ the oldest-contributing-book rule (notably older DraftKings/Bovada quotes).
 Live splits joined for the NFL game and all 56 CFB games; individual book and
 market coverage varies.
 
-Keep the legacy provider until several active NFL/CFB slates near kickoff show
-acceptable game/book coverage, reviewed aliases, stable common-book differences,
-and acceptable source freshness; test restart, 429, outage and stale UI behavior.
-Investigate sustained spread differences over 0.5 points. Resolve the existing
-NFL preseason calibration's legacy dependency in a separately authorized model
-decision before retiring its feed. Then disable scheduled legacy **current**
-snapshot requests, retain the adapter/credential for historical benchmarks as
-needed, and remove secrets only after auditing all consumers. Do not delete the
-integration or archived forecast context as part of this migration.
+The Odds API subscription has been retired. Weekly NFL forecasts now use Owls
+for the existing preseason calibration and frozen market comparisons. Separate
+NFL snapshots are manual-only because the deployed worker supplies live market
+data. Weekly updates, daily results/weather observations, and CI remain enabled.
+The legacy adapter and historical workflows remain available for optional use
+with a renewed subscription; existing archived forecasts are preserved.
 
 ## Validation
 
