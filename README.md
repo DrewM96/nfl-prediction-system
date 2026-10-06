@@ -28,7 +28,7 @@ The current application is configured for the 2026 season. It loads the upcoming
   from the full consensus schedule, and a football-only recent-form score frozen at the latest
   completed-game cutoff. The market ranking is not presented as an independent model.
 - The immutable ledger records the market timestamp and later scores model and market errors on the same games.
-- The scheduled NFL snapshot workflow collects Owls Insight consensus using `OWLS_INSIGHT_API_KEY`. Weekly NFL forecasts refresh Owls after training for calibration and frozen market comparisons. The Odds API is optional for manual historical benchmarks and legacy diagnostics only.
+- Weekly NFL forecasts refresh Owls Insight after training for calibration and frozen market comparisons using `OWLS_INSIGHT_API_KEY`. Separate NFL snapshots are manual-only; the deployed worker supplies live market data. The Odds API is optional for manual historical benchmarks and legacy diagnostics only.
 
 ## Version 3 foundation
 

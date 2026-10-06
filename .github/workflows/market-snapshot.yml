@@ -2,15 +2,6 @@ name: NFL market snapshot
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [labeled]
-  schedule:
-    - cron: "0 16 * * 2"
-    - cron: "0 16 * * 4"
-    - cron: "0 0 * * 5"
-    - cron: "0 15 * * 0"
-    - cron: "0 19 * * 0"
-    - cron: "0 23 * * 1"
 
 permissions:
   contents: write
@@ -22,7 +13,6 @@ concurrency:
 
 jobs:
   snapshot:
-    if: github.event_name != 'pull_request' || github.event.label.name == 'live-market-test'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +31,6 @@ jobs:
           python market_update.py --provider owls
           python -m pytest -q tests/test_market.py tests/test_odds.py tests/test_owls.py tests/test_market_snapshot.py
       - name: Publish only the derived consensus
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
