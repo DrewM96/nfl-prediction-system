@@ -52,9 +52,29 @@ def main(argv: list[str] | None = None) -> int:
                 )
             )
             return 0
-        from current_market_update import main as current_main
+        if args.sport != "nfl":
+            from current_market_update import main as current_main
 
-        return current_main(["--sport", args.sport])
+            return current_main(["--sport", args.sport])
+        from nfl_prediction.market_snapshot import refresh_owls_consensus
+        from nfl_prediction.owls import OwlsError
+
+        try:
+            consensus = refresh_owls_consensus()
+        except OwlsError as exc:
+            logging.error("Market update failed: %s", exc)
+            return 1
+        print(
+            json.dumps(
+                {
+                    "status": "ok",
+                    "provider": consensus["provider"],
+                    "snapshot_at": consensus["snapshot_at"],
+                    "games": len(consensus["games"]),
+                }
+            )
+        )
+        return 0
     if provider != "legacy":
         parser().error("GRIDLINE_MARKET_PROVIDER must be owls or legacy")
     if args.sport != "nfl":

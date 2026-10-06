@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import subprocess
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -11,6 +12,7 @@ import numpy as np
 import pandas as pd
 
 from .config import MODEL_MANIFEST_PATH, PROJECT_ROOT, get_season_context
+from .current_market import market_provider
 from .data import load_nflverse_data
 from .features import (
     GAME_FEATURES,
@@ -24,8 +26,10 @@ from .features import (
 from .io import atomic_write_json, read_json, sha256_file
 from .ledger import PredictionLedger
 from .lineup import attach_lineup_shadow, lineup_table
+from .market_snapshot import refresh_owls_consensus
 from .modeling import GAME_RIDGE_ALPHA, FittedEnsemble, fit_ensemble, save_model_bundle
 from .odds import _game_kickoff, attach_market_consensus, load_market_consensus
+from .owls import OwlsError
 from .preseason import apply_preseason_calibration
 from .prop_cache import poll_depth, poll_props
 from .prop_results import freeze_player_predictions, refresh_player_results
@@ -682,6 +686,20 @@ def _attach_official_injury_context(
     return output
 
 
+def _forecast_market_snapshot(
+    predictions: list[dict[str, Any]], *, as_of: datetime
+) -> dict[str, Any] | None:
+    """Refresh the selected provider; never fall back to a cancelled legacy feed."""
+    if market_provider() == "owls":
+        try:
+            return refresh_owls_consensus(predictions, as_of=as_of)
+        except OwlsError as exc:
+            logging.warning("Owls consensus unavailable: %s", exc)
+            return None
+    else:
+        return load_market_consensus()
+
+
 def run_update(as_of: datetime | None = None) -> UpdateResult:
     now = as_of or datetime.now(UTC)
     # This entry point consumes live feeds, not archived publication vintages.
@@ -769,8 +787,10 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         rosters=data.rosters,
     )
     predictions = _predict_upcoming_games(upcoming, ensembles, cutoff_text)
+    # Training can outlast quote freshness. Capture new odds at forecast time.
+    now = as_of or datetime.now(UTC)
     predictions = [p for p in predictions if _game_kickoff(p) and _game_kickoff(p) > now]
-    market_snapshot = load_market_consensus()
+    market_snapshot = _forecast_market_snapshot(predictions, as_of=now)
     predictions = attach_market_consensus(predictions, market_snapshot, as_of=now)
     current_schedule = data.schedules[data.schedules["season"].eq(context.prediction_season)]
     neutral_matchups = {

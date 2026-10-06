@@ -776,3 +776,77 @@ def test_invalid_split_source_time_remains_explicit(odds, splits, slate, stamp):
     context = current_context(slate[0], board, now=NOW)
     assert context["splits"]["circa"]["stale"]
     assert "Oldest source: unavailable" in public_action_html(slate[0], context)
+
+
+def test_public_consensus_has_only_aggregate_lines(odds, splits, slate, tmp_path):
+    from nfl_prediction.market_snapshot import refresh_owls_consensus
+    from nfl_prediction.odds import attach_market_consensus
+
+    output = tmp_path / "consensus.json"
+    snapshot = refresh_owls_consensus(
+        slate,
+        store=MarketStore(tmp_path / "market.db"),
+        client=Client(odds, splits),
+        as_of=NOW,
+        output=output,
+    )
+    assert json.loads(output.read_text()) == snapshot
+    assert snapshot["provider"] == "Owls Insight"
+    assert snapshot["games"][0]["spread"]["market_home_margin"] == 3.75
+    assert snapshot["games"][0]["total"]["total"] == 45.5
+    assert not any(
+        key in output.read_text() for key in ("bookmakers", '"books"', '"splits"', "Authorization")
+    )
+    attached = attach_market_consensus(slate, snapshot, as_of=NOW)[0]
+    assert attached["market_line"] == -3.75
+    assert attached["market_consensus"]["provider"] == "Owls Insight"
+
+
+@pytest.mark.parametrize("failure", ["auth", "old", "future", "kickoff", "missing"])
+def test_snapshot_failure_preserves_saved_consensus(odds, splits, slate, tmp_path, failure):
+    from nfl_prediction.market_snapshot import refresh_owls_consensus
+
+    output = tmp_path / "consensus.json"
+    output.write_text('{"previous": true}')
+    client = Client(odds, splits)
+    if failure == "auth":
+        client.odds = OwlsError("Owls authentication failed")
+    elif failure in {"old", "future"}:
+        stamp = (
+            NOW + timedelta(minutes=1) if failure == "future" else NOW - timedelta(hours=1)
+        ).isoformat()
+        for events in odds["data"].values():
+            events[0]["bookmakers"][0]["last_update"] = stamp
+    elif failure == "kickoff":
+        for events in odds["data"].values():
+            events[0]["commence_time"] = (NOW - timedelta(minutes=1)).isoformat()
+        slate[0]["commence_time"] = (NOW - timedelta(minutes=1)).isoformat()
+    else:
+        client.odds = {"data": {}}
+    with pytest.raises(OwlsError):
+        refresh_owls_consensus(
+            slate,
+            store=MarketStore(tmp_path / "market.db"),
+            client=client,
+            as_of=NOW,
+            output=output,
+        )
+    assert output.read_text() == '{"previous": true}'
+
+
+def test_snapshot_and_freeze_reject_old_total_with_fresh_spread(odds, splits, slate, tmp_path):
+    from nfl_prediction.current_market import public_consensus
+
+    for events in odds["data"].values():
+        events[0]["bookmakers"][0]["markets"][1]["last_update"] = (
+            NOW - timedelta(hours=1)
+        ).isoformat()
+    store = MarketStore(tmp_path / "market.db")
+    board = poll_market("nfl", slate, store=store, client=Client(odds, splits), now=NOW)
+    snapshot = public_consensus(board, slate, as_of=NOW)
+    assert snapshot["games"][0]["spread"]["home_spread"] == -3.75
+    assert snapshot["games"][0]["total"] is None
+    frozen = freeze_market_context(slate, "nfl", as_of=NOW, store=store)[0]
+    assert frozen["market_line"] == -3.75
+    assert frozen["market_consensus"]["total"] is None
+    assert frozen["market_informed"] is None

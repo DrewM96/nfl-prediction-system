@@ -17,7 +17,13 @@ import psycopg
 from . import market_postgres
 from .config import MARKET_PRIVATE_DIR
 from .money_signals import qualifying_signals
-from .odds import _game_kickoff, _market_summary, attach_market_consensus, parse_timestamp
+from .odds import (
+    _game_kickoff,
+    _market_summary,
+    attach_market_consensus,
+    eligible_market_snapshot,
+    parse_timestamp,
+)
 from .owls import OwlsClient, OwlsError, parse_odds, parse_splits, timestamp
 
 POLL_SECONDS = 300
@@ -502,6 +508,64 @@ def current_context(
     }
 
 
+def public_consensus(
+    board: dict[str, Any], slate: list[dict[str, Any]], *, as_of: datetime
+) -> dict[str, Any]:
+    """Use the same strict spread eligibility as frozen forecast context."""
+    games = []
+    eligible = eligible_market_snapshot(board, as_of=as_of)
+    by_id = {str(g["game_id"]): g for g in (eligible or {}).get("games", [])}
+    for forecast in slate:
+        game = by_id.get(str(forecast["game_id"]))
+        if (
+            game is None
+            or current_context(forecast, board, now=as_of)["status"] != "fresh"
+            or game.get("invalid_source_timestamp")
+            or stale_at(game.get("source_timestamp"), as_of)
+        ):
+            continue
+        # Totals have separate timestamps; never publish stale totals beside fresh spreads.
+        totals = []
+        for book in game.get("books", {}).values():
+            source = timestamp(book.get("total_source_timestamp"))
+            captured = timestamp(game.get("captured_at"))
+            if (
+                book.get("total") is None
+                or source is None
+                or stale_at(source, as_of)
+                or not captured
+                or source > captured
+            ):
+                continue
+            row = {"total": book["total"], "last_update": source}
+            for key in ("over_price", "under_price"):
+                if book.get(key) is not None:
+                    row[key] = book[key]
+            totals.append(row)
+        total = _market_summary(totals, "total")
+        if total:
+            total["total"] = total.pop("line")
+        games.append(
+            {
+                "game_id": game["game_id"],
+                "event_id": game["event_id"],
+                "home_team": game["home_team"],
+                "away_team": game["away_team"],
+                "commence_time": game["commence_time"],
+                "source_timestamp": game["source_timestamp"],
+                "spread": game["spread"],
+                "total": total,
+            }
+        )
+    return {
+        "schema_version": 1,
+        "provider": "Owls Insight",
+        "sport": board.get("sport", "nfl"),
+        "snapshot_at": board.get("snapshot_at"),
+        "games": games,
+    }
+
+
 def freeze_market_context(
     predictions: list[dict[str, Any]],
     sport: str,
@@ -513,24 +577,12 @@ def freeze_market_context(
     if market_provider() == "legacy":
         return predictions
     board = (store or MarketStore()).read(sport)
-    eligible: list[dict[str, Any]] = []
-    for prediction in predictions:
-        context = current_context(prediction, board, now=as_of)
-        if context["status"] == "fresh":
-            # Live display filtering must not relax the existing frozen-snapshot policy.
-            eligible.extend(
-                g
-                for g in board["games"]
-                if g["game_id"] == str(prediction["game_id"])
-                and not g.get("invalid_source_timestamp")
-                and not stale_at(g.get("source_timestamp"), as_of)
-            )
-    snapshot = {**board, "games": eligible}
+    snapshot = public_consensus(board, predictions, as_of=as_of)
     # Existing attachment preserves all predictive fields and benchmark conventions.
     enriched = attach_market_consensus(
         predictions, snapshot, as_of=as_of, max_age=timedelta(seconds=STALE_SECONDS)
     )
-    by_id = {g["game_id"]: g for g in eligible}
+    by_id = {g["game_id"]: g for g in snapshot["games"]}
     for prediction in enriched:
         prediction["forecast_at"] = as_of.isoformat()
         prediction["market_context_status"] = (
