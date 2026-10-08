@@ -16,7 +16,7 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("GRIDLINE" in markdown.value for markdown in app.markdown)
     assert any("Market at forecast" in markdown.value for markdown in app.markdown)
     assert any("Home win" in markdown.value for markdown in app.markdown)
-    assert any("Model total" in markdown.value for markdown in app.markdown)
+    assert any("Total model / Vegas" in markdown.value for markdown in app.markdown)
     nfl_labels = [m.value for m in app.markdown if 'class="grid-mini-label"' in m.value][:4]
     next(button for button in app.button if button.label == "Details ▼").click().run(timeout=30)
     assert not app.exception
@@ -31,7 +31,7 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     assert any("Featured matchup" in markdown.value for markdown in app.markdown)
     assert any("logo" in markdown.value for markdown in app.markdown)
     assert any("Home win" in markdown.value for markdown in app.markdown)
-    assert any("Model total" in markdown.value for markdown in app.markdown)
+    assert any("Total model / Vegas" in markdown.value for markdown in app.markdown)
     assert any("GRIDLINE" in markdown.value for markdown in app.markdown)
     assert any("Market at forecast" in markdown.value for markdown in app.markdown)
 

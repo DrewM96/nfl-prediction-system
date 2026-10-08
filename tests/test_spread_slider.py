@@ -154,6 +154,7 @@ def test_live_market_needs_no_frozen_market(slider, game):
 def test_card_live_market_ignores_frozen_line(game, sport, context, expected):
     namespace = {
         "Any": Any,
+        "math": math,
         "spread_label": spread_label,
         "format_probability": lambda value: f"{value:.0%}",
     }
@@ -179,8 +180,8 @@ def test_team_text_is_escaped_everywhere(slider, game):
 @pytest.mark.parametrize(
     "total_source,total_label",
     [
-        ("47.5", "O/U 47.5"),
-        ("'48'", "O/U 48.0"),
+        ("47.5", "45.0 · V 47.5"),
+        ("'48'", "45.0 · V 48.0"),
         ("missing", None),
         ("null_market", None),
         ("null_total", None),
@@ -262,11 +263,10 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert sum("Live Market" in m for m in rendered) == 2
     assert any("CHI -2.5" in m and "Live Market" in m for m in rendered)
     assert sum("11 books" in m and "2m ago" in m for m in rendered) == 2
-    totals = [m for m in rendered if "O/U" in m]
-    assert len(totals) == (2 if total_label else 0)
-    if total_label:
-        assert all(total_label in m and "Live Market" in m for m in totals)
-        assert all('class="grid-muted" title="Market total at forecast"' in m for m in totals)
+    totals = [m for m in rendered if "Total model / Vegas" in m]
+    assert len(totals) == 2
+    assert all((total_label or "45.0 · V —") in m for m in totals)
+    assert all("Vegas at forecast" in m for m in totals)
     assert not any("Market at forecast" in m for m in rendered)
     assert any('class="grid-hero grid-cfb-hero"' in m for m in rendered)
     panels = [i for i, m in enumerate(rendered) if "test-market-panel" in m]
@@ -297,7 +297,10 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     assert not any('class="grid-slider"' in m for m in rendered)
     assert sum("Live Market" in m and "CHI -2.5" in m for m in rendered) == 2
     assert sum("Last known—stale · 2m ago" in m for m in rendered) == 2
-    assert sum("O/U" in m for m in rendered) == (2 if total_label else 0)
+    assert (
+        sum("Total model / Vegas" in m and (total_label or "45.0 · V —") in m for m in rendered)
+        == 2
+    )
     assert sum('title="Source: 2026-09-30T12:00:00+00:00"' in m for m in rendered) == 2
 
 
