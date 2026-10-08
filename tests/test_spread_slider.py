@@ -177,6 +177,43 @@ def test_team_text_is_escaped_everywhere(slider, game):
 
 
 @pytest.mark.parametrize("sport", ["nfl", "cfb"])
+@pytest.mark.parametrize("total_status", ["fresh", "stale", "unavailable"])
+def test_card_total_is_independent_of_spread_and_never_uses_frozen_total(game, sport, total_status):
+    namespace = {
+        "Any": Any,
+        "math": math,
+        "spread_label": spread_label,
+        "format_probability": lambda value: f"{value:.0%}",
+    }
+    exec(app_functions({"forecast_card_values", "cfb_spread_label", "cfb_margin_label"}), namespace)
+    game.update(home_win_probability=0.6, total=45, predicted_total=45)
+    game["market_consensus"]["total"] = {"total": 39}
+    context = {"status": "unavailable", "total_status": total_status, "total": 49}
+    values = dict(namespace["forecast_card_values"](game, sport, context=context))
+    assert values["Live Market"] == "Unavailable"
+    assert values["Total model / Vegas"] == (
+        "45.0 · V —" if total_status == "unavailable" else "45.0 · V 49.0"
+    )
+
+
+def test_cfb_details_keep_forecast_time_total(game):
+    from types import SimpleNamespace
+
+    rendered = []
+    namespace = {
+        "Any": Any,
+        "html_text": html_text,
+        "probability_bar": lambda game: "",
+        "st": SimpleNamespace(markdown=lambda value, **kwargs: rendered.append(value)),
+    }
+    exec(app_functions({"render_forecast_details"}), namespace)
+    game.update(predicted_total=45, margin_p10=-10, margin_p90=12)
+    game["market_consensus"]["total"] = {"total": 39}
+    namespace["render_forecast_details"](game, "cfb")
+    assert "Total model / market at forecast: 45.0 · V 39.0" in rendered[0]
+
+
+@pytest.mark.parametrize("sport", ["nfl", "cfb"])
 @pytest.mark.parametrize(
     "total_source,total_label",
     [
@@ -232,7 +269,7 @@ def format_game_time(game): return "Sun 9/13 1p"
 format_cfb_game_time = format_game_time
 def team_logo_html(*args): return ""
 def load_current_market(sport): return {}
-def current_context(*args): return {"status": st.session_state.get("market_status", "fresh"), "home_spread": -2.5, "book_count": 11, "source_age_seconds": 120, "source_timestamp": "2026-09-30T12:00:00+00:00"}
+def current_context(*args): return {"status": st.session_state.get("market_status", "fresh"), "home_spread": -2.5, "book_count": 11, "source_age_seconds": 120, "source_timestamp": "2026-09-30T12:00:00+00:00", "total": game.get("_live_total"), "total_status": st.session_state.get("market_status", "fresh"), "total_book_count": 3, "total_source_age_seconds": 60, "total_source_timestamp": "2026-09-30T12:01:00+00:00"}
 def market_context_html(*args): return '<div class="test-market-panel">Current market</div>'
 def render_forecast_details(*args): pass
 game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_margin=2,
@@ -247,6 +284,8 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
         script += "\ngame['market_consensus']['total'] = None\n"
     elif total_source != "missing":
         script += f"\ngame['market_consensus']['total'] = {{'total': {total_source}}}\n"
+    script += "\ngame['_live_total'] = ((game.get('market_consensus') or {}).get('total') or {}).get('total')\n"
+    script += "game['market_consensus'] = {'total': {'total': 39.0}}\n"
     script += (
         functions
         + f"\n{'render_featured_game' if sport == 'nfl' else 'render_cfb_featured_game'}(game)\n"
@@ -266,7 +305,8 @@ game = dict(game_id="test", home_team="CHI", away_team="PHI", predicted_home_mar
     totals = [m for m in rendered if "Total model / Vegas" in m]
     assert len(totals) == 2
     assert all((total_label or "45.0 · V —") in m for m in totals)
-    assert all("Vegas at forecast" in m for m in totals)
+    assert all("Live O/U" in m for m in totals)
+    assert not any("V 39.0" in m for m in totals)
     assert not any("Market at forecast" in m for m in rendered)
     assert any('class="grid-hero grid-cfb-hero"' in m for m in rendered)
     panels = [i for i, m in enumerate(rendered) if "test-market-panel" in m]

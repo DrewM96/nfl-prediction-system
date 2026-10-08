@@ -26,6 +26,58 @@ KICKOFF = "2026-09-13T17:00:00+00:00"
 EVENT = "nfl:New York Jets@Buffalo Bills-20260913"
 
 
+@pytest.mark.parametrize("spread_available", [True, False])
+def test_live_total_does_not_require_spread_or_frozen_total(odds, slate, spread_available):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    game = board["games"][0]
+    for book in game["books"].values():
+        if not spread_available:
+            book["spread"] = None
+    before = copy.deepcopy((slate, board))
+    context = current_context(slate[0], board, now=NOW)
+    assert context["total"] == 45.5
+    assert context["total_status"] == "fresh"
+    assert context["total_book_count"] == len(game["books"])
+    assert context["total_source_age_seconds"] == 0
+    assert (slate, board) == before
+
+
+def test_live_total_excludes_stale_books_and_uses_total_timestamp(odds, slate):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    books = list(board["games"][0]["books"].values())
+    books[0]["total"] = 90
+    books[0]["total_source_timestamp"] = (NOW - timedelta(minutes=20)).isoformat()
+    context = current_context(slate[0], board, now=NOW)
+    assert context["status"] == "fresh"
+    assert context["total_status"] == "fresh"
+    assert context["total"] == 45.5
+    assert context["total_book_count"] == len(books) - 1
+    for book in books:
+        book["total_source_timestamp"] = (NOW - timedelta(minutes=20)).isoformat()
+    context = current_context(slate[0], board, now=NOW)
+    assert context["status"] == "fresh"
+    assert context["total_status"] == "stale"
+    assert context["total_source_age_seconds"] == 1200
+
+
+@pytest.mark.parametrize("value", [None, True, 0, -1, float("nan"), float("inf")])
+def test_invalid_live_totals_are_unavailable(odds, slate, value):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    for book in board["games"][0]["books"].values():
+        book["total"] = value
+    context = current_context(slate[0], board, now=NOW)
+    assert context["total_status"] == "unavailable"
+    assert context["total"] is None
+
+
+@pytest.mark.parametrize("source", [None, "bad", (NOW + timedelta(minutes=1)).isoformat()])
+def test_invalid_live_total_timestamps_are_unavailable(odds, slate, source):
+    board = parse_odds(odds, "nfl", slate, STAMP)
+    for book in board["games"][0]["books"].values():
+        book["total_source_timestamp"] = source
+    assert current_context(slate[0], board, now=NOW)["total_status"] == "unavailable"
+
+
 @pytest.fixture
 def slate():
     return [

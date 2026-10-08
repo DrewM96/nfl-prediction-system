@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 import os
 import sqlite3
 from contextlib import closing, contextmanager
@@ -388,6 +389,11 @@ def current_context(
     checked = {
         "last_attempt_at": board.get("last_attempt_at"),
         "checked_age_seconds": age_seconds(board.get("last_attempt_at"), now),
+        "total": None,
+        "total_status": "unavailable",
+        "total_book_count": 0,
+        "total_source_timestamp": None,
+        "total_source_age_seconds": None,
     }
     market = next(
         (g for g in board.get("games", []) if str(g["game_id"]) == str(forecast.get("game_id"))),
@@ -457,6 +463,38 @@ def current_context(
         reasons.append("Kickoff reached; pregame projection comparison only")
     if current is None:
         reasons.append("No spread available")
+    # Total coverage and freshness are independent of spread coverage.
+    total_rows = []
+    cached_total_rows = []
+    for book in market.get("books", {}).values():
+        value = book.get("total")
+        source = timestamp(book.get("total_source_timestamp"))
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, int | float)
+            or not math.isfinite(value)
+            or value <= 0
+            or source is None
+            or not captured
+            or source > captured
+            or parse_timestamp(source) > now
+        ):
+            continue
+        row = {"total": value, "last_update": source}
+        cached_total_rows.append(row)
+        if not stale_at(source, now):
+            total_rows.append(row)
+    live_total = _market_summary(total_rows, "total")
+    selected_total = live_total or _market_summary(cached_total_rows, "total") or {}
+    total_timestamp = selected_total.get("oldest_book_update")
+    total_stale = bool(
+        not live_total
+        or board.get("odds_error")
+        or market.get("unavailable")
+        or market.get("provider_stale")
+        or stale_at(market.get("captured_at"), now)
+        or kickoff <= now
+    )
     splits = copy.deepcopy(market.get("splits", {}))
     for book in splits.values():
         book["source_age_seconds"] = age_seconds(book.get("source_timestamp"), now)
@@ -487,6 +525,15 @@ def current_context(
         "provider": board.get("provider", "Owls Insight"),
         "event_id": market["event_id"],
         "home_spread": current,
+        "total": selected_total.get("line"),
+        "total_status": "unavailable"
+        if not selected_total
+        else "stale"
+        if total_stale
+        else "fresh",
+        "total_book_count": selected_total.get("book_count", 0),
+        "total_source_timestamp": total_timestamp,
+        "total_source_age_seconds": age_seconds(total_timestamp, now),
         "book_count": selected_spread.get("book_count", 0),
         "fresh_books": sorted(fresh_books),
         "excluded_books": sorted(excluded_books),

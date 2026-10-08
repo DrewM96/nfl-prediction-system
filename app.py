@@ -1633,7 +1633,7 @@ def forecast_card_values(
     line = context.get("home_spread")
     live_market = "Unavailable"
     model_total = float(game["predicted_total"] if college else game["total"])
-    raw_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
+    raw_total = context.get("total") if context.get("total_status") in {"fresh", "stale"} else None
     try:
         market_total = float(raw_total) if not isinstance(raw_total, bool) else math.nan
     except (TypeError, ValueError, OverflowError):
@@ -1690,7 +1690,16 @@ def render_forecast_header(
         if market_note
         else ""
     )
-    total_note_html = '<br><small class="grid-muted">Vegas at forecast</small>'
+    total_count = context.get("total_book_count", 0)
+    total_age = age_label(context.get("total_source_age_seconds"))
+    total_note = (
+        f"Live O/U · {total_count} {'book' if total_count == 1 else 'books'} · {total_age}"
+        if context.get("total_status") == "fresh"
+        else f"Last known O/U—stale · {total_age}"
+        if context.get("total_status") == "stale"
+        else "Live O/U unavailable"
+    )
+    total_note_html = f'<br><small class="grid-muted" title="Source: {html_text(context.get("total_source_timestamp") or "Timestamp unknown")}">{html_text(total_note)}</small>'
     if featured:
         tiles = "".join(
             f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div>{market_note_html if label == "Live Market" else total_note_html if label == "Total model / Vegas" else ""}</div>'
@@ -1721,6 +1730,9 @@ def render_forecast_details(game: dict[str, Any], sport: str, *, collapsed: bool
     college = sport == "cfb"
     if college:
         extra = f"80% margin range: {float(game['margin_p10']):+.1f} to {float(game['margin_p90']):+.1f}"
+        frozen_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
+        frozen_label = f"{float(frozen_total):.1f}" if frozen_total is not None else "—"
+        extra += f" · Total model / market at forecast: {float(game['predicted_total']):.1f} · V {frozen_label}"
     else:
         extra = f"Edge at forecast: {nfl_market_edge_label(game)} · Total model / market at forecast: {nfl_total_label(game)}"
     body = f'{probability_bar(game)}<div class="grid-detail-range">{html_text(extra)}</div>'
