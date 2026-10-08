@@ -1632,6 +1632,13 @@ def forecast_card_values(
     college = sport == "cfb"
     line = context.get("home_spread")
     live_market = "Unavailable"
+    model_total = float(game["predicted_total"] if college else game["total"])
+    raw_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
+    try:
+        market_total = float(raw_total) if not isinstance(raw_total, bool) else math.nan
+    except (TypeError, ValueError, OverflowError):
+        market_total = math.nan
+    vegas_total = f"{market_total:.1f}" if math.isfinite(market_total) and market_total > 0 else "—"
     if context.get("status") in {"fresh", "stale"} and line is not None:
         live_market = (
             cfb_margin_label(game, -float(line))
@@ -1642,7 +1649,7 @@ def forecast_card_values(
         ("GRIDLINE", cfb_spread_label(game) if college else spread_label(game)),
         ("Live Market", live_market),
         ("Home win", format_probability(game["home_win_probability"])),
-        ("Model total", f"{float(game['predicted_total'] if college else game['total']):.1f}"),
+        ("Total model / Vegas", f"{model_total:.1f} · V {vegas_total}"),
     ]
 
 
@@ -1678,24 +1685,15 @@ def render_forecast_header(
         if context.get("home_spread") is not None
         else ""
     )
-    raw_total = ((game.get("market_consensus") or {}).get("total") or {}).get("total")
-    try:
-        market_total = float(raw_total) if not isinstance(raw_total, bool) else math.nan
-    except (TypeError, ValueError, OverflowError):
-        market_total = math.nan
-    market_total_html = (
-        f'<br><small class="grid-muted" title="Market total at forecast">O/U {market_total:.1f}</small>'
-        if math.isfinite(market_total) and market_total > 0
-        else ""
-    )
-    market_note_html = market_total_html + (
+    market_note_html = (
         f'<br><small class="grid-muted" title="Source: {html_text(context.get("source_timestamp") or "Timestamp unknown")}">{html_text(market_note)}</small>'
         if market_note
         else ""
     )
+    total_note_html = '<br><small class="grid-muted">Vegas at forecast</small>'
     if featured:
         tiles = "".join(
-            f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div>{market_note_html if label == "Live Market" else ""}</div>'
+            f'<div class="grid-tile"><div class="grid-tile-label">{label}</div><div class="grid-tile-value" style="font-size:var(--text-md)">{html_text(value)}</div>{market_note_html if label == "Live Market" else total_note_html if label == "Total model / Vegas" else ""}</div>'
             for label, value in values
         )
         st.markdown(
@@ -1713,7 +1711,7 @@ def render_forecast_header(
     columns[1].markdown(matchup, unsafe_allow_html=True)
     for column, (label, value) in zip(columns[2:6], values, strict=False):
         column.markdown(
-            f'<div class="grid-row-value"><div class="grid-mini-label">{label}</div>{html_text(value)}{market_note_html if label == "Live Market" else ""}</div>',
+            f'<div class="grid-row-value"><div class="grid-mini-label">{label}</div>{html_text(value)}{market_note_html if label == "Live Market" else total_note_html if label == "Total model / Vegas" else ""}</div>',
             unsafe_allow_html=True,
         )
     return columns[6]
