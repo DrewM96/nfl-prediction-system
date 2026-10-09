@@ -22,7 +22,13 @@ from nfl_prediction.results import (
 
 
 def refresh_results(
-    schedules: pd.DataFrame, root: Path, output: Path, *, now: datetime, season: int | None = None
+    schedules: pd.DataFrame,
+    root: Path,
+    output: Path,
+    *,
+    now: datetime,
+    season: int | None = None,
+    write_if_unchanged: bool = True,
 ) -> dict:
     # NFL schedules do not supply an explicit completed flag. Avoid settling
     # in-progress score fields; revisit them on the next daily run.
@@ -33,6 +39,8 @@ def refresh_results(
         eligible.append(kickoff is not None and (now - kickoff).total_seconds() >= 8 * 3600)
     completed = completed.loc[eligible]
     writes = settle_schedule(root, completed)
+    if not writes and not write_if_unchanged:
+        return {"settlement_documents_added": 0, "season": season}
     rows = forecast_rows(root, as_of=now)
     if season is not None and not rows.empty:
         rows = rows[rows.season.eq(season)]
