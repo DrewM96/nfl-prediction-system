@@ -679,6 +679,27 @@ st.markdown(
       box-shadow: 0 1px 2px rgba(15,20,25,.08) !important;
     }
 
+    /* Keep the two quick-filter rows visible inside Streamlit's scrolling main. */
+    [data-testid="stLayoutWrapper"]:has(> .st-key-cfb_quick_filters),
+    [data-testid="stVerticalBlockBorderWrapper"]:has(> .st-key-cfb_quick_filters) {
+      position: sticky; top: 0; z-index: 50;
+      background: #fff; border-bottom: 1px solid var(--grid-border);
+      box-shadow: 0 5px 14px rgba(15,20,25,.06);
+    }
+    .st-key-cfb_quick_filters {
+      padding: 10px 0 12px; gap: 8px !important; background: #fff;
+    }
+    .st-key-cfb_quick_filters [data-testid="stButtonGroup"] > div {
+      flex-wrap: nowrap !important; overflow-x: auto; max-width: 100%;
+      padding-bottom: 4px; scrollbar-width: thin;
+    }
+    .st-key-cfb_quick_filters button {
+      flex-shrink: 0; min-height: 40px; border-radius: var(--radius-pill) !important;
+    }
+    .st-key-cfb_quick_filters [data-testid="stWidgetLabel"] p {
+      font-size: var(--text-xs); color: var(--grid-muted); margin-bottom: 2px;
+    }
+
     .st-key-cfb_schedule_filters {
       padding: 20px 22px 16px;
       margin-bottom: 12px;
@@ -969,13 +990,7 @@ st.markdown(
         width: auto !important;
         min-width: 0 !important;
       }
-      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div:nth-child(4) {
-        grid-column: 1 / -1;
-      }
       .st-key-cfb_schedule_filters { padding: 16px; border-radius: 14px; }
-      .st-key-cfb_schedule_filters [data-testid="stHorizontalBlock"] > div:nth-child(5) {
-        grid-column: 2; grid-row: 2;
-      }
       .grid-filter-count { flex-basis: 100%; }
       .grid-rank-row { grid-template-columns: 26px minmax(0,1fr) 46px; gap: 6px 8px; padding: 12px 0; }
       .grid-rank-track { grid-column: 2 / 4; }
@@ -2747,39 +2762,35 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
         key = f"cfb_filter_{name}"
         if st.session_state.get(key) not in choices:
             st.session_state[key] = choices[0]
+    with st.container(key="cfb_quick_filters"):
+        conference = (
+            st.pills(
+                "Conference",
+                options["conference"],
+                key="cfb_filter_conference",
+                selection_mode="single",
+                help="Includes games with either team in the selected conference.",
+            )
+            or "All conferences"
+        )
+        slot = (
+            st.pills(
+                "Kickoff (ET)",
+                options["slot"],
+                key="cfb_filter_slot",
+                selection_mode="single",
+                help="Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. All times Eastern.",
+            )
+            or "All times"
+        )
     with st.container(key="cfb_schedule_filters"):
-        st.markdown(
-            '<div class="grid-filter-heading">'
-            '<span class="grid-filter-icon" aria-hidden="true">'
-            '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" '
-            'stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'
-            '<path d="M4 7h7m4 0h5M4 17h3m4 0h9"/>'
-            '<circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>'
-            '</span><div><div class="grid-filter-title">Find your matchup</div>'
-            '<div class="grid-filter-subtitle">Narrow the slate to the games you care about.</div>'
-            "</div></div>",
-            unsafe_allow_html=True,
-        )
-        columns = st.columns([1.3, 1.1, 1.1, 1.5, 0.6], vertical_alignment="bottom")
-        conference = columns[0].selectbox(
-            "Conference",
-            options["conference"],
-            key="cfb_filter_conference",
-            help="Includes games with either team in the selected conference.",
-        )
-        day = columns[1].selectbox("Day", options["day"], key="cfb_filter_day")
-        slot = columns[2].selectbox(
-            "Time slot (ET)",
-            options["slot"],
-            key="cfb_filter_slot",
-            help="Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. All times Eastern.",
-        )
-        search = columns[3].text_input(
-            "Find a team", key="cfb_filter_search", placeholder="Search team name…"
-        )
-        columns[4].button(
-            "Reset", key="cfb_filter_reset", on_click=reset_cfb_schedule_filters, width="stretch"
-        )
+        with st.expander("More filters · day and team"):
+            columns = st.columns([1, 2], vertical_alignment="bottom")
+            day = columns[0].selectbox("Day", options["day"], key="cfb_filter_day")
+            search = columns[1].text_input(
+                "Find a team", key="cfb_filter_search", placeholder="Search team name…"
+            )
+        st.button("Reset filters", key="cfb_filter_reset", on_click=reset_cfb_schedule_filters)
         filtered = filter_schedule(
             games, conferences, conference=conference, day=day, slot=slot, search=search
         )
