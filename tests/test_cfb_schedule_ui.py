@@ -99,17 +99,7 @@ def test_conference_registry_covers_current_forecasts():
 
 
 @pytest.fixture
-def schedule_app(tmp_path, monkeypatch):
-    # Streamlit 1.49 AppTest assumes every button group has a list value,
-    # although single-selection pills store a scalar (or None).
-    from streamlit.testing.v1.element_tree import ButtonGroup
-
-    def pill_indices(widget):
-        value = widget.value
-        values = [value] if isinstance(value, str) else (value or [])
-        return [widget.options.index(widget.format_func(v)) for v in values]
-
-    monkeypatch.setattr(ButtonGroup, "indices", property(pill_indices))
+def schedule_app(tmp_path):
     tree = ast.parse(Path("app.py").read_text(encoding="utf-8"))
     functions = "\n\n".join(
         ast.unparse(node)
