@@ -1,0 +1,14 @@
+{
+  "run_id": "20261006T182301Z-6925bb80",
+  "revision": 1,
+  "scored_at": "2026-10-09T17:00:21.157150+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_05_TB_DAL",
+      "status": "final",
+      "actual_home_margin": -8.0,
+      "actual_total": 40.0
+    }
+  ]
+}
