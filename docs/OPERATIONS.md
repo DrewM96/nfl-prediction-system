@@ -10,6 +10,28 @@
 6. Start Streamlit and verify This Week, Custom Game, all four prop paths, Results, and Model Card. On Results, confirm one version per game, explicit pending/final counts, and the smaller matched-market sample where applicable.
 7. Merge/deploy only after the automated artifact pull request is reviewed.
 
+## Automatic final-game results
+
+The `Football game results` workflow runs hourly at minute 17, with independent NFL and CFB
+jobs. It can also be run manually with `sport=both`, `nfl`, or `cfb`. Each job uses its sport's
+existing model-update concurrency group so settlement writers do not overlap. GitHub scheduled
+runs can be delayed; this is an hourly polling cadence, not an instant final-score feed.
+
+`python football_results_update.py --sport nfl` fetches nflverse schedules and retains the
+existing eight-hour-after-kickoff safeguard before accepting scored NFL games. The CFB command
+fetches only the current regular-season FBS `/games` endpoint (one CFBD request per run), requires
+an explicit completed flag and both scores, and uses the repository's `CFBD_API_KEY` secret.
+No model training, feature downloads, market requests, player-stat refresh, or forecast creation
+runs in this workflow. The daily NFL observation workflow still handles weather and player results.
+
+Changed outcomes append settlement revisions and update result/performance summaries. The jobs
+run lint, formatting, and the full tests before opening and automatically squash-merging a
+results-only PR. Only settlement directories and summaries are staged: frozen prediction batches,
+release pointers, models, and rankings remain unchanged. Heroku's main-branch integration deploys
+the merged results. An unchanged poll writes no tracked files and creates no commit or deployment.
+A provider failure fails only that sport's job and preserves the deployed results; inspect the
+Actions run and rerun that sport after recovery. Corrections append new revisions on the next poll.
+
 ## College Football foundation refresh
 
 1. Keep `CFBD_API_KEY` only in GitHub Actions secrets or the ignored local `.env`.

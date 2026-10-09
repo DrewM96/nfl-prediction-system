@@ -39,4 +39,4 @@ jobs:
       - run: ruff format --check .
       - run: python -m mypy
       - run: python -m pytest -q
-      - run: python -m py_compile app.py serve.py injury_system.py weekly_nfl_update.py weekly_cfb_update.py cfb_historical_benchmark.py cfb_production_update.py market_update.py current_market_update.py historical_market_benchmark.py nfl_prediction/*.py cfb_prediction/*.py
+      - run: python -m py_compile football_results_update.py nfl_results_update.py app.py serve.py injury_system.py weekly_nfl_update.py weekly_cfb_update.py cfb_historical_benchmark.py cfb_production_update.py market_update.py current_market_update.py historical_market_benchmark.py nfl_prediction/*.py cfb_prediction/*.py

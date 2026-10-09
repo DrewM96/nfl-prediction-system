@@ -1,0 +1,82 @@
+name: Football game results
+
+on:
+  workflow_dispatch:
+    inputs:
+      sport:
+        description: Results to refresh
+        type: choice
+        options: [both, nfl, cfb]
+        default: both
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        sport: ${{ fromJSON(inputs.sport == 'nfl' && '["nfl"]' || inputs.sport == 'cfb' && '["cfb"]' || '["nfl","cfb"]') }}
+    concurrency:
+      group: ${{ matrix.sport == 'nfl' && 'weekly-model-update' || 'weekly-cfb-model-update' }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Refresh final scores only
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+          RESULT_SPORT: ${{ matrix.sport }}
+        run: python football_results_update.py --sport "$RESULT_SPORT"
+      - name: Detect outcome changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - run: ruff check .
+        if: steps.changes.outputs.changed == 'true'
+      - run: ruff format --check .
+        if: steps.changes.outputs.changed == 'true'
+      - run: python -m pytest -q
+        if: steps.changes.outputs.changed == 'true'
+      - name: Publish validated outcomes
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT_SPORT: ${{ matrix.sport }}
+        run: |
+          branch="automation/${RESULT_SPORT}-game-results"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          if [ "$RESULT_SPORT" = "nfl" ]; then
+            paths=(data/predictions/settlements data/nfl_results_summary.json performance_history.json)
+          else
+            paths=(data/cfb/predictions/settlements data/cfb/results_summary.json data/cfb/performance_history.json)
+          fi
+          for path in "${paths[@]}"; do
+            if [ -e "$path" ]; then git add -- "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: refresh ${RESULT_SPORT} final game results"
+          git push --force-with-lease origin "$branch"
+          pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')"
+          if [ -z "$pr_number" ]; then
+            pr_url="$(gh pr create --base main --head "$branch" --title "chore: refresh ${RESULT_SPORT} final game results" --body "Append official final outcomes and update performance summaries. Frozen forecasts, model files, rankings, and release pointers are unchanged. The results-only workflow passed lint, formatting, and the full test suite.")"
+            pr_number="${pr_url##*/}"
+          fi
+          gh pr merge "$pr_number" --squash --match-head-commit "$(git rev-parse HEAD)"
