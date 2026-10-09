@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        # Docker's ECR mirror avoids shared-runner Docker Hub pull limits.
+        image: public.ecr.aws/docker/library/postgres:16
         env:
           POSTGRES_DB: gridline_market_test
           POSTGRES_USER: gridline_test
