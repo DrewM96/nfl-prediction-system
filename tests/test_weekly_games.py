@@ -147,7 +147,7 @@ def load_weekly_results(*args): return st.session_state.get("results", {results!
 def page_header(*args): st.header(args[0])
 def published_forecasts(batch): return batch.get("predictions", [])
 def render_weekly_picks(*args, **kwargs): pass
-def render_cfb_schedule_filters(games, season):
+def render_cfb_schedule_filters(games, season, completed_ids=None):
     visible = st.session_state.get("visible_ids")
     return games if visible is None else [g for g in games if g["game_id"] in visible]
 def _featured_game_score(game): return 1

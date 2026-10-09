@@ -45,6 +45,19 @@ def game_conferences(game: dict[str, Any], conferences: dict[str, str]) -> set[s
     }
 
 
+def matches_kickoff_filter(game: dict[str, Any], slot: str, completed_ids: set[str]) -> bool:
+    if slot == "All times":
+        return True
+    if slot == "Completed":
+        return str(game["game_id"]) in completed_ids
+    if slot in {"Weekday", "Saturday"}:
+        kickoff = kickoff_et(game)
+        return kickoff is not None and (
+            kickoff.weekday() < 5 if slot == "Weekday" else kickoff.weekday() == 5
+        )
+    return time_slot(game) == slot
+
+
 def filter_schedule(
     games: list[dict[str, Any]],
     conferences: dict[str, str],
@@ -53,6 +66,7 @@ def filter_schedule(
     day: str = "All days",
     slot: str = "All times",
     search: str = "",
+    completed_ids: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     query = search.strip().casefold()
     return [
@@ -60,7 +74,7 @@ def filter_schedule(
         for game in games
         if (conference == "All conferences" or conference in game_conferences(game, conferences))
         and (day == "All days" or kickoff_day(game) == day)
-        and (slot == "All times" or time_slot(game) == slot)
+        and matches_kickoff_filter(game, slot, completed_ids or set())
         and (
             not query
             or any(query in str(game[f"{side}_team"]).casefold() for side in ("home", "away"))
