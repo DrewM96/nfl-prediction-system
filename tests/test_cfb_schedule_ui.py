@@ -99,7 +99,17 @@ def test_conference_registry_covers_current_forecasts():
 
 
 @pytest.fixture
-def schedule_app(tmp_path):
+def schedule_app(tmp_path, monkeypatch):
+    # Streamlit 1.49 AppTest assumes every button group has a list value,
+    # although single-selection pills store a scalar (or None).
+    from streamlit.testing.v1.element_tree import ButtonGroup
+
+    def pill_indices(widget):
+        value = widget.value
+        values = [value] if isinstance(value, str) else (value or [])
+        return [widget.options.index(widget.format_func(v)) for v in values]
+
+    monkeypatch.setattr(ButtonGroup, "indices", property(pill_indices))
     tree = ast.parse(Path("app.py").read_text(encoding="utf-8"))
     functions = "\n\n".join(
         ast.unparse(node)
@@ -146,8 +156,8 @@ def test_filter_controls_update_featured_cards_empty_state_and_reset(schedule_ap
         "Showing <strong>4</strong> of 4 games" in m.value and "Kickoff times ET" in m.value
         for m in app.markdown
     )
-    app.selectbox(key="cfb_filter_conference").select("SEC").run()
-    app.selectbox(key="cfb_filter_slot").select("Late").run()
+    app.get("button_group")[0].set_value(["SEC"]).run()
+    app.get("button_group")[1].set_value(["Late"]).run()
     assert not app.exception
     rendered = [m.value for m in app.markdown]
     assert "featured 3" in rendered
@@ -159,18 +169,27 @@ def test_filter_controls_update_featured_cards_empty_state_and_reset(schedule_ap
     assert not any(m.value.startswith(("featured ", "card ")) for m in app.markdown)
     app.button(key="cfb_filter_reset").click().run()
     assert not app.exception
-    assert app.selectbox(key="cfb_filter_conference").value == "All conferences"
-    assert app.selectbox(key="cfb_filter_slot").value == "All times"
+    assert app.session_state["cfb_filter_conference"] == "All conferences"
+    assert app.session_state["cfb_filter_slot"] == "All times"
     assert app.text_input(key="cfb_filter_search").value == ""
     assert sum(m.value.startswith("card ") for m in app.markdown) == 4
 
 
 def test_filter_selection_recovers_when_metadata_season_changes(schedule_app):
     app = schedule_app
-    app.selectbox(key="cfb_filter_conference").select("SEC").run()
+    app.get("button_group")[0].set_value(["SEC"]).run()
     app.session_state["season"] = 2027
     app.run()
     assert not app.exception
-    assert app.selectbox(key="cfb_filter_conference").options == ["All conferences"]
-    assert app.selectbox(key="cfb_filter_conference").value == "All conferences"
+    assert len(app.get("button_group")[0].options) == 1
+    assert app.session_state["cfb_filter_conference"] == "All conferences"
+    assert sum(m.value.startswith("card ") for m in app.markdown) == 4
+
+
+def test_deselecting_quick_pill_restores_all_games(schedule_app):
+    app = schedule_app
+    app.get("button_group")[0].set_value(["SEC"]).run()
+    assert sum(m.value.startswith("card ") for m in app.markdown) == 3
+    app.get("button_group")[0].set_value([]).run()
+    assert not app.exception
     assert sum(m.value.startswith("card ") for m in app.markdown) == 4
