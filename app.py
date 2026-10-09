@@ -149,6 +149,10 @@ st.markdown(
       max-width: 1120px !important;
       padding: 0 2rem 6rem !important;
     }
+    [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
+    .block-container:has(.st-key-cfb_active_screen) {
+      padding-bottom: calc(12rem + env(safe-area-inset-bottom)) !important;
+    }
     h1, h2, h3, .grid-display {
       font-family: var(--font-ui);
       letter-spacing: -0.01em;
@@ -944,7 +948,7 @@ st.markdown(
         padding-bottom: 5rem !important;
       }
       [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
-      .block-container:has(.st-key-cfb_active_screen) { padding-bottom: 5.5rem !important; }
+      .block-container:has(.st-key-cfb_active_screen) { padding-bottom: calc(12rem + env(safe-area-inset-bottom)) !important; }
       .grid-topbar { padding: 14px 16px; }
       .grid-topbar-inner { align-items: flex-start; }
       .grid-eyebrow, .grid-meta { display: none; }
