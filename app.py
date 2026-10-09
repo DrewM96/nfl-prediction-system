@@ -2747,7 +2747,9 @@ def reset_cfb_schedule_filters() -> None:
         st.session_state[f"cfb_filter_{name}"] = value
 
 
-def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> list[dict[str, Any]]:
+def render_cfb_schedule_filters(
+    games: list[dict[str, Any]], season: int, completed_ids: set[str] | None = None
+) -> list[dict[str, Any]]:
     registry = read_json(PROJECT_ROOT / "data" / "cfb" / "team_conferences.json", {})
     conferences = registry.get("teams", {}) if registry.get("season") == season else {}
     ordered = sorted(games, key=lambda game: str(game.get("start_date") or "z"))
@@ -2755,7 +2757,7 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
         "conference": ["All conferences"]
         + sorted({name for game in games for name in game_conferences(game, conferences)}),
         "day": ["All days"] + list(dict.fromkeys(kickoff_day(game) for game in ordered)),
-        "slot": ["All times"]
+        "slot": ["All times", "Weekday", "Saturday", "Completed"]
         + [slot for slot in TIME_SLOTS if any(time_slot(g) == slot for g in games)],
     }
     for name, choices in options.items():
@@ -2779,7 +2781,7 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
                 options["slot"],
                 key="cfb_filter_slot",
                 selection_mode="single",
-                help="Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. All times Eastern.",
+                help="Weekday: Monday–Friday · Saturday: Saturday kickoffs · Completed: recorded final results. Early: before 3pm · Afternoon: 3–7pm · Primetime: 7–10pm · Late: 10pm onward. Days and times are Eastern.",
             )
             or "All times"
         )
@@ -2792,7 +2794,13 @@ def render_cfb_schedule_filters(games: list[dict[str, Any]], season: int) -> lis
             )
         st.button("Reset filters", key="cfb_filter_reset", on_click=reset_cfb_schedule_filters)
         filtered = filter_schedule(
-            games, conferences, conference=conference, day=day, slot=slot, search=search
+            games,
+            conferences,
+            conference=conference,
+            day=day,
+            slot=slot,
+            search=search,
+            completed_ids=completed_ids,
         )
         active_filters = [
             value
@@ -2847,13 +2855,18 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     )
     if predictions:
         page_header(f"College Football — Week {forecast_week}", badge)
-        filtered_predictions = render_cfb_schedule_filters(predictions, prediction_season)
+        filtered_predictions = render_cfb_schedule_filters(
+            predictions, prediction_season, {str(game["game_id"]) for game in completed}
+        )
         unfinished, completed = group_weekly_games(filtered_predictions, results)
-        render_weekly_picks(published_forecasts(prediction_batch), sport="ncaaf")
+        if st.session_state.get("cfb_filter_slot") == "Completed":
+            render_completed_games(completed, results, "cfb", run_id)
+        else:
+            render_weekly_picks(published_forecasts(prediction_batch), sport="ncaaf")
         if unfinished:
             featured = max(unfinished, key=lambda game: abs(float(game["predicted_home_margin"])))
             render_cfb_featured_game(featured)
-        elif filtered_predictions:
+        elif filtered_predictions and st.session_state.get("cfb_filter_slot") != "Completed":
             st.info("All games this week are complete.")
     else:
         page_header("College Football", badge)
@@ -2959,7 +2972,8 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         f"Source: {state.get('source', 'CollegeFootballData')} · derived through "
         f"{state.get('data_cutoff', 'unknown')} · published artifacts contain derived data only."
     )
-    render_completed_games(completed, results, "cfb", run_id)
+    if st.session_state.get("cfb_filter_slot") != "Completed":
+        render_completed_games(completed, results, "cfb", run_id)
 
 
 def render_cfb_builder(state: dict[str, Any]) -> None:

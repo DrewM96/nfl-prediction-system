@@ -118,9 +118,10 @@ from nfl_prediction.ui import html_text
 from nfl_prediction.weekly_games import group_weekly_games, weekly_game_key
 PROJECT_ROOT = Path('.')
 CFB_PREDICTIONS_DIR = PROJECT_ROOT / 'data/cfb/predictions'
-def load_weekly_results(*args): return {{}}
+def load_weekly_results(*args): return st.session_state.get("results", {{}})
 def render_game_status(*args): pass
-def render_completed_games(games, *args): assert not games
+def render_completed_games(games, *args):
+    for game in games: st.markdown(f"completed {{game['game_id']}}")
 def read_json(*args): return {{'season': 2026, 'teams': {CONFERENCES!r}}}
 def page_header(*args): st.markdown('College Football')
 def published_forecasts(*args): return []
@@ -183,3 +184,40 @@ def test_deselecting_quick_pill_restores_all_games(schedule_app):
     app.get("button_group")[0].set_value([]).run()
     assert not app.exception
     assert sum(m.value.startswith("card ") for m in app.markdown) == 4
+
+
+@pytest.mark.parametrize("slot, expected", [("Weekday", [4]), ("Saturday", [1, 2, 3])])
+def test_quick_calendar_filters_use_eastern_days(slot, expected):
+    assert [g["game_id"] for g in filter_schedule(GAMES, CONFERENCES, slot=slot)] == expected
+    extra = [{**GAMES[0], "start_date": "2026-10-04T16:00:00Z"}, {**GAMES[1], "start_date": None}]
+    assert filter_schedule(extra, CONFERENCES, slot=slot) == []
+
+
+def test_completed_filter_uses_recorded_finals_and_combines_with_conference(schedule_app):
+    app = schedule_app
+    app.session_state["results"] = {
+        "1": {"status": "final"},
+        "2": {"status": "final"},
+        "3": {"status": "in_progress"},
+    }
+    app.get("button_group")[1].set_value(["Completed"]).run()
+    assert not app.exception
+    assert [m.value for m in app.markdown if m.value.startswith("completed ")] == [
+        "completed 2",
+        "completed 1",
+    ]
+    assert not any(m.value.startswith(("card ", "featured ")) for m in app.markdown)
+    app.get("button_group")[0].set_value(["SEC"]).run()
+    assert [m.value for m in app.markdown if m.value.startswith("completed ")] == ["completed 1"]
+    app.button(key="cfb_filter_reset").click().run()
+    assert sum(m.value.startswith("card ") for m in app.markdown) == 2
+
+
+@pytest.mark.parametrize("slot, count", [("Weekday", 1), ("Saturday", 3), ("Completed", 0)])
+def test_new_kickoff_pills_filter_cards_and_empty_state(schedule_app, slot, count):
+    app = schedule_app
+    app.get("button_group")[1].set_value([slot]).run()
+    assert not app.exception
+    assert sum(m.value.startswith("card ") for m in app.markdown) == count
+    if not count:
+        assert any("No games match" in message.value for message in app.info)
