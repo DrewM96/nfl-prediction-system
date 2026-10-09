@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import math
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -37,6 +38,7 @@ from nfl_prediction.config import (
 )
 from nfl_prediction.current_market import MarketStore, age_seconds, current_context
 from nfl_prediction.io import read_json, sha256_file
+from nfl_prediction.ledger import PredictionLedger
 from nfl_prediction.market import (
     american_odds_to_implied_probability,
     home_cover_probability,
@@ -69,6 +71,7 @@ from nfl_prediction.ui import (
     team_color,
     team_name,
 )
+from nfl_prediction.weekly_games import group_weekly_games, result_comparison, weekly_game_key
 from team_logos import team_logo_url
 
 LOGGER = logging.getLogger(__name__)
@@ -439,6 +442,8 @@ st.markdown(
     }
     .grid-results { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
     .grid-cfb-forecast-summary { margin-bottom: 18px; }
+    .grid-completed-summary { margin-bottom: 12px; }
+    .grid-completed-summary .grid-result { min-width: 0; overflow-wrap: anywhere; }
     .grid-result {
       padding: 12px;
       text-align: center;
@@ -1892,8 +1897,8 @@ def render_market_comparison(
 
 
 @st.fragment(run_every="60s")
-def render_game_row(game: dict[str, Any], index: int) -> None:
-    game_id = str(game.get("game_id", index))
+def render_game_row(game: dict[str, Any], index: str) -> None:
+    game_id = index
     expanded = st.session_state.get("expanded_game_id") == game_id
     context = current_context(game, load_current_market("nfl"))
     with st.container(border=True, key=f"game_card_{index}"):
@@ -1965,6 +1970,99 @@ def _featured_game_score(game: dict[str, Any]) -> float:
     return score
 
 
+def load_weekly_results(root: Path, run_id: str) -> dict[str, dict[str, Any]]:
+    if not run_id or not root.exists():
+        return {}
+    return PredictionLedger(root).latest_results(run_id)
+
+
+def render_game_status(result: dict[str, Any]) -> None:
+    if result.get("status") in {"cancelled", "postponed"}:
+        st.caption(str(result["status"]).title())
+
+
+def render_completed_games(
+    games: list[dict[str, Any]], results: dict[str, dict[str, Any]], sport: str, run_id: str
+) -> None:
+    if not games:
+        return
+    st.subheader(f"Completed Games ({len(games)})")
+    st.caption("Frozen pregame forecasts compared with final results. Errors are absolute points.")
+    state_key = "expanded_cfb_game_id" if sport == "cfb" else "expanded_game_id"
+    for game in games:
+        identity = weekly_game_key(sport, run_id, game)
+        comparison = result_comparison(game, results[str(game["game_id"])])
+        expanded = st.session_state.get(state_key) == identity
+
+        def score(value: Any, *, predicted: bool = False) -> str:
+            try:
+                number = float(value)
+                return (
+                    (f"{number:.1f}" if predicted else f"{number:g}")
+                    if math.isfinite(number)
+                    else "Unavailable"
+                )
+            except (TypeError, ValueError):
+                return "Unavailable"
+
+        prefix = "predicted_" if sport == "cfb" else ""
+        away, home = html_text(game["away_team"]), html_text(game["home_team"])
+        kickoff = format_cfb_game_time(game) if sport == "cfb" else format_game_time(game)
+        separator = game_matchup_separator(game)
+        final = (
+            f"{away} {score(comparison['away_score'])} · {home} {score(comparison['home_score'])}"
+        )
+        predicted = f"{away} {score(game.get(prefix + 'away_score'), predicted=True)} · {home} {score(game.get(prefix + 'home_score'), predicted=True)}"
+        tiles = [("Final score", final), ("Predicted score", predicted)]
+        for label, field in [("Margin error", "margin_error"), ("Total error", "total_error")]:
+            value = comparison[field]
+            tiles.append((label, f"{value:.1f} pts" if value is not None else "Unavailable"))
+        with st.container(border=True, key=f"completed_card_{identity}"):
+            st.markdown(
+                f'<div class="grid-kicker">Final · {html_text(kickoff)}</div>'
+                f"<h3>{away} {html_text(separator)} {home}</h3>"
+                '<div class="grid-results grid-completed-summary">'
+                + "".join(
+                    f'<div class="grid-result"><div class="grid-tile-label">{label}</div>'
+                    f'<div class="grid-row-value">{value}</div></div>'
+                    for label, value in tiles
+                )
+                + "</div>",
+                unsafe_allow_html=True,
+            )
+            if st.button("Hide ▲" if expanded else "Details ▼", key=f"completed_toggle_{identity}"):
+                st.session_state[state_key] = None if expanded else identity
+                st.rerun()
+            if expanded:
+                st.caption(
+                    f"Predicted home margin: {score(game.get('predicted_home_margin'), predicted=True)} · "
+                    f"Predicted total: {score(game.get('predicted_total', game.get('total')), predicted=True)}"
+                )
+                render_forecast_details(game, sport, collapsed=False)
+                if sport == "nfl":
+                    st.caption(
+                        f"80% total range: {score(game.get('total_p10'), predicted=True)}–"
+                        f"{score(game.get('total_p90'), predicted=True)}"
+                    )
+                    football = game.get("football_only") or {}
+                    if football:
+                        st.caption(
+                            f"Football-only home margin: {score(football.get('home_margin'), predicted=True)} · "
+                            f"Preseason weight: {float((game.get('preseason_calibration') or {}).get('weight', 0)):.0%}"
+                        )
+                    st.markdown("**Why the model leans this way**")
+                    for reason in game_reasoning(game):
+                        st.markdown(f"- {reason}")
+                    st.markdown(market_tile(game), unsafe_allow_html=True)
+                    render_official_injury_snapshot(game, detailed=True)
+                else:
+                    st.caption(f"Market at forecast: {cfb_market_spread_label(game)}")
+                    total = (game.get("market_consensus") or {}).get("total") or {}
+                    st.caption(
+                        f"Market total at forecast: {score(total.get('total'), predicted=True)}"
+                    )
+
+
 def render_this_week(state: dict[str, Any]) -> None:
     schedule = [
         {"forecast_at": (state.get("prediction_batch") or {}).get("created_at"), **g}
@@ -1983,12 +2081,21 @@ def render_this_week(state: dict[str, Any]) -> None:
         st.info("No upcoming games are available for the current prediction season.")
         return
     render_weekly_picks(published_forecasts(state.get("prediction_batch") or {}), sport="nfl")
-    featured = max(schedule, key=_featured_game_score)
+    batch = state.get("prediction_batch") or {}
+    run_id = batch.get("run_id", "")
+    results = load_weekly_results(PREDICTIONS_DIR, run_id)
+    schedule, completed = group_weekly_games(schedule, results)
     if "expanded_game_id" not in st.session_state:
         st.session_state.expanded_game_id = None
-    render_featured_game(featured)
-    for index, game in enumerate(schedule):
-        render_game_row(game, index)
+    if schedule:
+        featured = max(schedule, key=_featured_game_score)
+        render_featured_game(featured)
+    else:
+        st.info("All games this week are complete.")
+    for game in schedule:
+        render_game_status(results.get(str(game["game_id"]), {}))
+        render_game_row(game, weekly_game_key("nfl", run_id, game))
+    render_completed_games(completed, results, "nfl", run_id)
 
 
 def render_prediction_results(prediction: dict[str, Any] | None) -> None:
@@ -2593,8 +2700,8 @@ def render_cfb_featured_game(game: dict[str, Any]) -> None:
 
 
 @st.fragment(run_every="60s")
-def render_cfb_game_row(game: dict[str, Any], index: int) -> None:
-    game_id = str(game.get("game_id", index))
+def render_cfb_game_row(game: dict[str, Any], index: str) -> None:
+    game_id = index
     expanded = st.session_state.get("expanded_cfb_game_id") == game_id
     context = current_context(game, load_current_market("ncaaf"))
     with st.container(border=True, key=f"cfb_game_card_{index}"):
@@ -2715,6 +2822,9 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         prediction_batch.get("metadata", {}).get("forecast_week", "—") if prediction_batch else "—"
     )
     prediction_season = int(state.get("prediction_season", datetime.now().year))
+    run_id = (prediction_batch or {}).get("run_id", "")
+    results = load_weekly_results(CFB_PREDICTIONS_DIR, run_id)
+    unfinished, completed = group_weekly_games(predictions, results)
     badge = (
         "Forecasts ready"
         if forecast_ready
@@ -2723,12 +2833,13 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     if predictions:
         page_header(f"College Football — Week {forecast_week}", badge)
         filtered_predictions = render_cfb_schedule_filters(predictions, prediction_season)
+        unfinished, completed = group_weekly_games(filtered_predictions, results)
         render_weekly_picks(published_forecasts(prediction_batch), sport="ncaaf")
-        if filtered_predictions:
-            featured = max(
-                filtered_predictions, key=lambda game: abs(float(game["predicted_home_margin"]))
-            )
+        if unfinished:
+            featured = max(unfinished, key=lambda game: abs(float(game["predicted_home_margin"])))
             render_cfb_featured_game(featured)
+        elif filtered_predictions:
+            st.info("All games this week are complete.")
     else:
         page_header("College Football", badge)
         st.markdown(
@@ -2770,12 +2881,9 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
             """,
             unsafe_allow_html=True,
         )
-        visible_ids = {game["game_id"] for game in filtered_predictions} if predictions else set()
-        for index, prediction in enumerate(
-            sorted(predictions, key=lambda game: game["start_date"])
-        ):
-            if prediction["game_id"] in visible_ids:
-                render_cfb_game_row(prediction, index)
+        for prediction in sorted(unfinished, key=lambda game: game["start_date"]):
+            render_game_status(results.get(str(prediction["game_id"]), {}))
+            render_cfb_game_row(prediction, weekly_game_key("cfb", run_id, prediction))
         st.caption(
             "GRIDLINE records every forecast before kickoff. The CFB model uses Elo, recent form, "
             "advanced efficiency, recruiting, transfers, and available roster context."
@@ -2836,6 +2944,7 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
         f"Source: {state.get('source', 'CollegeFootballData')} · derived through "
         f"{state.get('data_cutoff', 'unknown')} · published artifacts contain derived data only."
     )
+    render_completed_games(completed, results, "cfb", run_id)
 
 
 def render_cfb_builder(state: dict[str, Any]) -> None:

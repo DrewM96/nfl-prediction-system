@@ -115,7 +115,12 @@ from typing import Any
 import streamlit as st
 from cfb_prediction.schedule_ui import TIME_SLOTS, filter_schedule, game_conferences, kickoff_day, time_slot
 from nfl_prediction.ui import html_text
+from nfl_prediction.weekly_games import group_weekly_games, weekly_game_key
 PROJECT_ROOT = Path('.')
+CFB_PREDICTIONS_DIR = PROJECT_ROOT / 'data/cfb/predictions'
+def load_weekly_results(*args): return {{}}
+def render_game_status(*args): pass
+def render_completed_games(games, *args): assert not games
 def read_json(*args): return {{'season': 2026, 'teams': {CONFERENCES!r}}}
 def page_header(*args): st.markdown('College Football')
 def published_forecasts(*args): return []
@@ -125,7 +130,7 @@ def render_cfb_game_row(game, index): st.markdown(f"card {{game['game_id']}} key
 {functions}
 metrics = {{'latest_holdout_season': 2025, 'latest_holdout_mae': 8.0}}
 state = {{'status': 'data_ready', 'prediction_season': st.session_state.get('season', 2026),
-          'prediction_batch': {{'predictions': {GAMES!r}, 'metadata': {{'forecast_week': 5}}}},
+          'prediction_batch': {{'run_id': 'run', 'predictions': {GAMES!r}, 'metadata': {{'forecast_week': 5}}}},
           'model_manifest': {{'models': {{'margin': {{'metrics': metrics}}, 'total': {{'metrics': metrics}}}}}}}}
 render_cfb_foundation(state)
 """
@@ -146,7 +151,7 @@ def test_filter_controls_update_featured_cards_empty_state_and_reset(schedule_ap
     assert not app.exception
     rendered = [m.value for m in app.markdown]
     assert "featured 3" in rendered
-    assert "card 3 key 3" in rendered
+    assert "card 3 key cfb_run_3" in rendered
     assert sum(m.startswith("card ") for m in rendered) == 1
     app.text_input(key="cfb_filter_search").set_value("Miami").run()
     assert not app.exception
