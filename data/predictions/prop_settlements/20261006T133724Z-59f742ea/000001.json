@@ -1,0 +1,458 @@
+{
+  "run_id": "20261006T133724Z-59f742ea",
+  "revision": 1,
+  "scored_at": "2026-10-10T17:25:32.623228+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_05_TB_DAL:00-0029692:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0032399:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0032943:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033077:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 316.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033921:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036358:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036919:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0041251:passing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 189.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0029692:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0032943:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033077:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033921:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036358:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036919:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036997:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 45.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037247:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037692:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037801:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038041:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038129:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038738:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038951:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039062:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039361:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 165.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039410:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039589:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040129:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040237:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0041251:rushing_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033921:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 37.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036132:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036358:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036406:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036919:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 10.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036997:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037247:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 130.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037578:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037801:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038041:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038129:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038547:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038738:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038951:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039050:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039062:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039361:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 10.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039410:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 90.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039530:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039589:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040129:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 38.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040237:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 64.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0041094:receiving_yards",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0033921:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036132:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036358:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036406:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036919:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0036997:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037247:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037578:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0037801:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038041:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038129:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038547:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038738:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0038951:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039050:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039062:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039361:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039410:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039530:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0039589:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040129:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0040237:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_05_TB_DAL:00-0041094:receptions",
+      "game_id": "2026_05_TB_DAL",
+      "actual": 0.0,
+      "status": "final"
+    }
+  ]
+}
