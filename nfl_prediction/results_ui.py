@@ -165,6 +165,13 @@ def render_results(root: str | Path, *, league: str) -> None:
     st.caption(
         "ATS and totals use the market line saved with each forecast, not the closing line. Hit rates exclude pushes, ties, and no-picks; records are W–L or W–L–P. A model within 0.05 of the line makes no pick."
     )
+    recovered = rows.market_margin_recovered | rows.market_total_recovered
+    if recovered.any():
+        st.caption(
+            f"{int(recovered.sum())} games use restored pregame lines from earlier archived releases. "
+            "Only snapshots captured before the selected forecast, within eight days, qualify. "
+            "Original forecasts are unchanged; source releases and timestamps are included in the game-log download."
+        )
     names = ["Overview", "Wagon tracker", "Game log"] + (
         ["Player props"] if league == "NFL" else []
     )
@@ -416,12 +423,18 @@ def _game_html(row, *, source):
         row["winner_result"],
         f"Model home margin {_number(row.get(f'{source}_margin'))}",
     )
-    picks += _pick_html("Against the spread", ats, row["ats_result"], "Line at forecast")
+    picks += _pick_html(
+        "Against the spread",
+        ats,
+        row["ats_result"],
+        "Restored pregame line" if row.get("market_margin_recovered") else "Line at forecast",
+    )
     picks += _pick_html(
         "Total points",
         total_pick,
         row["total_result"],
-        f"Model {_number(row.get(f'{source}_total'))} · Actual {_number(total)}",
+        f"Model {_number(row.get(f'{source}_total'))} · Actual {_number(total)}"
+        + (" · Restored pregame line" if row.get("market_total_recovered") else ""),
     )
     return (
         '<article class="grid-results-game"><div class="grid-results-game-head"><div>'
@@ -490,6 +503,14 @@ def _game_log(rows, versions, root, *, source, prefix, league, season):
         f"{source}_total",
         "actual_total",
         "market_total",
+        "embedded_market_margin",
+        "embedded_market_total",
+        "market_margin_recovered",
+        "market_total_recovered",
+        "market_margin_run_id",
+        "market_total_run_id",
+        "market_margin_at",
+        "market_total_at",
         "winner_result",
         "ats_result",
         "total_result",
