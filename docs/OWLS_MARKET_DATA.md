@@ -4,6 +4,19 @@ The pre-change inventory is in [OWLS_AUDIT.md](OWLS_AUDIT.md). This migration
 adds market context only. Model features, training, calibration calculations,
 injury handling and model binaries are unchanged.
 
+## College forecast capture
+
+`cfb_production_update.py --refresh-current` selects the upcoming week and
+finishes the model projections before polling Owls for those exact games.
+It then freezes eligible odds using the time after the poll, while preserving
+the earlier model data cutoff. The workflow supplies `OWLS_INSIGHT_API_KEY`
+directly to this production step; it must not poll against the previous release
+first. Explicit `--as-of` runs and cached runs do not request today's odds.
+
+The release's `metadata.market_refresh` records refresh errors and separate
+spread/total coverage. Provider backoff and timestamp checks remain enforced;
+unavailable odds are left missing and zero spread coverage emits a warning.
+
 ## Configuration and deployment
 
 ### Heroku

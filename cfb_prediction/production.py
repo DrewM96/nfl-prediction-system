@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import replace
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
@@ -8,7 +9,12 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from nfl_prediction.current_market import freeze_market_context
+from nfl_prediction.current_market import (
+    MarketStore,
+    freeze_market_context,
+    market_provider,
+    poll_market,
+)
 from nfl_prediction.io import atomic_write_json, read_json, sha256_file
 from nfl_prediction.results import performance_history, settle_schedule
 
@@ -26,6 +32,43 @@ from .features import CFB_FEATURE_CONFIGURATIONS, build_point_in_time_features
 from .historical import load_historical_data
 from .ledger import record_cfb_prediction_batch
 from .modeling import fit_cfb_model, make_ridge, save_cfb_model_bundle
+
+logger = logging.getLogger(__name__)
+
+
+def _capture_market_context(
+    predictions: list[dict[str, Any]],
+    *,
+    as_of: datetime,
+    refresh: bool,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Poll the newly selected slate, then freeze at actual capture time.
+
+    Explicit historical cutoffs and cached runs never request today's odds.
+    Model predictions are already complete and cannot use the returned lines.
+    """
+    store = MarketStore()
+    attempted = refresh and market_provider() != "legacy"
+    board = poll_market("ncaaf", predictions, store=store) if attempted else {}
+    captured_at = datetime.now(UTC) if attempted else as_of
+    frozen = freeze_market_context(predictions, "ncaaf", as_of=captured_at, store=store)
+    summary = {
+        "attempted": attempted,
+        "checked_at": board.get("last_attempt_at"),
+        "odds_error": board.get("odds_error"),
+        "cached_games": len(board.get("games", [])),
+        "games_with_spreads": sum(
+            bool((p.get("market_consensus") or {}).get("spread")) for p in frozen
+        ),
+        "games_with_totals": sum(
+            bool((p.get("market_consensus") or {}).get("total")) for p in frozen
+        ),
+        "forecast_games": len(frozen),
+    }
+    logger.info("CFB forecast market coverage: %s", summary)
+    if attempted and not summary["games_with_spreads"]:
+        logger.warning("No eligible spreads captured for the upcoming CFB slate: %s", summary)
+    return frozen, summary
 
 
 def _combine(parts: list[CFBHistoricalData]) -> CFBHistoricalData:
@@ -316,7 +359,11 @@ def run_cfb_production_update(
         if market_consensus is not None:
             prediction["market_consensus"] = market_consensus
         predictions.append(prediction)
-    predictions = freeze_market_context(predictions, "ncaaf", as_of=timestamp)
+    predictions, market_refresh = _capture_market_context(
+        predictions,
+        as_of=timestamp,
+        refresh=refresh_current and as_of is None,
+    )
     market_games = sum(bool(prediction.get("market_consensus")) for prediction in predictions)
     target = record_cfb_prediction_batch(
         predictions,
@@ -332,6 +379,7 @@ def run_cfb_production_update(
             "market_data_used": False,
             "market_data_used_as_model_input": False,
             "market_data_captured_for_evaluation": market_games > 0,
+            "market_refresh": market_refresh,
             "market_snapshot_at": max(
                 (
                     p["market_consensus"]["snapshot_at"]
