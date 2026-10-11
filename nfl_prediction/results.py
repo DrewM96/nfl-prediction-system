@@ -122,6 +122,7 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                 week=int(prediction["week"]),
                 home_team=prediction["home_team"],
                 away_team=prediction["away_team"],
+                neutral_site=prediction.get("neutral_site"),
                 kickoff=kickoff,
                 published_at=published,
                 data_cutoff=batch["data_cutoff"],
@@ -157,6 +158,7 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                 else None,
                 market_total=total_market.get("total") if market_valid else None,
                 market_at=captured if market_valid else None,
+                market_source_at=market.get("source_timestamp"),
                 published_probability=prediction.get("home_win_probability"),
                 independent_probability=football.get(
                     "home_win_probability",
@@ -180,7 +182,70 @@ def forecast_rows(root: str | Path, *, as_of: datetime | None = None) -> pd.Data
                     row[f"{source}_{target}_p10"] = low
                     row[f"{source}_{target}_p90"] = high
             rows.append(row)
-    return pd.DataFrame(rows)
+    return pd.DataFrame(_restore_market_lines(rows))
+
+
+def _restore_market_lines(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Fill attachment gaps from original, timestamp-valid earlier releases.
+
+    Never change predictions or their immutable files. Source selection uses
+    identity and publication/capture times only, independently of outcomes.
+    """
+    identities = ("season", "game_id", "home_team", "away_team", "kickoff", "neutral_site")
+    archives: dict[tuple, list[dict[str, Any]]] = {}
+    for row in rows:
+        for target in ("margin", "total"):
+            row[f"embedded_market_{target}"] = row[f"market_{target}"]
+            row[f"market_{target}_run_id"] = row["run_id"] if row["market_at"] else None
+            row[f"market_{target}_at"] = row["market_at"]
+            row[f"market_{target}_recovered"] = False
+        if not row["eligible"] or not row["market_at"]:
+            continue
+        captured = parse_timestamp(row["market_at"])
+        if not captured <= row["published_at"] < row["kickoff"]:
+            continue
+        if row["published_at"] - captured > timedelta(days=8):
+            continue
+        try:
+            source_at = row["market_source_at"]
+            if source_at and parse_timestamp(source_at) > captured:
+                continue
+        except (TypeError, ValueError):
+            continue
+        identity = tuple(row[key] for key in identities)
+        archives.setdefault(identity, []).append(dict(row))
+    for candidates in archives.values():
+        candidates.sort(
+            key=lambda row: (parse_timestamp(row["market_at"]), row["published_at"], row["run_id"]),
+            reverse=True,
+        )
+    for row in rows:
+        if not row["eligible"]:
+            continue
+        candidates = archives.get(tuple(row[key] for key in identities), [])
+        for target in ("margin", "total"):
+            if row[f"market_{target}"] is not None:
+                continue
+            for candidate in candidates:
+                captured = parse_timestamp(candidate["market_at"])
+                if candidate["published_at"] >= row["published_at"]:
+                    continue
+                if not captured <= row["published_at"] < row["kickoff"]:
+                    continue
+                if row["published_at"] - captured > timedelta(days=8):
+                    continue
+                try:
+                    line = float(candidate[f"market_{target}"])
+                except (TypeError, ValueError):
+                    continue
+                if not np.isfinite(line):
+                    continue
+                row[f"market_{target}"] = line
+                row[f"market_{target}_run_id"] = candidate["run_id"]
+                row[f"market_{target}_at"] = candidate["market_at"]
+                row[f"market_{target}_recovered"] = True
+                break
+    return rows
 
 
 def select_forecasts(rows: pd.DataFrame, *, policy="first", horizon_minutes=60) -> pd.DataFrame:
