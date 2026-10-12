@@ -1,0 +1,56 @@
+{
+  "run_id": "20261006T182301Z-6925bb80",
+  "revision": 3,
+  "scored_at": "2026-10-12T01:22:57.874261+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_05_CIN_MIA",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 55.0
+    },
+    {
+      "game_id": "2026_05_LV_NE",
+      "status": "final",
+      "actual_home_margin": 28.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "2026_05_MIN_NO",
+      "status": "final",
+      "actual_home_margin": -10.0,
+      "actual_total": 36.0
+    },
+    {
+      "game_id": "2026_05_CLE_NYJ",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 29.0
+    },
+    {
+      "game_id": "2026_05_IND_PIT",
+      "status": "final",
+      "actual_home_margin": 12.0,
+      "actual_total": 56.0
+    },
+    {
+      "game_id": "2026_05_HOU_TEN",
+      "status": "final",
+      "actual_home_margin": -23.0,
+      "actual_total": 29.0
+    },
+    {
+      "game_id": "2026_05_NYG_WAS",
+      "status": "final",
+      "actual_home_margin": 0.0,
+      "actual_total": 54.0
+    },
+    {
+      "game_id": "2026_05_CHI_GB",
+      "status": "final",
+      "actual_home_margin": 24.0,
+      "actual_total": 38.0
+    }
+  ]
+}
