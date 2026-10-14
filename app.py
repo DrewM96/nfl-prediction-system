@@ -48,6 +48,7 @@ from nfl_prediction.market import (
 from nfl_prediction.market_ui import age_label, market_context_html
 from nfl_prediction.modeling import FittedEnsemble, load_model_bundle
 from nfl_prediction.money_signals import published_forecasts, qualifying_signals
+from nfl_prediction.navigation import navigation_styles
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.player_props import comparisons, projection_rows
 from nfl_prediction.preseason import apply_preseason_calibration
@@ -147,11 +148,11 @@ st.markdown(
     [data-testid="stMain"] { width: 100% !important; }
     [data-testid="stMainBlockContainer"], .block-container {
       max-width: 1120px !important;
-      padding: 0 2rem 6rem !important;
+      padding: 0 2rem calc(7rem + env(safe-area-inset-bottom)) !important;
     }
     [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
     .block-container:has(.st-key-cfb_active_screen) {
-      padding-bottom: calc(12rem + env(safe-area-inset-bottom)) !important;
+      padding-bottom: calc(7rem + env(safe-area-inset-bottom)) !important;
     }
     h1, h2, h3, .grid-display {
       font-family: var(--font-ui);
@@ -910,55 +911,6 @@ st.markdown(
       padding: 6px 0 2px;
     }
 
-    .st-key-active_screen, .st-key-cfb_active_screen {
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100vw !important;
-      max-width: none !important;
-      margin: 0 !important;
-      box-sizing: border-box;
-      padding: 5px max(12px, calc((100vw - 1120px)/2));
-      background: rgba(255,255,255,.98);
-      border-top: 1px solid var(--grid-border);
-    }
-    .st-key-active_screen > div, .st-key-cfb_active_screen > div { width: 100% !important; }
-    .st-key-active_screen [role="radiogroup"], .st-key-cfb_active_screen [role="radiogroup"] {
-      display: grid;
-      width: 100%;
-      gap: 0 !important;
-    }
-    .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(6,1fr); }
-    .st-key-cfb_active_screen [role="radiogroup"] { grid-template-columns: repeat(2,1fr); }
-    .st-key-active_screen label, .st-key-cfb_active_screen label {
-      min-height: 46px;
-      padding: 5px 4px !important;
-      justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      border: 0 !important;
-      border-radius: 0 !important;
-      background: transparent !important;
-      color: var(--grid-faint) !important;
-      font-size: var(--text-xs);
-    }
-    .st-key-active_screen label::before, .st-key-cfb_active_screen label::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--grid-border-strong);
-    }
-    .st-key-active_screen label:has(input:checked), .st-key-cfb_active_screen label:has(input:checked) { color: var(--grid-ink) !important; }
-    .st-key-active_screen label:has(input:checked)::before, .st-key-cfb_active_screen label:has(input:checked)::before { background: var(--grid-orange); }
-    .st-key-active_screen label p, .st-key-cfb_active_screen label p {
-      margin: 0 !important;
-      color: inherit !important;
-      font-size: var(--text-xs) !important;
-      line-height: 1 !important;
-    }
     [data-testid="stSidebar"] { background: #f8f9fb; border-right: 1px solid var(--grid-border); }
     .grid-muted { color: var(--grid-faint); font-size: var(--text-sm); }
     .grid-positive { color: #16a34a; }
@@ -966,10 +918,10 @@ st.markdown(
       [data-testid="stMainBlockContainer"], .block-container {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
-        padding-bottom: 5rem !important;
+        padding-bottom: calc(7rem + env(safe-area-inset-bottom)) !important;
       }
       [data-testid="stMainBlockContainer"]:has(.st-key-cfb_active_screen),
-      .block-container:has(.st-key-cfb_active_screen) { padding-bottom: calc(12rem + env(safe-area-inset-bottom)) !important; }
+      .block-container:has(.st-key-cfb_active_screen) { padding-bottom: calc(7rem + env(safe-area-inset-bottom)) !important; }
       .grid-topbar { padding: 14px 16px; }
       .grid-topbar-inner { align-items: flex-start; }
       .grid-eyebrow, .grid-meta { display: none; }
@@ -1042,17 +994,6 @@ st.markdown(
       .grid-injury-panel-body { padding: 12px 13px 14px; }
       .grid-injury-team { padding: 11px; }
       .grid-injury-status { max-width: 100px; }
-      .st-key-active_screen, .st-key-cfb_active_screen {
-        padding-top: 0;
-        padding-bottom: max(6px, env(safe-area-inset-bottom));
-      }
-      .st-key-active_screen [role="radiogroup"],
-      .st-key-cfb_active_screen [role="radiogroup"] {
-        width: calc(100vw - 24px) !important;
-        max-width: none !important;
-      }
-      .st-key-active_screen label, .st-key-cfb_active_screen label { width: 100% !important; min-height: 48px; padding: 4px 1px !important; font-size: var(--text-xs); }
-      .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: var(--text-xs) !important; white-space: nowrap; }
       div[data-testid="stButton"] button, div[data-testid="stFormSubmitButton"] button { min-height: 44px; }
       [data-testid="stDataFrame"] { max-width: 100%; overflow: hidden; }
       .grid-mobile-hint { display: block; margin: 4px 0 8px; color: var(--grid-muted); font-size: var(--text-sm); }
@@ -1060,16 +1001,6 @@ st.markdown(
     @media (max-width: 520px) {
       .grid-results-stat { padding: 16px; }
       .grid-results-stat-number { font-size: 26px; }
-      .st-key-active_screen [role="radiogroup"] { grid-template-columns: repeat(6,minmax(0,1fr)); }
-      .st-key-active_screen label::before, .st-key-cfb_active_screen label::before { display: none; }
-      .st-key-active_screen label, .st-key-cfb_active_screen label {
-        border-top: 2px solid transparent !important;
-      }
-      .st-key-active_screen label:has(input:checked),
-      .st-key-cfb_active_screen label:has(input:checked) {
-        border-top-color: var(--grid-orange) !important;
-        color: var(--grid-ink) !important;
-      }
       .grid-page-head { gap: 10px; }
       .grid-badge { max-width: 145px; }
       .grid-hero-main { display: block; }
@@ -1091,7 +1022,6 @@ st.markdown(
       .grid-team-logo { width: 28px; height: 28px; }
       .grid-team-logo--hero { width: 44px; height: 44px; }
       .grid-team-logo--rank { width: 24px; height: 24px; }
-      .st-key-active_screen label p, .st-key-cfb_active_screen label p { font-size: var(--text-xs) !important; }
     }
     </style>
     """,
@@ -1105,6 +1035,9 @@ def load_models(
 ) -> tuple[dict[str, FittedEnsemble], dict[str, Any]]:
     del checksum
     return load_model_bundle(manifest_path)
+
+
+st.markdown(navigation_styles(), unsafe_allow_html=True)
 
 
 @st.cache_data(ttl=60)
