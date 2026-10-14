@@ -6,7 +6,7 @@ from pathlib import Path
 from streamlit.testing.v1 import AppTest
 
 
-def test_ranked_table_book_selection_and_projection_cache(tmp_path):
+def test_ranked_cards_book_selection_and_projection_cache(tmp_path):
     tree = ast.parse(Path("app.py").read_text(encoding="utf-8"))
     functions = "\n".join(
         ast.unparse(node)
@@ -21,6 +21,8 @@ import streamlit as st
 from nfl_prediction.current_market import age_seconds
 from nfl_prediction.market_ui import age_label
 from nfl_prediction.player_props import comparisons, projection_rows
+from nfl_prediction.props_ui import prop_card
+def team_logo_html(*args): return ""
 if "now" not in st.session_state:
     st.session_state.now = datetime.now(UTC)
     st.session_state.inferences = 0
@@ -50,11 +52,11 @@ render_prop_rankings(projections, "passing_yards")
     path.write_text(script, encoding="utf-8")
     app = AppTest.from_file(str(path)).run(timeout=30)
     assert not app.exception
-    assert app.dataframe[0].value.iloc[0]["Player"] == "Josh Allen"
-    assert app.dataframe[0].value.iloc[0]["Difference"] == 14.5
+    card = next(item.value for item in app.markdown if 'class="prop-board"' in item.value)
+    assert "Josh Allen" in card and "+14.5" in card and "255.5" in card
     assert app.session_state.inferences == 1
     app.selectbox[0].set_value("draftkings").run(timeout=30)
     assert not app.exception
-    assert app.dataframe[0].value.iloc[0]["Market line"] == 250.5
-    assert app.dataframe[0].value.iloc[0]["Difference"] == 19.5
+    card = next(item.value for item in app.markdown if 'class="prop-board"' in item.value)
+    assert "250.5" in card and "+19.5" in card
     assert app.session_state.inferences == 1

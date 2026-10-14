@@ -52,6 +52,7 @@ from nfl_prediction.navigation import navigation_styles
 from nfl_prediction.odds import attach_market_consensus, eligible_market_snapshot
 from nfl_prediction.player_props import comparisons, projection_rows
 from nfl_prediction.preseason import apply_preseason_calibration
+from nfl_prediction.props_ui import PROPS_STYLES, prop_card
 from nfl_prediction.rankings import (
     build_football_form_ratings,
     build_market_power_ratings,
@@ -2176,19 +2177,20 @@ def cached_prop_projections(model_hash: str, snapshot: dict, _models: dict) -> l
 def render_prop_rankings(projections: list[dict], category: str) -> None:
     board = load_current_market("nfl_props")
     depth = load_current_market("nfl_depth")
-    columns = st.columns([3, 2])
     books = sorted(
         {row["sportsbook"] for row in board.get("rows", []) if row["category"] == category}
     )
-    book = columns[0].selectbox(
-        "Sportsbook",
-        ["Consensus", *books],
-        format_func=lambda b: "Consensus (median)" if b == "Consensus" else b.title(),
-        key=f"prop_book_{category}",
-    )
-    include_stale = columns[1].checkbox(
-        "Include older lines", value=False, key=f"prop_stale_{category}"
-    )
+    with st.container(key="prop_board_controls"):
+        columns = st.columns([3, 2])
+        book = columns[0].selectbox(
+            "Sportsbook",
+            ["Consensus", *books],
+            format_func=lambda b: "Consensus (median)" if b == "Consensus" else b.title(),
+            key=f"prop_book_{category}",
+        )
+        include_stale = columns[1].checkbox(
+            "Include older lines", value=False, key=f"prop_stale_{category}"
+        )
     now = datetime.now(UTC)
     rows = comparisons(
         projections, board, depth, category, book=book, include_stale=include_stale, now=now
@@ -2197,30 +2199,18 @@ def render_prop_rankings(projections: list[dict], category: str) -> None:
         "Expected starters · Largest absolute difference first · Difference = GRIDLINE − market line"
     )
     if rows:
-        display = [
-            {
-                "Player": row["player_name"],
-                "Pos": row["position"],
-                "Team": row["team"],
-                "Opponent": row["opponent"],
-                "GRIDLINE": round(row["projection"], 1),
-                "Market line": row["line"],
-                "Difference": round(row["difference"], 1),
-                "Lean": row["lean"],
-                "Books": row["books"],
-                "Source age": age_label(age_seconds(row["source_timestamp"], now))
-                + (" · stale" if row["stale"] else ""),
-            }
+        cards = "".join(
+            prop_card(
+                row,
+                logo=team_logo_html(row["team"], "nfl", "rank"),
+                age=age_label(age_seconds(row["source_timestamp"], now)),
+            )
             for row in rows
-        ]
-        st.dataframe(
-            pd.DataFrame(display),
-            hide_index=True,
-            width="stretch",
-            column_config={
-                "Difference": st.column_config.NumberColumn(format="%+.1f"),
-                "GRIDLINE": st.column_config.NumberColumn(format="%.1f"),
-            },
+        )
+        st.markdown(
+            f'<div class="prop-board-heading"><h2>Starter comparisons</h2>'
+            f'<span>{len(rows)} players</span></div><div class="prop-board">{cards}</div>',
+            unsafe_allow_html=True,
         )
         with st.expander("Sportsbook lines and starter sources"):
             st.caption(
@@ -2266,7 +2256,12 @@ def render_prop_rankings(projections: list[dict], category: str) -> None:
 def render_props(
     state: dict[str, Any], service: PredictionService, injury_system: InjuryAdjustmentSystem
 ) -> None:
+    st.markdown(PROPS_STYLES, unsafe_allow_html=True)
     page_header("Player Props")
+    st.markdown(
+        '<div class="prop-intro">Find the gap between GRIDLINE forecasts and sportsbook lines.</div>',
+        unsafe_allow_html=True,
+    )
     mapping = {
         "Passing yards": ("qb", "passing_yards"),
         "Receiving yards": ("wr", "receiving_yards"),
