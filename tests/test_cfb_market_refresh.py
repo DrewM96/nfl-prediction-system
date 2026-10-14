@@ -8,6 +8,7 @@ import pytest
 
 from cfb_prediction import production
 from cfb_prediction.ledger import record_cfb_prediction_batch
+from nfl_prediction import ledger
 from nfl_prediction.current_market import MarketStore, poll_market
 from nfl_prediction.odds import parse_timestamp
 from nfl_prediction.owls import OwlsError
@@ -79,6 +80,7 @@ def capture_setup(tmp_path, monkeypatch):
     monkeypatch.setenv("GRIDLINE_MARKET_PROVIDER", "owls")
     monkeypatch.setattr(production, "MarketStore", lambda: store)
     monkeypatch.setattr(production, "datetime", Clock)
+    monkeypatch.setattr(ledger, "datetime", Clock)
     slates = []
 
     def poll(sport, slate, *, store):
@@ -132,7 +134,9 @@ def test_selected_upcoming_slate_is_polled_and_lines_survive_publication(capture
     assert parse_timestamp(payload["created_at"]) >= parse_timestamp(
         frozen[0]["market_consensus"]["snapshot_at"]
     )
-    selected = select_forecasts(forecast_rows(path.parent), policy="horizon").iloc[0]
+    selected = select_forecasts(
+        forecast_rows(path.parent, as_of=Clock.now()), policy="horizon"
+    ).iloc[0]
     assert selected.market_margin == 10
     assert selected.market_total == 54
 
