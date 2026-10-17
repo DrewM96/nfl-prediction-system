@@ -597,10 +597,10 @@
     },
     {
       "run_id": "20261011T123535Z-f91811d7",
-      "games": 16,
-      "margin_mae": 11.688911559642616,
-      "total_mae": 13.532533407636985,
-      "winner_accuracy": 0.5625,
+      "games": 25,
+      "margin_mae": 10.072909844680197,
+      "total_mae": 13.129050371916142,
+      "winner_accuracy": 0.6,
       "market_games": 0,
       "matched_model_margin_mae": null,
       "market_margin_mae": null,
@@ -614,36 +614,36 @@
     },
     {
       "run_id": "20261011T144317Z-38605e2c",
-      "games": 16,
-      "margin_mae": 11.696583744472036,
-      "total_mae": 13.483667714543182,
-      "winner_accuracy": 0.5625,
-      "market_games": 13,
-      "matched_model_margin_mae": 10.136958804735723,
-      "market_margin_mae": 10.884615384615385,
-      "market_total_games": 13,
-      "matched_model_total_mae": 11.386039025114108,
-      "market_total_mae": 12.115384615384615,
+      "games": 25,
+      "margin_mae": 10.09560262772913,
+      "total_mae": 13.100338680803183,
+      "winner_accuracy": 0.6,
+      "market_games": 16,
+      "matched_model_margin_mae": 9.323664737921458,
+      "market_margin_mae": 9.875,
+      "market_total_games": 16,
+      "matched_model_total_mae": 10.953457769239092,
+      "market_total_mae": 11.8125,
       "margin_disagreement_buckets": [
         {
           "bucket": "0-2",
-          "games": 4,
+          "games": 5,
           "wins": 2,
-          "losses": 2,
+          "losses": 3,
           "pushes": 0,
-          "ats_rate": 0.5,
-          "model_mae": 5.353686476694355,
-          "market_mae": 4.875
+          "ats_rate": 0.4,
+          "model_mae": 5.070876632104808,
+          "market_mae": 4.4
         },
         {
           "bucket": "2-4",
-          "games": 5,
-          "wins": 4,
-          "losses": 0,
+          "games": 7,
+          "wins": 5,
+          "losses": 1,
           "pushes": 1,
-          "ats_rate": 1.0,
-          "model_mae": 11.047883553421386,
-          "market_mae": 12.95
+          "ats_rate": 0.8333333333333334,
+          "model_mae": 9.813993122648464,
+          "market_mae": 11.25
         },
         {
           "bucket": "4-6",
@@ -682,36 +682,36 @@
     },
     {
       "run_id": "20261012T203126Z-984f7436",
-      "games": 16,
-      "margin_mae": 11.696583744472036,
-      "total_mae": 13.483667714543182,
-      "winner_accuracy": 0.5625,
-      "market_games": 13,
-      "matched_model_margin_mae": 10.136958804735723,
-      "market_margin_mae": 10.961538461538462,
-      "market_total_games": 13,
-      "matched_model_total_mae": 11.386039025114108,
-      "market_total_mae": 12.038461538461538,
+      "games": 25,
+      "margin_mae": 10.09560262772913,
+      "total_mae": 13.100338680803183,
+      "winner_accuracy": 0.6,
+      "market_games": 16,
+      "matched_model_margin_mae": 9.323664737921458,
+      "market_margin_mae": 9.9375,
+      "market_total_games": 16,
+      "matched_model_total_mae": 10.953457769239092,
+      "market_total_mae": 11.75,
       "margin_disagreement_buckets": [
         {
           "bucket": "0-2",
-          "games": 4,
+          "games": 5,
           "wins": 2,
-          "losses": 2,
+          "losses": 3,
           "pushes": 0,
-          "ats_rate": 0.5,
-          "model_mae": 5.353686476694353,
-          "market_mae": 4.875
+          "ats_rate": 0.4,
+          "model_mae": 5.070876632104806,
+          "market_mae": 4.4
         },
         {
           "bucket": "2-4",
-          "games": 5,
-          "wins": 4,
-          "losses": 0,
+          "games": 7,
+          "wins": 5,
+          "losses": 1,
           "pushes": 1,
-          "ats_rate": 1.0,
-          "model_mae": 11.047883553421386,
-          "market_mae": 12.95
+          "ats_rate": 0.8333333333333334,
+          "model_mae": 9.813993122648464,
+          "market_mae": 11.25
         },
         {
           "bucket": "4-6",
@@ -749,6 +749,6 @@
       "qb_shadow_independent_margin_mae": null
     }
   ],
-  "updated_at": "2026-10-17T19:31:01.669694+00:00",
+  "updated_at": "2026-10-17T22:24:39.460817+00:00",
   "schema_version": 3
 }
