@@ -1,0 +1,434 @@
+{
+  "run_id": "20261013T113708Z-490f4a5d",
+  "revision": 1,
+  "scored_at": "2026-10-17T15:48:07.080271+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033908:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034348:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034869:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 278.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036613:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038543:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039732:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 107.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040730:passing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033881:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033908:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034160:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034348:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034869:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034974:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036158:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 41.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036613:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036727:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037085:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037545:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037745:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038488:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038543:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038797:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 52.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038976:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039299:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039732:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039793:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039868:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040648:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040730:rushing_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033538:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033576:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033881:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033908:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 50.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034348:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036158:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036613:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 24.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036727:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037085:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037545:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 66.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037745:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038488:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038543:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 134.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038797:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038976:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039299:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039732:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039793:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039868:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040648:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040730:receiving_yards",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033538:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033576:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033881:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0033908:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0034348:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036158:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036613:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0036727:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037085:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037545:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0037745:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038488:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038543:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 12.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038797:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0038976:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039299:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039732:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039793:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0039868:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040648:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_06_SEA_DEN:00-0040730:receptions",
+      "game_id": "2026_06_SEA_DEN",
+      "actual": 3.0,
+      "status": "final"
+    }
+  ]
+}
