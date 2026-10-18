@@ -1,0 +1,14 @@
+{
+  "run_id": "20261013T113708Z-490f4a5d",
+  "revision": 2,
+  "scored_at": "2026-10-18T23:18:49.747018+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_06_HOU_JAX",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 65.0
+    }
+  ]
+}

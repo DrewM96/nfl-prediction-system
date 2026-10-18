@@ -835,9 +835,9 @@
     },
     {
       "run_id": "20261013T113708Z-490f4a5d",
-      "games": 1,
-      "margin_mae": 4.54,
-      "total_mae": 14.600000000000001,
+      "games": 2,
+      "margin_mae": 5.87,
+      "total_mae": 18.2,
       "winner_accuracy": 0.0,
       "market_games": 0,
       "matched_model_margin_mae": null,
@@ -851,6 +851,6 @@
       "qb_shadow_independent_margin_mae": null
     }
   ],
-  "updated_at": "2026-10-16T12:33:00.959442+00:00",
+  "updated_at": "2026-10-18T23:18:50.234764+00:00",
   "schema_version": 3
 }
