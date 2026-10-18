@@ -597,10 +597,10 @@
     },
     {
       "run_id": "20261011T123535Z-f91811d7",
-      "games": 55,
-      "margin_mae": 11.701079719814556,
-      "total_mae": 13.081273535556802,
-      "winner_accuracy": 0.6363636363636364,
+      "games": 59,
+      "margin_mae": 11.654808151368805,
+      "total_mae": 13.023679144129018,
+      "winner_accuracy": 0.6610169491525424,
       "market_games": 0,
       "matched_model_margin_mae": null,
       "market_margin_mae": null,
@@ -614,10 +614,10 @@
     },
     {
       "run_id": "20261011T144317Z-38605e2c",
-      "games": 55,
-      "margin_mae": 11.719735053521228,
-      "total_mae": 13.081021055613961,
-      "winner_accuracy": 0.6363636363636364,
+      "games": 59,
+      "margin_mae": 11.671206588509063,
+      "total_mae": 13.023511437779524,
+      "winner_accuracy": 0.6610169491525424,
       "market_games": 27,
       "matched_model_margin_mae": 11.757173583384345,
       "market_margin_mae": 11.277777777777779,
@@ -682,10 +682,10 @@
     },
     {
       "run_id": "20261012T203126Z-984f7436",
-      "games": 55,
-      "margin_mae": 11.717750682299286,
-      "total_mae": 13.079113693718028,
-      "winner_accuracy": 0.6363636363636364,
+      "games": 59,
+      "margin_mae": 11.671206588509065,
+      "total_mae": 13.019955339329478,
+      "winner_accuracy": 0.6610169491525424,
       "market_games": 27,
       "matched_model_margin_mae": 11.757173583384345,
       "market_margin_mae": 11.277777777777779,
@@ -749,6 +749,6 @@
       "qb_shadow_independent_margin_mae": null
     }
   ],
-  "updated_at": "2026-10-18T05:59:32.812443+00:00",
+  "updated_at": "2026-10-18T13:44:39.282952+00:00",
   "schema_version": 3
 }
