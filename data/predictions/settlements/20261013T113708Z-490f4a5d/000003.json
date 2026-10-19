@@ -1,0 +1,68 @@
+{
+  "run_id": "20261013T113708Z-490f4a5d",
+  "revision": 3,
+  "scored_at": "2026-10-19T04:49:14.148658+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_06_CHI_ATL",
+      "status": "final",
+      "actual_home_margin": -8.0,
+      "actual_total": 54.0
+    },
+    {
+      "game_id": "2026_06_BAL_CLE",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 23.0
+    },
+    {
+      "game_id": "2026_06_TEN_IND",
+      "status": "final",
+      "actual_home_margin": -6.0,
+      "actual_total": 46.0
+    },
+    {
+      "game_id": "2026_06_NYJ_NE",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 45.0
+    },
+    {
+      "game_id": "2026_06_NO_NYG",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 61.0
+    },
+    {
+      "game_id": "2026_06_CAR_PHI",
+      "status": "final",
+      "actual_home_margin": -11.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "2026_06_PIT_TB",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 45.0
+    },
+    {
+      "game_id": "2026_06_ARI_LA",
+      "status": "final",
+      "actual_home_margin": -2.0,
+      "actual_total": 34.0
+    },
+    {
+      "game_id": "2026_06_LAC_KC",
+      "status": "final",
+      "actual_home_margin": 16.0,
+      "actual_total": 28.0
+    },
+    {
+      "game_id": "2026_06_BUF_LV",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 63.0
+    }
+  ]
+}
