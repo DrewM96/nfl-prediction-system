@@ -1,0 +1,398 @@
+{
+  "run_id": "20261020T142639Z-8847e77a",
+  "revision": 1,
+  "scored_at": "2026-10-24T16:09:25.752262+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036290:passing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039851:passing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 321.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039918:passing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 308.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040563:passing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0032464:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0035676:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036275:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 78.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036290:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036875:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0037253:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0038621:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039021:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039851:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 26.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039918:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039919:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040126:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040131:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040277:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040556:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040563:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040734:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040735:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0041051:rushing_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0032464:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0033090:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 71.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0035676:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 48.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036275:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 12.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036290:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036875:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 93.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0037253:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0038621:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039021:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039851:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039918:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039919:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 69.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040126:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 69.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040131:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040277:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040556:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040563:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040734:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040735:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 130.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0041051:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0041395:receiving_yards",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 56.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0032464:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0033090:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0035676:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036275:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036290:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0036875:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0037253:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0038621:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039021:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039851:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039918:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0039919:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040126:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040131:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040277:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040556:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040563:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040734:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0040735:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0041051:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_07_NE_CHI:00-0041395:receptions",
+      "game_id": "2026_07_NE_CHI",
+      "actual": 3.0,
+      "status": "final"
+    }
+  ]
+}
