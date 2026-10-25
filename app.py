@@ -37,6 +37,8 @@ from nfl_prediction.config import (
     is_division_game,
 )
 from nfl_prediction.current_market import MarketStore, age_seconds, current_context
+from nfl_prediction.explanations import explain_forecast, explain_forecasts
+from nfl_prediction.explanations_ui import render_model_inputs
 from nfl_prediction.io import read_json, sha256_file
 from nfl_prediction.ledger import PredictionLedger
 from nfl_prediction.market import (
@@ -65,7 +67,6 @@ from nfl_prediction.ui import (
     format_game_time,
     format_probability,
     game_matchup_separator,
-    game_reasoning,
     html_text,
     market_line_label,
     relative_mae_improvement,
@@ -1041,6 +1042,15 @@ def load_models(
 st.markdown(navigation_styles(), unsafe_allow_html=True)
 
 
+@st.cache_data
+def cached_forecast_explanations(
+    predictions: list[dict[str, Any]], model_hash: str, _models: dict
+) -> list[dict[str, Any]]:
+    # The hash keys the excluded fitted models; only frozen feature rows are used.
+    del model_hash
+    return explain_forecasts(predictions, _models)
+
+
 @st.cache_data(ttl=60)
 def load_state() -> dict[str, Any]:
     release = read_json(PROJECT_ROOT / "data" / "nfl_release.json")
@@ -1094,13 +1104,16 @@ def load_cfb_state() -> dict[str, Any]:
     state["historical_benchmark"] = read_json(CFB_HISTORICAL_BENCHMARK_PATH)
     try:
         cfb_manifest_path = release_manifest(PROJECT_ROOT, sport="CFB")
-        _, model_manifest = load_cfb_model_bundle(cfb_manifest_path)
+        cfb_models, model_manifest = load_cfb_model_bundle(cfb_manifest_path)
         prediction_batch = load_latest_cfb_prediction_batch()
         if prediction_batch is None:
             raise ValueError("No immutable CFB prediction batch is available")
         model_hash = sha256_file(cfb_manifest_path)
         if prediction_batch.get("model_hash") != model_hash:
             raise ValueError("The CFB prediction batch does not match the active model bundle")
+        prediction_batch["predictions"] = cached_forecast_explanations(
+            prediction_batch["predictions"], model_hash, cfb_models
+        )
         pointer = read_json(PROJECT_ROOT / "data" / "cfb" / "latest_prediction.json", {})
         ranking_relative = pointer.get("rankings_path") or "data/cfb/power_rankings.json"
         rankings_path = (PROJECT_ROOT / ranking_relative).resolve()
@@ -1223,7 +1236,8 @@ class PredictionService:
             "features": {key: float(value) for key, value in features.iloc[0].items()},
         }
         enriched = attach_market_consensus([prediction], self.state.get("market"))
-        return apply_preseason_calibration(enriched, self.state.get("market"))[0]
+        calibrated = apply_preseason_calibration(enriched, self.state.get("market"))[0]
+        return explain_forecast(calibrated, self.models)
 
     def predict_player(self, model_name: str, player: dict[str, Any]) -> dict[str, float]:
         distribution = self.models[model_name].distribution(pd.DataFrame([player]))[0]
@@ -1711,6 +1725,7 @@ def render_featured_game(game: dict[str, Any]) -> None:
     context = current_context(game, load_current_market("nfl"))
     render_forecast_header(game, "nfl", context=context, featured=True)
     render_current_market(game, "nfl", context=context, show_slider=True)
+    render_model_inputs(game, "nfl", "featured")
     render_forecast_details(game, "nfl")
     render_official_injury_snapshot(game, detailed=True)
 
@@ -1864,12 +1879,9 @@ def render_game_row(game: dict[str, Any], index: str) -> None:
             st.session_state.expanded_game_id = None if expanded else game_id
             st.rerun()
         render_current_market(game, "nfl", context=context, show_slider=True)
+        render_model_inputs(game, "nfl", f"game-{index}")
         if expanded:
             render_forecast_details(game, "nfl", collapsed=False)
-            reasons = "".join(
-                f'<div class="grid-reason"><span>›</span><div>{html_text(reason)}</div></div>'
-                for reason in game_reasoning(game)
-            )
             football = game.get("football_only") or {}
             basis = ""
             if football:
@@ -1886,8 +1898,6 @@ def render_game_row(game: dict[str, Any], index: str) -> None:
                 )
             detail_html = (
                 '<div class="grid-game-detail"><section>'
-                '<div class="grid-kicker">Why the model leans this way</div>'
-                f'<div class="grid-game-reasons">{reasons}</div></section><section>'
                 f'<div class="grid-detail-range">80% total range: <b>{float(game["total_p10"]):.1f}–{float(game["total_p90"]):.1f}</b></div>'
                 f"{basis}"
                 f"{market_tile(game).replace('grid-tile', 'grid-placeholder', 1).strip()}"
@@ -1986,6 +1996,7 @@ def render_completed_games(
             if st.button("Hide ▲" if expanded else "Details ▼", key=f"completed_toggle_{identity}"):
                 st.session_state[state_key] = None if expanded else identity
                 st.rerun()
+            render_model_inputs(game, sport, f"completed-{identity}")
             if expanded:
                 st.caption(
                     f"Predicted home margin: {score(game.get('predicted_home_margin'), predicted=True)} · "
@@ -2003,9 +2014,6 @@ def render_completed_games(
                             f"Football-only home margin: {score(football.get('home_margin'), predicted=True)} · "
                             f"Preseason weight: {float((game.get('preseason_calibration') or {}).get('weight', 0)):.0%}"
                         )
-                    st.markdown("**Why the model leans this way**")
-                    for reason in game_reasoning(game):
-                        st.markdown(f"- {reason}")
                     st.markdown(market_tile(game), unsafe_allow_html=True)
                     render_official_injury_snapshot(game, detailed=True)
                 else:
@@ -2018,7 +2026,11 @@ def render_completed_games(
 
 def render_this_week(state: dict[str, Any]) -> None:
     schedule = [
-        {"forecast_at": (state.get("prediction_batch") or {}).get("created_at"), **g}
+        {
+            "forecast_at": (state.get("prediction_batch") or {}).get("created_at"),
+            "data_cutoff": (state.get("prediction_batch") or {}).get("data_cutoff"),
+            **g,
+        }
         for g in state["schedule"]
     ]
     week = state.get("report", {}).get("week")
@@ -2643,6 +2655,7 @@ def render_cfb_featured_game(game: dict[str, Any]) -> None:
     context = current_context(game, load_current_market("ncaaf"))
     render_forecast_header(game, "cfb", context=context, featured=True)
     render_current_market(game, "ncaaf", context=context, show_slider=True)
+    render_model_inputs(game, "cfb", "featured")
     render_forecast_details(game, "cfb")
 
 
@@ -2661,6 +2674,7 @@ def render_cfb_game_row(game: dict[str, Any], index: str) -> None:
             st.session_state.expanded_cfb_game_id = None if expanded else game_id
             st.rerun()
         render_current_market(game, "ncaaf", context=context, show_slider=True)
+        render_model_inputs(game, "cfb", f"game-{index}")
         if expanded:
             render_forecast_details(game, "cfb", collapsed=False)
 
@@ -2763,7 +2777,11 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     model_manifest = state.get("model_manifest")
     predictions = (
         [
-            {"forecast_at": prediction_batch.get("created_at"), **g}
+            {
+                "forecast_at": prediction_batch.get("created_at"),
+                "data_cutoff": prediction_batch.get("data_cutoff"),
+                **g,
+            }
             for g in prediction_batch.get("predictions", [])
         ]
         if prediction_batch
@@ -3120,6 +3138,9 @@ except Exception as exc:
     st.stop()
 
 state = load_state()
+state["schedule"] = cached_forecast_explanations(
+    state.get("schedule", []), sha256_file(active_manifest), models
+)
 service = PredictionService(models, manifest, state)
 injury_system = InjuryAdjustmentSystem(persist=False)
 top_bar(manifest, league="NFL")

@@ -15,6 +15,7 @@ from nfl_prediction.current_market import (
     market_provider,
     poll_market,
 )
+from nfl_prediction.explanations import explain_forecast
 from nfl_prediction.io import atomic_write_json, read_json, sha256_file
 from nfl_prediction.results import performance_history, settle_schedule
 
@@ -354,7 +355,15 @@ def run_cfb_production_update(
             "total_p10": float(total["p10"]),
             "total_p90": float(total["p90"]),
             "forecast_type": "independent_football_model",
+            "features": {
+                feature: float(game[feature])
+                for feature in dict.fromkeys(
+                    [*selected_features["margin"], *selected_features["total"]]
+                )
+            },
+            "data_cutoff": timestamp.isoformat(),
         }
+        prediction = explain_forecast(prediction, models)
         market_consensus = _market_consensus_for_game(game, snapshot_at=market_snapshot_at)
         if market_consensus is not None:
             prediction["market_consensus"] = market_consensus

@@ -265,6 +265,7 @@ from nfl_prediction.ui import html_text, spread_label, format_probability, game_
 from nfl_prediction.market_ui import age_label
 from nfl_prediction.money_signals import qualifying_signals
 from nfl_prediction.signals_ui import render_pick_badge
+from nfl_prediction.explanations_ui import render_model_inputs
 def format_game_time(game): return "Sun 9/13 1p"
 format_cfb_game_time = format_game_time
 def team_logo_html(*args): return ""

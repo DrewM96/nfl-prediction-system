@@ -22,6 +22,22 @@ neutral-imputed and the ranking remains provisional.
 
 ## Model design
 
+Game cards expose their frozen inputs and per-game point contributions under
+"Model inputs & contributions," with separate margin/winner and total views.
+Ridge terms are centered on the fitted training means. Gradient-boosted tree
+terms assign each change along the game's decision path to the splitting feature.
+The reference and feature terms use the same component weights as the forecast;
+preseason calibration is shown as a separate adjustment. These additive model
+decompositions are not causal effects or SHAP estimates. The reference, terms,
+and adjustments reconcile to the published prediction within its rounding precision.
+
+New NFL and CFB forecasts save both the actual feature values and explanations.
+Older NFL forecasts can be explained using their saved rows and matching release
+artifacts, after verifying the prediction. Missing snapshots, unsupported models,
+or mismatched outputs show an unavailable state; current team statistics are never
+substituted. Older CFB releases without saved input rows become explainable only
+when a future forecast saves its inputs. This presentation does not change predictions.
+
 Each target combines a standardized ridge regression with a shallow gradient-boosted regressor. Game models use Ridge alpha 50, selected on 2023-2024 and checked separately on 2025; player models retain alpha 10. The blend weight is learned from chronological out-of-fold predictions. The final production estimators are fitted on every eligible record through the manifest cutoff.
 
 Game inputs use shrunk rolling team form, EPA/play, pressure rates on a shared rate scale, turnovers, rest, division status, week, and home field. Player inputs use shifted opportunity and efficiency features, real intended targets, stable player IDs, opponent defense, and offensive snap participation when published.
