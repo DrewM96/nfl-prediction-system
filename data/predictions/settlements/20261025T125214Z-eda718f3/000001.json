@@ -1,0 +1,14 @@
+{
+  "run_id": "20261025T125214Z-eda718f3",
+  "revision": 1,
+  "scored_at": "2026-10-25T21:51:45.565928+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_07_PIT_NO",
+      "status": "final",
+      "actual_home_margin": -6.0,
+      "actual_total": 26.0
+    }
+  ]
+}
