@@ -14,6 +14,7 @@ import pandas as pd
 from .config import MODEL_MANIFEST_PATH, PROJECT_ROOT, get_season_context
 from .current_market import market_provider
 from .data import load_nflverse_data
+from .explanations import explain_forecasts
 from .features import (
     GAME_FEATURES,
     GAME_MARGIN_FEATURES,
@@ -805,6 +806,7 @@ def run_update(as_of: datetime | None = None) -> UpdateResult:
         as_of=now,
     )
     predictions = _attach_official_injury_context(predictions, official_injuries)
+    predictions = explain_forecasts(predictions, ensembles)
     qb_shadow_table = build_qb_replacement_table(
         data.injuries,
         data.pbp,

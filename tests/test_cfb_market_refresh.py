@@ -216,6 +216,7 @@ def test_production_selects_week_before_market_poll_and_skips_historical_request
         events.append(name)
         mu = 12.3 if name == "margin" else 55
         return SimpleNamespace(
+            feature_names=kwargs["feature_names"],
             estimator=object(),
             distribution=lambda rows: [
                 {"mean": mu, "probability_above_zero": 0.6, "p10": mu - 10, "p90": mu + 10}
@@ -240,7 +241,7 @@ def test_production_selects_week_before_market_poll_and_skips_historical_request
     monkeypatch.setattr(production, "_cut_off_results", lambda data, cutoff: data)
     monkeypatch.setattr(production, "build_point_in_time_features", lambda *a, **kw: features)
     monkeypatch.setattr(production, "_current_input_coverage", lambda *a: {})
-    monkeypatch.setattr(production, "CFB_FEATURE_CONFIGURATIONS", {"test": []})
+    monkeypatch.setattr(production, "CFB_FEATURE_CONFIGURATIONS", {"test": ["home_field"]})
     monkeypatch.setattr(
         production,
         "_load_selected_benchmark",
@@ -269,6 +270,11 @@ def test_production_selects_week_before_market_poll_and_skips_historical_request
         latest_path=tmp_path / "latest_prediction.json",
     )
     assert result["forecast_week"] == 7
+    assert result["predictions"][0]["features"] == {"home_field": 1.0}
+    assert result["predictions"][0]["model_input_schema"] == {
+        "margin": ["home_field"],
+        "total": ["home_field"],
+    }
     assert result["prediction_count"] == 1  # Week 8 is excluded from this publication and poll.
     if historical:
         assert not slates and not client.calls

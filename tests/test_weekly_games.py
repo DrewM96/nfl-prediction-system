@@ -139,6 +139,7 @@ import math
 from datetime import datetime
 from typing import Any
 import streamlit as st
+from nfl_prediction.explanations_ui import render_model_inputs
 from nfl_prediction.ui import html_text, format_game_time, game_matchup_separator
 from nfl_prediction.weekly_games import group_weekly_games, result_comparison, weekly_game_key
 {functions}

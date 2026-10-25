@@ -20,7 +20,7 @@ def test_app_switches_from_nfl_to_college_football() -> None:
     nfl_labels = [m.value for m in app.markdown if 'class="grid-mini-label"' in m.value][:4]
     next(button for button in app.button if button.label == "Details ▼").click().run(timeout=30)
     assert not app.exception
-    assert any("Why the model leans this way" in m.value for m in app.markdown)
+    assert any("Model inputs &amp; contributions" in m.value for m in app.markdown)
 
     sport.set_value("College Football").run(timeout=30)
 
