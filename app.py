@@ -2026,7 +2026,11 @@ def render_completed_games(
 
 def render_this_week(state: dict[str, Any]) -> None:
     schedule = [
-        {"forecast_at": (state.get("prediction_batch") or {}).get("created_at"), **g}
+        {
+            "forecast_at": (state.get("prediction_batch") or {}).get("created_at"),
+            "data_cutoff": (state.get("prediction_batch") or {}).get("data_cutoff"),
+            **g,
+        }
         for g in state["schedule"]
     ]
     week = state.get("report", {}).get("week")
@@ -2773,7 +2777,11 @@ def render_cfb_foundation(state: dict[str, Any]) -> None:
     model_manifest = state.get("model_manifest")
     predictions = (
         [
-            {"forecast_at": prediction_batch.get("created_at"), **g}
+            {
+                "forecast_at": prediction_batch.get("created_at"),
+                "data_cutoff": prediction_batch.get("data_cutoff"),
+                **g,
+            }
             for g in prediction_batch.get("predictions", [])
         ]
         if prediction_batch
