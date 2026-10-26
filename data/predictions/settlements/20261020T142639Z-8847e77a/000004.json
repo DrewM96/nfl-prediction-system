@@ -1,0 +1,14 @@
+{
+  "run_id": "20261020T142639Z-8847e77a",
+  "revision": 4,
+  "scored_at": "2026-10-26T14:21:11.024744+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_07_KC_SEA",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 23.0
+    }
+  ]
+}
