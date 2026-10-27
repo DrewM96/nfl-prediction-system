@@ -1,13 +1,13 @@
 {
   "source": "nflverse injury reports + weekly rosters",
-  "generated_at": "2026-10-25T12:42:01.865351+00:00",
+  "generated_at": "2026-10-27T11:20:02.020632+00:00",
   "prediction_season": 2026,
-  "forecast_week": 7,
+  "forecast_week": 8,
   "available_season": 2026,
   "available_week": 7,
   "roster_available_week": 7,
   "stale_for_prediction_season": false,
-  "stale_for_prediction_week": false,
+  "stale_for_prediction_week": true,
   "entries": [
     {
       "team": "ARI",
@@ -3590,8 +3590,7 @@
       "practice_primary_injury": "Knee",
       "practice_secondary_injury": "Pectoral",
       "practice_status": "Full Participation in Practice",
-      "availability_source": "injury report + weekly roster",
-      "availability_status": "RES"
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -3617,8 +3616,7 @@
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
       "practice_status": "Full Participation in Practice",
-      "availability_source": "injury report + weekly roster",
-      "availability_status": "RES"
+      "availability_source": "injury report"
     },
     {
       "team": "PHI",
@@ -3788,8 +3786,7 @@
       "practice_primary_injury": "Quadricep",
       "practice_secondary_injury": null,
       "practice_status": "Full Participation in Practice",
-      "availability_source": "injury report + weekly roster",
-      "availability_status": "RES"
+      "availability_source": "injury report"
     },
     {
       "team": "PIT",
