@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-10-27T11:29:27.609341+00:00",
+  "created_at": "2026-10-27T18:04:54.024514+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,8 +10,8 @@
     2026
   ],
   "data_cutoff": "2026-10-26",
-  "raw_data_hash": "5764fe3ba10d0c1f7d7d05641c2ab7a0a4ff9e90117eb04fe7b0ec66f2e2406f",
-  "git_commit": "d9530cc3418914621c0fc4e8454617bf6777caba",
+  "raw_data_hash": "0333b344d1e1b4ab275ce66347809ff009091b4a79590ff41af3dd335501cc4d",
+  "git_commit": "67a053e6c9631c301278d050b3cf031bd26aa876",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -68,17 +68,17 @@
         "baseline_mae": 10.639959839357429,
         "mae_improvement_vs_baseline": 0.3765893590780838,
         "mae_difference_vs_baseline_95_low": -0.692674992546646,
-        "mae_difference_vs_baseline_95_high": -0.0445663094216064,
+        "mae_difference_vs_baseline_95_high": -0.04456630942160641,
         "latest_holdout_baseline_mae": 9.973520249221187
       },
       "files": [
         {
-          "path": "v3_game_margin_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_game_margin_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.7007455253667583,
-          "sha256": "4f46525c9fd5f2b5c0582bb697a6b6e97d5af71048102bfd5b9051092e03e8a4"
+          "sha256": "a81b17e82a5670867a92f606dc2fc354c47cb2077b58d0ed561e0ddf62ff8f32"
         },
         {
-          "path": "v3_game_margin_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_game_margin_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.29925447463324173,
           "sha256": "a7a9d6f1dd5b1848fb0b8efc5c1245ad74a339909dff56840b873a18b057cb09"
         }
@@ -136,18 +136,18 @@
         "pinball_p90": 2.542224778672557,
         "baseline_mae": 10.896159653010054,
         "mae_improvement_vs_baseline": 0.30535261899402677,
-        "mae_difference_vs_baseline_95_low": -0.5251493270059292,
-        "mae_difference_vs_baseline_95_high": -0.07195643638338516,
+        "mae_difference_vs_baseline_95_low": -0.5251493270059291,
+        "mae_difference_vs_baseline_95_high": -0.07195643638338514,
         "latest_holdout_baseline_mae": 11.7787837848763
       },
       "files": [
         {
-          "path": "v3_game_total_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_game_total_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.650897992788444,
-          "sha256": "a1d99bdb9f4967cd6e844d114ec8eb012f07165f757ace8a7a391fb285b7f755"
+          "sha256": "0765e922625eb14ee4cb4af03d1549c16d8a74b9554a229bdb92ef1d5302b713"
         },
         {
-          "path": "v3_game_total_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_game_total_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.34910200721155604,
           "sha256": "3b25e5be47ee4b3cf0fe6200f0380a451a76717ec4ad6ef694cfdd533afc16e5"
         }
@@ -190,17 +190,17 @@
       },
       "files": [
         {
-          "path": "v3_passing_yards_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_passing_yards_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.3192474062742118,
-          "sha256": "a62a0dadf71ed3f0c5f7051d52e0cf366624d3b7558fb5b0c570b40cc81be5a7"
+          "sha256": "2207902ef6b2285959e0cedf7bca919b5b5be2c4e8810809e5a04cb29a1b93ae"
         },
         {
-          "path": "v3_passing_yards_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_passing_yards_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.5007525937257883,
           "sha256": "6e8e38d13ba43b99272cea33305da6b3a6064b218e96c89932f6fb025e25a0de"
         },
         {
-          "path": "v3_passing_yards_2_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_passing_yards_2_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.17999999999999994,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -244,17 +244,17 @@
       },
       "files": [
         {
-          "path": "v3_receiving_yards_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receiving_yards_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.5985052532463032,
-          "sha256": "acd7910d8ba174794b89274a3059bd1e704e79e307fc71cd521b9734838147fb"
+          "sha256": "82e688d10281007307a937cb14093d28cd1a5686f33e15990c14dd483684ce7a"
         },
         {
-          "path": "v3_receiving_yards_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receiving_yards_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.2114947467536968,
           "sha256": "023a64e49d9358ac93bbf418389aeabdd6df51dd7a8e5b6ff19f4310171359b3"
         },
         {
-          "path": "v3_receiving_yards_2_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receiving_yards_2_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.18999999999999995,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -296,17 +296,17 @@
       },
       "files": [
         {
-          "path": "v3_receptions_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receptions_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.5750194486216295,
-          "sha256": "bc6cde5f0ae6229a9280877080a2ac35403be911410b9536a6999bab8b378be5"
+          "sha256": "812ae3b64625de9acdbe3d5cd6e3ddba59982d190f050214b567a3ed19168c0c"
         },
         {
-          "path": "v3_receptions_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receptions_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.19498055137837053,
           "sha256": "28fdcd0cc9e25f4cec2d6644e96e3865fa8f9fd54f03497d8063dd57756749dd"
         },
         {
-          "path": "v3_receptions_2_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_receptions_2_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.22999999999999998,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -348,17 +348,17 @@
       },
       "files": [
         {
-          "path": "v3_rushing_yards_0_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_rushing_yards_0_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.3008934498500967,
-          "sha256": "d304b33024d2ab8c9027daba14bc97d882fc0ca82b94bd7dca1b8b4fe3e91e62"
+          "sha256": "f66349d2f2119874902238b2d453779343dc94461c47897387c7ecd90b99184b"
         },
         {
-          "path": "v3_rushing_yards_1_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_rushing_yards_1_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.1391065501499033,
           "sha256": "95c30ff91a50a88759ed524755d05984d18fdde3d12dbbf44787dcf24c2f94b3"
         },
         {
-          "path": "v3_rushing_yards_2_f3a8dc0deda5434d897982104e71a86b.joblib",
+          "path": "v3_rushing_yards_2_8bb9a05cb534463ea8befcfc5825c14f.joblib",
           "weight": 0.56,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }

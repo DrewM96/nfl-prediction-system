@@ -1,11 +1,11 @@
 {
   "source": "nflverse injury reports + weekly rosters",
-  "generated_at": "2026-10-27T11:20:02.020632+00:00",
+  "generated_at": "2026-10-27T17:50:21.370819+00:00",
   "prediction_season": 2026,
   "forecast_week": 8,
   "available_season": 2026,
   "available_week": 7,
-  "roster_available_week": 7,
+  "roster_available_week": 8,
   "stale_for_prediction_season": false,
   "stale_for_prediction_week": true,
   "entries": [
@@ -1055,8 +1055,7 @@
       "practice_primary_injury": "Back",
       "practice_secondary_injury": null,
       "practice_status": "Full Participation in Practice",
-      "availability_source": "injury report + weekly roster",
-      "availability_status": "RES"
+      "availability_source": "injury report"
     },
     {
       "team": "CLE",
@@ -3146,8 +3145,7 @@
       "practice_primary_injury": "Shoulder",
       "practice_secondary_injury": null,
       "practice_status": "Did Not Participate In Practice",
-      "availability_source": "injury report + weekly roster",
-      "availability_status": "RES"
+      "availability_source": "injury report"
     },
     {
       "team": "NYG",
@@ -4601,26 +4599,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0032265",
-      "position": "DL",
-      "full_name": "Mario Edwards",
+      "team": "LAC",
+      "gsis_id": "00-0032103",
+      "position": "LB",
+      "full_name": "Denzel Perryman",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYG",
-      "gsis_id": "00-0032667",
-      "position": "DL",
-      "full_name": "Roy Robertson-Harris",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0032775",
-      "position": "WR",
-      "full_name": "Demarcus Robinson",
+      "team": "WAS",
+      "gsis_id": "00-0032380",
+      "position": "OL",
+      "full_name": "Laremy Tunsil",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4689,6 +4679,14 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "LAC",
+      "gsis_id": "00-0033885",
+      "position": "TE",
+      "full_name": "David Njoku",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "BAL",
       "gsis_id": "00-0033901",
       "position": "OL",
@@ -4725,14 +4723,6 @@
       "gsis_id": "00-0034377",
       "position": "DB",
       "full_name": "Avonte Maddox",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0034419",
-      "position": "WR",
-      "full_name": "Braxton Berrios",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4785,14 +4775,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0034987",
-      "position": "LB",
-      "full_name": "E.J. Speed",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "IND",
       "gsis_id": "00-0035045",
       "position": "WR",
@@ -4801,10 +4783,42 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "JAX",
+      "gsis_id": "00-0035062",
+      "position": "OL",
+      "full_name": "Sam Mustipher",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0035112",
+      "position": "OL",
+      "full_name": "Patrick Mekari",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0035125",
+      "position": "RB",
+      "full_name": "Alec Ingold",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "MIN",
       "gsis_id": "00-0035249",
       "position": "TE",
       "full_name": "Josh Oliver",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0035253",
+      "position": "DB",
+      "full_name": "C.J. Gardner-Johnson",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4825,34 +4839,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYG",
-      "gsis_id": "00-0035645",
-      "position": "WR",
-      "full_name": "Gunner Olszewski",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "CHI",
-      "gsis_id": "00-0035647",
-      "position": "DL",
-      "full_name": "Montez Sweat",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NO",
-      "gsis_id": "00-0035665",
-      "position": "DB",
-      "full_name": "David Long",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "DEN",
       "gsis_id": "00-0035686",
       "position": "OL",
       "full_name": "Michael Deiter",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0035688",
+      "position": "OL",
+      "full_name": "Trey Pipkins",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4869,22 +4867,6 @@
       "gsis_id": "00-0035707",
       "position": "LB",
       "full_name": "Devin White",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0035713",
-      "position": "LB",
-      "full_name": "Brian Burns",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0035829",
-      "position": "OL",
-      "full_name": "Austen Pleasants",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4929,10 +4911,26 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "CHI",
+      "gsis_id": "00-0036290",
+      "position": "TE",
+      "full_name": "Cole Kmet",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "DAL",
       "gsis_id": "00-0036295",
       "position": "OL",
       "full_name": "Matt Hennessy",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0036376",
+      "position": "OL",
+      "full_name": "Tyler Biadasz",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -4969,34 +4967,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0036619",
-      "position": "OL",
-      "full_name": "Dillon Radunz",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "CHI",
       "gsis_id": "00-0036634",
       "position": "LB",
       "full_name": "Tony Fields II",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0036638",
-      "position": "DB",
-      "full_name": "Darrick Forrest",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0036871",
-      "position": "DB",
-      "full_name": "Nate Hobbs",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5049,22 +5023,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0036973",
-      "position": "RB",
-      "full_name": "Travis Etienne",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0036982",
-      "position": "DL",
-      "full_name": "Chauncey Golston",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "ATL",
       "gsis_id": "00-0036984",
       "position": "RB",
@@ -5077,6 +5035,22 @@
       "gsis_id": "00-0037004",
       "position": "TE",
       "full_name": "Hunter Long",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0037009",
+      "position": "OL",
+      "full_name": "Rashawn Slater",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0037012",
+      "position": "QB",
+      "full_name": "Trey Lance",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5113,14 +5087,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0037112",
-      "position": "TE",
-      "full_name": "Jake Tonges",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "ARI",
       "gsis_id": "00-0037141",
       "position": "DB",
@@ -5145,6 +5111,14 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "LAC",
+      "gsis_id": "00-0037241",
+      "position": "OL",
+      "full_name": "Trevor Penning",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "CLE",
       "gsis_id": "00-0037251",
       "position": "DL",
@@ -5157,14 +5131,6 @@
       "gsis_id": "00-0037266",
       "position": "OL",
       "full_name": "Matt Waletzko",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NO",
-      "gsis_id": "00-0037276",
-      "position": "RB",
-      "full_name": "Ty Chandler",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5265,22 +5231,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0037602",
-      "position": "DL",
-      "full_name": "Sam Okuayinonu",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "HOU",
-      "gsis_id": "00-0037633",
-      "position": "LB",
-      "full_name": "Jacob Hummel",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "IND",
       "gsis_id": "00-0037664",
       "position": "WR",
@@ -5329,18 +5279,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0037831",
-      "position": "OL",
-      "full_name": "Nick Zakelj",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0037837",
-      "position": "WR",
-      "full_name": "Calvin Austin III",
+      "team": "WAS",
+      "gsis_id": "00-0037819",
+      "position": "LB",
+      "full_name": "Leo Chenal",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5385,14 +5327,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYG",
-      "gsis_id": "00-0038401",
-      "position": "DB",
-      "full_name": "Jarrick Bernard-Converse",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "ARI",
       "gsis_id": "00-0038540",
       "position": "OL",
@@ -5405,14 +5339,6 @@
       "gsis_id": "00-0038555",
       "position": "RB",
       "full_name": "Tank Bigsby",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NO",
-      "gsis_id": "00-0038566",
-      "position": "OL",
-      "full_name": "Nick Saldiveri",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5433,14 +5359,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NE",
-      "gsis_id": "00-0038610",
-      "position": "P",
-      "full_name": "Bryce Baringer",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "CIN",
       "gsis_id": "00-0038619",
       "position": "WR",
@@ -5453,6 +5371,14 @@
       "gsis_id": "00-0038629",
       "position": "OL",
       "full_name": "Jovaughn Gwyn",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0038679",
+      "position": "WR",
+      "full_name": "Tyrell Shavers",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5481,14 +5407,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0038724",
-      "position": "DL",
-      "full_name": "Ali Gaye",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "DAL",
       "gsis_id": "00-0038735",
       "position": "TE",
@@ -5505,22 +5423,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0038781",
-      "position": "DB",
-      "full_name": "Rejzohn Wright",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0038865",
-      "position": "LB",
-      "full_name": "Andrew Farmer II",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "LA",
       "gsis_id": "00-0038905",
       "position": "K",
@@ -5529,18 +5431,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0038995",
-      "position": "DL",
-      "full_name": "Bryan Bresee",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "HOU",
-      "gsis_id": "00-0039009",
-      "position": "DL",
-      "full_name": "Dylan Horton",
+      "team": "JAX",
+      "gsis_id": "00-0038934",
+      "position": "OL",
+      "full_name": "Anton Harrison",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5665,14 +5559,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0039363",
-      "position": "RB",
-      "full_name": "Isaac Guerendo",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "ATL",
       "gsis_id": "00-0039370",
       "position": "LB",
@@ -5689,10 +5575,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0039427",
-      "position": "DL",
-      "full_name": "Solomon Byrd",
+      "team": "WAS",
+      "gsis_id": "00-0039412",
+      "position": "LB",
+      "full_name": "Javontae Jean-Baptiste",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5725,30 +5611,6 @@
       "gsis_id": "00-0039568",
       "position": "OL",
       "full_name": "Frank Crum",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "HOU",
-      "gsis_id": "00-0039603",
-      "position": "RB",
-      "full_name": "British Brooks",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0039620",
-      "position": "DB",
-      "full_name": "Rico Payton",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NO",
-      "gsis_id": "00-0039623",
-      "position": "WR",
-      "full_name": "Mason Tipton",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5833,6 +5695,14 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "GB",
+      "gsis_id": "00-0039817",
+      "position": "OL",
+      "full_name": "Jacob Monk",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "LV",
       "gsis_id": "00-0039836",
       "position": "LB",
@@ -5889,10 +5759,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0039916",
-      "position": "WR",
-      "full_name": "Ricky Pearsall",
+      "team": "WAS",
+      "gsis_id": "00-0039906",
+      "position": "DL",
+      "full_name": "Jer'Zhan Newton",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -5953,22 +5823,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0040125",
-      "position": "OL",
-      "full_name": "Kelvin Banks Jr.",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "HOU",
-      "gsis_id": "00-0040130",
-      "position": "WR",
-      "full_name": "Jayden Higgins",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "DEN",
       "gsis_id": "00-0040134",
       "position": "WR",
@@ -5977,18 +5831,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0040135",
-      "position": "LB",
-      "full_name": "Nick Martin",
+      "team": "JAX",
+      "gsis_id": "00-0040145",
+      "position": "DB",
+      "full_name": "Caleb Ransaw",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0040149",
-      "position": "DB",
-      "full_name": "Jaylin Smith",
+      "team": "WAS",
+      "gsis_id": "00-0040164",
+      "position": "WR",
+      "full_name": "Jaylin Lane",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6017,6 +5871,14 @@
       "availability_source": "weekly roster"
     },
     {
+      "team": "BUF",
+      "gsis_id": "00-0040192",
+      "position": "DB",
+      "full_name": "Jordan Hancock",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
       "team": "NYJ",
       "gsis_id": "00-0040196",
       "position": "LB",
@@ -6025,10 +5887,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0040211",
-      "position": "QB",
-      "full_name": "Graham Mertz",
+      "team": "BUF",
+      "gsis_id": "00-0040197",
+      "position": "DB",
+      "full_name": "Dorian Strong",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6049,18 +5911,10 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYG",
-      "gsis_id": "00-0040243",
-      "position": "DB",
-      "full_name": "Korie Black",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NO",
-      "gsis_id": "00-0040244",
-      "position": "TE",
-      "full_name": "Moliki Matavao",
+      "team": "WAS",
+      "gsis_id": "00-0040242",
+      "position": "RB",
+      "full_name": "Jacory Croskey-Merritt",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6073,10 +5927,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0040413",
+      "team": "JAX",
+      "gsis_id": "00-0040329",
+      "position": "DL",
+      "full_name": "BJ Green II",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "JAX",
+      "gsis_id": "00-0040395",
       "position": "LB",
-      "full_name": "K.C. Ossai",
+      "full_name": "Jared Bartlett",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6149,30 +6011,6 @@
       "gsis_id": "00-0040678",
       "position": "DL",
       "full_name": "Derrick Harmon",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "NYG",
-      "gsis_id": "00-0040691",
-      "position": "QB",
-      "full_name": "Jaxson Dart",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0040711",
-      "position": "DL",
-      "full_name": "C.J. West",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0040721",
-      "position": "DL",
-      "full_name": "Alfred Collins",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6329,22 +6167,6 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NO",
-      "gsis_id": "00-0041029",
-      "position": "WR",
-      "full_name": "Jordyn Tyson",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
-      "team": "SF",
-      "gsis_id": "00-0041035",
-      "position": "WR",
-      "full_name": "De'Zhaun Stribling",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "CAR",
       "gsis_id": "00-0041047",
       "position": "WR",
@@ -6357,6 +6179,14 @@
       "gsis_id": "00-0041087",
       "position": "TE",
       "full_name": "Joe Royer",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "BUF",
+      "gsis_id": "00-0041091",
+      "position": "DL",
+      "full_name": "Zane Durant",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6385,18 +6215,26 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "MIA",
-      "gsis_id": "00-0041136",
+      "team": "JAX",
+      "gsis_id": "00-0041122",
       "position": "DL",
-      "full_name": "Rene Konga",
+      "full_name": "Zach Durfee",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYG",
-      "gsis_id": "00-0041142",
-      "position": "DB",
-      "full_name": "Thaddeus Dixon",
+      "team": "JAX",
+      "gsis_id": "00-0041127",
+      "position": "LB",
+      "full_name": "Parker Hughes",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "MIA",
+      "gsis_id": "00-0041136",
+      "position": "DL",
+      "full_name": "Rene Konga",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6409,18 +6247,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "NYJ",
-      "gsis_id": "00-0041239",
-      "position": "RB",
-      "full_name": "Chip Trayanum",
+      "team": "JAX",
+      "gsis_id": "00-0041208",
+      "position": "OL",
+      "full_name": "Garrett DiGiorgio",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
     {
-      "team": "HOU",
-      "gsis_id": "00-0041303",
-      "position": "OL",
-      "full_name": "Sam Hagen",
+      "team": "NYJ",
+      "gsis_id": "00-0041239",
+      "position": "RB",
+      "full_name": "Chip Trayanum",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },
@@ -6441,18 +6279,18 @@
       "availability_source": "weekly roster"
     },
     {
-      "team": "SF",
-      "gsis_id": "00-0041360",
-      "position": "DL",
-      "full_name": "Mikail Kamara",
-      "availability_status": "RES",
-      "availability_source": "weekly roster"
-    },
-    {
       "team": "ARI",
       "gsis_id": "00-0041366",
       "position": "TE",
       "full_name": "Jameson Geers",
+      "availability_status": "RES",
+      "availability_source": "weekly roster"
+    },
+    {
+      "team": "LAC",
+      "gsis_id": "00-0041387",
+      "position": "OL",
+      "full_name": "Isaiah World",
       "availability_status": "RES",
       "availability_source": "weekly roster"
     },

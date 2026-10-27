@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-27T11:29:27.645482+00:00",
+  "last_updated": "2026-10-27T18:04:54.163244+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,9 +10,9 @@
   ],
   "data_cutoff": "2026-10-26",
   "model_manifest": "models/manifest.json",
-  "model_hash": "6152bf93c341bce0a214c78fa04fdbeaff546d3ea28e71c0b9d598207156a8dc",
-  "raw_data_hash": "5764fe3ba10d0c1f7d7d05641c2ab7a0a4ff9e90117eb04fe7b0ec66f2e2406f",
-  "ledger_run": "20261027T113013Z-b2f1cbc7",
+  "model_hash": "001ab2296127771d9e964f5e1962fc2f80fb18f9f50ffa3902f8b299cac42296",
+  "raw_data_hash": "0333b344d1e1b4ab275ce66347809ff009091b4a79590ff41af3dd335501cc4d",
+  "ledger_run": "20261027T180620Z-e6245da0",
   "metrics": {
     "game_margin": {
       "ridge_alpha": 50.0,
@@ -36,7 +36,7 @@
       "baseline_mae": 10.639959839357429,
       "mae_improvement_vs_baseline": 0.3765893590780838,
       "mae_difference_vs_baseline_95_low": -0.692674992546646,
-      "mae_difference_vs_baseline_95_high": -0.0445663094216064,
+      "mae_difference_vs_baseline_95_high": -0.04456630942160641,
       "latest_holdout_baseline_mae": 9.973520249221187
     },
     "game_total": {
@@ -56,8 +56,8 @@
       "pinball_p90": 2.542224778672557,
       "baseline_mae": 10.896159653010054,
       "mae_improvement_vs_baseline": 0.30535261899402677,
-      "mae_difference_vs_baseline_95_low": -0.5251493270059292,
-      "mae_difference_vs_baseline_95_high": -0.07195643638338516,
+      "mae_difference_vs_baseline_95_low": -0.5251493270059291,
+      "mae_difference_vs_baseline_95_high": -0.07195643638338514,
       "latest_holdout_baseline_mae": 11.7787837848763
     },
     "passing_yards": {
