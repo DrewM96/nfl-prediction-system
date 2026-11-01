@@ -1,0 +1,116 @@
+{
+  "run_id": "20261025T132845Z-41ec6981",
+  "revision": 6,
+  "scored_at": "2026-11-01T02:17:19.012472+00:00",
+  "source": "CollegeFootballData games",
+  "results": [
+    {
+      "game_id": "401858283",
+      "status": "final",
+      "actual_home_margin": 28.0,
+      "actual_total": 76.0
+    },
+    {
+      "game_id": "401864531",
+      "status": "final",
+      "actual_home_margin": 24.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "401871095",
+      "status": "final",
+      "actual_home_margin": -14.0,
+      "actual_total": 56.0
+    },
+    {
+      "game_id": "401871059",
+      "status": "final",
+      "actual_home_margin": 39.0,
+      "actual_total": 59.0
+    },
+    {
+      "game_id": "401860910",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 45.0
+    },
+    {
+      "game_id": "401856734",
+      "status": "final",
+      "actual_home_margin": 19.0,
+      "actual_total": 35.0
+    },
+    {
+      "game_id": "401858501",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 39.0
+    },
+    {
+      "game_id": "401856845",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 38.0
+    },
+    {
+      "game_id": "401856843",
+      "status": "final",
+      "actual_home_margin": 7.0,
+      "actual_total": 47.0
+    },
+    {
+      "game_id": "401858505",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 60.0
+    },
+    {
+      "game_id": "401856848",
+      "status": "final",
+      "actual_home_margin": -24.0,
+      "actual_total": 74.0
+    },
+    {
+      "game_id": "401858284",
+      "status": "final",
+      "actual_home_margin": 44.0,
+      "actual_total": 58.0
+    },
+    {
+      "game_id": "401864529",
+      "status": "final",
+      "actual_home_margin": -5.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "401856736",
+      "status": "final",
+      "actual_home_margin": -17.0,
+      "actual_total": 67.0
+    },
+    {
+      "game_id": "401858506",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 48.0
+    },
+    {
+      "game_id": "401858508",
+      "status": "final",
+      "actual_home_margin": 27.0,
+      "actual_total": 27.0
+    },
+    {
+      "game_id": "401869846",
+      "status": "final",
+      "actual_home_margin": 16.0,
+      "actual_total": 22.0
+    },
+    {
+      "game_id": "401860909",
+      "status": "final",
+      "actual_home_margin": 6.0,
+      "actual_total": 46.0
+    }
+  ]
+}
