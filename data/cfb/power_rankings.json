@@ -2,12 +2,12 @@
   "schema_version": 1,
   "sport": "college_football",
   "kind": "blended_common_opponent_results",
-  "created_at": "2026-11-01T15:07:23.267413+00:00",
+  "created_at": "2026-11-02T20:56:50.772059+00:00",
   "prediction_season": 2026,
-  "data_cutoff": "2026-11-01T15:07:23.267413+00:00",
+  "data_cutoff": "2026-11-02T20:56:50.772059+00:00",
   "forecast_week": 10,
   "preseason_prior_cutoff": "2026-08-29T16:00:00+00:00",
-  "model_hash": "a86de43264e277eb01ffdc66409367db2c894663f44c598220dd7feaf2d1f9c9",
+  "model_hash": "05e37686265dfdf4c16ca4e4c385992ecf6de5879525b74a98076ab79c79063f",
   "display_count": 30,
   "team_count": 138,
   "game_count": 500,
@@ -21,8 +21,8 @@
   "home_field_points": 3.0,
   "incremental_home_field_points": 3.0,
   "designated_home_bias": 0.0,
-  "model_disagreement_mae": 0.7843961561030535,
-  "line_fit_mae": 0.7843961561030535,
+  "model_disagreement_mae": 0.7843961561030536,
+  "line_fit_mae": 0.7843961561030536,
   "line_fit_rmse": 0.985527501817502,
   "input_coverage": {
     "scheduled_fbs_teams": 138,
@@ -38,7 +38,7 @@
       "team": "Georgia",
       "rating": 26.261768694167774,
       "common_opponent_rating": 26.993728673530473,
-      "results_rating": 24.065888756079673,
+      "results_rating": 24.06588875607967,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -56,8 +56,8 @@
     {
       "rank": 3,
       "team": "Ohio State",
-      "rating": 24.716460406066506,
-      "common_opponent_rating": 25.091648255799946,
+      "rating": 24.71646040606651,
+      "common_opponent_rating": 25.09164825579995,
       "results_rating": 23.5908968568662,
       "conference": "Big Ten",
       "completed_games": 8,
@@ -66,8 +66,8 @@
     {
       "rank": 4,
       "team": "Alabama",
-      "rating": 22.1032121252127,
-      "common_opponent_rating": 21.99164247074667,
+      "rating": 22.103212125212703,
+      "common_opponent_rating": 21.991642470746676,
       "results_rating": 22.43792108861079,
       "conference": "SEC",
       "completed_games": 8,
@@ -97,8 +97,8 @@
       "rank": 7,
       "team": "Miami",
       "rating": 21.172411715319587,
-      "common_opponent_rating": 20.69874078992813,
-      "results_rating": 22.593424491493952,
+      "common_opponent_rating": 20.698740789928134,
+      "results_rating": 22.59342449149395,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -106,8 +106,8 @@
     {
       "rank": 8,
       "team": "Ole Miss",
-      "rating": 20.178096291362273,
-      "common_opponent_rating": 20.917751948573397,
+      "rating": 20.17809629136227,
+      "common_opponent_rating": 20.917751948573393,
       "results_rating": 17.9591293197289,
       "conference": "SEC",
       "completed_games": 8,
@@ -116,9 +116,9 @@
     {
       "rank": 9,
       "team": "USC",
-      "rating": 17.94382271620168,
-      "common_opponent_rating": 19.610351898024227,
-      "results_rating": 12.944235170734034,
+      "rating": 17.943822716201684,
+      "common_opponent_rating": 19.610351898024234,
+      "results_rating": 12.944235170734036,
       "conference": "Big Ten",
       "completed_games": 9,
       "scheduled_games": 3
@@ -138,7 +138,7 @@
       "team": "Tennessee",
       "rating": 16.434247386860797,
       "common_opponent_rating": 16.79952065696428,
-      "results_rating": 15.338427576550341,
+      "results_rating": 15.338427576550343,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -146,9 +146,9 @@
     {
       "rank": 12,
       "team": "Oregon",
-      "rating": 16.309667355718744,
+      "rating": 16.309667355718748,
       "common_opponent_rating": 16.870438555535234,
-      "results_rating": 14.62735375626928,
+      "results_rating": 14.627353756269281,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -156,9 +156,9 @@
     {
       "rank": 13,
       "team": "Utah",
-      "rating": 16.28382927924005,
-      "common_opponent_rating": 16.538113715157138,
-      "results_rating": 15.52097597148878,
+      "rating": 16.283829279240052,
+      "common_opponent_rating": 16.53811371515714,
+      "results_rating": 15.520975971488783,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -168,7 +168,7 @@
       "team": "Wake Forest",
       "rating": 15.714521370745658,
       "common_opponent_rating": 16.30066133812765,
-      "results_rating": 13.956101468599684,
+      "results_rating": 13.956101468599686,
       "conference": "ACC",
       "completed_games": 8,
       "scheduled_games": 3
@@ -176,9 +176,9 @@
     {
       "rank": 15,
       "team": "Texas Tech",
-      "rating": 15.125096650474243,
-      "common_opponent_rating": 15.456376053958119,
-      "results_rating": 14.131258440022615,
+      "rating": 15.125096650474244,
+      "common_opponent_rating": 15.456376053958122,
+      "results_rating": 14.131258440022616,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -186,9 +186,9 @@
     {
       "rank": 16,
       "team": "Iowa",
-      "rating": 13.845953343717314,
-      "common_opponent_rating": 14.354355990213353,
-      "results_rating": 12.320745404229195,
+      "rating": 13.845953343717312,
+      "common_opponent_rating": 14.35435599021335,
+      "results_rating": 12.320745404229196,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -196,9 +196,9 @@
     {
       "rank": 17,
       "team": "South Carolina",
-      "rating": 13.607100014995437,
-      "common_opponent_rating": 13.778262347193785,
-      "results_rating": 13.093613018400397,
+      "rating": 13.607100014995439,
+      "common_opponent_rating": 13.778262347193786,
+      "results_rating": 13.093613018400399,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -206,9 +206,9 @@
     {
       "rank": 18,
       "team": "Arizona",
-      "rating": 13.297861223651816,
-      "common_opponent_rating": 13.631149014948983,
-      "results_rating": 12.297997849760316,
+      "rating": 13.297861223651818,
+      "common_opponent_rating": 13.631149014948987,
+      "results_rating": 12.297997849760318,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -216,9 +216,9 @@
     {
       "rank": 19,
       "team": "UCLA",
-      "rating": 13.089033950780514,
+      "rating": 13.089033950780516,
       "common_opponent_rating": 13.455100415815002,
-      "results_rating": 11.990834555677058,
+      "results_rating": 11.99083455567706,
       "conference": "Big Ten",
       "completed_games": 8,
       "scheduled_games": 4
@@ -226,9 +226,9 @@
     {
       "rank": 20,
       "team": "Michigan",
-      "rating": 12.175880733927414,
-      "common_opponent_rating": 13.565378358525864,
-      "results_rating": 8.007387860132065,
+      "rating": 12.175880733927418,
+      "common_opponent_rating": 13.565378358525866,
+      "results_rating": 8.007387860132066,
       "conference": "Big Ten",
       "completed_games": 8,
       "scheduled_games": 4
@@ -237,8 +237,8 @@
       "rank": 21,
       "team": "Missouri",
       "rating": 12.170265264814116,
-      "common_opponent_rating": 12.027637440299056,
-      "results_rating": 12.598148738359297,
+      "common_opponent_rating": 12.027637440299054,
+      "results_rating": 12.5981487383593,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -246,9 +246,9 @@
     {
       "rank": 22,
       "team": "BYU",
-      "rating": 11.85009815867712,
+      "rating": 11.850098158677122,
       "common_opponent_rating": 12.22285557954179,
-      "results_rating": 10.73182589608311,
+      "results_rating": 10.731825896083114,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -258,7 +258,7 @@
       "team": "Texas A&M",
       "rating": 11.369156331801724,
       "common_opponent_rating": 10.66613029923547,
-      "results_rating": 13.478234429500489,
+      "results_rating": 13.47823442950049,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -266,9 +266,9 @@
     {
       "rank": 24,
       "team": "Boise State",
-      "rating": 10.793208978558695,
-      "common_opponent_rating": 10.755638117673504,
-      "results_rating": 10.905921561214269,
+      "rating": 10.793208978558697,
+      "common_opponent_rating": 10.755638117673506,
+      "results_rating": 10.90592156121427,
       "conference": "Pac-12",
       "completed_games": 7,
       "scheduled_games": 3
@@ -278,7 +278,7 @@
       "team": "Liberty",
       "rating": 10.404720414909413,
       "common_opponent_rating": 11.13635072372656,
-      "results_rating": 8.209829488457972,
+      "results_rating": 8.209829488457974,
       "conference": "Conference USA",
       "completed_games": 7,
       "scheduled_games": 4
@@ -286,9 +286,9 @@
     {
       "rank": 26,
       "team": "Northwestern",
-      "rating": 10.18319719984134,
-      "common_opponent_rating": 9.944349538937509,
-      "results_rating": 10.899740182552833,
+      "rating": 10.183197199841342,
+      "common_opponent_rating": 9.94434953893751,
+      "results_rating": 10.899740182552835,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -297,8 +297,8 @@
       "rank": 27,
       "team": "Houston",
       "rating": 9.983200814450257,
-      "common_opponent_rating": 10.372328942709617,
-      "results_rating": 8.815816429672171,
+      "common_opponent_rating": 10.372328942709618,
+      "results_rating": 8.815816429672173,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -317,8 +317,8 @@
       "rank": 29,
       "team": "Kentucky",
       "rating": 9.839552465378578,
-      "common_opponent_rating": 10.09569224890843,
-      "results_rating": 9.071133114789024,
+      "common_opponent_rating": 10.095692248908428,
+      "results_rating": 9.071133114789026,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -326,9 +326,9 @@
     {
       "rank": 30,
       "team": "SMU",
-      "rating": 9.470145087517102,
-      "common_opponent_rating": 10.183161752561126,
-      "results_rating": 7.331095092385027,
+      "rating": 9.4701450875171,
+      "common_opponent_rating": 10.183161752561125,
+      "results_rating": 7.331095092385024,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -336,9 +336,9 @@
     {
       "rank": 31,
       "team": "Nebraska",
-      "rating": 8.91307502348575,
-      "common_opponent_rating": 8.32552433668697,
-      "results_rating": 10.675727083882084,
+      "rating": 8.913075023485744,
+      "common_opponent_rating": 8.325524336686962,
+      "results_rating": 10.675727083882085,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -346,9 +346,9 @@
     {
       "rank": 32,
       "team": "Florida",
-      "rating": 8.402368863802277,
-      "common_opponent_rating": 7.643218782079281,
-      "results_rating": 10.67981910897126,
+      "rating": 8.40236886380228,
+      "common_opponent_rating": 7.643218782079285,
+      "results_rating": 10.679819108971262,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -356,8 +356,8 @@
     {
       "rank": 33,
       "team": "Memphis",
-      "rating": 7.673705262334534,
-      "common_opponent_rating": 8.476804741207562,
+      "rating": 7.673705262334533,
+      "common_opponent_rating": 8.47680474120756,
       "results_rating": 5.264406825715448,
       "conference": "American Athletic",
       "completed_games": 8,
@@ -366,8 +366,8 @@
     {
       "rank": 34,
       "team": "Oklahoma",
-      "rating": 7.488164332702129,
-      "common_opponent_rating": 6.745519114120511,
+      "rating": 7.488164332702128,
+      "common_opponent_rating": 6.745519114120509,
       "results_rating": 9.716099988446985,
       "conference": "SEC",
       "completed_games": 8,
@@ -376,8 +376,8 @@
     {
       "rank": 35,
       "team": "Washington",
-      "rating": 7.360012421323239,
-      "common_opponent_rating": 7.387536844768237,
+      "rating": 7.3600124213232405,
+      "common_opponent_rating": 7.38753684476824,
       "results_rating": 7.277439150988245,
       "conference": "Big Ten",
       "completed_games": 7,
@@ -386,8 +386,8 @@
     {
       "rank": 36,
       "team": "UTSA",
-      "rating": 6.5938669248191255,
-      "common_opponent_rating": 7.9219047656277795,
+      "rating": 6.593866924819124,
+      "common_opponent_rating": 7.921904765627778,
       "results_rating": 2.609753402393164,
       "conference": "American Athletic",
       "completed_games": 7,
@@ -406,9 +406,9 @@
     {
       "rank": 38,
       "team": "Clemson",
-      "rating": 6.037002674250147,
+      "rating": 6.037002674250146,
       "common_opponent_rating": 6.391576190733207,
-      "results_rating": 4.973282124800966,
+      "results_rating": 4.973282124800964,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -417,7 +417,7 @@
       "rank": 39,
       "team": "Duke",
       "rating": 6.0189488513714124,
-      "common_opponent_rating": 5.755792490553999,
+      "common_opponent_rating": 5.755792490553998,
       "results_rating": 6.808417933823657,
       "conference": "ACC",
       "completed_games": 7,
@@ -426,8 +426,8 @@
     {
       "rank": 40,
       "team": "North Carolina",
-      "rating": 5.906446115027208,
-      "common_opponent_rating": 6.363145053886042,
+      "rating": 5.906446115027211,
+      "common_opponent_rating": 6.363145053886044,
       "results_rating": 4.53634929845071,
       "conference": "ACC",
       "completed_games": 7,
@@ -436,8 +436,8 @@
     {
       "rank": 41,
       "team": "Wisconsin",
-      "rating": 5.590932916040817,
-      "common_opponent_rating": 4.810101896823909,
+      "rating": 5.590932916040815,
+      "common_opponent_rating": 4.810101896823906,
       "results_rating": 7.93342597369154,
       "conference": "Big Ten",
       "completed_games": 7,
@@ -447,8 +447,8 @@
       "rank": 42,
       "team": "New Mexico",
       "rating": 4.562080611891313,
-      "common_opponent_rating": 3.8643729766466595,
-      "results_rating": 6.655203517625271,
+      "common_opponent_rating": 3.8643729766466604,
+      "results_rating": 6.655203517625269,
       "conference": "Mountain West",
       "completed_games": 7,
       "scheduled_games": 4
@@ -456,9 +456,9 @@
     {
       "rank": 43,
       "team": "Penn State",
-      "rating": 4.390988012571442,
-      "common_opponent_rating": 2.5970527617348034,
-      "results_rating": 9.772793765081357,
+      "rating": 4.390988012571439,
+      "common_opponent_rating": 2.5970527617347994,
+      "results_rating": 9.772793765081358,
       "conference": "Big Ten",
       "completed_games": 8,
       "scheduled_games": 4
@@ -466,8 +466,8 @@
     {
       "rank": 44,
       "team": "James Madison",
-      "rating": 4.297076142140671,
-      "common_opponent_rating": 3.3169782250926874,
+      "rating": 4.2970761421406705,
+      "common_opponent_rating": 3.316978225092687,
       "results_rating": 7.2373698932846215,
       "conference": "Sun Belt",
       "completed_games": 8,
@@ -478,7 +478,7 @@
       "team": "Virginia Tech",
       "rating": 4.257765997760763,
       "common_opponent_rating": 5.077881063413683,
-      "results_rating": 1.7974208008020018,
+      "results_rating": 1.797420800802002,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -486,8 +486,8 @@
     {
       "rank": 46,
       "team": "TCU",
-      "rating": 3.8319483674638635,
-      "common_opponent_rating": 3.7764327581358965,
+      "rating": 3.8319483674638617,
+      "common_opponent_rating": 3.776432758135894,
       "results_rating": 3.998495195447764,
       "conference": "Big 12",
       "completed_games": 7,
@@ -496,9 +496,9 @@
     {
       "rank": 47,
       "team": "Auburn",
-      "rating": 3.70209241539166,
-      "common_opponent_rating": 2.8813159380204283,
-      "results_rating": 6.164421847505356,
+      "rating": 3.7020924153916583,
+      "common_opponent_rating": 2.881315938020427,
+      "results_rating": 6.164421847505353,
       "conference": "SEC",
       "completed_games": 8,
       "scheduled_games": 3
@@ -506,9 +506,9 @@
     {
       "rank": 48,
       "team": "Texas State",
-      "rating": 3.552049611583423,
-      "common_opponent_rating": 4.2202178088660185,
-      "results_rating": 1.5475450197356346,
+      "rating": 3.552049611583422,
+      "common_opponent_rating": 4.220217808866018,
+      "results_rating": 1.5475450197356349,
       "conference": "Pac-12",
       "completed_games": 7,
       "scheduled_games": 3
@@ -517,8 +517,8 @@
       "rank": 49,
       "team": "Florida State",
       "rating": 3.199124598625285,
-      "common_opponent_rating": 3.0573586994988506,
-      "results_rating": 3.624422296004589,
+      "common_opponent_rating": 3.0573586994988515,
+      "results_rating": 3.6244222960045875,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -526,9 +526,9 @@
     {
       "rank": 50,
       "team": "Arizona State",
-      "rating": 3.041475671038227,
-      "common_opponent_rating": 4.282987469762228,
-      "results_rating": -0.6830597251337752,
+      "rating": 3.0414756710382274,
+      "common_opponent_rating": 4.2829874697622285,
+      "results_rating": -0.6830597251337749,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -536,8 +536,8 @@
     {
       "rank": 51,
       "team": "Minnesota",
-      "rating": 2.9015772724924096,
-      "common_opponent_rating": 3.1247413212037696,
+      "rating": 2.90157727249241,
+      "common_opponent_rating": 3.12474132120377,
       "results_rating": 2.2320851263583292,
       "conference": "Big Ten",
       "completed_games": 7,
@@ -546,8 +546,8 @@
     {
       "rank": 52,
       "team": "Pittsburgh",
-      "rating": 2.848770723844038,
-      "common_opponent_rating": 2.200312693390126,
+      "rating": 2.8487707238440385,
+      "common_opponent_rating": 2.200312693390127,
       "results_rating": 4.794144815205773,
       "conference": "ACC",
       "completed_games": 8,
@@ -556,9 +556,9 @@
     {
       "rank": 53,
       "team": "Oregon State",
-      "rating": 2.8338181483440867,
+      "rating": 2.8338181483440863,
       "common_opponent_rating": 3.0084140863263964,
-      "results_rating": 2.3100303343971578,
+      "results_rating": 2.3100303343971564,
       "conference": "Pac-12",
       "completed_games": 7,
       "scheduled_games": 3
@@ -566,8 +566,8 @@
     {
       "rank": 54,
       "team": "Illinois",
-      "rating": 2.812712838671847,
-      "common_opponent_rating": 2.5733584583132254,
+      "rating": 2.8127128386718474,
+      "common_opponent_rating": 2.5733584583132263,
       "results_rating": 3.530775979747711,
       "conference": "Big Ten",
       "completed_games": 7,
@@ -576,8 +576,8 @@
     {
       "rank": 55,
       "team": "Fresno State",
-      "rating": 2.1549026228418104,
-      "common_opponent_rating": 2.193643178216483,
+      "rating": 2.1549026228418096,
+      "common_opponent_rating": 2.193643178216482,
       "results_rating": 2.038680956717793,
       "conference": "Pac-12",
       "completed_games": 8,
@@ -586,9 +586,9 @@
     {
       "rank": 56,
       "team": "South Florida",
-      "rating": 1.8433673931156977,
-      "common_opponent_rating": 2.0385999869042255,
-      "results_rating": 1.2576696117501147,
+      "rating": 1.8433673931156944,
+      "common_opponent_rating": 2.038599986904221,
+      "results_rating": 1.257669611750115,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -596,9 +596,9 @@
     {
       "rank": 57,
       "team": "NC State",
-      "rating": 1.612383003003287,
-      "common_opponent_rating": 2.551189477742883,
-      "results_rating": -1.2040364212155013,
+      "rating": 1.6123830030032849,
+      "common_opponent_rating": 2.5511894777428803,
+      "results_rating": -1.204036421215501,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -606,8 +606,8 @@
     {
       "rank": 58,
       "team": "Mississippi State",
-      "rating": 1.592938660255621,
-      "common_opponent_rating": 0.1474570937493226,
+      "rating": 1.5929386602556204,
+      "common_opponent_rating": 0.14745709374932167,
       "results_rating": 5.9293833597745165,
       "conference": "SEC",
       "completed_games": 8,
@@ -616,8 +616,8 @@
     {
       "rank": 59,
       "team": "Ohio",
-      "rating": 1.4656587643492327,
-      "common_opponent_rating": 2.8007832869156326,
+      "rating": 1.4656587643492336,
+      "common_opponent_rating": 2.800783286915634,
       "results_rating": -2.5397148033499675,
       "conference": "Mid-American",
       "completed_games": 7,
@@ -626,8 +626,8 @@
     {
       "rank": 60,
       "team": "Jacksonville State",
-      "rating": 1.4295046563603313,
-      "common_opponent_rating": 2.8801503113818234,
+      "rating": 1.4295046563603322,
+      "common_opponent_rating": 2.8801503113818243,
       "results_rating": -2.9224323087041446,
       "conference": "Conference USA",
       "completed_games": 7,
@@ -636,8 +636,8 @@
     {
       "rank": 61,
       "team": "Kansas State",
-      "rating": 1.1149243848503783,
-      "common_opponent_rating": 0.8917220334774605,
+      "rating": 1.1149243848503771,
+      "common_opponent_rating": 0.8917220334774589,
       "results_rating": 1.7845314389691316,
       "conference": "Big 12",
       "completed_games": 7,
@@ -646,8 +646,8 @@
     {
       "rank": 62,
       "team": "Oklahoma State",
-      "rating": 1.0259262410699437,
-      "common_opponent_rating": 0.49812567315037265,
+      "rating": 1.0259262410699441,
+      "common_opponent_rating": 0.49812567315037304,
       "results_rating": 2.609327944828657,
       "conference": "Big 12",
       "completed_games": 7,
@@ -656,9 +656,9 @@
     {
       "rank": 63,
       "team": "Cincinnati",
-      "rating": 0.8841861816405585,
-      "common_opponent_rating": 1.1295833103222235,
-      "results_rating": 0.14799479559556342,
+      "rating": 0.8841861816405584,
+      "common_opponent_rating": 1.1295833103222233,
+      "results_rating": 0.1479947955955639,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -666,9 +666,9 @@
     {
       "rank": 64,
       "team": "Toledo",
-      "rating": 0.6746804522534113,
-      "common_opponent_rating": 1.0721010251108265,
-      "results_rating": -0.5175812663188344,
+      "rating": 0.6746804522534119,
+      "common_opponent_rating": 1.0721010251108272,
+      "results_rating": -0.517581266318834,
       "conference": "Mid-American",
       "completed_games": 7,
       "scheduled_games": 4
@@ -676,8 +676,8 @@
     {
       "rank": 65,
       "team": "North Texas",
-      "rating": 0.5465095518426517,
-      "common_opponent_rating": -0.09767092864383353,
+      "rating": 0.5465095518426494,
+      "common_opponent_rating": -0.09767092864383672,
       "results_rating": 2.4790509933021077,
       "conference": "American Athletic",
       "completed_games": 7,
@@ -686,8 +686,8 @@
     {
       "rank": 66,
       "team": "Georgia Southern",
-      "rating": 0.3864634460301961,
-      "common_opponent_rating": 1.3826286155418896,
+      "rating": 0.3864634460301972,
+      "common_opponent_rating": 1.382628615541891,
       "results_rating": -2.6020320625048843,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -696,8 +696,8 @@
     {
       "rank": 67,
       "team": "Louisiana Tech",
-      "rating": 0.3710852964288304,
-      "common_opponent_rating": 0.6374844504328245,
+      "rating": 0.3710852964288326,
+      "common_opponent_rating": 0.6374844504328274,
       "results_rating": -0.42811216558315185,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -706,9 +706,9 @@
     {
       "rank": 68,
       "team": "Western Michigan",
-      "rating": -0.08589028541824453,
-      "common_opponent_rating": 0.018668655630496377,
-      "results_rating": -0.39956710856446725,
+      "rating": -0.0858902854182447,
+      "common_opponent_rating": 0.01866865563049594,
+      "results_rating": -0.3995671085644666,
       "conference": "Mid-American",
       "completed_games": 8,
       "scheduled_games": 3
@@ -716,9 +716,9 @@
     {
       "rank": 69,
       "team": "Arkansas",
-      "rating": -0.1685933576657955,
-      "common_opponent_rating": 0.1344631748538421,
-      "results_rating": -1.0777629552247083,
+      "rating": -0.1685933576657973,
+      "common_opponent_rating": 0.1344631748538398,
+      "results_rating": -1.0777629552247086,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -726,8 +726,8 @@
     {
       "rank": 70,
       "team": "UNLV",
-      "rating": -0.3027998209675103,
-      "common_opponent_rating": 0.26735823098049666,
+      "rating": -0.30279982096751046,
+      "common_opponent_rating": 0.26735823098049644,
       "results_rating": -2.013273976811531,
       "conference": "Mountain West",
       "completed_games": 8,
@@ -736,8 +736,8 @@
     {
       "rank": 71,
       "team": "North Dakota State",
-      "rating": -0.6694011102443946,
-      "common_opponent_rating": -1.562444247175211,
+      "rating": -0.6694011102443944,
+      "common_opponent_rating": -1.5624442471752107,
       "results_rating": 2.009728300548054,
       "conference": "Mountain West",
       "completed_games": 8,
@@ -746,8 +746,8 @@
     {
       "rank": 72,
       "team": "Kansas",
-      "rating": -0.9760980799795207,
-      "common_opponent_rating": -2.040959044079185,
+      "rating": -0.976098079979522,
+      "common_opponent_rating": -2.040959044079187,
       "results_rating": 2.2184848123194723,
       "conference": "Big 12",
       "completed_games": 7,
@@ -756,9 +756,9 @@
     {
       "rank": 73,
       "team": "Louisiana",
-      "rating": -1.0641858535145212,
-      "common_opponent_rating": -1.118466015470024,
-      "results_rating": -0.9013453676480125,
+      "rating": -1.064185853514521,
+      "common_opponent_rating": -1.1184660154700239,
+      "results_rating": -0.9013453676480122,
       "conference": "Sun Belt",
       "completed_games": 7,
       "scheduled_games": 4
@@ -766,9 +766,9 @@
     {
       "rank": 74,
       "team": "Syracuse",
-      "rating": -1.1700847084733612,
-      "common_opponent_rating": -0.6651759371123624,
-      "results_rating": -2.6848110225563575,
+      "rating": -1.170084708473361,
+      "common_opponent_rating": -0.6651759371123621,
+      "results_rating": -2.684811022556358,
       "conference": "ACC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -776,9 +776,9 @@
     {
       "rank": 75,
       "team": "Vanderbilt",
-      "rating": -1.3997789090584898,
-      "common_opponent_rating": -2.065225969208672,
-      "results_rating": 0.5965622713920555,
+      "rating": -1.3997789090584893,
+      "common_opponent_rating": -2.065225969208671,
+      "results_rating": 0.5965622713920559,
       "conference": "SEC",
       "completed_games": 7,
       "scheduled_games": 4
@@ -786,9 +786,9 @@
     {
       "rank": 76,
       "team": "West Virginia",
-      "rating": -1.6442657188374399,
-      "common_opponent_rating": -1.6250228976433145,
-      "results_rating": -1.701994182419816,
+      "rating": -1.6442657188374388,
+      "common_opponent_rating": -1.6250228976433132,
+      "results_rating": -1.7019941824198157,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -796,9 +796,9 @@
     {
       "rank": 77,
       "team": "Iowa State",
-      "rating": -1.9367065690649488,
-      "common_opponent_rating": -3.4024582689088487,
-      "results_rating": 2.4605485304667516,
+      "rating": -1.936706569064949,
+      "common_opponent_rating": -3.4024582689088496,
+      "results_rating": 2.4605485304667525,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -806,9 +806,9 @@
     {
       "rank": 78,
       "team": "UConn",
-      "rating": -2.5438617168710183,
-      "common_opponent_rating": -2.2636631552829956,
-      "results_rating": -3.3844574016350855,
+      "rating": -2.54386171687102,
+      "common_opponent_rating": -2.263663155282998,
+      "results_rating": -3.3844574016350863,
       "conference": "FBS Independents",
       "completed_games": 7,
       "scheduled_games": 4
@@ -816,9 +816,9 @@
     {
       "rank": 79,
       "team": "Utah State",
-      "rating": -2.551327846029696,
-      "common_opponent_rating": -2.837142356756388,
-      "results_rating": -1.6938843138496207,
+      "rating": -2.551327846029695,
+      "common_opponent_rating": -2.837142356756387,
+      "results_rating": -1.6938843138496198,
       "conference": "Pac-12",
       "completed_games": 7,
       "scheduled_games": 3
@@ -827,7 +827,7 @@
       "rank": 80,
       "team": "Marshall",
       "rating": -2.8046507237140066,
-      "common_opponent_rating": -1.145125591402549,
+      "common_opponent_rating": -1.1451255914025495,
       "results_rating": -7.783226120648378,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -838,7 +838,7 @@
       "team": "Purdue",
       "rating": -3.1177384896373663,
       "common_opponent_rating": -4.172256464535138,
-      "results_rating": 0.04581543505594937,
+      "results_rating": 0.045815435055949684,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -846,8 +846,8 @@
     {
       "rank": 82,
       "team": "Boston College",
-      "rating": -3.1364702532057773,
-      "common_opponent_rating": -2.8556488538790683,
+      "rating": -3.1364702532057755,
+      "common_opponent_rating": -2.855648853879066,
       "results_rating": -3.978934451185903,
       "conference": "ACC",
       "completed_games": 7,
@@ -858,7 +858,7 @@
       "team": "Tulane",
       "rating": -3.243082063159159,
       "common_opponent_rating": -3.381052859242855,
-      "results_rating": -2.8291696749080706,
+      "results_rating": -2.829169674908071,
       "conference": "American Athletic",
       "completed_games": 8,
       "scheduled_games": 4
@@ -866,9 +866,9 @@
     {
       "rank": 84,
       "team": "Virginia",
-      "rating": -3.8846250663959436,
-      "common_opponent_rating": -4.843765366979003,
-      "results_rating": -1.0072041646467644,
+      "rating": -3.8846250663959467,
+      "common_opponent_rating": -4.8437653669790075,
+      "results_rating": -1.0072041646467642,
       "conference": "ACC",
       "completed_games": 8,
       "scheduled_games": 3
@@ -878,7 +878,7 @@
       "team": "UCF",
       "rating": -4.2952337388687605,
       "common_opponent_rating": -5.194174128543732,
-      "results_rating": -1.5984125698438436,
+      "results_rating": -1.5984125698438434,
       "conference": "Big 12",
       "completed_games": 7,
       "scheduled_games": 4
@@ -886,8 +886,8 @@
     {
       "rank": 86,
       "team": "App State",
-      "rating": -5.052287871629485,
-      "common_opponent_rating": -4.45825026719301,
+      "rating": -5.052287871629483,
+      "common_opponent_rating": -4.458250267193008,
       "results_rating": -6.834400684938909,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -898,7 +898,7 @@
       "team": "Michigan State",
       "rating": -5.208324769751716,
       "common_opponent_rating": -6.766129024352674,
-      "results_rating": -0.5349120059488399,
+      "results_rating": -0.5349120059488396,
       "conference": "Big Ten",
       "completed_games": 8,
       "scheduled_games": 4
@@ -907,7 +907,7 @@
       "rank": 88,
       "team": "Arkansas State",
       "rating": -5.442699025056587,
-      "common_opponent_rating": -5.151547453209615,
+      "common_opponent_rating": -5.151547453209614,
       "results_rating": -6.316153740597505,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -916,8 +916,8 @@
     {
       "rank": 89,
       "team": "Colorado",
-      "rating": -5.571464120841374,
-      "common_opponent_rating": -5.330004829180988,
+      "rating": -5.571464120841376,
+      "common_opponent_rating": -5.330004829180989,
       "results_rating": -6.295841995822534,
       "conference": "Big 12",
       "completed_games": 7,
@@ -926,9 +926,9 @@
     {
       "rank": 90,
       "team": "Wyoming",
-      "rating": -5.684652770530386,
-      "common_opponent_rating": -4.181517903676578,
-      "results_rating": -10.194057371091809,
+      "rating": -5.684652770530384,
+      "common_opponent_rating": -4.181517903676577,
+      "results_rating": -10.194057371091807,
       "conference": "Mountain West",
       "completed_games": 7,
       "scheduled_games": 4
@@ -937,7 +937,7 @@
       "rank": 91,
       "team": "Georgia Tech",
       "rating": -6.174272516400845,
-      "common_opponent_rating": -6.420639100386241,
+      "common_opponent_rating": -6.420639100386242,
       "results_rating": -5.435172764444656,
       "conference": "ACC",
       "completed_games": 7,
@@ -956,8 +956,8 @@
     {
       "rank": 93,
       "team": "Delaware",
-      "rating": -6.293210660688656,
-      "common_opponent_rating": -5.8625669652313235,
+      "rating": -6.293210660688654,
+      "common_opponent_rating": -5.862566965231321,
       "results_rating": -7.585141747060655,
       "conference": "Conference USA",
       "completed_games": 7,
@@ -968,7 +968,7 @@
       "team": "East Carolina",
       "rating": -6.320840375918595,
       "common_opponent_rating": -6.672716643335201,
-      "results_rating": -5.265211573668775,
+      "results_rating": -5.265211573668776,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -976,8 +976,8 @@
     {
       "rank": 95,
       "team": "Air Force",
-      "rating": -6.47049194087192,
-      "common_opponent_rating": -6.546465730067676,
+      "rating": -6.470491940871922,
+      "common_opponent_rating": -6.546465730067679,
       "results_rating": -6.242570573284652,
       "conference": "Mountain West",
       "completed_games": 7,
@@ -996,8 +996,8 @@
     {
       "rank": 97,
       "team": "Troy",
-      "rating": -7.050957456936159,
-      "common_opponent_rating": -7.22511595352409,
+      "rating": -7.050957456936156,
+      "common_opponent_rating": -7.225115953524087,
       "results_rating": -6.528481967172365,
       "conference": "Sun Belt",
       "completed_games": 7,
@@ -1008,7 +1008,7 @@
       "team": "Miami (OH)",
       "rating": -7.22880426220517,
       "common_opponent_rating": -6.733775407738864,
-      "results_rating": -8.71389082560409,
+      "results_rating": -8.713890825604087,
       "conference": "Mid-American",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1016,9 +1016,9 @@
     {
       "rank": 99,
       "team": "UAB",
-      "rating": -7.47322986557719,
-      "common_opponent_rating": -6.846554103975075,
-      "results_rating": -9.353257150383534,
+      "rating": -7.473229865577192,
+      "common_opponent_rating": -6.846554103975078,
+      "results_rating": -9.353257150383532,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1037,8 +1037,8 @@
       "rank": 101,
       "team": "Hawai'i",
       "rating": -7.507751150226669,
-      "common_opponent_rating": -7.310737307538892,
-      "results_rating": -8.098792678290003,
+      "common_opponent_rating": -7.310737307538891,
+      "results_rating": -8.098792678290001,
       "conference": "Mountain West",
       "completed_games": 8,
       "scheduled_games": 4
@@ -1046,8 +1046,8 @@
     {
       "rank": 102,
       "team": "California",
-      "rating": -7.865833631057896,
-      "common_opponent_rating": -7.950910018033238,
+      "rating": -7.8658336310579,
+      "common_opponent_rating": -7.950910018033242,
       "results_rating": -7.61060447013187,
       "conference": "ACC",
       "completed_games": 8,
@@ -1066,8 +1066,8 @@
     {
       "rank": 104,
       "team": "Washington State",
-      "rating": -8.339450005404162,
-      "common_opponent_rating": -8.958119439240075,
+      "rating": -8.339450005404164,
+      "common_opponent_rating": -8.958119439240079,
       "results_rating": -6.483441703896421,
       "conference": "Pac-12",
       "completed_games": 8,
@@ -1076,9 +1076,9 @@
     {
       "rank": 105,
       "team": "Central Michigan",
-      "rating": -8.53351217340896,
-      "common_opponent_rating": -8.322688958835874,
-      "results_rating": -9.165981817128218,
+      "rating": -8.533512173408958,
+      "common_opponent_rating": -8.32268895883587,
+      "results_rating": -9.165981817128216,
       "conference": "Mid-American",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1087,8 +1087,8 @@
       "rank": 106,
       "team": "Florida Atlantic",
       "rating": -8.58078037424071,
-      "common_opponent_rating": -8.118791881220456,
-      "results_rating": -9.966745853301468,
+      "common_opponent_rating": -8.118791881220458,
+      "results_rating": -9.966745853301466,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1096,9 +1096,9 @@
     {
       "rank": 107,
       "team": "South Alabama",
-      "rating": -8.597072582258122,
-      "common_opponent_rating": -9.28758359888287,
-      "results_rating": -6.525539532383876,
+      "rating": -8.597072582258118,
+      "common_opponent_rating": -9.287583598882867,
+      "results_rating": -6.525539532383877,
       "conference": "Sun Belt",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1107,7 +1107,7 @@
       "rank": 108,
       "team": "Western Kentucky",
       "rating": -8.64710100254428,
-      "common_opponent_rating": -7.625324884275424,
+      "common_opponent_rating": -7.625324884275423,
       "results_rating": -11.712429357350851,
       "conference": "Conference USA",
       "completed_games": 7,
@@ -1116,8 +1116,8 @@
     {
       "rank": 109,
       "team": "San Diego State",
-      "rating": -8.756818294196096,
-      "common_opponent_rating": -9.15637588433799,
+      "rating": -8.756818294196094,
+      "common_opponent_rating": -9.156375884337988,
       "results_rating": -7.558145523770413,
       "conference": "Pac-12",
       "completed_games": 8,
@@ -1128,7 +1128,7 @@
       "team": "Maryland",
       "rating": -8.79387465968681,
       "common_opponent_rating": -9.331951493915229,
-      "results_rating": -7.179644157001553,
+      "results_rating": -7.179644157001555,
       "conference": "Big Ten",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1136,9 +1136,9 @@
     {
       "rank": 111,
       "team": "Buffalo",
-      "rating": -8.972424371264951,
-      "common_opponent_rating": -8.882558006411093,
-      "results_rating": -9.242023465826529,
+      "rating": -8.97242437126495,
+      "common_opponent_rating": -8.882558006411092,
+      "results_rating": -9.242023465826525,
       "conference": "Mid-American",
       "completed_games": 6,
       "scheduled_games": 4
@@ -1156,9 +1156,9 @@
     {
       "rank": 113,
       "team": "Temple",
-      "rating": -9.15726985155498,
+      "rating": -9.157269851554979,
       "common_opponent_rating": -9.354037072139969,
-      "results_rating": -8.566968189800013,
+      "results_rating": -8.566968189800011,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1167,7 +1167,7 @@
       "rank": 114,
       "team": "Florida International",
       "rating": -9.179512886551828,
-      "common_opponent_rating": -9.952652875481478,
+      "common_opponent_rating": -9.95265287548148,
       "results_rating": -6.860092919762875,
       "conference": "Conference USA",
       "completed_games": 7,
@@ -1176,8 +1176,8 @@
     {
       "rank": 115,
       "team": "Army",
-      "rating": -9.204632876493138,
-      "common_opponent_rating": -10.608197432096308,
+      "rating": -9.204632876493143,
+      "common_opponent_rating": -10.608197432096313,
       "results_rating": -4.99393920968363,
       "conference": "American Athletic",
       "completed_games": 7,
@@ -1186,9 +1186,9 @@
     {
       "rank": 116,
       "team": "Kennesaw State",
-      "rating": -9.511215174630259,
-      "common_opponent_rating": -9.775447017455575,
-      "results_rating": -8.718519646154313,
+      "rating": -9.511215174630257,
+      "common_opponent_rating": -9.775447017455573,
+      "results_rating": -8.718519646154311,
       "conference": "Conference USA",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1198,7 +1198,7 @@
       "team": "Southern Miss",
       "rating": -9.652161399280374,
       "common_opponent_rating": -8.957360228289621,
-      "results_rating": -11.736564912252636,
+      "results_rating": -11.736564912252634,
       "conference": "Sun Belt",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1206,9 +1206,9 @@
     {
       "rank": 118,
       "team": "Stanford",
-      "rating": -10.590924522271665,
+      "rating": -10.590924522271663,
       "common_opponent_rating": -10.63293762335411,
-      "results_rating": -10.46488521902433,
+      "results_rating": -10.464885219024328,
       "conference": "ACC",
       "completed_games": 8,
       "scheduled_games": 3
@@ -1216,9 +1216,9 @@
     {
       "rank": 119,
       "team": "Navy",
-      "rating": -11.438218202031061,
-      "common_opponent_rating": -13.036247887026565,
-      "results_rating": -6.644129147044546,
+      "rating": -11.43821820203106,
+      "common_opponent_rating": -13.036247887026564,
+      "results_rating": -6.644129147044544,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1228,7 +1228,7 @@
       "team": "Eastern Michigan",
       "rating": -11.485586197514229,
       "common_opponent_rating": -11.486667553015396,
-      "results_rating": -11.482342131010727,
+      "results_rating": -11.482342131010725,
       "conference": "Mid-American",
       "completed_games": 8,
       "scheduled_games": 3
@@ -1236,9 +1236,9 @@
     {
       "rank": 121,
       "team": "Missouri State",
-      "rating": -12.050522020749229,
+      "rating": -12.050522020749227,
       "common_opponent_rating": -11.85078531156652,
-      "results_rating": -12.649732148297351,
+      "results_rating": -12.64973214829735,
       "conference": "Conference USA",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1247,8 +1247,8 @@
       "rank": 122,
       "team": "Bowling Green",
       "rating": -12.363082309678067,
-      "common_opponent_rating": -11.554167492047366,
-      "results_rating": -14.789826762570172,
+      "common_opponent_rating": -11.554167492047364,
+      "results_rating": -14.78982676257017,
       "conference": "Mid-American",
       "completed_games": 8,
       "scheduled_games": 3
@@ -1256,9 +1256,9 @@
     {
       "rank": 123,
       "team": "Colorado State",
-      "rating": -12.948287241170158,
+      "rating": -12.948287241170156,
       "common_opponent_rating": -13.358031637552482,
-      "results_rating": -11.719054052023187,
+      "results_rating": -11.719054052023186,
       "conference": "Pac-12",
       "completed_games": 7,
       "scheduled_games": 3
@@ -1267,8 +1267,8 @@
       "rank": 124,
       "team": "San Jos\u00e9 State",
       "rating": -13.312758455803644,
-      "common_opponent_rating": -14.683842963501558,
-      "results_rating": -9.199504932709907,
+      "common_opponent_rating": -14.683842963501556,
+      "results_rating": -9.199504932709905,
       "conference": "Mountain West",
       "completed_games": 8,
       "scheduled_games": 4
@@ -1276,9 +1276,9 @@
     {
       "rank": 125,
       "team": "Rice",
-      "rating": -13.520494077436293,
-      "common_opponent_rating": -13.600943486833348,
-      "results_rating": -13.279145849245124,
+      "rating": -13.52049407743629,
+      "common_opponent_rating": -13.600943486833346,
+      "results_rating": -13.279145849245122,
       "conference": "American Athletic",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1286,8 +1286,8 @@
     {
       "rank": 126,
       "team": "Ball State",
-      "rating": -13.581868876011914,
-      "common_opponent_rating": -12.415354070263868,
+      "rating": -13.58186887601191,
+      "common_opponent_rating": -12.415354070263867,
       "results_rating": -17.081413293256045,
       "conference": "Mid-American",
       "completed_games": 7,
@@ -1298,7 +1298,7 @@
       "team": "Old Dominion",
       "rating": -14.283780359679358,
       "common_opponent_rating": -15.047540939035597,
-      "results_rating": -11.992498621610642,
+      "results_rating": -11.99249862161064,
       "conference": "Sun Belt",
       "completed_games": 8,
       "scheduled_games": 3
@@ -1308,7 +1308,7 @@
       "team": "Middle Tennessee",
       "rating": -15.01073064187886,
       "common_opponent_rating": -15.74021411342687,
-      "results_rating": -12.822280227234836,
+      "results_rating": -12.822280227234835,
       "conference": "Conference USA",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1318,7 +1318,7 @@
       "team": "New Mexico State",
       "rating": -16.240191896407545,
       "common_opponent_rating": -16.83504926047439,
-      "results_rating": -14.455619804207025,
+      "results_rating": -14.455619804207023,
       "conference": "Conference USA",
       "completed_games": 7,
       "scheduled_games": 4
@@ -1327,8 +1327,8 @@
       "rank": 130,
       "team": "Massachusetts",
       "rating": -16.820012595559934,
-      "common_opponent_rating": -17.44522953119705,
-      "results_rating": -14.94436178864859,
+      "common_opponent_rating": -17.445229531197047,
+      "results_rating": -14.944361788648589,
       "conference": "Mid-American",
       "completed_games": 6,
       "scheduled_games": 4
@@ -1346,8 +1346,8 @@
     {
       "rank": 132,
       "team": "Akron",
-      "rating": -18.40367642154741,
-      "common_opponent_rating": -18.261957629569558,
+      "rating": -18.403676421547406,
+      "common_opponent_rating": -18.261957629569554,
       "results_rating": -18.828832797480956,
       "conference": "Mid-American",
       "completed_games": 7,
@@ -1366,8 +1366,8 @@
     {
       "rank": 134,
       "team": "Kent State",
-      "rating": -18.95103562857442,
-      "common_opponent_rating": -18.994886364533453,
+      "rating": -18.951035628574417,
+      "common_opponent_rating": -18.99488636453345,
       "results_rating": -18.819483420697324,
       "conference": "Mid-American",
       "completed_games": 8,
@@ -1396,8 +1396,8 @@
     {
       "rank": 137,
       "team": "Sacramento State",
-      "rating": -19.729717885885005,
-      "common_opponent_rating": -19.040350608479713,
+      "rating": -19.729717885885,
+      "common_opponent_rating": -19.04035060847971,
       "results_rating": -21.797819718100886,
       "conference": "Mid-American",
       "completed_games": 8,

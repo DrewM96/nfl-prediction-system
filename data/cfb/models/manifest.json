@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "sport": "college_football",
-  "created_at": "2026-11-01T15:07:54.644555+00:00",
+  "created_at": "2026-11-02T20:57:15.947241+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2018,
@@ -14,7 +14,7 @@
     2025,
     2026
   ],
-  "data_cutoff": "2026-11-01T15:07:23.267413+00:00",
+  "data_cutoff": "2026-11-02T20:56:50.772059+00:00",
   "selected_configurations": {
     "margin": "elo_form_advanced_preseason",
     "total": "elo_form_advanced"
@@ -108,8 +108,8 @@
         "winner_calibration_error": 0.019902773526285097
       },
       "file": {
-        "path": "v1_margin_31feb21f515043a896eb98020d9fce7e.joblib",
-        "sha256": "629090a62211c82a5f5830d7b96b4cb9944b6470b61ff6a547a052082f6e2481"
+        "path": "v1_margin_3a98c3a342c54ad3afb14b148e7810cf.joblib",
+        "sha256": "3b80d041b98c9f0ef8f72d8e29a242b69e04946db08f391480e0ab7eda715a56"
       }
     },
     "total": {
@@ -168,7 +168,7 @@
         "pinball_p90": 3.061944990340265
       },
       "file": {
-        "path": "v1_total_31feb21f515043a896eb98020d9fce7e.joblib",
+        "path": "v1_total_3a98c3a342c54ad3afb14b148e7810cf.joblib",
         "sha256": "6bc53839afaa78fc8ab14d89a6497e0a6fd8fa3eb79603bd6b56bf5d8135ff80"
       }
     }
