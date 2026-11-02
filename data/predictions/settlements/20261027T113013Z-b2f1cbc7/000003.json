@@ -1,0 +1,14 @@
+{
+  "run_id": "20261027T113013Z-b2f1cbc7",
+  "revision": 3,
+  "scored_at": "2026-11-02T18:28:21.954721+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_08_PHI_WAS",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 37.0
+    }
+  ]
+}
