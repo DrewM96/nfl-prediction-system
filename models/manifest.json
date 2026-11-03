@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-11-03T12:27:58.200021+00:00",
+  "created_at": "2026-11-03T19:31:31.525780+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,8 +10,8 @@
     2026
   ],
   "data_cutoff": "2026-11-02",
-  "raw_data_hash": "ecfb355aa2381b9b6b0a54c0009683e77ea3f08d8d0185385030e72f24d1df26",
-  "git_commit": "41429bfbaacfefa69dbfaef379887beb8a8d5b96",
+  "raw_data_hash": "5b12e272029cc064f7d1fb807ec40f383eba9a054a4d44e023baf87adbfe3a9a",
+  "git_commit": "09a80012c7abbecfa12f7c081a6fb07c82c9b5be",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -73,12 +73,12 @@
       },
       "files": [
         {
-          "path": "v3_game_margin_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_game_margin_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.7373089392589153,
-          "sha256": "ef780687f583ac83802f8168f3d400f7f7030128362f758f88ba0ec41802ffe7"
+          "sha256": "f33b351fe5d3d8d13b78fc3f357024500133c5c57128821d31c5c01244f202a5"
         },
         {
-          "path": "v3_game_margin_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_game_margin_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.2626910607410847,
           "sha256": "3342c69af883deb5d7e483f076306e6a0ad4017a558b9addbab9667e32a1e96b"
         }
@@ -136,18 +136,18 @@
         "pinball_p90": 2.558470620334276,
         "baseline_mae": 10.924535631314837,
         "mae_improvement_vs_baseline": 0.3048515089772117,
-        "mae_difference_vs_baseline_95_low": -0.5197081568392155,
+        "mae_difference_vs_baseline_95_low": -0.5197081568392156,
         "mae_difference_vs_baseline_95_high": -0.08305784543454706,
         "latest_holdout_baseline_mae": 11.874590295976368
       },
       "files": [
         {
-          "path": "v3_game_total_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_game_total_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.6490951033364553,
-          "sha256": "506ca0cfbfa303d0703fd36120b201ddb066e5a0c7e39faf10fa8d71a4e8befa"
+          "sha256": "1eb30b643faa071611fb39bd6bb9edc4264d0754e497a1535b5cef2de388ed3a"
         },
         {
-          "path": "v3_game_total_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_game_total_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.35090489666354474,
           "sha256": "7d36320ac0774c49b3b41a6349e19048f990ab4f49c6a31f4a0d6730f3efe0b8"
         }
@@ -190,17 +190,17 @@
       },
       "files": [
         {
-          "path": "v3_passing_yards_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_passing_yards_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.30564854881446435,
-          "sha256": "2fafeb49cefd6181f084cfb4c1a8995be7595686e362186bcf3161e75211dc5a"
+          "sha256": "d351abb7c59cbe2753cf5a00fc88e19f07b02caca11932b42551c11623c42c89"
         },
         {
-          "path": "v3_passing_yards_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_passing_yards_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.5143514511855357,
           "sha256": "78e7de9037043b40e9f3e94c162e5f18a1f385979a928d05f466fb5c2b3d2f93"
         },
         {
-          "path": "v3_passing_yards_2_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_passing_yards_2_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.17999999999999994,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -244,17 +244,17 @@
       },
       "files": [
         {
-          "path": "v3_receiving_yards_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receiving_yards_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.6021206161617456,
           "sha256": "2a86c79dae8dd9627b8c07f681fe85a2e42a41e8861b53a134b72f9c74f5d8f5"
         },
         {
-          "path": "v3_receiving_yards_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receiving_yards_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.2078793838382544,
           "sha256": "99ab13237bd597134928a0c9fc5bf726d629e4410ee3c68a45abd0f6f1d1511f"
         },
         {
-          "path": "v3_receiving_yards_2_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receiving_yards_2_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.18999999999999995,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -296,17 +296,17 @@
       },
       "files": [
         {
-          "path": "v3_receptions_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receptions_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.5766220612617413,
           "sha256": "b5d04f7d305022813562e15809f8787efc1908ebc422143e83845f6f92117843"
         },
         {
-          "path": "v3_receptions_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receptions_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.1933779387382587,
           "sha256": "b3aab8a996b7759b130a77ffa0e10ca889eb9f44a06952ad1958a988c53bf40b"
         },
         {
-          "path": "v3_receptions_2_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_receptions_2_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.22999999999999998,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -348,17 +348,17 @@
       },
       "files": [
         {
-          "path": "v3_rushing_yards_0_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_rushing_yards_0_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.29766098276761244,
           "sha256": "bc4380aec248700273f18ea777ba82a6985d10b24ecd77784b8c94ccee0ac623"
         },
         {
-          "path": "v3_rushing_yards_1_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_rushing_yards_1_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.13233901723238758,
           "sha256": "7f7b2d6e3bb2b4ba9e48961e77f9bd12dab6192d35ce509dbe476c6cd6e70708"
         },
         {
-          "path": "v3_rushing_yards_2_279fa7d3c2924bddb03b9293c5934bc4.joblib",
+          "path": "v3_rushing_yards_2_ac1fdcd03bb54c0f9fd1b3dd83b1597b.joblib",
           "weight": 0.5700000000000001,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
