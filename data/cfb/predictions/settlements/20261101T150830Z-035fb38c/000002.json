@@ -1,0 +1,26 @@
+{
+  "run_id": "20261101T150830Z-035fb38c",
+  "revision": 2,
+  "scored_at": "2026-11-05T11:03:05.535282+00:00",
+  "source": "CollegeFootballData games",
+  "results": [
+    {
+      "game_id": "401866455",
+      "status": "final",
+      "actual_home_margin": 1.0,
+      "actual_total": 61.0
+    },
+    {
+      "game_id": "401866457",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 37.0
+    },
+    {
+      "game_id": "401866456",
+      "status": "final",
+      "actual_home_margin": -28.0,
+      "actual_total": 42.0
+    }
+  ]
+}
