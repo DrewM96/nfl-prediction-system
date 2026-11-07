@@ -1022,10 +1022,10 @@
     },
     {
       "run_id": "20261101T150830Z-035fb38c",
-      "games": 12,
-      "margin_mae": 16.205891375531092,
-      "total_mae": 12.659969914607949,
-      "winner_accuracy": 0.5833333333333334,
+      "games": 13,
+      "margin_mae": 16.017899031560493,
+      "total_mae": 11.687819196101568,
+      "winner_accuracy": 0.6153846153846154,
       "market_games": 5,
       "matched_model_margin_mae": 14.44733299146291,
       "market_margin_mae": 12.1,
@@ -1090,16 +1090,16 @@
     },
     {
       "run_id": "20261102T205752Z-a70f1e93",
-      "games": 12,
-      "margin_mae": 16.20589137553109,
-      "total_mae": 12.659969914607949,
-      "winner_accuracy": 0.5833333333333334,
-      "market_games": 12,
-      "matched_model_margin_mae": 16.20589137553109,
-      "market_margin_mae": 15.25,
-      "market_total_games": 12,
-      "matched_model_total_mae": 12.659969914607949,
-      "market_total_mae": 12.166666666666666,
+      "games": 13,
+      "margin_mae": 16.017899031560493,
+      "total_mae": 11.687819196101568,
+      "winner_accuracy": 0.6153846153846154,
+      "market_games": 13,
+      "matched_model_margin_mae": 16.017899031560493,
+      "market_margin_mae": 14.846153846153847,
+      "market_total_games": 13,
+      "matched_model_total_mae": 11.687819196101568,
+      "market_total_mae": 11.615384615384615,
       "margin_disagreement_buckets": [
         {
           "bucket": "0-2",
@@ -1113,13 +1113,13 @@
         },
         {
           "bucket": "2-4",
-          "games": 2,
+          "games": 3,
           "wins": 0,
-          "losses": 2,
+          "losses": 3,
           "pushes": 0,
           "ats_rate": 0.0,
-          "model_mae": 14.208330970772513,
-          "market_mae": 11.75
+          "model_mae": 14.05955094848612,
+          "market_mae": 11.166666666666666
         },
         {
           "bucket": "4-6",
@@ -1157,6 +1157,6 @@
       "qb_shadow_independent_margin_mae": null
     }
   ],
-  "updated_at": "2026-11-07T08:52:34.365331+00:00",
+  "updated_at": "2026-11-07T20:16:12.702718+00:00",
   "schema_version": 3
 }
