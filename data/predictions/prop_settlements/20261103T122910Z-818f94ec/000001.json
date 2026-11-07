@@ -1,0 +1,416 @@
+{
+  "run_id": "20261103T122910Z-818f94ec",
+  "revision": 1,
+  "scored_at": "2026-11-07T17:48:51.667831+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034437:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036971:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 242.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040981:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 30.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 57.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 85.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036971:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 29.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040981:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 65.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036590:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038935:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040879:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040887:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041084:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041503:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036590:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038935:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040879:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040887:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041084:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041503:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    }
+  ]
+}
