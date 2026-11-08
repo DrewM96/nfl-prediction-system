@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "sport": "college_football",
-  "created_at": "2026-11-02T20:57:15.947241+00:00",
+  "created_at": "2026-11-08T15:43:06.583280+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2018,
@@ -14,7 +14,7 @@
     2025,
     2026
   ],
-  "data_cutoff": "2026-11-02T20:56:50.772059+00:00",
+  "data_cutoff": "2026-11-08T15:42:39.225936+00:00",
   "selected_configurations": {
     "margin": "elo_form_advanced_preseason",
     "total": "elo_form_advanced"
@@ -25,7 +25,7 @@
     "talent_teams": 138,
     "recruiting_teams": 138,
     "portal_records": 4484,
-    "completed_games": 622
+    "completed_games": 685
   },
   "benchmark_sha256": "5763b54e5921d7558a771436fa2835aa1483a3d8c2f43f1166953b98f1999883",
   "git_commit": null,
@@ -84,32 +84,32 @@
         "away_recruiting_points_z",
         "away_portal_net_rating_z"
       ],
-      "residual_std": 16.326235369281846,
+      "residual_std": 16.346109869804035,
       "metrics": {
         "ridge_alpha": 50.0,
-        "training_rows": 6205.0,
-        "oof_rows": 4970.0,
-        "mae": 12.937355080036804,
-        "rmse": 16.326390464104346,
-        "bias": 0.2422709874155276,
-        "residual_std": 16.326235369281846,
+        "training_rows": 6267.0,
+        "oof_rows": 5032.0,
+        "mae": 12.94740894417473,
+        "rmse": 16.347535723693845,
+        "bias": 0.31577775138064673,
+        "residual_std": 16.346109869804035,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 500.0,
-        "latest_holdout_mae": 12.629851564709554,
-        "uncertainty_oof_rows": 4922.0,
-        "interval_80_coverage": 0.8035351483136937,
-        "interval_80_mean_width": 41.85251771079177,
-        "pinball_p10": 2.9280974063889307,
-        "pinball_p90": 2.855635699374201,
-        "winner_oof_rows": 4922.0,
-        "winner_brier": 0.18645641130071253,
-        "winner_log_loss": 0.5503281806113017,
-        "winner_calibration_error": 0.019902773526285097
+        "latest_holdout_rows": 562.0,
+        "latest_holdout_mae": 12.753795091920118,
+        "uncertainty_oof_rows": 4984.0,
+        "interval_80_coverage": 0.8031701444622793,
+        "interval_80_mean_width": 41.8524541282959,
+        "pinball_p10": 2.9310265209371646,
+        "pinball_p90": 2.8604378089514113,
+        "winner_oof_rows": 4984.0,
+        "winner_brier": 0.18689188528757625,
+        "winner_log_loss": 0.5513841010114506,
+        "winner_calibration_error": 0.020695832070173743
       },
       "file": {
-        "path": "v1_margin_3a98c3a342c54ad3afb14b148e7810cf.joblib",
-        "sha256": "3b80d041b98c9f0ef8f72d8e29a242b69e04946db08f391480e0ab7eda715a56"
+        "path": "v1_margin_b9f6324885bb4499a9c886ad78b5d572.joblib",
+        "sha256": "2d056b222990bfc1cb5fba6a26ff22b70da378a7c6321546969b526dc8f9239b"
       }
     },
     "total": {
@@ -148,28 +148,28 @@
         "away_off_explosiveness_l6",
         "away_def_explosiveness_l6"
       ],
-      "residual_std": 16.428088232160093,
+      "residual_std": 16.430093797478147,
       "metrics": {
         "ridge_alpha": 50.0,
-        "training_rows": 6205.0,
-        "oof_rows": 4970.0,
-        "mae": 13.073665417244223,
-        "rmse": 16.431520006808046,
-        "bias": 0.40874074970425545,
-        "residual_std": 16.428088232160093,
+        "training_rows": 6267.0,
+        "oof_rows": 5032.0,
+        "mae": 13.08132755775217,
+        "rmse": 16.432926293140262,
+        "bias": 0.38305433325204674,
+        "residual_std": 16.430093797478147,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 500.0,
-        "latest_holdout_mae": 12.885427018153658,
-        "uncertainty_oof_rows": 4922.0,
-        "interval_80_coverage": 0.8057700121901666,
-        "interval_80_mean_width": 43.10395708420358,
-        "pinball_p10": 2.688545181221012,
-        "pinball_p90": 3.061944990340265
+        "latest_holdout_rows": 562.0,
+        "latest_holdout_mae": 12.974798320252598,
+        "uncertainty_oof_rows": 4984.0,
+        "interval_80_coverage": 0.8051765650080257,
+        "interval_80_mean_width": 43.0915734882351,
+        "pinball_p10": 2.685646900521414,
+        "pinball_p90": 3.062141170887529
       },
       "file": {
-        "path": "v1_total_3a98c3a342c54ad3afb14b148e7810cf.joblib",
-        "sha256": "6bc53839afaa78fc8ab14d89a6497e0a6fd8fa3eb79603bd6b56bf5d8135ff80"
+        "path": "v1_total_b9f6324885bb4499a9c886ad78b5d572.joblib",
+        "sha256": "30b3e7db5b71b4077864d0de83d57ab76860f13a5ede66bdafb23f82a4cc74a0"
       }
     }
   }
