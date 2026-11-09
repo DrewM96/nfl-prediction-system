@@ -1,0 +1,50 @@
+{
+  "run_id": "20261103T193222Z-ea0ae25e",
+  "revision": 3,
+  "scored_at": "2026-11-09T02:42:41.781232+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_09_DEN_CAR",
+      "status": "final",
+      "actual_home_margin": -5.0,
+      "actual_total": 47.0
+    },
+    {
+      "game_id": "2026_09_DAL_IND",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 50.0
+    },
+    {
+      "game_id": "2026_09_NYJ_KC",
+      "status": "final",
+      "actual_home_margin": 23.0,
+      "actual_total": 47.0
+    },
+    {
+      "game_id": "2026_09_DET_MIA",
+      "status": "final",
+      "actual_home_margin": -10.0,
+      "actual_total": 28.0
+    },
+    {
+      "game_id": "2026_09_CLE_NO",
+      "status": "final",
+      "actual_home_margin": 1.0,
+      "actual_total": 45.0
+    },
+    {
+      "game_id": "2026_09_NYG_PHI",
+      "status": "final",
+      "actual_home_margin": -8.0,
+      "actual_total": 30.0
+    },
+    {
+      "game_id": "2026_09_LA_WAS",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 33.0
+    }
+  ]
+}
