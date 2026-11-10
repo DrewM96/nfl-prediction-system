@@ -1,0 +1,6086 @@
+{
+  "run_id": "20261103T193222Z-ea0ae25e",
+  "revision": 1,
+  "scored_at": "2026-11-10T13:28:30.999751+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_09_LA_WAS:00-0026498:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 228.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0029604:passing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 216.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0029692:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0030279:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030565:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 165.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0031503:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 71.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0031588:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0032065:passing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 46.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032399:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032943:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0032950:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 81.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0033077:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 335.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0033106:passing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 170.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0033269:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033280:passing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0033873:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 242.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033908:passing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0033921:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0034162:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0034348:passing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034437:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034577:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0034721:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034827:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034844:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0034855:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 243.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034857:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 234.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0035156:passing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0035190:passing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035250:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0035289:passing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 166.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0035700:passing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0035704:passing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 175.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0035710:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 180.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036264:passing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 372.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036309:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036313:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036322:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036355:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 193.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036358:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036425:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036442:passing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 271.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036613:passing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036849:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036898:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036900:passing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036919:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036945:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036963:passing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036971:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 242.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0036972:passing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037238:passing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0037239:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0037500:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037834:passing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 232.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038120:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0038128:passing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 128.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038476:passing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 21.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038543:passing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038559:passing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038977:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039150:passing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 276.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039163:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 384.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039337:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039398:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 169.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039451:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039491:passing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039634:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039732:passing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 237.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039750:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0039851:passing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 299.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039890:passing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039910:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 273.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0039917:passing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 162.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039918:passing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 279.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039923:passing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 127.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040128:passing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040494:passing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040563:passing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040654:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040668:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 297.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040727:passing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040743:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 265.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040784:passing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040981:passing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0041040:passing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0026498:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0029604:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0029692:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0029892:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0030140:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0030279:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030506:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030565:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0031236:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0031503:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0031588:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0031610:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0031763:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0032065:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 30.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032464:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 57.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032943:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0032950:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0032951:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0033077:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0033106:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033280:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 68.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033288:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0033293:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0033526:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 43.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033589:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0033699:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0033854:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0033873:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033881:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0033906:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033908:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0033921:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 12.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0034160:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0034162:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0034270:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0034348:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034351:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0034355:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034577:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": -2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0034721:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034827:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034844:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0034855:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034857:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0034959:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0034974:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 85.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0035021:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0035133:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0035190:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0035208:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035229:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035250:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0035280:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0035289:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035359:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035500:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035537:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035662:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035689:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0035700:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0035704:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0035710:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0035859:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036158:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036223:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 46.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036264:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036275:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036309:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": -4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036313:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036322:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036331:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036355:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036358:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036407:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036410:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036415:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036425:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036429:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036442:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036463:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036554:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036555:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 79.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036567:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036613:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036630:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036637:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036646:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036648:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036672:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036727:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036842:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036849:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036875:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036898:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": -2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036900:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036906:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036909:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036919:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036945:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036963:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036970:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036971:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0036972:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036980:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036997:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 101.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037091:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037093:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037120:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 77.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037238:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0037239:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037240:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037248:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 107.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037252:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037253:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037256:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037261:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037263:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 46.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0037284:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037291:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037524:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037525:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 35.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0037614:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037692:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037741:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037744:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037809:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037834:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 40.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037840:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 45.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038041:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038046:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038098:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038120:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038123:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038124:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0038128:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038129:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038134:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 102.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038397:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038454:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 33.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038476:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038519:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038542:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 100.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038543:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038544:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038559:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0038563:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038573:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038576:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038597:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 57.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038608:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038614:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038618:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038621:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0038728:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038783:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038839:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038840:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038938:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038951:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038976:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038977:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0038994:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038996:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038997:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039021:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039062:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039065:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039067:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039075:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039139:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 74.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039150:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039163:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039165:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 77.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039299:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039337:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039338:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039355:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039361:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 97.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039364:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039365:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039391:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 30.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039398:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 64.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039407:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039410:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039424:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039451:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039491:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039589:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039703:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039732:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039738:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039751:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039793:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039794:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 33.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039798:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039816:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039825:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039849:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0039851:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039868:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039875:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039880:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039890:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039894:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039901:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039910:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0039917:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 50.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039918:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039919:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039920:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039923:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040009:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040024:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040122:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040124:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040126:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040128:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040129:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040131:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040142:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 68.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040162:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 21.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040172:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040177:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040184:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040187:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040189:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040198:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 55.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040208:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040237:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040277:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040298:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040352:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040394:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040494:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040506:rushing_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040556:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 55.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040563:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040568:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040583:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 70.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040586:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0040590:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040644:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040646:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0040648:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040663:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040666:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040667:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040668:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040669:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 29.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040727:rushing_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040729:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040735:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040743:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 51.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040782:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040784:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 43.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040785:rushing_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040867:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040878:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040890:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040930:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040948:rushing_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040981:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041013:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 34.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041032:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041037:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0041040:rushing_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0041042:rushing_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041048:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041051:rushing_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0041052:rushing_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 70.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041067:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041070:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041096:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041099:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:rushing_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041125:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 45.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041132:rushing_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041267:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0041496:rushing_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 57.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041511:rushing_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041512:rushing_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 24.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041523:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041525:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041529:rushing_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041547:rushing_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0026498:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0029892:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0030279:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 26.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030506:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 72.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030565:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0031236:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0031503:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0031588:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 51.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0031610:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 90.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0031763:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032464:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0032951:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0033090:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 35.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0033106:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0033110:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033280:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033288:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0033293:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0033526:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033576:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033589:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0033699:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0033854:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0033873:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033881:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 33.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0033906:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033908:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0033921:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0034270:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0034348:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 45.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034351:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 50.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0034383:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 42.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 19.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034827:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0034829:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034844:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034857:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0034959:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 65.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0035021:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 55.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035039:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0035208:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035229:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 33.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035250:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035359:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035500:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035537:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 36.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035643:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0035644:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 12.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035662:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035689:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 37.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0035700:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035795:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036040:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 34.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036124:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036158:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036223:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036244:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036275:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036309:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 54.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036322:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036331:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036355:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036358:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 195.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036406:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036407:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 37.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036410:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036415:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036422:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036425:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036429:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036463:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036554:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 55.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036555:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036556:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036567:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036590:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036613:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036630:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036637:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036646:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036727:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036842:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036849:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036875:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 46.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0036887:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036900:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 155.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036906:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036919:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036945:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036963:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 86.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036970:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036980:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036997:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0037005:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 24.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0037086:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037091:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037093:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037120:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037238:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 68.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0037239:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 98.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037240:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037243:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037248:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037252:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037253:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037256:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 41.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037261:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037263:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037277:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037289:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037291:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0037311:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037317:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037524:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037525:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037578:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0037614:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 40.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037741:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037744:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 54.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037757:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037809:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 56.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0037838:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 53.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037840:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038041:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 21.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038046:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038098:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038120:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 26.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038124:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 171.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038129:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038134:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 41.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038397:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038454:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 34.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038476:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038519:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038542:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 47.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038543:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 51.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038544:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038559:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0038563:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 55.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038573:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038576:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038597:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038608:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 125.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038614:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038618:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 29.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038621:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 102.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0038643:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0038710:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0038728:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038783:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038839:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038840:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0038933:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038935:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038938:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038951:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038976:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038977:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 105.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0038994:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038996:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038997:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 24.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039021:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039041:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039050:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039062:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039065:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 32.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039066:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 37.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039067:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 49.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039075:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 150.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039139:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039163:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039165:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039299:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039337:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 43.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039338:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 111.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039355:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039361:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039364:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039365:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039391:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039407:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039410:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 53.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039424:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039451:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039489:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039491:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 29.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039530:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039589:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039686:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039703:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039732:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039738:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039751:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039793:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039794:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 21.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039798:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039816:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 16.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039849:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0039851:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039868:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039875:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039880:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 21.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039890:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039894:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 48.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039901:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039913:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039918:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039919:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 60.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039920:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040009:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040024:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040081:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040122:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": -5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040124:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 56.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040126:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 54.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040128:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 44.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040129:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 38.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040131:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040142:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040162:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 27.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040165:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040172:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 86.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040177:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040184:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 50.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040187:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040189:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 17.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040194:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040198:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040208:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040237:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 76.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040245:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040277:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040298:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040352:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040363:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040394:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040506:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040509:receiving_yards",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040556:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040563:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 49.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040568:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040583:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040586:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0040590:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 20.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040644:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040646:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 18.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0040648:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 22.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040663:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 42.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040666:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040667:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 164.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040669:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": -1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040727:receiving_yards",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040729:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040735:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 97.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040736:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 11.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040782:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040784:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040785:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 47.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040867:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040878:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040879:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040887:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040890:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040930:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040948:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041013:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041032:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 49.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041037:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 98.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0041040:receiving_yards",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041041:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0041042:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 40.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041048:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041051:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 13.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0041052:receiving_yards",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041067:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041070:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 25.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041084:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 15.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041094:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041096:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 46.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041099:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 52.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0041116:receiving_yards",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041125:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": -3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041132:receiving_yards",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041267:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0041395:receiving_yards",
+      "game_id": "2026_09_GB_NE",
+      "actual": 52.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0041483:receiving_yards",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0041496:receiving_yards",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 31.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041503:receiving_yards",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 61.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041511:receiving_yards",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 58.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041512:receiving_yards",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 54.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041523:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 70.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041524:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041525:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041529:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041547:receiving_yards",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 85.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041558:receiving_yards",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 23.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041579:receiving_yards",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0026498:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0029892:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0030279:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030506:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0030565:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0031236:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0031503:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0031588:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0031610:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0031763:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032104:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0032464:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0032764:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0032951:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0033090:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0033106:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0033110:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033280:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0033288:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0033293:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0033526:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033576:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033589:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0033699:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0033854:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0033873:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0033881:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0033906:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0033908:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0033921:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0034270:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0034348:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034351:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0034383:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034753:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034827:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0034829:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0034844:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0034857:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0034959:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034960:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0034975:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0035021:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035039:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0035208:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035229:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035250:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035359:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035500:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035537:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0035643:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0035644:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0035662:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035689:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0035700:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0035795:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036040:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036124:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036158:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036223:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036244:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036275:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036309:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036322:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036331:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036355:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036358:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 10.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036406:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036407:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036410:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036415:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036422:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0036425:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036429:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036463:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036550:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036554:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036555:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0036556:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036567:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0036590:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036613:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0036630:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036637:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0036646:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0036727:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036842:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0036849:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0036875:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0036887:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036900:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 10.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036906:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0036919:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0036945:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0036963:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0036970:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0036980:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0036997:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0037005:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0037086:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037091:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037093:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037120:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037238:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0037239:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037240:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037243:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037248:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037252:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0037253:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037256:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037261:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037263:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037277:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037289:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0037291:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0037311:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037317:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0037524:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0037525:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037578:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0037614:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0037741:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0037744:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0037757:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037809:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0037838:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0037840:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038041:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038046:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038098:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038120:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038124:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038129:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038134:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038397:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038454:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038476:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0038519:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038542:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038543:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038544:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0038559:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0038563:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038573:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038576:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038597:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038606:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038608:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038611:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038614:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038618:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038621:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0038643:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0038710:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0038728:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038783:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0038839:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038840:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0038933:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0038935:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0038938:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0038951:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0038976:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0038977:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0038994:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0038996:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0038997:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039021:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039041:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039050:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039062:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039064:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039065:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039066:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039067:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039075:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 14.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039139:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039163:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039165:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039299:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0039337:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039338:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039355:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039361:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039364:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039365:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039391:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0039407:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039410:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039424:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039451:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039489:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039491:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039530:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039589:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039686:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039703:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039732:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039738:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039751:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0039793:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039794:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0039796:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039798:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0039816:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0039849:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0039851:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0039868:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039875:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0039880:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039890:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0039894:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0039901:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0039913:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039918:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0039919:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0039920:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040009:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040024:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040075:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040081:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040122:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040124:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040126:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040128:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040129:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040131:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040142:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040162:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040165:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040172:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040177:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040184:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040187:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040189:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040194:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040198:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040208:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040237:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040238:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040245:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040277:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040298:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040352:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040363:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040394:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040506:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_BUF_MIN:00-0040509:receptions",
+      "game_id": "2026_09_BUF_MIN",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040556:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040563:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040568:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040583:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040586:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0040590:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0040644:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040646:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0040648:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040663:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040666:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040667:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 10.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0040669:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040718:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040719:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_HOU_LAC:00-0040727:receptions",
+      "game_id": "2026_09_HOU_LAC",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040729:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0040735:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 7.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040736:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040782:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0040784:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0040785:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0040867:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040870:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0040878:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040879:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0040887:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0040890:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0040930:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0040948:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041013:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041032:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041037:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LA_WAS:00-0041040:receptions",
+      "game_id": "2026_09_LA_WAS",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041041:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0041042:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041048:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041051:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_LV_SF:00-0041052:receptions",
+      "game_id": "2026_09_LV_SF",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041067:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041070:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041084:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041094:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041096:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041099:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041100:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CIN_ATL:00-0041116:receptions",
+      "game_id": "2026_09_CIN_ATL",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041125:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DAL_IND:00-0041132:receptions",
+      "game_id": "2026_09_DAL_IND",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041267:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_GB_NE:00-0041395:receptions",
+      "game_id": "2026_09_GB_NE",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYG_PHI:00-0041483:receptions",
+      "game_id": "2026_09_NYG_PHI",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DEN_CAR:00-0041496:receptions",
+      "game_id": "2026_09_DEN_CAR",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_JAX_BAL:00-0041503:receptions",
+      "game_id": "2026_09_JAX_BAL",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_NYJ_KC:00-0041511:receptions",
+      "game_id": "2026_09_NYJ_KC",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_ARI_SEA:00-0041512:receptions",
+      "game_id": "2026_09_ARI_SEA",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041523:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041524:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041525:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041529:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_CLE_NO:00-0041547:receptions",
+      "game_id": "2026_09_CLE_NO",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_TB_CHI:00-0041558:receptions",
+      "game_id": "2026_09_TB_CHI",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_09_DET_MIA:00-0041579:receptions",
+      "game_id": "2026_09_DET_MIA",
+      "actual": 0.0,
+      "status": "final"
+    }
+  ]
+}
