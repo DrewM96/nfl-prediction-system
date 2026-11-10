@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-11-10T13:27:21.126960+00:00",
+  "created_at": "2026-11-10T19:43:27.849698+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,8 +10,8 @@
     2026
   ],
   "data_cutoff": "2026-11-09",
-  "raw_data_hash": "c8fea21e72dbcdf86e888e515d6539977e6fdcb4c144570e5846f02fcc54acae",
-  "git_commit": "59aa428662e28726ae5132d27e104f65c513c4e5",
+  "raw_data_hash": "3622058c90a13d28b1697e1870bcfedc8e227436c5d3a290286015ceaf028e8b",
+  "git_commit": "98229dd6eb81818f80aa3c3b566f55187e062103",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -73,12 +73,12 @@
       },
       "files": [
         {
-          "path": "v3_game_margin_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_game_margin_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.7741021785289248,
-          "sha256": "cb679d63ff1ab9aaf517ada68593aa3ca5125dcb9fd10d0c0a49f360d454cfe2"
+          "sha256": "b6494829546a6cde82a615b1cad9f4d339ac84c1f3f28e4f4fd0941a1243a91e"
         },
         {
-          "path": "v3_game_margin_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_game_margin_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.22589782147107518,
           "sha256": "6406891bf5c5488bb460a9f6c6707a98de038a8f03bef8aeeb2b3ad422003b43"
         }
@@ -142,12 +142,12 @@
       },
       "files": [
         {
-          "path": "v3_game_total_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_game_total_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.6365647501418479,
-          "sha256": "c7aa8e2821888f931262808efd8eb9b6f9eb8482a899242e2d7504b4e10b16e8"
+          "sha256": "0999f412ebbb91b4556b41118be5ef096defb0f578f2593cdcc8a87112d38f22"
         },
         {
-          "path": "v3_game_total_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_game_total_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.3634352498581521,
           "sha256": "a7b20efd2bb1d2ad18106940d13f790234ef6adcd3c7a7468f6f3442bb67ea7a"
         }
@@ -190,17 +190,17 @@
       },
       "files": [
         {
-          "path": "v3_passing_yards_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_passing_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.3172595498907052,
-          "sha256": "5a24d87572b57f384ff4f1b7606d24abdf8202bb7eddb9f7e0b884093ab7dcf7"
+          "sha256": "9594d160182910c79a6acdcb2f8f26c72fc41d64d5bdf039052b62b627283413"
         },
         {
-          "path": "v3_passing_yards_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_passing_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.5027404501092949,
           "sha256": "3f5fa30eaf6f02fd4db1b4344cf0afc88b93fd0139ff7a368aa5be680f8befaf"
         },
         {
-          "path": "v3_passing_yards_2_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_passing_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.17999999999999994,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -244,17 +244,17 @@
       },
       "files": [
         {
-          "path": "v3_receiving_yards_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receiving_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.6068353926290653,
           "sha256": "25aeb51af14bbc8130bf8a3e43a6cec7c6299babefc8402c96e1aed35a367a6c"
         },
         {
-          "path": "v3_receiving_yards_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receiving_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.20316460737093484,
           "sha256": "224e7237af772b9a4efed3c642625efbed8bb92a09b421c38cf4b502cb625c63"
         },
         {
-          "path": "v3_receiving_yards_2_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receiving_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.18999999999999995,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -296,17 +296,17 @@
       },
       "files": [
         {
-          "path": "v3_receptions_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receptions_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.5803122126225407,
           "sha256": "75f7a6d1a9d2da800a25c9a2e27b230c675a5d3e6b64fefc105ef9909c851278"
         },
         {
-          "path": "v3_receptions_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receptions_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.1896877873774593,
           "sha256": "81919cbb56b204d8dd3881c5b29dc1b9bdf1971c759b75daab4efc2712b95591"
         },
         {
-          "path": "v3_receptions_2_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_receptions_2_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.22999999999999998,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -348,17 +348,17 @@
       },
       "files": [
         {
-          "path": "v3_rushing_yards_0_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_rushing_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.30260300041362187,
           "sha256": "2eefcc6b0fe303b551ed7097a218bb64a099e1884149cc2dd3363068e12b6569"
         },
         {
-          "path": "v3_rushing_yards_1_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_rushing_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.13739699958637813,
           "sha256": "b7df459540954f65a6025d4823d684ca6feb89e38e620e8c079b2942c570292b"
         },
         {
-          "path": "v3_rushing_yards_2_a622b82f080c42518e7caac4562cf302.joblib",
+          "path": "v3_rushing_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
           "weight": 0.56,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
