@@ -1,0 +1,410 @@
+{
+  "run_id": "20261110T132830Z-2841eed8",
+  "revision": 1,
+  "scored_at": "2026-11-14T18:22:58.212250+00:00",
+  "source": "nflverse weekly player stats",
+  "results": [
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031503:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031588:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0035250:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036309:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037742:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039337:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039910:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 249.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039923:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 293.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041040:passing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0030140:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031503:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031588:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0033699:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 26.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0035250:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036309:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037256:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 47.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037742:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037809:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0038576:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039337:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039355:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039910:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 28.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039923:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 34.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0040715:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 78.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041040:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041042:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041376:rushing_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031484:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031503:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031588:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 83.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0033699:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 26.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0035250:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036309:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036628:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037256:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037742:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 27.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037809:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 24.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037838:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 127.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0038576:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039337:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 44.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039355:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039847:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 8.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039912:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 42.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039913:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0040715:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 44.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041040:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 42.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041042:receiving_yards",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 62.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031484:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031503:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0031588:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 6.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0033699:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0035250:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036309:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0036628:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037256:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037742:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037809:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0037838:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 9.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0038576:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039337:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 5.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039355:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039847:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 1.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039912:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 4.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0039913:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 0.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0040715:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 3.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041040:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 2.0,
+      "status": "final"
+    },
+    {
+      "prop_id": "2026_10_WAS_NYG:00-0041042:receptions",
+      "game_id": "2026_10_WAS_NYG",
+      "actual": 3.0,
+      "status": "final"
+    }
+  ]
+}
