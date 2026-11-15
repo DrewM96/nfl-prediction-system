@@ -1,0 +1,14 @@
+{
+  "run_id": "20261110T132830Z-2841eed8",
+  "revision": 2,
+  "scored_at": "2026-11-15T22:54:56.881546+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_10_NE_DET",
+      "status": "final",
+      "actual_home_margin": 25.0,
+      "actual_total": 45.0
+    }
+  ]
+}
