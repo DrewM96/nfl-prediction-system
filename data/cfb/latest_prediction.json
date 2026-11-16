@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20261109T214143Z-a7b433e3",
-  "path": "20261109T214143Z-a7b433e3.json",
-  "model_hash": "e66e3e5fdb99d5d9b945d898b06ae5aa8ecae69ecd7cc0c5d1814957eb273471",
-  "manifest_path": "data/cfb/models/manifest-e66e3e5fdb99d5d9b945d898b06ae5aa8ecae69ecd7cc0c5d1814957eb273471.json",
-  "rankings_path": "data/cfb/power_rankings-e66e3e5fdb99d5d9b945d898b06ae5aa8ecae69ecd7cc0c5d1814957eb273471.json"
+  "run_id": "20261116T141219Z-c7aef0fb",
+  "path": "20261116T141219Z-c7aef0fb.json",
+  "model_hash": "c133951101173066b2f8066a805043aca53225463401531373fa3eb7ca3a37ab",
+  "manifest_path": "data/cfb/models/manifest-c133951101173066b2f8066a805043aca53225463401531373fa3eb7ca3a37ab.json",
+  "rankings_path": "data/cfb/power_rankings-c133951101173066b2f8066a805043aca53225463401531373fa3eb7ca3a37ab.json"
 }
