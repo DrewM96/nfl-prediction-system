@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-11-10T19:43:27.849698+00:00",
+  "created_at": "2026-11-17T14:01:30.273947+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -9,9 +9,9 @@
     2025,
     2026
   ],
-  "data_cutoff": "2026-11-09",
-  "raw_data_hash": "3622058c90a13d28b1697e1870bcfedc8e227436c5d3a290286015ceaf028e8b",
-  "git_commit": "98229dd6eb81818f80aa3c3b566f55187e062103",
+  "data_cutoff": "2026-11-16",
+  "raw_data_hash": "e6e46e800efd851c3791aff0c0075b8823ef97b1c0adc412915ba710e377f25c",
+  "git_commit": "eb9c8053085dcd5f6e4443087e06160d29d5e74e",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -45,42 +45,42 @@
         "week",
         "home_field"
       ],
-      "residual_std": 13.186341605320486,
+      "residual_std": 13.218222958633612,
       "metrics": {
         "ridge_alpha": 50.0,
-        "oof_rows": 859.0,
-        "mae": 10.242651048490577,
-        "rmse": 13.178699194585365,
-        "bias": 0.030471125662005997,
+        "oof_rows": 873.0,
+        "mae": 10.274797035759525,
+        "rmse": 13.211145861587443,
+        "bias": 0.11443720343478528,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 136.0,
-        "latest_holdout_mae": 9.569004560834527,
-        "uncertainty_oof_rows": 846.0,
-        "interval_80_coverage": 0.7848699763593381,
-        "interval_80_mean_width": 34.11231863707026,
-        "pinball_p10": 2.2557629090308833,
-        "pinball_p90": 2.4839259722061295,
-        "winner_oof_rows": 844.0,
-        "winner_brier": 0.2251230655125465,
-        "winner_log_loss": 0.6404441313914558,
-        "winner_calibration_error": 0.028576123513468242,
-        "baseline_mae": 10.610593713620489,
-        "mae_improvement_vs_baseline": 0.36794266512991136,
-        "mae_difference_vs_baseline_95_low": -0.6699221022889643,
-        "mae_difference_vs_baseline_95_high": -0.054467698491167706,
-        "latest_holdout_baseline_mae": 9.930147058823529
+        "latest_holdout_rows": 150.0,
+        "latest_holdout_mae": 9.818967878921042,
+        "uncertainty_oof_rows": 860.0,
+        "interval_80_coverage": 0.7837209302325582,
+        "interval_80_mean_width": 34.1063330262879,
+        "pinball_p10": 2.2633957922498964,
+        "pinball_p90": 2.4908961049040372,
+        "winner_oof_rows": 858.0,
+        "winner_brier": 0.22559913716657992,
+        "winner_log_loss": 0.641488404741919,
+        "winner_calibration_error": 0.03152647897461507,
+        "baseline_mae": 10.608820160366552,
+        "mae_improvement_vs_baseline": 0.3340231246070271,
+        "mae_difference_vs_baseline_95_low": -0.6590181147198076,
+        "mae_difference_vs_baseline_95_high": -0.02541016744644994,
+        "latest_holdout_baseline_mae": 9.983333333333333
       },
       "files": [
         {
-          "path": "v3_game_margin_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.7741021785289248,
-          "sha256": "b6494829546a6cde82a615b1cad9f4d339ac84c1f3f28e4f4fd0941a1243a91e"
+          "path": "v3_game_margin_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.7632070892527578,
+          "sha256": "b9dae952abd4f0052e23feb0b876ecb32410af794d90f2f4c59680e78b1d7bf9"
         },
         {
-          "path": "v3_game_margin_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.22589782147107518,
-          "sha256": "6406891bf5c5488bb460a9f6c6707a98de038a8f03bef8aeeb2b3ad422003b43"
+          "path": "v3_game_margin_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.23679291074724218,
+          "sha256": "77c33c69a096c7ab889ea0b7b211fe5bfb01042185b788eb984993713eb9b976"
         }
       ]
     },
@@ -118,38 +118,38 @@
         "away_roster_ol_continuity_delta",
         "away_roster_skill_continuity_delta"
       ],
-      "residual_std": 13.610375506489039,
+      "residual_std": 13.590812911641347,
       "metrics": {
         "ridge_alpha": 50.0,
-        "oof_rows": 859.0,
-        "mae": 10.625467710520214,
-        "rmse": 13.657521032205981,
-        "bias": -1.225237985089126,
+        "oof_rows": 873.0,
+        "mae": 10.584178256383712,
+        "rmse": 13.641010283791989,
+        "bias": -1.2564023811460623,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 136.0,
-        "latest_holdout_mae": 11.913859615731901,
-        "uncertainty_oof_rows": 846.0,
-        "interval_80_coverage": 0.7978723404255319,
-        "interval_80_mean_width": 34.47589516616923,
-        "pinball_p10": 2.320622479246567,
-        "pinball_p90": 2.5611269394725715,
-        "baseline_mae": 10.923817628571323,
-        "mae_improvement_vs_baseline": 0.2983499180511089,
-        "mae_difference_vs_baseline_95_low": -0.5032602508847578,
-        "mae_difference_vs_baseline_95_high": -0.08627092468061398,
-        "latest_holdout_baseline_mae": 11.76526982298666
+        "latest_holdout_rows": 150.0,
+        "latest_holdout_mae": 11.55330508150436,
+        "uncertainty_oof_rows": 860.0,
+        "interval_80_coverage": 0.8,
+        "interval_80_mean_width": 34.48243319365581,
+        "pinball_p10": 2.3166060567533875,
+        "pinball_p90": 2.5669292433270807,
+        "baseline_mae": 10.870392349753702,
+        "mae_improvement_vs_baseline": 0.28621409336999015,
+        "mae_difference_vs_baseline_95_low": -0.49883476473960553,
+        "mae_difference_vs_baseline_95_high": -0.08325257893403526,
+        "latest_holdout_baseline_mae": 11.375799162122666
       },
       "files": [
         {
-          "path": "v3_game_total_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.6365647501418479,
-          "sha256": "0999f412ebbb91b4556b41118be5ef096defb0f578f2593cdcc8a87112d38f22"
+          "path": "v3_game_total_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.6430738349134938,
+          "sha256": "5a2833b638311db78f3257603f9895c49f3e6fef64af97ce8aae1172c9eb6a61"
         },
         {
-          "path": "v3_game_total_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.3634352498581521,
-          "sha256": "a7b20efd2bb1d2ad18106940d13f790234ef6adcd3c7a7468f6f3442bb67ea7a"
+          "path": "v3_game_total_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.3569261650865062,
+          "sha256": "ab95b11a1ad4f7c7eb5f2013c244f74bfff977d9747073401402f551fb7a7c3a"
         }
       ]
     },
@@ -166,41 +166,41 @@
         "snap_share_l4",
         "opponent_def_epa"
       ],
-      "residual_std": 85.04421361459447,
+      "residual_std": 85.03254481034813,
       "metrics": {
         "ridge_alpha": 10.0,
-        "oof_rows": 2608.0,
-        "mae": 66.7974194939919,
-        "rmse": 85.08912867111256,
-        "bias": 3.2271897282688813,
+        "oof_rows": 2642.0,
+        "mae": 66.862982375496,
+        "rmse": 85.0729403845497,
+        "bias": 3.0997215933529514,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 322.0,
-        "latest_holdout_mae": 66.49175579865785,
-        "uncertainty_oof_rows": 2572.0,
-        "interval_80_coverage": 0.8203732503888025,
-        "interval_80_mean_width": 221.5006663520397,
-        "pinball_p10": 14.911614000351905,
-        "pinball_p90": 15.439001217078516,
-        "baseline_mae": 69.0956667064579,
-        "mae_improvement_vs_baseline": 2.298247212466009,
-        "mae_difference_vs_baseline_95_low": -3.0396433337449893,
-        "mae_difference_vs_baseline_95_high": -1.5512498074484673,
-        "latest_holdout_baseline_mae": 70.30955239136095
+        "latest_holdout_rows": 356.0,
+        "latest_holdout_mae": 67.00751337892537,
+        "uncertainty_oof_rows": 2606.0,
+        "interval_80_coverage": 0.8204144282425173,
+        "interval_80_mean_width": 221.45594153340832,
+        "pinball_p10": 14.905408835537806,
+        "pinball_p90": 15.420085808685513,
+        "baseline_mae": 69.088367365436,
+        "mae_improvement_vs_baseline": 2.2253849899399967,
+        "mae_difference_vs_baseline_95_low": -2.9565231237637817,
+        "mae_difference_vs_baseline_95_high": -1.4663632561086524,
+        "latest_holdout_baseline_mae": 70.13944853667955
       },
       "files": [
         {
-          "path": "v3_passing_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.3172595498907052,
-          "sha256": "9594d160182910c79a6acdcb2f8f26c72fc41d64d5bdf039052b62b627283413"
+          "path": "v3_passing_yards_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.31654330715161727,
+          "sha256": "6e807ade6f5fbc432c4ae2882cf7e2bd43fbeec0fa8069207dd4dde8f8f204d1"
         },
         {
-          "path": "v3_passing_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.5027404501092949,
-          "sha256": "3f5fa30eaf6f02fd4db1b4344cf0afc88b93fd0139ff7a368aa5be680f8befaf"
+          "path": "v3_passing_yards_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.5034566928483828,
+          "sha256": "a9c1fc0f1ecdb1ebeed5ee0b4860ae7bc6a19917716fbc3f92941e95f15e9468"
         },
         {
-          "path": "v3_passing_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
+          "path": "v3_passing_yards_2_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
           "weight": 0.17999999999999994,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -220,41 +220,41 @@
         "snap_share_l4",
         "opponent_def_epa"
       ],
-      "residual_std": 23.20506103726954,
+      "residual_std": 23.236076437768883,
       "metrics": {
         "ridge_alpha": 10.0,
-        "oof_rows": 24134.0,
-        "mae": 15.756155501027235,
-        "rmse": 23.206269255574576,
-        "bias": -0.279976600050692,
+        "oof_rows": 24446.0,
+        "mae": 15.775341176733502,
+        "rmse": 23.23744480326699,
+        "bias": -0.2927094114294804,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 2915.0,
-        "latest_holdout_mae": 15.506996891547011,
-        "uncertainty_oof_rows": 23837.0,
-        "interval_80_coverage": 0.8637831941939003,
-        "interval_80_mean_width": 61.501033412300366,
-        "pinball_p10": 3.5861491612991174,
-        "pinball_p90": 5.148561645354785,
-        "baseline_mae": 16.4493283598285,
-        "mae_improvement_vs_baseline": 0.6931728588012636,
-        "mae_difference_vs_baseline_95_low": -0.7818451158373523,
-        "mae_difference_vs_baseline_95_high": -0.6091545446281267,
-        "latest_holdout_baseline_mae": 16.205082661856455
+        "latest_holdout_rows": 3227.0,
+        "latest_holdout_mae": 15.676426861944659,
+        "uncertainty_oof_rows": 24149.0,
+        "interval_80_coverage": 0.8633897883970351,
+        "interval_80_mean_width": 61.47490883464164,
+        "pinball_p10": 3.5876762422000095,
+        "pinball_p90": 5.155311169315506,
+        "baseline_mae": 16.473798200306472,
+        "mae_improvement_vs_baseline": 0.6984570235729706,
+        "mae_difference_vs_baseline_95_low": -0.7867465119199352,
+        "mae_difference_vs_baseline_95_high": -0.6143887336236051,
+        "latest_holdout_baseline_mae": 16.414067594639768
       },
       "files": [
         {
-          "path": "v3_receiving_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.6068353926290653,
-          "sha256": "25aeb51af14bbc8130bf8a3e43a6cec7c6299babefc8402c96e1aed35a367a6c"
+          "path": "v3_receiving_yards_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.6089875395130604,
+          "sha256": "234fe90dc1d9214c5560207b3abec26b92abbeac660fb32410aef51130bb42ad"
         },
         {
-          "path": "v3_receiving_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.20316460737093484,
-          "sha256": "224e7237af772b9a4efed3c642625efbed8bb92a09b421c38cf4b502cb625c63"
+          "path": "v3_receiving_yards_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.2010124604869396,
+          "sha256": "469f2ff780c4b587f4c41323e771e7f74cf88f15b0ff46259f3fb54ff8ad6a39"
         },
         {
-          "path": "v3_receiving_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
+          "path": "v3_receiving_yards_2_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
           "weight": 0.18999999999999995,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -272,42 +272,42 @@
         "snap_share_l4",
         "opponent_def_epa"
       ],
-      "residual_std": 1.698185321628717,
+      "residual_std": 1.6983564635138662,
       "metrics": {
         "ridge_alpha": 10.0,
-        "oof_rows": 24134.0,
-        "mae": 1.2410300515079258,
-        "rmse": 1.698151771284732,
-        "bias": 0.00235462946233227,
+        "oof_rows": 24446.0,
+        "mae": 1.2411722412212742,
+        "rmse": 1.6983239514999657,
+        "bias": 0.0027492458680071735,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 2915.0,
-        "latest_holdout_mae": 1.215043779441168,
-        "uncertainty_oof_rows": 23837.0,
-        "interval_80_coverage": 0.8507362503670763,
-        "interval_80_mean_width": 4.506708433717572,
-        "pinball_p10": 0.2694670197498115,
-        "pinball_p90": 0.3562809416119232,
-        "baseline_mae": 1.2806374952153887,
-        "mae_improvement_vs_baseline": 0.03960744370746294,
-        "mae_difference_vs_baseline_95_low": -0.04510028580656442,
-        "mae_difference_vs_baseline_95_high": -0.03442211948470606,
-        "latest_holdout_baseline_mae": 1.2555357038042791
+        "latest_holdout_rows": 3227.0,
+        "latest_holdout_mae": 1.2186333941351075,
+        "uncertainty_oof_rows": 24149.0,
+        "interval_80_coverage": 0.8507184562507765,
+        "interval_80_mean_width": 4.5047198864594575,
+        "pinball_p10": 0.26945726695312117,
+        "pinball_p90": 0.3563179865804903,
+        "baseline_mae": 1.2809256640605702,
+        "mae_improvement_vs_baseline": 0.03975342283929595,
+        "mae_difference_vs_baseline_95_low": -0.045044348920912594,
+        "mae_difference_vs_baseline_95_high": -0.034596158883679125,
+        "latest_holdout_baseline_mae": 1.2601456618177829
       },
       "files": [
         {
-          "path": "v3_receptions_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.5803122126225407,
-          "sha256": "75f7a6d1a9d2da800a25c9a2e27b230c675a5d3e6b64fefc105ef9909c851278"
+          "path": "v3_receptions_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.5853357694156411,
+          "sha256": "c0bb9bb0d93f89f580fc36b0aa524a862799d5021b30f775318cfcdc64ae2dac"
         },
         {
-          "path": "v3_receptions_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.1896877873774593,
-          "sha256": "81919cbb56b204d8dd3881c5b29dc1b9bdf1971c759b75daab4efc2712b95591"
+          "path": "v3_receptions_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.1946642305843589,
+          "sha256": "6dddd7678ef738232a10b70a063e00b650f3b316321e1fca61cd46e8804249fa"
         },
         {
-          "path": "v3_receptions_2_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.22999999999999998,
+          "path": "v3_receptions_2_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.21999999999999997,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
       ]
@@ -324,42 +324,42 @@
         "snap_share_l4",
         "opponent_def_epa"
       ],
-      "residual_std": 17.72187248311399,
+      "residual_std": 17.711426606909665,
       "metrics": {
         "ridge_alpha": 10.0,
-        "oof_rows": 20049.0,
-        "mae": 9.037443354838684,
-        "rmse": 17.721628597026015,
-        "bias": -0.08378951299263991,
+        "oof_rows": 20302.0,
+        "mae": 9.030465414135628,
+        "rmse": 17.711174893397867,
+        "bias": -0.080839766400047,
         "prequential_evaluation": 1.0,
         "latest_holdout_season": 2026.0,
-        "latest_holdout_rows": 2375.0,
-        "latest_holdout_mae": 8.410308341488438,
-        "uncertainty_oof_rows": 19815.0,
-        "interval_80_coverage": 0.8794852384557154,
-        "interval_80_mean_width": 47.60044953826043,
-        "pinball_p10": 3.132410047062977,
-        "pinball_p90": 3.8806365143030948,
-        "baseline_mae": 9.15771110796953,
-        "mae_improvement_vs_baseline": 0.12026775313084492,
-        "mae_difference_vs_baseline_95_low": -0.15086274508134487,
-        "mae_difference_vs_baseline_95_high": -0.0894691762386608,
-        "latest_holdout_baseline_mae": 8.511263634315938
+        "latest_holdout_rows": 2628.0,
+        "latest_holdout_mae": 8.416776760904028,
+        "uncertainty_oof_rows": 20068.0,
+        "interval_80_coverage": 0.8797089894359179,
+        "interval_80_mean_width": 47.573001802563894,
+        "pinball_p10": 3.1329536134188447,
+        "pinball_p90": 3.878263938919833,
+        "baseline_mae": 9.147139894335515,
+        "mae_improvement_vs_baseline": 0.11667448019988669,
+        "mae_difference_vs_baseline_95_low": -0.14939003764898487,
+        "mae_difference_vs_baseline_95_high": -0.08630308808467621,
+        "latest_holdout_baseline_mae": 8.491832291711896
       },
       "files": [
         {
-          "path": "v3_rushing_yards_0_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.30260300041362187,
-          "sha256": "2eefcc6b0fe303b551ed7097a218bb64a099e1884149cc2dd3363068e12b6569"
+          "path": "v3_rushing_yards_0_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.29839794092139715,
+          "sha256": "5a7a4f4715fedab41af124d51d0d9f2e36b7bc7d419d88b951719dd7033da1b9"
         },
         {
-          "path": "v3_rushing_yards_1_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.13739699958637813,
-          "sha256": "b7df459540954f65a6025d4823d684ca6feb89e38e620e8c079b2942c570292b"
+          "path": "v3_rushing_yards_1_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.1316020590786028,
+          "sha256": "5c602b42c9cb1c370450948b4d513c1b9f620027fc58207bc2bdca01ced33b35"
         },
         {
-          "path": "v3_rushing_yards_2_36b55220a76445458969d8feb69bbc3e.joblib",
-          "weight": 0.56,
+          "path": "v3_rushing_yards_2_1e9961d39d4f43cc90de2e3a6c7eb94b.joblib",
+          "weight": 0.5700000000000001,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
       ]
