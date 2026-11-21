@@ -1,0 +1,44 @@
+{
+  "run_id": "20261116T141219Z-c7aef0fb",
+  "revision": 4,
+  "scored_at": "2026-11-21T11:14:52.529448+00:00",
+  "source": "CollegeFootballData games",
+  "results": [
+    {
+      "game_id": "401856869",
+      "status": "final",
+      "actual_home_margin": 31.0,
+      "actual_total": 65.0
+    },
+    {
+      "game_id": "401866468",
+      "status": "final",
+      "actual_home_margin": 19.0,
+      "actual_total": 19.0
+    },
+    {
+      "game_id": "401858303",
+      "status": "final",
+      "actual_home_margin": -10.0,
+      "actual_total": 30.0
+    },
+    {
+      "game_id": "401858529",
+      "status": "final",
+      "actual_home_margin": -38.0,
+      "actual_total": 52.0
+    },
+    {
+      "game_id": "401864545",
+      "status": "final",
+      "actual_home_margin": 49.0,
+      "actual_total": 55.0
+    },
+    {
+      "game_id": "401864542",
+      "status": "final",
+      "actual_home_margin": -7.0,
+      "actual_total": 41.0
+    }
+  ]
+}
