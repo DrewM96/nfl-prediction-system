@@ -1515,46 +1515,46 @@
     },
     {
       "run_id": "20261117T140239Z-3855ee30",
-      "games": 1,
-      "margin_mae": 17.09,
-      "total_mae": 16.1,
-      "winner_accuracy": 1.0,
-      "market_games": 1,
-      "matched_model_margin_mae": 17.09,
-      "market_margin_mae": 10.5,
-      "market_total_games": 1,
-      "matched_model_total_mae": 16.1,
-      "market_total_mae": 15.5,
+      "games": 8,
+      "margin_mae": 7.936249999999999,
+      "total_mae": 14.45,
+      "winner_accuracy": 0.875,
+      "market_games": 7,
+      "matched_model_margin_mae": 8.231428571428571,
+      "market_margin_mae": 6.071428571428571,
+      "market_total_games": 7,
+      "matched_model_total_mae": 15.471428571428572,
+      "market_total_mae": 13.785714285714286,
       "margin_disagreement_buckets": [
         {
           "bucket": "0-2",
-          "games": 0,
-          "wins": 0,
-          "losses": 0,
+          "games": 3,
+          "wins": 2,
+          "losses": 1,
           "pushes": 0,
-          "ats_rate": null,
-          "model_mae": null,
-          "market_mae": null
+          "ats_rate": 0.6666666666666666,
+          "model_mae": 2.166666666666667,
+          "market_mae": 2.5
         },
         {
           "bucket": "2-4",
-          "games": 0,
+          "games": 2,
           "wins": 0,
-          "losses": 0,
+          "losses": 2,
           "pushes": 0,
-          "ats_rate": null,
-          "model_mae": null,
-          "market_mae": null
+          "ats_rate": 0.0,
+          "model_mae": 9.175,
+          "market_mae": 6.75
         },
         {
           "bucket": "4-6",
-          "games": 0,
+          "games": 1,
           "wins": 0,
-          "losses": 0,
+          "losses": 1,
           "pushes": 0,
-          "ats_rate": null,
-          "model_mae": null,
-          "market_mae": null
+          "ats_rate": 0.0,
+          "model_mae": 15.68,
+          "market_mae": 11.0
         },
         {
           "bucket": "6-8",
@@ -1583,36 +1583,36 @@
     },
     {
       "run_id": "20261117T205818Z-35adc3c6",
-      "games": 1,
-      "margin_mae": 16.490000000000002,
-      "total_mae": 15.700000000000003,
-      "winner_accuracy": 1.0,
-      "market_games": 1,
-      "matched_model_margin_mae": 16.490000000000002,
-      "market_margin_mae": 10.5,
-      "market_total_games": 1,
-      "matched_model_total_mae": 15.700000000000003,
-      "market_total_mae": 15.5,
+      "games": 8,
+      "margin_mae": 7.5649999999999995,
+      "total_mae": 14.2375,
+      "winner_accuracy": 0.875,
+      "market_games": 7,
+      "matched_model_margin_mae": 7.698571428571428,
+      "market_margin_mae": 6.071428571428571,
+      "market_total_games": 7,
+      "matched_model_total_mae": 15.200000000000001,
+      "market_total_mae": 14.0,
       "margin_disagreement_buckets": [
         {
           "bucket": "0-2",
-          "games": 0,
-          "wins": 0,
-          "losses": 0,
+          "games": 4,
+          "wins": 3,
+          "losses": 1,
           "pushes": 0,
-          "ats_rate": null,
-          "model_mae": null,
-          "market_mae": null
+          "ats_rate": 0.75,
+          "model_mae": 1.9950000000000003,
+          "market_mae": 2.0
         },
         {
           "bucket": "2-4",
-          "games": 0,
+          "games": 2,
           "wins": 0,
-          "losses": 0,
+          "losses": 2,
           "pushes": 0,
-          "ats_rate": null,
-          "model_mae": null,
-          "market_mae": null
+          "ats_rate": 0.0,
+          "model_mae": 14.71,
+          "market_mae": 12.0
         },
         {
           "bucket": "4-6",
@@ -1650,6 +1650,6 @@
       "qb_shadow_independent_margin_mae": null
     }
   ],
-  "updated_at": "2026-11-20T13:00:36.871792+00:00",
+  "updated_at": "2026-11-23T02:52:17.884621+00:00",
   "schema_version": 3
 }
