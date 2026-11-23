@@ -1,0 +1,50 @@
+{
+  "run_id": "20261117T140239Z-3855ee30",
+  "revision": 2,
+  "scored_at": "2026-11-23T02:52:17.330306+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_11_MIA_BUF",
+      "status": "final",
+      "actual_home_margin": 17.0,
+      "actual_total": 35.0
+    },
+    {
+      "game_id": "2026_11_BAL_CAR",
+      "status": "final",
+      "actual_home_margin": 2.0,
+      "actual_total": 68.0
+    },
+    {
+      "game_id": "2026_11_NO_CHI",
+      "status": "final",
+      "actual_home_margin": 8.0,
+      "actual_total": 34.0
+    },
+    {
+      "game_id": "2026_11_TEN_DAL",
+      "status": "final",
+      "actual_home_margin": 21.0,
+      "actual_total": 81.0
+    },
+    {
+      "game_id": "2026_11_TB_DET",
+      "status": "final",
+      "actual_home_margin": 10.0,
+      "actual_total": 52.0
+    },
+    {
+      "game_id": "2026_11_ARI_KC",
+      "status": "final",
+      "actual_home_margin": 27.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "2026_11_PIT_PHI",
+      "status": "final",
+      "actual_home_margin": 3.0,
+      "actual_total": 35.0
+    }
+  ]
+}
