@@ -1,0 +1,32 @@
+{
+  "run_id": "20261117T140239Z-3855ee30",
+  "revision": 3,
+  "scored_at": "2026-11-23T12:59:05.806277+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_11_JAX_NYG",
+      "status": "final",
+      "actual_home_margin": 5.0,
+      "actual_total": 41.0
+    },
+    {
+      "game_id": "2026_11_NYJ_LAC",
+      "status": "final",
+      "actual_home_margin": -3.0,
+      "actual_total": 51.0
+    },
+    {
+      "game_id": "2026_11_LV_DEN",
+      "status": "final",
+      "actual_home_margin": 14.0,
+      "actual_total": 62.0
+    },
+    {
+      "game_id": "2026_11_MIN_SF",
+      "status": "final",
+      "actual_home_margin": 25.0,
+      "actual_total": 45.0
+    }
+  ]
+}
