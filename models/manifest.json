@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "created_at": "2026-11-24T21:31:52.842686+00:00",
+  "created_at": "2026-11-24T22:25:17.334573+00:00",
   "prediction_season": 2026,
   "training_seasons": [
     2022,
@@ -10,8 +10,8 @@
     2026
   ],
   "data_cutoff": "2026-11-23",
-  "raw_data_hash": "8b76799636208085b0847d31f0280747a344d796746d6c05e554defee37cf283",
-  "git_commit": "b176ca8b4185d7184a50098a1ad609293cdc81da",
+  "raw_data_hash": "40d0e3f8ace06b94c53e6282ac967cad3a448929ff7fde2d51e570792d0ac7c2",
+  "git_commit": "ff091021c5488f55e8f5fc3acc53cb622a16f13a",
   "libraries": {
     "scikit_learn": "1.7.1",
     "joblib": "1.5.1"
@@ -73,12 +73,12 @@
       },
       "files": [
         {
-          "path": "v3_game_margin_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_game_margin_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.7212211708731296,
           "sha256": "a9611ac9ac5c552285ef730a748ec5a142d9694e89da689c2b0cb312c44d4f08"
         },
         {
-          "path": "v3_game_margin_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_game_margin_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.27877882912687035,
           "sha256": "8183287f0d9df76ee5cca4c88a188a410c1024364384caab81c48ae293fdd880"
         }
@@ -142,12 +142,12 @@
       },
       "files": [
         {
-          "path": "v3_game_total_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_game_total_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.6882117151404005,
           "sha256": "333556679cabfd990bebec421d894889506809aba03a5abb78ab1fd34d5c6dc2"
         },
         {
-          "path": "v3_game_total_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_game_total_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.31178828485959953,
           "sha256": "4839bc276d4795608b91cd10e33455e5f0bac75e668585d008ed6add749f554c"
         }
@@ -190,17 +190,17 @@
       },
       "files": [
         {
-          "path": "v3_passing_yards_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_passing_yards_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.3164212825396062,
           "sha256": "3bf3b6ec3ef73f483e6e5ed65a340169f79c3c54b1df7999bd4c213bcd3c95d5"
         },
         {
-          "path": "v3_passing_yards_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_passing_yards_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.49357871746039383,
           "sha256": "a31da64944acf58b90df2bb937d91517365a1c4b6c322944fcda0e11a0c15780"
         },
         {
-          "path": "v3_passing_yards_2_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_passing_yards_2_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.18999999999999995,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -244,17 +244,17 @@
       },
       "files": [
         {
-          "path": "v3_receiving_yards_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receiving_yards_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.6159738576429725,
           "sha256": "b2ac35202afc78a25336bbf74a0bb252bffc1f96d7e8526a5cc6381747e3c5a8"
         },
         {
-          "path": "v3_receiving_yards_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receiving_yards_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.2040261423570275,
           "sha256": "eb713f5ec0ff8039c5af9b39a7e6eb56b7fa5deab997962a643901e3691bb677"
         },
         {
-          "path": "v3_receiving_yards_2_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receiving_yards_2_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.17999999999999994,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -296,17 +296,17 @@
       },
       "files": [
         {
-          "path": "v3_receptions_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receptions_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.5795553530746654,
           "sha256": "c7dc51efc9198af6de58f463430ed14b77046c2bfe4007bdecec5eee9e14f76b"
         },
         {
-          "path": "v3_receptions_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receptions_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.2004446469253346,
           "sha256": "563e6827d8c3f96ff1f40e71671522f52febdc860ac8e926db52df2ba4696b80"
         },
         {
-          "path": "v3_receptions_2_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_receptions_2_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.21999999999999997,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
@@ -348,17 +348,17 @@
       },
       "files": [
         {
-          "path": "v3_rushing_yards_0_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_rushing_yards_0_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.3025652786048468,
           "sha256": "4dc5e4fe84fda46adf8cacacc554ce20011876c8198f666c9fa9e2bab0044bdc"
         },
         {
-          "path": "v3_rushing_yards_1_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_rushing_yards_1_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.13743472139515323,
           "sha256": "3acd18f3a5308b3659e485d9b56f3bc3d92e52a745d362a5026415f78588dcf0"
         },
         {
-          "path": "v3_rushing_yards_2_829cef09d96a47ab90f954b9eed86147.joblib",
+          "path": "v3_rushing_yards_2_3f23c4f519fd4031bf8387c8fb470c30.joblib",
           "weight": 0.56,
           "sha256": "ff517e22af4b0694a109fe61627d87df21a1ba444aa7ba84d2ad7bdb8fa12ee7"
         }
