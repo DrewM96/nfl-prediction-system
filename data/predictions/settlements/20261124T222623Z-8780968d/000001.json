@@ -1,0 +1,14 @@
+{
+  "run_id": "20261124T222623Z-8780968d",
+  "revision": 1,
+  "scored_at": "2026-11-26T09:37:44.753904+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_12_GB_LA",
+      "status": "final",
+      "actual_home_margin": 13.0,
+      "actual_total": 39.0
+    }
+  ]
+}
