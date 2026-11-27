@@ -1,0 +1,14 @@
+{
+  "run_id": "20261124T213246Z-7380f4ea",
+  "revision": 2,
+  "scored_at": "2026-11-27T02:54:42.155449+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_12_CHI_DET",
+      "status": "final",
+      "actual_home_margin": -4.0,
+      "actual_total": 74.0
+    }
+  ]
+}
