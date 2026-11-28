@@ -1,0 +1,14 @@
+{
+  "run_id": "20261124T222623Z-8780968d",
+  "revision": 4,
+  "scored_at": "2026-11-28T13:08:35.694892+00:00",
+  "source": "nflverse schedules",
+  "results": [
+    {
+      "game_id": "2026_12_DEN_PIT",
+      "status": "final",
+      "actual_home_margin": 22.0,
+      "actual_total": 32.0
+    }
+  ]
+}
